@@ -1,4 +1,6 @@
 notes (secret).txt
+.env
+.slugignore
 
 # Logs
 logs
