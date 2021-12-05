@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato', sans-serif;
+}
+
+header {
+  height: 100px;
+  width: 100%;
+}
+
+h1#title {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 25px;
+  color: "#535c68";
+  font-size: 3em;
+}
+
+label,
+td {
+  margin: 5px;
+}
+
+button {
+  margin: 10px;
+  padding: 3px;
+}
+
+pre {
+  font-family: monospace;
+  margin-left: 10px;
+}
+
+input[type=text] {
+  width: 300px;
+}

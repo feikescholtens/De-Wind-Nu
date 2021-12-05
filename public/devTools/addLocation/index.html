@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Locatie toevoegen</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+
+</head>
+
+<body onload="updateJSON()">
+  <header>
+    <h1 id="title">Locatie toevoegen aan de database</h1>
+  </header>
+  <table>
+    <tr>
+      <td><label for="name">Name</label></td>
+      <td><input autocomplete="off" type="text" id="name"></td>
+    </tr>
+    <tr>
+      <td><label for="lat">Latitude</label></td>
+      <td><input autocomplete="off" type="text" id="lat"></td>
+    </tr>
+    <tr>
+      <td><label for="lon">Longitude</label></td>
+      <td><input autocomplete="off" type="text" id="lon"></td>
+    </tr>
+    <tr>
+      <td>Datasets</td>
+      <td><input type="checkbox" id="RWS"><label for="RWS">Rijkswaterstaat</label><input type="checkbox"
+          id="KNMI"><label for="RWS">KNMI</label><input type="checkbox" id="MVB"><label for="MVB">Meetnet Vlaamse
+          Banken</label></td>
+    </tr>
+    <tr class="hidden" id="RWS_id_tr">
+      <td><label for="RWS_id">ID Rijkswaterstaat</label></td>
+      <td><input autocomplete="off" type="text" id="RWS_id"></td>
+    </tr>
+    <tr class="hidden" id="KNMI_id_tr">
+      <td><label for="KNMI_id">ID KNMI</label></td>
+      <td><input autocomplete="off" type="text" id="KNMI_id"></td>
+    </tr>
+    <tr class="hidden" id="MVB_id_tr">
+      <td><label for="MVB_id">ID Meetnet Vlaamse Banken (enter als gestringde array)</label></td>
+      <td><input autocomplete="off" type="text" id="MVB_id"></td>
+    </tr>
+  </table> <button id="submit">Toevoegen</button>
+  <script src="index.js">
+  </script>
+</body>
+
+</html>

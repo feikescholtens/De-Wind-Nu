@@ -1,0 +1,937 @@
+[{
+    "id": "3958",
+    "name": "Gilze Rijen",
+    "lat": "51.57",
+    "lon": "4.93",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6350"
+      }
+    }
+  },
+  {
+    "id": "8474",
+    "name": "Hansweert",
+    "lat": "51.44571",
+    "lon": "3.99745",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "HAWI"
+      }
+    }
+  },
+  {
+    "id": "3545",
+    "name": "Oosterschelde zeezijde (Schaar)",
+    "lat": "51.65588",
+    "lon": "3.69395",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "OS4"
+      }
+    }
+  },
+  {
+    "id": "9690",
+    "name": "Blankenberge",
+    "lat": "51.3152777777778",
+    "lon": "3.10944444444444",
+    "datasets": {
+      "MVB": {
+        "location_id": [
+          "BL7WC3",
+          "BL7WRS",
+          "BL7WVC"
+        ]
+      }
+    }
+  },
+  {
+    "id": "7807",
+    "name": "K13 Platform Alpha",
+    "lat": "53.21598",
+    "lon": "3.21879",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "K132"
+      }
+    }
+  },
+  {
+    "id": "3595",
+    "name": "Lichteiland Goeree",
+    "lat": "51.92575",
+    "lon": "3.66987",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "LEG1"
+      }
+    }
+  },
+  {
+    "id": "9673",
+    "name": "Houtribdijk (Trintelhaven)",
+    "lat": "52.634268",
+    "lon": "5.416504",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "HOUD"
+      }
+    }
+  },
+  {
+    "id": "1141",
+    "name": "Den Helder",
+    "lat": "52.92",
+    "lon": "4.78",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6235"
+      }
+    }
+  },
+  {
+    "id": "5643",
+    "name": "F3 Platform",
+    "lat": "54.85",
+    "lon": "4.73",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6239"
+      }
+    }
+  },
+  {
+    "id": "8287",
+    "name": "Gannet Alpha Platform",
+    "lat": "57.19150",
+    "lon": "1.00180",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "GAN1"
+      }
+    }
+  },
+  {
+    "id": "4072",
+    "name": "Oesterdam (Diepsluis)",
+    "lat": "51.51020",
+    "lon": "4.17390",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "BDWI"
+      }
+    }
+  },
+  {
+    "id": "5803",
+    "name": "Vlakte van de Raan",
+    "lat": "51.50372",
+    "lon": "3.24205",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "VR"
+      }
+    }
+  },
+  {
+    "id": "4585",
+    "name": "Rotterdam Geulhaven",
+    "lat": "51.88",
+    "lon": "4.32",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6343"
+      }
+    }
+  },
+  {
+    "id": "2885",
+    "name": "Tholen",
+    "lat": "51.52",
+    "lon": "4.13",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6331"
+      }
+    }
+  },
+  {
+    "id": "3235",
+    "name": "Zeebrugge Daminstrumentatie",
+    "lat": "51.3541666666667",
+    "lon": "3.17222222222222",
+    "datasets": {
+      "MVB": {
+        "location_id": [
+          "ZDIWRS",
+          "ZDIWVC",
+          "OS7WRS"
+        ]
+      }
+    }
+  },
+  {
+    "id": "0290",
+    "name": "Twente",
+    "lat": "52.27",
+    "lon": "6.9",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6290"
+      }
+    }
+  },
+  {
+    "id": "8254",
+    "name": "Zeebrugge - Meteopark",
+    "lat": "51.3330555555556",
+    "lon": "3.21916666666667",
+    "datasets": {
+      "MVB": {
+        "location_id": [
+          "ZMPWRS",
+          "ZMPWVC",
+          "OS7WRS"
+        ]
+      }
+    }
+  },
+  {
+    "id": "8245",
+    "name": "Woensdrecht",
+    "lat": "51.45",
+    "lon": "4.33",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6340"
+      }
+    }
+  },
+  {
+    "id": "3007",
+    "name": "IJmuiden haven",
+    "lat": "52.46228",
+    "lon": "4.55482",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "IJMH"
+      }
+    }
+  },
+  {
+    "id": "0856",
+    "name": "Wierumergronden",
+    "lat": "53.51583",
+    "lon": "5.95826",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "WIER"
+      }
+    }
+  },
+  {
+    "id": "1612",
+    "name": "Hoogeveen",
+    "lat": "52.73",
+    "lon": "6.52",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6279"
+      }
+    }
+  },
+  {
+    "id": "5407",
+    "name": "Maastricht",
+    "lat": "50.92",
+    "lon": "5.78",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6380"
+      }
+    }
+  },
+  {
+    "id": "5647",
+    "name": "Brouwershavensegat",
+    "lat": "51.76653",
+    "lon": "3.62175",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "BG2"
+      }
+    }
+  },
+  {
+    "id": "3107",
+    "name": "Nieuw Beerta",
+    "lat": "53.2",
+    "lon": "7.15",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6286"
+      }
+    }
+  },
+  {
+    "id": "7043",
+    "name": "Markermeer",
+    "lat": "52.53207",
+    "lon": "5.24215",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "FL42"
+      }
+    }
+  },
+  {
+    "id": "1980",
+    "name": "Zeelandbrug",
+    "lat": "51.62860",
+    "lon": "3.91778",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "ZBWI"
+      }
+    }
+  },
+  {
+    "id": "1218",
+    "name": "De Bilt",
+    "lat": "52.1",
+    "lon": "5.18",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6260"
+      }
+    }
+  },
+  {
+    "id": "1412",
+    "name": "Stavenisse",
+    "lat": "51.59541",
+    "lon": "4.00601",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "STAV"
+      }
+    }
+  },
+  {
+    "id": "9556",
+    "name": "Ell",
+    "lat": "51.2",
+    "lon": "5.77",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6377"
+      }
+    }
+  },
+  {
+    "id": "0304",
+    "name": "Marknesse",
+    "lat": "52.70191",
+    "lon": "5.88738",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6273"
+      }
+    }
+  },
+  {
+    "id": "2367",
+    "name": "J6 Platform",
+    "lat": "53.81663",
+    "lon": "2.95001",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "J61"
+      }
+    }
+  },
+  {
+    "id": "5907",
+    "name": "Texelhors",
+    "lat": "53",
+    "lon": "4.75",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6229"
+      }
+    }
+  },
+  {
+    "id": "0205",
+    "name": "Oostende",
+    "lat": "51.2375",
+    "lon": "2.92416666666667",
+    "datasets": {
+      "MVB": {
+        "location_id": [
+          "OS7WRS"
+        ]
+      }
+    }
+  },
+  {
+    "id": "1892",
+    "name": "Groenlo-Hupsel",
+    "lat": "52.07",
+    "lon": "6.65",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6283"
+      }
+    }
+  },
+  {
+    "id": "9880",
+    "name": "Nieuw Beerta",
+    "lat": "53.2",
+    "lon": "7.15",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6286"
+      }
+    }
+  },
+  {
+    "id": "7713",
+    "name": "Berkhout",
+    "lat": "52.65",
+    "lon": "4.98",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6249"
+      }
+    }
+  },
+  {
+    "id": "8412",
+    "name": "Haringvlietsluis",
+    "lat": "51.83617",
+    "lon": "4.05438",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "HVS01"
+      }
+    }
+  },
+  {
+    "id": "7619",
+    "name": "Wandelaar",
+    "lat": "51.3944444444444",
+    "lon": "3.04583333333333",
+    "datasets": {
+      "MVB": {
+        "location_id": [
+          "MP0WC3",
+          "MP0WRS",
+          "MP0WVC"
+        ]
+      }
+    }
+  },
+  {
+    "id": "3714",
+    "name": "Vlissingen",
+    "lat": "51.44056",
+    "lon": "3.59453",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6310"
+      }
+    }
+  },
+  {
+    "id": "8577",
+    "name": "Wijdenes",
+    "lat": "52.63",
+    "lon": "5.17",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6248"
+      }
+    }
+  },
+  {
+    "id": "5202",
+    "name": "Wijk aan Zee",
+    "lat": "52.5",
+    "lon": "4.6",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6257"
+      }
+    }
+  },
+  {
+    "id": "7234",
+    "name": "Q11 Platform",
+    "lat": "52.92534",
+    "lon": "4.15036",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "Q11"
+      }
+    }
+  },
+  {
+    "id": "8650",
+    "name": "Europlatform",
+    "lat": "51.99780",
+    "lon": "3.27507",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "EPL1"
+      }
+    }
+  },
+  {
+    "id": "3406",
+    "name": "Stavoren",
+    "lat": "52.89660",
+    "lon": "5.38333",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6267"
+      }
+    }
+  },
+  {
+    "id": "1251",
+    "name": "Wilhelminadorp",
+    "lat": "51.53",
+    "lon": "3.9",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6323"
+      }
+    }
+  },
+  {
+    "id": "2417",
+    "name": "A12 Platform",
+    "lat": "55.41666",
+    "lon": "3.81669",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "A121"
+      }
+    }
+  },
+  {
+    "id": "8971",
+    "name": "Nelson Platform",
+    "lat": "57.66832",
+    "lon": "1.14725",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "NLS1"
+      }
+    }
+  },
+  {
+    "id": "4123",
+    "name": "Terneuzen (Westsluis)",
+    "lat": "51.32778",
+    "lon": "3.81621",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "TNWS"
+      }
+    }
+  },
+  {
+    "id": "1919",
+    "name": "North Cormorant 1 Platform",
+    "lat": "61.33819",
+    "lon": "1.16610",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "NC1"
+      }
+    }
+  },
+  {
+    "id": "5428",
+    "name": "Lichteiland Goeree",
+    "lat": "51.92575",
+    "lon": "3.66987",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "LEG1"
+      }
+    }
+  },
+  {
+    "id": "0227",
+    "name": "Schiphol",
+    "lat": "52.3",
+    "lon": "4.77",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6240"
+      }
+    }
+  },
+  {
+    "id": "4997",
+    "name": "Arcen",
+    "lat": "51.5",
+    "lon": "6.2",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6391"
+      }
+    }
+  },
+  {
+    "id": "3356",
+    "name": "Lelystad",
+    "lat": "52.45",
+    "lon": "5.53",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6269"
+      }
+    }
+  },
+  {
+    "id": "0323",
+    "name": "Lopik-Cabauw",
+    "lat": "51.97",
+    "lon": "4.93",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6348"
+      }
+    }
+  },
+  {
+    "id": "0900",
+    "name": "IJmuiden buitenhaven (zuid pier)",
+    "lat": "52.46369",
+    "lon": "4.53228",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "IJZ1"
+      }
+    }
+  },
+  {
+    "id": "1254",
+    "name": "Huibertgat",
+    "lat": "53.57375",
+    "lon": "6.39843",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "HUIB"
+      }
+    }
+  },
+  {
+    "id": "4686",
+    "name": "Cadzand",
+    "lat": "51.37989",
+    "lon": "3.37905",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "CAWI"
+      }
+    }
+  },
+  {
+    "id": "6688",
+    "name": "Lauwersoog",
+    "lat": "53.42",
+    "lon": "6.2",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6277"
+      }
+    }
+  },
+  {
+    "id": "5467",
+    "name": "K14 Platform",
+    "lat": "53.26667",
+    "lon": "3.63333",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "K141"
+      }
+    }
+  },
+  {
+    "id": "0160",
+    "name": "Terschelling Noordzee",
+    "lat": "53.42792",
+    "lon": "5.33323",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "TERS"
+      }
+    }
+  },
+  {
+    "id": "3019",
+    "name": "Westhinder",
+    "lat": "51.3886111111111",
+    "lon": "2.43777777777778",
+    "datasets": {
+      "MVB": {
+        "location_id": [
+          "MP7WC3",
+          "MP7WRS",
+          "MP7WVC"
+        ]
+      }
+    }
+  },
+  {
+    "id": "8231",
+    "name": "Rotterdam",
+    "lat": "51.95",
+    "lon": "4.45",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6344"
+      }
+    }
+  },
+  {
+    "id": "3216",
+    "name": "Oostende - Meteopark",
+    "lat": "51.2376638888889",
+    "lon": "2.93014722222222",
+    "datasets": {
+      "MVB": {
+        "location_id": [
+          "OMPWC3",
+          "OMPWRS",
+          "OMPWVC"
+        ]
+      }
+    }
+  },
+  {
+    "id": "7135",
+    "name": "Nieuwpoort",
+    "lat": "51.1558333333333",
+    "lon": "2.71666666666667",
+    "datasets": {
+      "MVB": {
+        "location_id": [
+          "NP7WC3",
+          "NP7WRS",
+          "NP7WVC"
+        ]
+      }
+    }
+  },
+  {
+    "id": "9462",
+    "name": "Westdorpe",
+    "lat": "51.23",
+    "lon": "3.83",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6319"
+      }
+    }
+  },
+  {
+    "id": "4859",
+    "name": "Hoorn, Terschelling",
+    "lat": "53.39926",
+    "lon": "5.34865",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "HOTE"
+      }
+    }
+  },
+  {
+    "id": "6822",
+    "name": "Bruinisse (Grevelingensluis)",
+    "lat": "51.66661",
+    "lon": "4.09566",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "GRWI"
+      }
+    }
+  },
+  {
+    "id": "5107",
+    "name": "Platform Borssele Alpha",
+    "lat": "51.69993",
+    "lon": "3.05670",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "BSA"
+      }
+    }
+  },
+  {
+    "id": "9990",
+    "name": "Herwijnen",
+    "lat": "51.87",
+    "lon": "5.15",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6356"
+      }
+    }
+  },
+  {
+    "id": "5331",
+    "name": "Groningen",
+    "lat": "53.13",
+    "lon": "6.58",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6280"
+      }
+    }
+  },
+  {
+    "id": "6503",
+    "name": "Vlieland",
+    "lat": "53.25",
+    "lon": "4.92",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6242"
+      }
+    }
+  },
+  {
+    "id": "4711",
+    "name": "Eindhoven",
+    "lat": "51.45",
+    "lon": "5.42",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6370"
+      }
+    }
+  },
+  {
+    "id": "7941",
+    "name": "Scheur Wielingen",
+    "lat": "51.4183333333333",
+    "lon": "3.29861111111111",
+    "datasets": {
+      "MVB": {
+        "location_id": [
+          "MP4WC3",
+          "MP4WRS",
+          "MP4WVC"
+        ]
+      }
+    }
+  },
+  {
+    "id": "1071",
+    "name": "Leeuwarden",
+    "lat": "53.22",
+    "lon": "5.77",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6270"
+      }
+    }
+  },
+  {
+    "id": "3392",
+    "name": "Nes, Ameland",
+    "lat": "53.42997",
+    "lon": "5.76046",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "NESS"
+      }
+    }
+  },
+  {
+    "id": "9170",
+    "name": "AWG Platform",
+    "lat": "53.491449",
+    "lon": "5.940918",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "AWG1"
+      }
+    }
+  },
+  {
+    "id": "2347",
+    "name": "Rotterdamse hoek (IJsselmeer)",
+    "lat": "52.74935",
+    "lon": "5.55995",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "FL02"
+      }
+    }
+  },
+  {
+    "id": "2721",
+    "name": "Volkel",
+    "lat": "51.65",
+    "lon": "5.7",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6375"
+      }
+    }
+  },
+  {
+    "id": "7092",
+    "name": "Stroompaal IJmond",
+    "lat": "52.46444",
+    "lon": "4.51860",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "SPY1"
+      }
+    }
+  },
+  {
+    "id": "8527",
+    "name": "Arnhem",
+    "lat": "52.07",
+    "lon": "5.88",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6275"
+      }
+    }
+  },
+  {
+    "id": "3255",
+    "name": "Hoogeveen",
+    "lat": "52.73",
+    "lon": "6.52",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6279"
+      }
+    }
+  },
+  {
+    "id": "3048",
+    "name": "Huibertgat",
+    "lat": "53.573889",
+    "lon": "6.398333",
+    "datasets": {
+      "KNMI": {
+        "location_id": "6285"
+      }
+    }
+  }
+]

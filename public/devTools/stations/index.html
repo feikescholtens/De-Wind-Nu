@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Meetstations</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+</head>
+
+<body>
+  <header>
+    <h1 id="title">Meetstations</h1>
+    <table id="Compare">
+      <tr>
+        <td><label for="RWS_ID">Rijkswaterstaat ID:</label></td>
+        <td><input class="input" type="text" id="RWS_ID"><br></td>
+      </tr>
+      <tr>
+        <td><label for="KNMI_ID">KNMI ID:</label></td>
+        <td><input class="input" type="text" id="KNMI_ID"></td>
+      </tr>
+    </table>
+    <br>
+
+    <button id="fetch">Opvragen</button>
+  </header>
+  <main>
+    <div id="locations"></div>
+  </main>
+
+  <script src="index.js"></script>
+</body>
+
+</html>
