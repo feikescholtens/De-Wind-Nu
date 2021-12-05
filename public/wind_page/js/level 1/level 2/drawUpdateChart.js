@@ -40,8 +40,15 @@ function drawUpdateChart(chart_windspeed, chart_winddirection, DOM_chart_windspe
   //Update the current wind section on top of the page in separte function
   updateCurrentWind(units, ctx, size);
 
-  wind_obj.label = `Windsterkte | max: ${Math.max(...data_unit[dataset][2]).toFixed(decimals).replace(".", ",")} ${units[unit].afkorting}`
-  wind_gusts_obj.label = `Windvlagen | max: ${Math.max(...data_unit[dataset][3]).toFixed(decimals).replace(".", ",")} ${units[unit].afkorting}`
+  const maxWind = Math.max(...data_unit[dataset][2].filter(function (value, index, arr) {
+    return value !== "NaN";
+  }));
+  const maxGusts = Math.max(...data_unit[dataset][3].filter(function (value, index, arr) {
+    return value !== "NaN";
+  }));
+
+  wind_obj.label = `Windsterkte | max: ${maxWind.toFixed(decimals).replace(".", ",")} ${units[unit].afkorting}`
+  wind_gusts_obj.label = `Windvlagen | max: ${maxGusts.toFixed(decimals).replace(".", ",")} ${units[unit].afkorting}`
   //Set unit on the chart's y-axis and set y-axis scale
   options_chart.scales.y.title.text = "Windsnelheid [" + units[unit].afkorting + "]";
   delete options_chart.scales.y.ticks;

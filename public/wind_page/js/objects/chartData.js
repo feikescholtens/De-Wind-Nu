@@ -126,8 +126,13 @@ const options_chart = {
           let title = context.label;
 
           if (context.parsed.y !== null) {
+
             if (context.chart.id == 0) {
-              label += ": " + context.formattedValue + " " + units[unit].afkorting;
+              if (context.datasetIndex == 0) {
+                label = "Windsnelheid: " + context.formattedValue + " " + units[unit].afkorting;
+              } else if (context.datasetIndex == 1) {
+                label = "Windvlagen: " + context.formattedValue + " " + units[unit].afkorting;
+              }
             } else if (context.chart.id == 1) {
               label += ": " + context.formattedValue + "°";
             }
@@ -136,9 +141,8 @@ const options_chart = {
         },
         title: function (context) {
           let title = context[0].label;
-
           if (title !== null) {
-            title = data[dataset][0][context[0].dataIndex] + " om " + title;
+            title = "Vandaag om " + title;
           }
           return title;
         }
