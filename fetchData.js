@@ -344,6 +344,153 @@ async function fetchData(database_data, moment, MVBAPIKey, resolve, reject, fs) 
               };
             }
           } else {
+            const times = [
+              "00:00",
+              "00:10",
+              "00:20",
+              "00:30",
+              "00:40",
+              "00:50",
+              "01:00",
+              "01:10",
+              "01:20",
+              "01:30",
+              "01:40",
+              "01:50",
+              "02:00",
+              "02:10",
+              "02:20",
+              "02:30",
+              "02:40",
+              "02:50",
+              "03:00",
+              "03:10",
+              "03:20",
+              "03:30",
+              "03:40",
+              "03:50",
+              "04:00",
+              "04:10",
+              "04:20",
+              "04:30",
+              "04:40",
+              "04:50",
+              "05:00",
+              "05:10",
+              "05:20",
+              "05:30",
+              "05:40",
+              "05:50",
+              "06:00",
+              "06:10",
+              "06:20",
+              "06:30",
+              "06:40",
+              "06:50",
+              "07:00",
+              "07:10",
+              "07:20",
+              "07:30",
+              "07:40",
+              "07:50",
+              "08:00",
+              "08:10",
+              "08:20",
+              "08:30",
+              "08:40",
+              "08:50",
+              "09:00",
+              "09:10",
+              "09:20",
+              "09:30",
+              "09:40",
+              "09:50",
+              "10:00",
+              "10:10",
+              "10:20",
+              "10:30",
+              "10:40",
+              "10:50",
+              "11:00",
+              "11:10",
+              "11:20",
+              "11:30",
+              "11:40",
+              "11:50",
+              "12:00",
+              "12:10",
+              "12:20",
+              "12:30",
+              "12:40",
+              "12:50",
+              "13:00",
+              "13:10",
+              "13:20",
+              "13:30",
+              "13:40",
+              "13:50",
+              "14:00",
+              "14:10",
+              "14:20",
+              "14:30",
+              "14:40",
+              "14:50",
+              "15:00",
+              "15:10",
+              "15:20",
+              "15:30",
+              "15:40",
+              "15:50",
+              "16:00",
+              "16:10",
+              "16:20",
+              "16:30",
+              "16:40",
+              "16:50",
+              "17:00",
+              "17:10",
+              "17:20",
+              "17:30",
+              "17:40",
+              "17:50",
+              "18:00",
+              "18:10",
+              "18:20",
+              "18:30",
+              "18:40",
+              "18:50",
+              "19:00",
+              "19:10",
+              "19:20",
+              "19:30",
+              "19:40",
+              "19:50",
+              "20:00",
+              "20:10",
+              "20:20",
+              "20:30",
+              "20:40",
+              "20:50",
+              "21:00",
+              "21:10",
+              "21:20",
+              "21:30",
+              "21:40",
+              "21:50",
+              "22:00",
+              "22:10",
+              "22:20",
+              "22:30",
+              "22:40",
+              "22:50",
+              "23:00",
+              "23:10",
+              "23:20",
+              "23:30",
+              "23:40",
+              "23:50",
+              "00:00"
+            ];
             //Declare variables
             let date = [],
               time = [],
@@ -354,53 +501,76 @@ async function fetchData(database_data, moment, MVBAPIKey, resolve, reject, fs) 
             let maxLength = 0;
             let maxLengthindex;
 
-            for (let i = 0; i < raw_data.Values.length; i++) {
-              if (raw_data.Values[i].Values.length > maxLength) {
-                maxLength = raw_data.Values[i].Values.length;
-                maxLengthindex = i;
-              }
+            // let measurementTime = moment(raw_data.Values[i].Values[j].Timestamp).format("HH:mm");
+            //       let lastMeasurementTime = moment(raw_data.Values[i].Values[j].Timestamp).add(10, 'minutes').format("HH:mm");
+            //       if ()
+            // console.log(raw_data)
+            let lastMeasurementH = moment(raw_data.Values[0].Values[raw_data.Values[0].Values.length - 1].Timestamp).format("HH");
+            let lastMeasurementm = moment(raw_data.Values[0].Values[raw_data.Values[0].Values.length - 1].Timestamp).format("mm");
 
-              //Windvlagen
-              if (raw_data.Values[i].ID.includes("WC3")) {
-                for (let j = 0; j < raw_data.Values[i].Values.length; j++) {
-                  if (raw_data.Values[i].Values[j].Value) {
-                    wind_gusts[j] = raw_data.Values[i].Values[j].Value;
-                  }
-                }
-              }
+            let theoreticalMeasurementCount = lastMeasurementH * 6 + lastMeasurementm / 10 + 1
+            console.log(theoreticalMeasurementCount)
 
-              //Windrichting
-              if (raw_data.Values[i].ID.includes("WRS")) {
-                for (let j = 0; j < raw_data.Values[i].Values.length; j++) {
-                  if (raw_data.Values[i].Values[j].Value) {
-                    wind_direction[j] = raw_data.Values[i].Values[j].Value;
-                  }
-                }
-              }
-
-              //Windsnelheid
-              if (raw_data.Values[i].ID.includes("WVC")) {
-                for (let j = 0; j < raw_data.Values[i].Values.length; j++) {
-                  if (raw_data.Values[i].Values[j].Value) {
-                    wind_speed[j] = raw_data.Values[i].Values[j].Value;
-                  }
-                }
-              }
-            }
-
-            //Loop through the longest data for the times
-            for (var i = 0; i < maxLength; i++) {
+            // Loop through the longest data for the times
+            let reducer = 0;
+            for (let i = 0; i < theoreticalMeasurementCount; i++) {
 
               //Set the date and time arrays (data needs to be reformatted to Dutch)
-              date[i] = moment().tz("Europe/Amsterdam").format("DD-MM-YYYY");
-              time[i] = moment(raw_data.Values[maxLengthindex].Values[i].Timestamp).format("HH:mm");
+              // date[i] = moment().tz("Europe/Amsterdam").format("DD-MM-YYYY");
+              // time[i] = moment(raw_data.Values[maxLengthindex].Values[i].Timestamp).format("HH:mm");
+              if (moment(raw_data.Values[0].Values[i].Timestamp).format("HH:mm") !== times[i + reducer]) {
+                reducer++;
+                console.log("foutive meeting")
+              }
+
+              console.log(moment(raw_data.Values[0].Values[i].Timestamp).format("HH:mm"))
+              console.log("moet gelijk zijn aan: " + times[i + reducer])
+              // if (moment(raw_data.Values[0].Values[i].Timestamp).format("HH:mm") !== times[i]) {
+              //   console.log("FOUT")
+              // }
             }
+            resolve()
+            // reject();
+
+            // for (let i = 0; i < raw_data.Values.length; i++) {
+            //   if (raw_data.Values[i].Values.length > maxLength) {
+            //     maxLength = raw_data.Values[i].Values.length;
+            //     maxLengthindex = i;
+            //   }
+
+            //   //Windvlagen
+            //   if (raw_data.Values[i].ID.includes("WC3")) {
+            //     for (let j = 0; j < raw_data.Values[i].Values.length; j++) {
+            //       if (raw_data.Values[i].Values[j].Value) {
+            //         wind_gusts[j] = raw_data.Values[i].Values[j].Value;
+            //       }
+            //     }
+            //   }
+
+            //   //Windrichting
+            //   if (raw_data.Values[i].ID.includes("WRS")) {
+            //     for (let j = 0; j < raw_data.Values[i].Values.length; j++) {
+            //       if (raw_data.Values[i].Values[j].Value) {
+            //         wind_direction[j] = raw_data.Values[i].Values[j].Value;
+            //       }
+            //     }
+            //   }
+
+            //   //Windsnelheid
+            //   if (raw_data.Values[i].ID.includes("WVC")) {
+            //     for (let j = 0; j < raw_data.Values[i].Values.length; j++) {
+            //       if (raw_data.Values[i].Values[j].Value) {
+            //         wind_speed[j] = raw_data.Values[i].Values[j].Value;
+            //       }
+            //     }
+            //   }
+            // }
 
             //Add all the data to the main array which will be returned
-            data["MVB"] = [date, time, wind_speed, wind_gusts, wind_direction];
-            resolve({
-              data
-            });
+            // data["MVB"] = [date, time, wind_speed, wind_gusts, wind_direction];
+            // resolve({
+            //   data
+            // });
           }
 
           //Errors: will be sent back and handled in other function (handleFetchErrors)
