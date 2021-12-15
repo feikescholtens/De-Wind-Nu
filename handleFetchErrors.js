@@ -16,7 +16,15 @@ function handleFetchErrors(data_fetched, response) {
       });
 
       //Other errors are not yet indexed, so this will throw 'unknown error'
+    } else if (error_code == "ETIMEDOUT") {
+      response.json({
+        error: "99"
+      });
+
+      //Other errors are not yet indexed, so this will throw 'unknown error'
     } else {
+      console.log("An error occured: " + JSON.stringify(data_fetched));
+
       response.json({
         error: ""
       });
@@ -36,8 +44,14 @@ function handleFetchErrors(data_fetched, response) {
       });
 
       //Other errors are not yet indexed, so this will throw 'unknown error'
+    } else if (error_code == "ETIMEDOUT") {
+      response.json({
+        error: "25"
+      });
+
+      //Other errors are not yet indexed, so this will throw 'unknown error'
     } else {
-      console.log(JSON.stringify(response));
+      console.log("An error occured: " + JSON.stringify(data_fetched));
 
       response.json({
         error: ""
@@ -63,8 +77,14 @@ function handleFetchErrors(data_fetched, response) {
       });
 
       //Other errors are not yet indexed, so this will throw 'unknown error'
+    } else if (error_code == "ETIMEDOUT") {
+      response.json({
+        error: "58"
+      });
+
+      //Other errors are not yet indexed, so this will throw 'unknown error'
     } else {
-      console.log(JSON.stringify(response));
+      console.log("An error occured: " + JSON.stringify(data_fetched));
 
       response.json({
         error: ""

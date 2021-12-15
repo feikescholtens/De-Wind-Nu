@@ -90,7 +90,12 @@ const options_chart = {
           size: '14',
         }
       },
-      beginAtZero: true
+      beginAtZero: true,
+      ticks: {
+        font: {
+          family: 'Lato',
+        }
+      }
     },
     x: {
       ticks: {
@@ -132,7 +137,10 @@ const options_chart = {
                 label = "Windsnelheid: " + context.formattedValue + " " + units[unit].afkorting;
               } else if (context.datasetIndex == 1) {
                 label = "Windvlagen: " + context.formattedValue + " " + units[unit].afkorting;
+              } else if (context.datasetIndex == 2) {
+                label = "Windvoorspelling: " + context.formattedValue + " " + units[unit].afkorting;
               }
+
             } else if (context.chart.id == 1) {
               label += ": " + context.formattedValue + "°";
             }

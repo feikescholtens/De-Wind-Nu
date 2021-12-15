@@ -37,14 +37,25 @@ function drawUpdateChart(chart_windspeed, chart_winddirection, DOM_chart_windspe
     convertToBft(data, data_unit, dataset);
   }
 
+  for (let j = 0; j < 7; j++) {
+    for (let k = 0; k < times.length; k++) {
+      if (data[dataset][j]) {
+        if (data[dataset][j][k] == -999) {
+          data_unit[dataset][j][k] = undefined
+        }
+
+      }
+    }
+  }
+
   //Update the current wind section on top of the page in separte function
   updateCurrentWind(units, ctx, size);
 
   const maxWind = Math.max(...data_unit[dataset][2].filter(function (value, index, arr) {
-    return value !== "NaN";
+    return (value !== "NaN" && value !== undefined)
   }));
   const maxGusts = Math.max(...data_unit[dataset][3].filter(function (value, index, arr) {
-    return value !== "NaN";
+    return (value !== "NaN" && value !== undefined)
   }));
 
   wind_obj.label = `Windsterkte | max: ${maxWind.toFixed(decimals).replace(".", ",")} ${units[unit].afkorting}`
@@ -54,6 +65,9 @@ function drawUpdateChart(chart_windspeed, chart_winddirection, DOM_chart_windspe
   delete options_chart.scales.y.ticks;
   delete options_chart.scales.y.min;
   delete options_chart.scales.y.max;
+  options_chart.scales.y.ticks = {
+    precision: 0
+  }
 
   //In any case add the wind_speed data to the dataset for the chart
   datasetsChart1.push(wind_obj);

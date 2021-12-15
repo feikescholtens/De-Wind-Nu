@@ -13,7 +13,7 @@ async function getData(request, response, locations, fetchData, moment, MVBAPIKe
       if (locations[i].id == request.params.id) {
 
         //Fetch by calling the dedicated function
-        let data_fetched = new Promise((resolve, reject) => {
+        let data_fetched = new Promise(async (resolve, reject) => {
           return fetchData(locations[i], moment, MVBAPIKey, resolve, reject, fs);
         });
 
@@ -21,6 +21,8 @@ async function getData(request, response, locations, fetchData, moment, MVBAPIKe
 
           //Check for error (which is in the first key of the object data_fetched.data)
           if (Object.keys(data_fetched.data)[0] == "error") {
+            console.log("data" + JSON.stringify(data_fetched))
+
             handleFetchErrors(data_fetched, response);
 
             //If there are no errors: proceed
