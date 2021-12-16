@@ -177,6 +177,8 @@ async function fetchData(database_data, moment, MVBAPIKey, resolve, reject, fs) 
 
         const raw_data = JSON.parse(raw_data_text)
 
+        console.log(raw_data)
+
         //Declare variables
         let date = [],
           time = [],
