@@ -21,7 +21,6 @@ async function getData(request, response, locations, fetchData, moment, MVBAPIKe
 
           //Check for error (which is in the first key of the object data_fetched.data)
           if (Object.keys(data_fetched.data)[0] == "error") {
-            console.log("data" + JSON.stringify(data_fetched))
 
             handleFetchErrors(data_fetched, response);
 
@@ -105,7 +104,7 @@ async function getData(request, response, locations, fetchData, moment, MVBAPIKe
 
               //Otherwise just send back all the data als almost always one dataset will contain data, there is no need to check if both are empty
             } else {
-              console.log(data_fetched);
+
               let reponseBack = {
                 "name": data_fetched.name
               };

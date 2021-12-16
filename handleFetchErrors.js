@@ -58,6 +58,7 @@ function handleFetchErrors(data_fetched, response) {
       });
     }
   } else if (data_fetched.data.dataset == "MVB") {
+
     //If the error is that the fetch link was not found, send that to the frondend
     if (error_code == "ENOTFOUND") {
       response.json({
@@ -70,16 +71,24 @@ function handleFetchErrors(data_fetched, response) {
         error: "22"
       });
 
-      //Other errors are not yet indexed, so this will throw 'unknown error'
     } else if (error_code == "LOGINFAILED") {
       response.json({
         error: "57"
       });
 
-      //Other errors are not yet indexed, so this will throw 'unknown error'
     } else if (error_code == "ETIMEDOUT") {
       response.json({
         error: "58"
+      });
+
+    } else if (error_code == 24) {
+      response.json({
+        error: "24"
+      });
+
+    } else if (error_code == 91) {
+      response.json({
+        error: "91"
       });
 
       //Other errors are not yet indexed, so this will throw 'unknown error'

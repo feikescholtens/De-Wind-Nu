@@ -282,7 +282,9 @@ async function fetchData(database_data, moment, MVBAPIKey, resolve, reject, fs) 
                 dataset: "MVB"
               }
             }
-            return
+            resolve({
+              data
+            })
           }
 
           fs.writeFile("Meetnet Vlaamse Banken API key.json", JSON.stringify({
@@ -292,7 +294,9 @@ async function fetchData(database_data, moment, MVBAPIKey, resolve, reject, fs) 
           }, null, 2), (err) => {
             if (err) {
               console.log(err)
-              return
+              resolve({
+                data
+              })
             }
 
             fetchDataMVB(raw_data["access_token"])
@@ -340,10 +344,27 @@ async function fetchData(database_data, moment, MVBAPIKey, resolve, reject, fs) 
           if (raw_data.Message) {
             if (raw_data.Message == "Authorization has been denied for this request.") {
               data = {
-                error: "Error: Authorization has been denied for this request.",
+                error: {
+                  code: 24,
+                  message: "Authorization has been denied for this request."
+                },
                 dataset: "MVB"
               }
+              resolve({
+                data
+              })
             }
+          } else if (!raw_data.StartTime) {
+            data = {
+              error: {
+                code: 91,
+                message: "No data (yet) for this station."
+              },
+              dataset: "MVB"
+            }
+            resolve({
+              data
+            })
           } else {
             const times = JSON.parse(fs.readFileSync("times.json"))
 
@@ -385,7 +406,6 @@ async function fetchData(database_data, moment, MVBAPIKey, resolve, reject, fs) 
                 }
               })
 
-              console.log(tempArray)
               let lastMeasurementH = moment(raw_data.Values[i].Values[raw_data.Values[i].Values.length - 1].Timestamp).tz("Europe/Amsterdam").format("HH")
               let lastMeasurementm = moment(raw_data.Values[i].Values[raw_data.Values[i].Values.length - 1].Timestamp).tz("Europe/Amsterdam").format("mm")
               let theoreticalMeasurementCount = lastMeasurementH * 6 + lastMeasurementm / 10 + 1

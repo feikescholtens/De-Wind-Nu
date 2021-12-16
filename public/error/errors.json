@@ -18,7 +18,7 @@
   ["79", "Fetch fout Token endpoint, API link Meetnet Vlaamse Banken is niet geldig / netwerkprobleem"],
   ["22", "De server kon geen verbinding maken met de Token endpoint van Meetnet Vlaamse Banken (netwerkfout)"],
   ["57", "Inloggen mislukt bij Token endpoint"],
-  ["58", "MVB Times out"],
-  ["25", "KNMI Times out"],
-  ["99", "KNMI Times out"]
+  ["58", "MVB Timed out"],
+  ["25", "KNMI Timed out"],
+  ["99", "Rijkswaterstaat Timed out"]
 ]
