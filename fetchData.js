@@ -360,7 +360,7 @@ async function fetchData(database_data, moment, MVBAPIKey, resolve, reject, fs) 
               let tempArray = []
 
               raw_data.Values[i].Values.forEach((value) => {
-                let time = moment(value.Timestamp).format("HH:mm")
+                let time = moment(value.Timestamp).tz("Europe/Amsterdam").format("HH:mm")
                 measurementTimes.push(time)
               })
 
@@ -395,9 +395,9 @@ async function fetchData(database_data, moment, MVBAPIKey, resolve, reject, fs) 
               }
 
               if (raw_data.Values[i].ID.includes("WC3")) {
-                wind_gusts = JSON.parse(JSON.stringify(tempArray))
+                wind_gusts = JSON.parse(JSON.stringify(tempArray)).map(x => x * 1.94384449)
               } else if (raw_data.Values[i].ID.includes("WVC")) {
-                wind_speed = JSON.parse(JSON.stringify(tempArray))
+                wind_speed = JSON.parse(JSON.stringify(tempArray)).map(x => x * 1.94384449)
               } else if (raw_data.Values[i].ID.includes("WRS")) {
                 wind_direction = JSON.parse(JSON.stringify(tempArray))
               }
