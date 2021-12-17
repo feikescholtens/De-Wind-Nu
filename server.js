@@ -75,20 +75,16 @@ const {
   sub
 } = require('date-fns')
 const {
-  getTimezoneOffset
+  utcToZonedTime
 } = require('date-fns-tz')
 
 const timeZone = 'Europe/Amsterdam'
 const dateUTC = new Date()
-// const dateZoned = add(dateUTC, {
-//   seconds: getTimezoneOffset(timeZone, dateUTC) / 1000
-// })
+const dateZoned = utcToZonedTime(dateUTC, timeZone)
 
-// const today = format(dateUTC, "d-MM-yyyy")
+const date = format(dateZoned, "d-MM-yyyy")
+const time = format(dateZoned, "HH:mm")
 
-// console.log(sub(dateZoned, {
-//   hour: 1
-// }));
 
-console.log(format(dateUTC, "d-MM-yyyy"))
-console.log(format(dateUTC, "HH:mm"))
+console.log(date)
+console.log(time)
