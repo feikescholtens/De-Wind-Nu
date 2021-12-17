@@ -40,10 +40,9 @@ function drawUpdateChart(chart_windspeed, chart_winddirection, DOM_chart_windspe
   for (let j = 0; j < 7; j++) {
     for (let k = 0; k < times.length; k++) {
       if (data[dataset][j]) {
-        if (data[dataset][j][k] == -999) {
+        if (data[dataset][j][k] < 0) {
           data_unit[dataset][j][k] = undefined
         }
-
       }
     }
   }
