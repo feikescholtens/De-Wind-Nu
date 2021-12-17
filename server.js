@@ -8,7 +8,7 @@ const fs = require("fs");
 require("dotenv").config();
 const {
   fetchData
-} = require("./fetchData");
+} = require("./fetchData")
 const {
   getData
 } = require("./getData");
@@ -64,7 +64,31 @@ app.post("/addFeedback", (request, response) => {
 });
 
 //If unknown url is typed in
-app.use(function (request, response) {
+app.use(function (response) {
   response.status(404);
   response.type('txt').send("URL niet gevonden!");
 });
+
+const {
+  format,
+  add,
+  sub
+} = require('date-fns')
+const {
+  getTimezoneOffset
+} = require('date-fns-tz')
+
+const timeZone = 'Europe/Amsterdam'
+const dateUTC = new Date()
+// const dateZoned = add(dateUTC, {
+//   seconds: getTimezoneOffset(timeZone, dateUTC) / 1000
+// })
+
+// const today = format(dateUTC, "d-MM-yyyy")
+
+// console.log(sub(dateZoned, {
+//   hour: 1
+// }));
+
+console.log(format(dateUTC, "d-MM-yyyy"))
+console.log(format(dateUTC, "HH:mm"))
