@@ -159,6 +159,7 @@ async function fetchMVB(databaseData, resolve, times) {
 
               raw_data.Values[i].Values.forEach((value) => {
                 let time = format(utcToZonedTime(parseISO(value.Timestamp), timeZone), "HH:mm")
+                console.log(time);
                 measurementTimes.push(time)
               })
 
