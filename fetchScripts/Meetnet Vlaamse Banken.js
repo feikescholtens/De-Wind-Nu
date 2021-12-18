@@ -159,7 +159,6 @@ async function fetchMVB(databaseData, resolve, times) {
 
               raw_data.Values[i].Values.forEach((value) => {
                 let time = format(utcToZonedTime(parseISO(value.Timestamp), timeZone), "HH:mm")
-                console.log(time);
                 measurementTimes.push(time)
               })
 
@@ -184,8 +183,8 @@ async function fetchMVB(databaseData, resolve, times) {
                 }
               })
 
-              let lastMeasurementH = format(parseISO(raw_data.Values[i].Values[raw_data.Values[i].Values.length - 1].Timestamp), "HH")
-              let lastMeasurementm = format(parseISO(raw_data.Values[i].Values[raw_data.Values[i].Values.length - 1].Timestamp), "mm")
+              let lastMeasurementH = measurementTimes[measurementTimes.length - 1].substring(0, 2)
+              let lastMeasurementm = measurementTimes[measurementTimes.length - 1].substring(3, 5)
               let theoreticalMeasurementCount = lastMeasurementH * 6 + lastMeasurementm / 10 + 1
 
               for (let j = 0; j < (times.length - theoreticalMeasurementCount); j++) {
