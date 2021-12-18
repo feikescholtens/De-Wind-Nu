@@ -1,4 +1,4 @@
-async function getData(request, response, locations, fetchData, moment, MVBAPIKey, fs) {
+async function getData(request, response, locations, fetchData, fs) {
 
   //Import the handleErrors function
   const {
@@ -14,7 +14,7 @@ async function getData(request, response, locations, fetchData, moment, MVBAPIKe
 
         //Fetch by calling the dedicated function
         let data_fetched = new Promise(async (resolve, reject) => {
-          return fetchData(locations[i], moment, MVBAPIKey, resolve, reject, fs);
+          return fetchData(locations[i], resolve);
         });
 
         data_fetched.then((data_fetched) => {

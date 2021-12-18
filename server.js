@@ -1,8 +1,6 @@
 //Import dependencies
 const express = require("express");
 const path = require("path");
-const moment = require("moment");
-const momentTZ = require("moment-timezone");
 const fs = require("fs");
 
 require("dotenv").config();
@@ -17,13 +15,12 @@ const {
 } = require("./addLocation")
 const {
   addFeedback
-} = require("./addFeedback")
+} = require("./addFeedback");
 
 //Define variables
 const app = express();
 const port = process.env.PORT || 3000;
 const locations = JSON.parse(fs.readFileSync("locations.json"));
-const MVBAPIKey = JSON.parse(fs.readFileSync("Meetnet Vlaamse Banken API key.json"));
 
 //Initialize Express
 app.listen(port, () => console.log("server running at port " + port));
@@ -55,12 +52,12 @@ app.get("/wind/:id", (request, response) => {
 
 //Get data function / API and serve to the user
 app.get("/getData/:id", async (request, response) => {
-  getData(request, response, locations, fetchData, moment, MVBAPIKey, fs);
+  getData(request, response, locations, fetchData, fs);
 });
 
 //Add data to database when feedback received
 app.post("/addFeedback", (request, response) => {
-  addFeedback(request, response, moment)
+  addFeedback(request, response)
 });
 
 //If unknown url is typed in
@@ -68,23 +65,3 @@ app.use(function (response) {
   response.status(404);
   response.type('txt').send("URL niet gevonden!");
 });
-
-const {
-  format,
-  add,
-  sub
-} = require('date-fns')
-const {
-  utcToZonedTime
-} = require('date-fns-tz')
-
-const timeZone = 'Europe/Amsterdam'
-const dateUTC = new Date()
-const dateZoned = utcToZonedTime(dateUTC, timeZone)
-
-const date = format(dateZoned, "d-MM-yyyy")
-const time = format(dateZoned, "HH:mm")
-
-
-console.log(date)
-console.log(time)
