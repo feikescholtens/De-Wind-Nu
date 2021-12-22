@@ -1,26 +1,25 @@
-const {
+import {
   format,
   sub,
   parseISO,
   getUnixTime,
   parse,
   add
-} = require('date-fns')
-const {
-  utcToZonedTime
-} = require('date-fns-tz')
-const fetch = (...args) => import('node-fetch').then(({
-  default: fetch
-}) => fetch(...args))
-const fs = require("fs");
+} from "date-fns"
+import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
+import fetch from "node-fetch";
+import {
+  readFileSync,
+  writeFile
+} from 'fs';
 
-async function fetchMVB(databaseData, resolve, times) {
+export async function fetchMVB(databaseData, resolve, times) {
 
   let data = []
 
   //Getting API key, if gotten, make request for data
 
-  const MVBAPIKey = JSON.parse(fs.readFileSync("Meetnet Vlaamse Banken API key.json"));
+  const MVBAPIKey = JSON.parse(readFileSync("Meetnet Vlaamse Banken API key.json"));
 
   if (Object.keys(MVBAPIKey).length == 0 || (getUnixTime(new Date()) + 5) > MVBAPIKey.expirationDate) {
 
@@ -56,7 +55,7 @@ async function fetchMVB(databaseData, resolve, times) {
           hours: 1
         })
 
-        fs.writeFile("Meetnet Vlaamse Banken API key.json", JSON.stringify({
+        writeFile("Meetnet Vlaamse Banken API key.json", JSON.stringify({
           "expirationDate": getUnixTime(expiresString),
           "issuedDate": getUnixTime(issuedString),
           "APIKey": raw_data["access_token"]
@@ -90,7 +89,7 @@ async function fetchMVB(databaseData, resolve, times) {
     if (newToken) {
       keyFetch = newToken
     } else {
-      keyFetch = JSON.parse(fs.readFileSync("Meetnet Vlaamse Banken API key.json")).APIKey
+      keyFetch = JSON.parse(readFileSync("Meetnet Vlaamse Banken API key.json")).APIKey
     }
 
     const locationID = JSON.stringify(databaseData.datasets.MVB.location_id)
@@ -223,8 +222,4 @@ async function fetchMVB(databaseData, resolve, times) {
         })
       })
   }
-}
-
-module.exports = {
-  fetchMVB
 }

@@ -1,4 +1,4 @@
-async function generateId(locations) {
+export async function generateId(locations) {
 
   //Gerenate random number
   let random = Math.random().toString().substring(2, 6);
@@ -13,8 +13,3 @@ async function generateId(locations) {
   return random;
 
 }
-
-//Export the funtion to the main file
-module.exports = {
-  generateId
-};

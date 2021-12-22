@@ -1,9 +1,8 @@
-async function getData(request, response, locations, fetchData, fs) {
+import {
+  handleFetchErrors
+} from "./handleFetchErrors.js";
 
-  //Import the handleErrors function
-  const {
-    handleFetchErrors
-  } = require("./handleFetchErrors");
+export async function getData(request, response, locations, fetchData) {
 
   //Check once again if the ID is valid
   if (request.params.id !== "" && request.params.id.length == 4 && /^\d+$/.test(request.params.id) == true) {
@@ -140,8 +139,3 @@ async function getData(request, response, locations, fetchData, fs) {
     });
   }
 }
-
-//Export the function to the main file
-module.exports = {
-  getData
-};

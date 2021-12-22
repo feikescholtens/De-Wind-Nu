@@ -1,15 +1,11 @@
-const {
+import {
   format
-} = require('date-fns')
-const {
-  utcToZonedTime
-} = require('date-fns-tz')
-const fetch = (...args) => import('node-fetch').then(({
-  default: fetch
-}) => fetch(...args))
+} from "date-fns"
+import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
+import fetch from "node-fetch";
 const timeZone = 'Europe/Amsterdam'
 
-async function fetchKNMI(databaseData, resolve, times) {
+export async function fetchKNMI(databaseData, resolve, times) {
 
   let data = []
 
@@ -88,8 +84,4 @@ async function fetchKNMI(databaseData, resolve, times) {
         data
       })
     })
-}
-
-module.exports = {
-  fetchKNMI
 }

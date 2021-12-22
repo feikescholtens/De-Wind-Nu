@@ -1,8 +1,11 @@
-async function addLocation(request, response, locations, fs) {
+import {
+  writeFile
+} from "fs";
+import {
+  generateId
+} from "./generateId.js";
 
-  const {
-    generateId
-  } = require("./generateId");
+export async function addLocation(request, locations) {
 
   let new_location = request.body;
 
@@ -11,7 +14,7 @@ async function addLocation(request, response, locations, fs) {
   new_location.id = id;
   locations.push(new_location);
 
-  fs.writeFile("locations.json", JSON.stringify(locations, null, 2), (err) => {
+  writeFile("locations.json", JSON.stringify(locations, null, 2), (err) => {
     if (err) {
       console.log(err)
       return
@@ -20,7 +23,3 @@ async function addLocation(request, response, locations, fs) {
     console.log("Added new location to the list!")
   })
 }
-
-module.exports = {
-  addLocation
-};

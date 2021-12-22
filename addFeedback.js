@@ -1,5 +1,6 @@
-async function addFeedback(request, response) {
-  const nodemailer = require("nodemailer")
+import nodemailer from "nodemailer";
+
+export async function addFeedback(request, response) {
 
   //Set variables
   data = request.body;
@@ -28,7 +29,3 @@ async function addFeedback(request, response) {
     }
   });
 }
-
-module.exports = {
-  addFeedback
-};

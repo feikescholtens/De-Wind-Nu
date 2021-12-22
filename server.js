@@ -1,26 +1,31 @@
 //Import dependencies
-const express = require("express");
-const path = require("path");
-const fs = require("fs");
+import express from "express";
+import path from "path"
+import {
+  readFileSync
+} from "fs";
+import dotenv from "dotenv"
 
-require("dotenv").config();
-const {
+import {
   fetchData
-} = require("./fetchData")
-const {
+} from "./fetchData.js"
+import {
   getData
-} = require("./getData");
-const {
+} from "./getData.js"
+import {
   addLocation
-} = require("./addLocation")
-const {
+} from "./addLocation.js"
+import {
   addFeedback
-} = require("./addFeedback");
+} from "./addFeedback.js"
+
+dotenv.config();
+const __dirname = path.resolve();
 
 //Define variables
 const app = express();
 const port = process.env.PORT || 3000;
-const locations = JSON.parse(fs.readFileSync("locations.json"));
+const locations = JSON.parse(readFileSync("locations.json"));
 
 //Initialize Express
 app.listen(port, () => console.log("server running at port " + port));
@@ -32,7 +37,7 @@ app.use(express.json({
 
 //Add location API, only on localhost
 if (port == 3000) {
-  app.post("/addLocation", (request, response) => addLocation(request, response, locations, fs));
+  app.post("/addLocation", (request) => addLocation(request, locations));
 }
 
 //Serve location data API
@@ -52,7 +57,7 @@ app.get("/wind/:id", (request, response) => {
 
 //Get data function / API and serve to the user
 app.get("/getData/:id", async (request, response) => {
-  getData(request, response, locations, fetchData, fs);
+  getData(request, response, locations, fetchData);
 });
 
 //Add data to database when feedback received

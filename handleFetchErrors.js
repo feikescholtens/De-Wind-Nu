@@ -1,4 +1,4 @@
-function handleFetchErrors(data_fetched, response) {
+export function handleFetchErrors(data_fetched, response) {
   const error_code = data_fetched.data.error.code;
   //Check in which dataset the error occured
   if (data_fetched.data.dataset == "Rijkswaterstaat") {
@@ -101,8 +101,3 @@ function handleFetchErrors(data_fetched, response) {
     }
   }
 }
-
-//Export the function to the fetchData file
-module.exports = {
-  handleFetchErrors
-};

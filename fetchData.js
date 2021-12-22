@@ -1,17 +1,19 @@
-const fs = require("fs");
-const times = JSON.parse(fs.readFileSync("times.json"))
-
-const {
+import {
+  readFileSync
+} from 'fs';
+import {
   fetchRWS
-} = require("./fetchScripts/Rijkswaterstaat");
-const {
+} from "./fetchScripts/Rijkswaterstaat.js"
+import {
   fetchKNMI
-} = require("./fetchScripts/KNMI");
-const {
+} from "./fetchScripts/KNMI.js"
+import {
   fetchMVB
-} = require("./fetchScripts/Meetnet Vlaamse Banken");
+} from "./fetchScripts/Meetnet Vlaamse Banken.js"
 
-async function fetchData(databaseData, resolve) {
+const times = JSON.parse(readFileSync("times.json"))
+
+export async function fetchData(databaseData, resolve) {
 
   // Rijkswaterstaat
   if (databaseData.datasets.Rijkswaterstaat) {
@@ -27,8 +29,4 @@ async function fetchData(databaseData, resolve) {
   if (databaseData.datasets.MVB) {
     fetchMVB(databaseData, resolve, times)
   }
-}
-
-module.exports = {
-  fetchData
 }
