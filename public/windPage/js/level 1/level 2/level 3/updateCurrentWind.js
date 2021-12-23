@@ -1,3 +1,7 @@
+Array.prototype.lastMeasurement = function() {
+  return this[this.length - 1]
+}
+
 function updateCurrentWind(units, ctx, size) {
 
   //Define all the DOM elements
@@ -9,7 +13,7 @@ function updateCurrentWind(units, ctx, size) {
   const DOM_actueel_header = document.getElementById("heading_current_wind");
   const DOM_chart1_header = document.getElementById("heading_chart1");
   const DOM_chart2_header = document.getElementById("heading_chart2");
-  const actuele_richting = data_unit[4].at(-1);
+  const actuele_richting = data_unit[4].lastMeasurement();
 
   DOM_actuele_richting.innerHTML = "";
   DOM_actuele_wind.innerHTML = "";
@@ -51,7 +55,7 @@ function updateCurrentWind(units, ctx, size) {
   if (data_unit[2].length !== 0) {
 
     //Set new value in the box, replace correct decimal point and add unit
-    DOM_actuele_wind.innerHTML = data_unit[2].at(-1).replace(".", ",") + " " + units[unit].afkorting;
+    DOM_actuele_wind.innerHTML = data_unit[2].lastMeasurement().replace(".", ",") + " " + units[unit].afkorting;
   }
 
   //If there are values set for the forecasted wind
@@ -63,9 +67,9 @@ function updateCurrentWind(units, ctx, size) {
     }
   }
 
-  if (data_unit[3].length !== 0 && data_unit[3].length == data_unit[2].length && data_unit[3].at(-1) !== "NaN") {
+  if (data_unit[3].length !== 0 && data_unit[3].length == data_unit[2].length && data_unit[3].lastMeasurement() !== "NaN") {
 
-    DOM_actuele_vlagen.innerHTML = data_unit[3].at(-1).replace(".", ",") + " " + units[unit].afkorting + "<label class='label'>&nbsp;vlagen</label>";
+    DOM_actuele_vlagen.innerHTML = data_unit[3].lastMeasurement().replace(".", ",") + " " + units[unit].afkorting + "<label class='label'>&nbsp;vlagen</label>";
   }
 
   if (DOM_actuele_vlagen.innerHTML !== "" && DOM_voorspelde_richting.innerHTML !== "" && DOM_voorspelde_wind.innerHTML !== "") {
@@ -113,5 +117,5 @@ function updateCurrentWind(units, ctx, size) {
   DOM_chart2_header.innerHTML = "Windrichting";
 
   //Set the latest time in de "Actueel" header
-  DOM_actueel_header.innerHTML = "Actueel (" + data_unit[1].at(-1) + ")";
+  DOM_actueel_header.innerHTML = "Actueel (" + data_unit[1].lastMeasurement() + ")";
 }

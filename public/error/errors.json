@@ -2,16 +2,10 @@
   ["47", "Geen of foute ID in de URL gevonden of er bestaat geen locatie bij de gegeven ID"],
   ["14", "API heeft (nog) geen gegevens voor deze meetlocatie"],
   ["80", "API heeft metingen maar de data hiervoor ontbreekt"],
-  ["11", "Fetch fout, API link Rijkswaterstaat is niet geldig / netwerkprobleem"],
-  ["55", "Fetch fout, API link KNMI is niet geldig / netwerkprobleem"],
-  ["76", "De server kon geen verbinding maken met de API van Rijkswaterstaat (netwerkfout)"],
-  ["05", "De server kon geen verbinding maken met de API van het KNMI (netwerkfout)"],
+  ["11", "Fetch fout, API link is niet geldig / netwerkprobleem"],
+  ["76", "De server kon geen verbinding maken met de API (netwerkfout)"],
   ["37", "Kan locaties niet fetchen, foutieve JSON"],
-  ["24", "Meetnet Vlaamse Banken heeft de toegang geweigerd tot de data"],
-  ["79", "Fetch fout Token endpoint, API link Meetnet Vlaamse Banken is niet geldig / netwerkprobleem"],
-  ["22", "De server kon geen verbinding maken met de Token endpoint van Meetnet Vlaamse Banken (netwerkfout)"],
+  ["24", "Toegang geweigerd tot de data"],
   ["57", "Inloggen mislukt bij Token endpoint"],
-  ["58", "MVB Timed out"],
-  ["25", "KNMI Timed out"],
-  ["99", "Rijkswaterstaat Timed out"]
+  ["99", "Verbinding timed out"]
 ]

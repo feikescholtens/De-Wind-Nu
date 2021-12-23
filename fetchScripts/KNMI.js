@@ -17,7 +17,7 @@ export async function fetchKNMI(databaseData, resolve, times) {
 
   await fetch(`https://graphdata.buienradar.nl/1.0/actualarchive/weatherstation/${locationID}/?startDate=${dateTodayFetch}`, {})
     .then(response => response.text())
-    .then(function (raw_data_text) {
+    .then(function(raw_data_text) {
 
       const raw_data = JSON.parse(raw_data_text)
 
@@ -75,7 +75,7 @@ export async function fetchKNMI(databaseData, resolve, times) {
         data
       })
       //Errors: will be sent back and handled in other function (handleFetchErrors)
-    }).catch(function (error) {
+    }).catch(function(error) {
       data = {
         error: error,
         dataset: "KNMI"
