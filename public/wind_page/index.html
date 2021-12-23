@@ -1,120 +1,16 @@
-<!DOCTYPE html>
-<html lang="nl">
+<script>
+  const protocol = window.location.protocol
+  const hostname = window.location.hostname 
+  const port = window.location.port 
+  const path = "/error/?e=47"
 
-<head>
-  <title>laden...</title>
+  let referString = protocol + "//" + hostname
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  if (port) {
+    referString += ":" + port
+  }
 
-  <link rel="stylesheet" href="styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+  referString += path;
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"> </script>
-  <script src="js/index.js" defer></script>
-  <script src="js/objects/chartData.js"></script>
-  <script src="js/level 1/processData.js"></script>
-  <script src="js/level 1/level 2/level 3/updateCurrentWind.js"></script>
-  <script src="js/level 1/level 2/drawUpdateChart.js"></script>
-  <script src="js/level 1/level 2/level 3/convertToBft.js"></script>
-  <script src="js/level 1/level 2/level 3/level 4/directionToLetters.js"></script>
-  <script src="js/level 1/level 2/level 3/level 4/drawDirectionArrow.js"></script>
-  <script src="../jsPopUps/feedback.js"></script>
-  <script src="../jsPopUps/credit.js"></script>
-  <script src="../jsPopUps/contact.js"></script>
-
-  <!-- ICO TAGS -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
-  <meta name="apple-mobile-web-app-title" content="De Wind Nu">
-  <meta name="application-name" content="De Wind Nu">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="theme-color" content="#000000">
-</head>
-
-<body>
-  <div id="loader_box">
-    <div id="loader"></div>
-  </div>
-
-  <header>
-    <a href="/"><img id="logo" src="../images/logo.svg"></a>
-    <a href="/">
-      <h1 id="title">De Wind Nu</h1>
-    </a>
-
-  </header>
-  <h1 id="subtitle"></h1>
-  <main>
-    <h2 id="heading_current_wind">
-      </h1>
-      <canvas id="wind_compass" width="350px" height="350px"></canvas>
-      <div id="actuele_gegevens">
-        <div id="actuele_wind"></div>
-        <div id="voorspelde_wind"></div>
-        <div id="actuele_vlagen"></div>
-        <div id="actuele_richting"></div>
-        <div id="voorspelde_richting"></div>
-
-      </div>
-      <h2 id="heading_chart1">
-      </h2>
-      <canvas class="charts" id="chart_windspeed" height="300px"></canvas>
-      <h2 id="heading_chart2">
-      </h2>
-      <canvas class="charts" id="chart_winddirection" height="300px"></canvas>
-      <h2>Instellingen</h2>
-      <table id="settings">
-        <tr>
-          <td>Eenheid</td>
-          <td><select id="eenheid">
-              <option value="0">Knopen [kn]</option>
-              <option value="1">Meter per seconde [m/s]</option>
-              <option value="2">Kilometer per uur [km/h]</option>
-              <option value="3">Mijl per uur [mph]</option>
-              <option value="4">Beaufort [Bft]</option>
-            </select></td>
-        </tr>
-        <tr>
-          <td>Aantal decimalen</td>
-          <td><select id="decimals">
-              <option value="0">0</option>
-              <option value="1">1</option>
-              <option value="2">2 (data slechts geleverd in één decimaal)</option>
-            </select></td>
-        </tr>
-        <!--		<tr><td>Donkere modus</td><td></td></tr>-->
-
-      </table>
-  </main>
-  <footer>
-    <table id="footer">
-      <tr>
-        <td onClick="feedback()">
-          <p>Geef feedback</p>
-        </td>
-        <td onClick="credit()">
-          <p>Credit / bronvermelding</p>
-        </td>
-      </tr>
-      <tr>
-        <td onClick="contact()">
-          <p>Contact</p>
-        </td>
-        <td><a id="source" href="https://github.com/feikescholtens/De-Wind-Nu" target="_blank">
-            <p>Broncode op Github</p>
-          </a>
-        </td>
-      </tr>
-    </table>
-  </footer>
-</body>
-
-</html>
+  window.location.replace(referString);
+</script>

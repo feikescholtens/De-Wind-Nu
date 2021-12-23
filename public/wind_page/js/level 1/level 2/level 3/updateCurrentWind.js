@@ -9,7 +9,7 @@ function updateCurrentWind(units, ctx, size) {
   const DOM_actueel_header = document.getElementById("heading_current_wind");
   const DOM_chart1_header = document.getElementById("heading_chart1");
   const DOM_chart2_header = document.getElementById("heading_chart2");
-  const actuele_richting = data_unit[dataset][4].at(-1);
+  const actuele_richting = data_unit[4].at(-1);
 
   DOM_actuele_richting.innerHTML = "";
   DOM_actuele_wind.innerHTML = "";
@@ -21,10 +21,10 @@ function updateCurrentWind(units, ctx, size) {
   ctx.clearRect(0, 0, size, size);
 
   //If there is a forecasted direction
-  if (data_unit[dataset][6]) {
-    if (data_unit[dataset][6].length !== 0) {
+  if (data_unit[6]) {
+    if (data_unit[6].length !== 0) {
 
-      const forecastedDirection = data_unit[dataset][6][data_unit[dataset][4].length - 1];
+      const forecastedDirection = data_unit[6][data_unit[4].length - 1];
 
       //Call function to draw the right arrows in the canvas
       drawDirectionArrow(forecastedDirection, ctx, size, "#ff9f43");
@@ -48,24 +48,24 @@ function updateCurrentWind(units, ctx, size) {
   }
 
   //If there are values set for the current wind
-  if (data_unit[dataset][2].length !== 0) {
+  if (data_unit[2].length !== 0) {
 
     //Set new value in the box, replace correct decimal point and add unit
-    DOM_actuele_wind.innerHTML = data_unit[dataset][2].at(-1).replace(".", ",") + " " + units[unit].afkorting;
+    DOM_actuele_wind.innerHTML = data_unit[2].at(-1).replace(".", ",") + " " + units[unit].afkorting;
   }
 
   //If there are values set for the forecasted wind
-  if (data_unit[dataset][5]) {
-    if (data_unit[dataset][5].length !== 0 && data_unit[dataset][5][data_unit[dataset][4].length - 1] !== "0.00") {
+  if (data_unit[5]) {
+    if (data_unit[5].length !== 0 && data_unit[5][data_unit[4].length - 1] !== "0.00") {
 
       //Set new value in the box, replace correct decimal point and add unit
-      DOM_voorspelde_wind.innerHTML = data_unit[dataset][5][data_unit[dataset][4].length - 1].replace(".", ",") + " " + units[unit].afkorting + "<label class='label2'> voorspeld</label>";
+      DOM_voorspelde_wind.innerHTML = data_unit[5][data_unit[4].length - 1].replace(".", ",") + " " + units[unit].afkorting + "<label class='label2'> voorspeld</label>";
     }
   }
 
-  if (data_unit[dataset][3].length !== 0 && data_unit[dataset][3].length == data_unit[dataset][2].length && data_unit[dataset][3].at(-1) !== "NaN") {
+  if (data_unit[3].length !== 0 && data_unit[3].length == data_unit[2].length && data_unit[3].at(-1) !== "NaN") {
 
-    DOM_actuele_vlagen.innerHTML = data_unit[dataset][3].at(-1).replace(".", ",") + " " + units[unit].afkorting + "<label class='label'>&nbsp;vlagen</label>";
+    DOM_actuele_vlagen.innerHTML = data_unit[3].at(-1).replace(".", ",") + " " + units[unit].afkorting + "<label class='label'>&nbsp;vlagen</label>";
   }
 
   if (DOM_actuele_vlagen.innerHTML !== "" && DOM_voorspelde_richting.innerHTML !== "" && DOM_voorspelde_wind.innerHTML !== "") {
@@ -113,5 +113,5 @@ function updateCurrentWind(units, ctx, size) {
   DOM_chart2_header.innerHTML = "Windrichting";
 
   //Set the latest time in de "Actueel" header
-  DOM_actueel_header.innerHTML = "Actueel (" + data_unit[dataset][1].at(-1) + ")";
+  DOM_actueel_header.innerHTML = "Actueel (" + data_unit[1].at(-1) + ")";
 }

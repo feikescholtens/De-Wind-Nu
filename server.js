@@ -1,23 +1,12 @@
 //Import dependencies
 import express from "express";
 import path from "path"
-import {
-  readFileSync
-} from "fs";
+import { readFileSync } from "fs";
 import dotenv from "dotenv"
 
-import {
-  fetchData
-} from "./fetchData.js"
-import {
-  getData
-} from "./getData.js"
-import {
-  addLocation
-} from "./addLocation.js"
-import {
-  addFeedback
-} from "./addFeedback.js"
+import { getData } from "./getData.js"
+import { addLocation } from "./addLocation.js"
+import { addFeedback } from "./addFeedback.js"
 
 dotenv.config();
 const __dirname = path.resolve();
@@ -30,10 +19,10 @@ const locations = JSON.parse(readFileSync("locations.json"));
 //Initialize Express
 app.listen(port, () => console.log("server running at port " + port));
 app.use(express.static('public'));
-app.use("/wind", express.static(path.resolve(__dirname, "public", "wind_page")));
-app.use(express.json({
-  limit: '500kb'
-}));
+app.use(express.json({ limit: '500kb' }));
+app.use("/wind/", express.static(path.resolve(__dirname, "public", "wind_page")));
+app.set("view-engine", "ejs")
+app.set("views", path.join(__dirname, "/public/wind_page/"))
 
 //Add location API, only on localhost
 if (port == 3000) {
@@ -41,32 +30,18 @@ if (port == 3000) {
 }
 
 //Serve location data API
-app.get("/locations", (request, response) => {
-  response.json(locations);
-});
+app.get("/locations", (request, response) => response.json(locations));
 
 //Server wind page API
-app.get("/wind/:id", (request, response) => {
+app.get("/wind/:id", async (request, response) => {
+  const dateText = await getData(request, response, locations)
+  const data = JSON.stringify(dateText)
 
-  if (request.params.id !== "" && request.params.id.length == 4 && /^\d+$/.test(request.params.id) == true) {
-    response.sendFile(path.resolve("public/wind_page", "index.html"));
-  } else {
-    response.redirect('/error?e=93');
-  }
-});
-
-//Get data function / API and serve to the user
-app.get("/getData/:id", async (request, response) => {
-  getData(request, response, locations, fetchData);
+  response.render("index.ejs", { data })
 });
 
 //Add data to database when feedback received
-app.post("/addFeedback", (request, response) => {
-  addFeedback(request, response)
-});
+app.post("/addFeedback", (request, response) => addFeedback(request, response))
 
 //If unknown url is typed in
-app.use(function (response) {
-  response.status(404);
-  response.type('txt').send("URL niet gevonden!");
-});
+app.use("/*", (request, response) => response.redirect("/"));
