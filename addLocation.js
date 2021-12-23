@@ -1,18 +1,14 @@
-import {
-  writeFile
-} from "fs";
-import {
-  generateId
-} from "./generateId.js";
+import { writeFile } from "fs";
+import { generateId } from "./generateId.js";
 
 export async function addLocation(request, locations) {
 
-  let new_location = request.body;
+  let newLocation = request.body;
 
   const id = await generateId(locations);
 
-  new_location.id = id;
-  locations.push(new_location);
+  newLocation.id = id;
+  locations.push(newLocation);
 
   writeFile("locations.json", JSON.stringify(locations, null, 2), (err) => {
     if (err) {
