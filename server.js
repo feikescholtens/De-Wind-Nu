@@ -2,13 +2,10 @@
 import express from "express";
 import path from "path"
 import { readFileSync } from "fs";
-import dotenv from "dotenv"
-
 import { getData } from "./getData.js"
 import { addLocation } from "./addLocation.js"
 import { addFeedback } from "./addFeedback.js"
 
-dotenv.config();
 const __dirname = path.resolve();
 
 //Define variables
@@ -24,8 +21,11 @@ app.use("/wind/", express.static(path.resolve(__dirname, "public", "wind_page"))
 app.set("view-engine", "ejs")
 app.set("views", path.join(__dirname, "/public/wind_page/"))
 
-//Add location API, only on localhost
+//Add location API and DOTENV, only on localhost
 if (port == 3000) {
+  const dotenv = await import("dotenv");
+  dotenv.config()
+
   app.post("/addLocation", (request) => addLocation(request, locations));
 }
 
