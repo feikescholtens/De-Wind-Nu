@@ -27,89 +27,35 @@ export async function fetchKNMI(databaseData, resolve, times) {
     wind_speed = [],
     wind_gusts = [],
     wind_direction = []
-  let nullCounts = { ff: 0, fx: 0, dd: 0 }
+  let dataCategorized = {}
+  let dataNullCounts = {}
   const nullTreshold = 10
 
-  let dataCategorized = {}
-
   Object.keys(rawData.observations[0].values).forEach(measurementType => {
+    if (!["ff", "fx", "dd"].includes(measurementType)) return
+
     dataCategorized[measurementType] = []
+    dataNullCounts[measurementType] = 0
 
     rawData.observations.forEach(measurement => {
       dataCategorized[measurementType].push(measurement.values[measurementType])
-    });
+      if (!measurement) dataNullCounts[measurementType]++
+    })
+
+    if (dataNullCounts[measurementType] >= nullTreshold) return
+
+    if (measurementType == "ff") {
+      wind_speed = dataCategorized[measurementType].map(x => x * 0.53995726994149)
+    } else if (measurementType == "fx") {
+      wind_gusts = dataCategorized[measurementType].map(x => x * 0.53995726994149)
+    } else if (measurementType == "dd") {
+      wind_direction = dataCategorized[measurementType]
+    }
   })
-
-  console.log(dataCategorized)
-
-  //Loop through the data
-  // rawData.observations.forEach(measurement => {
-
-  //   Object.keys(measurement.values).forEach(measurementType => {
-  //     console.log(measurementType)
-
-  //     if (measurement.values[measurementType] == null) {
-  //       nullCounts[measurementType]++
-  //     }
-
-  //   })
-
-  // });
-
-  // Object.keys(measurement.values).forEach(measurementType => {
-  //   console.log(measurementType)
-
-  //   if (measurement.values[measurementType] == null) {
-  //     nullCounts[measurementType]++
-  //   }
-
-  // })
-  // console.log(nullCounts)
-
-  //Loop for wind, wind gusts and direction (3 times, length of array null_counter)
-  // nullCounts.forEach((nullCount) => {
-  //   //If the there are less null values in each array, good. Else the data is not considered good enough and the array remains empty
-  //   if (nullCount < nullTreshold) {
-
-  //     //Loop through all the data and add to the arrays (*0.53 for the factor to knots)
-  //     for (let i = 0; i < rawData.observations.length; i++) {
-  //       if (k == 0) {
-  //         wind_speed[i] = rawData.observations[i].values.ff * 0.53995726994149
-  //       }
-  //       if (k == 1) {
-  //         wind_gusts[i] = rawData.observations[i].values.fx * 0.53995726994149
-  //       }
-  //       if (k == 2) {
-  //         wind_direction[i] = rawData.observations[i].values.dd
-  //       }
-  //     }
-  //   }
-  // })
-  // for (let k = 0; k < null_counter.length; k++) {
-
-  //   // //If the there are less null values in each array, good. Else the data is not considered good enough and the array remains empty
-  //   // if (null_counter[k] < null_treshold) {
-
-  //   //   //Loop through all the data and add to the arrays (*0.53 for the factor to knots)
-  //   //   for (let i = 0; i < rawData.observations.length; i++) {
-  //   //     if (k == 0) {
-  //   //       wind_speed[i] = rawData.observations[i].values.ff * 0.53995726994149
-  //   //     }
-  //   //     if (k == 1) {
-  //   //       wind_gusts[i] = rawData.observations[i].values.fx * 0.53995726994149
-  //   //     }
-  //   //     if (k == 2) {
-  //   //       wind_direction[i] = rawData.observations[i].values.dd
-  //   //     }
-  //   //   }
-  //   // }
-  // }
 
   timeStamps.splice(wind_speed.length)
 
   //Add all the data to the main array which will be returned
   data["KNMI"] = [date, timeStamps, wind_speed, wind_gusts, wind_direction]
   resolve({ data })
-
-
 }

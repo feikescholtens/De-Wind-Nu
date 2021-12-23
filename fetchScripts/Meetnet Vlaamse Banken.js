@@ -23,7 +23,8 @@ export async function fetchMVB(databaseData, resolve, times) {
       resolve({ data })
     })
 
-    const rawData = JSON.parse(rawDataString)
+    let rawData
+    try { rawData = JSON.parse(rawDataString) } catch { return }
 
     if (rawData.Message) {
       if (rawData.Message == "Login failed") {
@@ -79,7 +80,7 @@ export async function fetchMVB(databaseData, resolve, times) {
         "method": "POST"
       })
       .then(response => response.text()).catch((error) => {
-        // console.log(error)
+        console.log(error)
 
         data = { error: error, dataset: "MVB" }
         resolve({ data })
@@ -87,8 +88,7 @@ export async function fetchMVB(databaseData, resolve, times) {
 
     let rawData
     try { rawData = JSON.parse(rawDataString) } catch { return }
-
-    // const rawData = JSON.parse(fs.readFileSync("project_files/discontinuous test data MVB.json"))
+    // rawData = JSON.parse(readFileSync("projectFiles/discontinuous test data MVB.json"))
 
     if (rawData.Message) {
       if (rawData.Message == "Authorization has been denied for this request.") {

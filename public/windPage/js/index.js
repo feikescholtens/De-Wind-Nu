@@ -15,6 +15,8 @@ let units;
     return data.units;
   });
 
+  console.log(dataFetched)
+
   const dataset = dataFetched.dataset;
   const spotName = dataFetched.spotName;
   const DOM_eenheid = document.getElementById("eenheid");

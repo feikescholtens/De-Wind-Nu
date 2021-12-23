@@ -117,5 +117,6 @@ function updateCurrentWind(units, ctx, size) {
   DOM_chart2_header.innerHTML = "Windrichting";
 
   //Set the latest time in de "Actueel" header
-  DOM_actueel_header.innerHTML = "Actueel (" + data_unit[1].lastMeasurement() + ")";
+  const lastMeasurementTime = data_unit[1][data_unit[2].length - 1]
+  DOM_actueel_header.innerHTML = "Actueel (" + lastMeasurementTime + ")";
 }
