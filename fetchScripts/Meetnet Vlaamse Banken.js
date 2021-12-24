@@ -1,8 +1,8 @@
-import { format, sub, parseISO, getUnixTime, parse, add } from "date-fns"
+import { format, sub, parseISO, getUnixTime } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 import fetch from "node-fetch";
-import { readFileSync, writeFile } from 'fs';
-import { catchError, MessageError } from "./fetchUtilFunctions.js"
+import { readFileSync } from 'fs';
+import { catchError, MessageError, saveNewApiKey, theoreticalMeasurements } from "./fetchUtilFunctions.js"
 
 export async function fetchMVB(databaseData, resolve, times) {
 
@@ -25,21 +25,9 @@ export async function fetchMVB(databaseData, resolve, times) {
     try { rawData = JSON.parse(rawDataString) } catch { return }
     if (MessageError(rawData, data, resolve)) return
 
-    const expiresString = add(parse(rawData[".expires"], "EEE, dd MMM yyyy HH:mm:ss 'GMT'", new Date()), { hours: 1 })
-    const issuedString = add(parse(rawData[".issued"], "EEE, dd MMM yyyy HH:mm:ss 'GMT'", new Date()), { hours: 1 })
-
     fetchDataMVB(rawData["access_token"])
 
-    writeFile("Meetnet Vlaamse Banken API key.json", JSON.stringify({
-      "expirationDate": getUnixTime(expiresString),
-      "issuedDate": getUnixTime(issuedString),
-      "APIKey": rawData["access_token"]
-    }, null, 2), (err) => {
-      if (err) {
-        console.log(err)
-        resolve({ data })
-      }
-    })
+    saveNewApiKey(rawData)
 
   } else {
     fetchDataMVB()
@@ -82,8 +70,8 @@ export async function fetchMVB(databaseData, resolve, times) {
     rawData.Values.forEach((measurementType) => {
       if (measurementType.Values.length == 0) return
 
-      let measurementTimes = []
-      let tempArray = []
+      let measurementTimes = [],
+        tempArray = []
 
       measurementType.Values.forEach((measurement) => {
         let time = format(utcToZonedTime(parseISO(measurement.Timestamp), timeZone), "HH:mm")
@@ -109,21 +97,15 @@ export async function fetchMVB(databaseData, resolve, times) {
         }
       })
 
-      const lastMeasurementHH = measurementTimes[measurementTimes.length - 1].substring(0, 2)
-      const lastMeasurementmm = measurementTimes[measurementTimes.length - 1].substring(3, 5)
-      const theoreticalMeasurementCount = lastMeasurementHH * 6 + lastMeasurementmm / 10 + 1
+      const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes)
 
       for (let j = 0; j < (times.length - theoreticalMeasurementCount); j++) {
         tempArray.pop()
       }
 
-      if (measurementType.ID.includes("WC3")) {
-        wind_gusts = JSON.parse(JSON.stringify(tempArray)).map(x => x * 1.94384449)
-      } else if (measurementType.ID.includes("WVC")) {
-        wind_speed = JSON.parse(JSON.stringify(tempArray)).map(x => x * 1.94384449)
-      } else if (measurementType.ID.includes("WRS")) {
-        wind_direction = JSON.parse(JSON.stringify(tempArray))
-      }
+      if (measurementType.ID.includes("WC3")) wind_gusts = JSON.parse(JSON.stringify(tempArray)).map(x => x * 1.94384449)
+      if (measurementType.ID.includes("WVC")) wind_speed = JSON.parse(JSON.stringify(tempArray)).map(x => x * 1.94384449)
+      if (measurementType.ID.includes("WRS")) wind_direction = JSON.parse(JSON.stringify(tempArray))
     })
 
     timeStamps.splice(wind_speed.length)

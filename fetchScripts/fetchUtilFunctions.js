@@ -49,3 +49,29 @@ export function MessageError(rawData, data, resolve) {
     return true
   }
 }
+
+import { writeFile } from 'fs';
+import { getUnixTime, parse, add } from "date-fns"
+
+export function saveNewApiKey(rawData) {
+  const expiresString = add(parse(rawData[".expires"], "EEE, dd MMM yyyy HH:mm:ss 'GMT'", new Date()), { hours: 1 })
+  const issuedString = add(parse(rawData[".issued"], "EEE, dd MMM yyyy HH:mm:ss 'GMT'", new Date()), { hours: 1 })
+  writeFile("Meetnet Vlaamse Banken API key.json", JSON.stringify({
+    "expirationDate": getUnixTime(expiresString),
+    "issuedDate": getUnixTime(issuedString),
+    "APIKey": rawData["access_token"]
+  }, null, 2), (err) => {
+    if (err) {
+      console.log(err)
+      resolve({ data })
+    }
+  })
+}
+
+export function theoreticalMeasurements(measurementTimes) {
+  const lastMeasurementHH = measurementTimes[measurementTimes.length - 1].substring(0, 2)
+  const lastMeasurementmm = measurementTimes[measurementTimes.length - 1].substring(3, 5)
+  const theoreticalMeasurementCount = lastMeasurementHH * 6 + lastMeasurementmm / 10 + 1
+
+  return theoreticalMeasurementCount
+}
