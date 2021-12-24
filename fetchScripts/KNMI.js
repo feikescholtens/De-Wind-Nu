@@ -1,6 +1,7 @@
 import { format } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 import fetch from "node-fetch";
+import { catchError } from "./fetchUtilFunctions.js"
 const timeZone = 'Europe/Amsterdam'
 
 export async function fetchKNMI(databaseData, resolve, times) {
@@ -14,10 +15,7 @@ export async function fetchKNMI(databaseData, resolve, times) {
   const dateTodayFetch = format(dateZoned, "yyyy-M-d")
 
   const rawDataString = await fetch(`https://graphdata.buienradar.nl/1.0/actualarchive/weatherstation/${locationID}/?startDate=${dateTodayFetch}`)
-    .then(response => response.text()).catch((error) => {
-      data = { error: error, dataset: "KNMI" }
-      resolve({ data })
-    })
+    .then(response => response.text()).catch((error) => catchError(resolve, data, error, "KNMI"))
 
   let rawData
   try { rawData = JSON.parse(rawDataString) } catch { return }
@@ -55,7 +53,6 @@ export async function fetchKNMI(databaseData, resolve, times) {
 
   timeStamps.splice(wind_speed.length)
 
-  //Add all the data to the main array which will be returned
   data["KNMI"] = [date, timeStamps, wind_speed, wind_gusts, wind_direction]
   resolve({ data })
 }

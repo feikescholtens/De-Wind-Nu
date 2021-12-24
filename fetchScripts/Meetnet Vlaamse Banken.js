@@ -2,6 +2,7 @@ import { format, sub, parseISO, getUnixTime, parse, add } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 import fetch from "node-fetch";
 import { readFileSync, writeFile } from 'fs';
+import { catchError, MessageError } from "./fetchUtilFunctions.js"
 
 export async function fetchMVB(databaseData, resolve, times) {
 
@@ -18,25 +19,11 @@ export async function fetchMVB(databaseData, resolve, times) {
       },
       "body": `grant_type=password&username=${process.env.APP_EMAIL}&password=${process.env.MVB_PWD_ENCODED}`,
       "method": "POST"
-    }).then(response => response.text()).catch((error) => {
-      data = { error: error, dataset: "MVB" }
-      resolve({ data })
-    })
+    }).then(response => response.text()).catch((error) => catchError(resolve, data, error, "MVB"))
 
     let rawData
     try { rawData = JSON.parse(rawDataString) } catch { return }
-
-    if (rawData.Message) {
-      if (rawData.Message == "Login failed") {
-        data = {
-          error: {
-            code: "LOGINFAILED"
-          },
-          dataset: "MVB"
-        }
-      }
-      resolve({ data })
-    }
+    if (MessageError(rawData, data, resolve)) return
 
     const expiresString = add(parse(rawData[".expires"], "EEE, dd MMM yyyy HH:mm:ss 'GMT'", new Date()), { hours: 1 })
     const issuedString = add(parse(rawData[".issued"], "EEE, dd MMM yyyy HH:mm:ss 'GMT'", new Date()), { hours: 1 })
@@ -72,42 +59,18 @@ export async function fetchMVB(databaseData, resolve, times) {
     const dateTodayFetch = format(dateZoned, "yyyy-MM-dd")
 
     const rawDataString = await fetch("https://api.meetnetvlaamsebanken.be/V2/getData", {
-        "headers": {
-          "authorization": `Bearer ${keyFetch}`,
-          "content-type": "application/json; charset=UTF-8"
-        },
-        "body": `{\"StartTime\":\"${dateYesterdayFetch}T23:00:00.000Z\",\"EndTime\":\"${dateTodayFetch}T23:00:00.000Z\",\"IDs\":${locationID}}`,
-        "method": "POST"
-      })
-      .then(response => response.text()).catch((error) => {
-        console.log(error)
-
-        data = { error: error, dataset: "MVB" }
-        resolve({ data })
-      })
+      "headers": {
+        "authorization": `Bearer ${keyFetch}`,
+        "content-type": "application/json; charset=UTF-8"
+      },
+      "body": `{\"StartTime\":\"${dateYesterdayFetch}T23:00:00.000Z\",\"EndTime\":\"${dateTodayFetch}T23:00:00.000Z\",\"IDs\":${locationID}}`,
+      "method": "POST"
+    }).then(response => response.text()).catch((error) => catchError(resolve, data, error, "MVB"))
 
     let rawData
     try { rawData = JSON.parse(rawDataString) } catch { return }
     // rawData = JSON.parse(readFileSync("projectFiles/discontinuous test data MVB.json"))
-
-    if (rawData.Message) {
-      if (rawData.Message == "Authorization has been denied for this request.") {
-        data = {
-          error: { code: 24, message: "Authorization has been denied for this request." },
-          dataset: "MVB"
-        }
-        resolve({ data })
-      }
-      return
-    }
-    if (!rawData.StartTime) {
-      data = {
-        error: { code: 91, message: "No data (yet) for this station." },
-        dataset: "MVB"
-      }
-      resolve({ data })
-      return
-    }
+    if (MessageError(rawData, data, resolve)) return
 
     //Declare variables
     let wind_speed = [],
@@ -165,7 +128,6 @@ export async function fetchMVB(databaseData, resolve, times) {
 
     timeStamps.splice(wind_speed.length)
 
-    // Add all the data to the main array which will be returned
     data["MVB"] = [date, timeStamps, wind_speed, wind_gusts, wind_direction]
     resolve({ data })
   }

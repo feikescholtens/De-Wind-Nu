@@ -1,6 +1,7 @@
 import { format, sub } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 import fetch from "node-fetch";
+import { catchError, loopArrayRelativeIndex, lastMeasurementIndex } from "./fetchUtilFunctions.js"
 
 const timeZone = 'Europe/Amsterdam'
 
@@ -17,10 +18,7 @@ export async function fetchRWS(databaseData, resolve, times) {
   const time = "23:00:00"
 
   const rawDataString = await fetch(`https://waterberichtgeving.rws.nl/wbviewer/wb_api.php?request=windrose&meting=WN_S_1.2-5&verwachting=WN_knmi_6.1-2&loc=${locationID}&start=${dateYesterdayFetch}T${time}Z&end=${dateTodayFetch}T${time}Z`)
-    .then(response => response.text()).catch(function(error) {
-      data = { error: error, dataset: "Rijkswaterstaat" }
-      resolve({ data })
-    })
+    .then(response => response.text()).catch((error) => catchError(resolve, data, error, "Rijkswaterstaat"))
 
   let rawData
   try { rawData = JSON.parse(rawDataString) } catch { return }
@@ -32,58 +30,48 @@ export async function fetchRWS(databaseData, resolve, times) {
     wind_direction = [],
     wind_speedFOR = [],
     wind_directionFOR = []
-  let dataCategorized = []
-  let dataNullCounts = {}
-  const nullTreshold = 20
+  let dataCategorized = [],
+    dataNullCounts = []
+  const nullTreshold = 10
+  const metingenCategoriesLength = rawData.meting.values[0].length
+  const verwachtingenCategoriesLength = rawData.verwachting.values[0].length
 
-  //Loop through data category (wind, gusts, direction)
-  for (let i = 0; i < rawData.meting.values[0].length; i++) {
+  //Loop through # data categories
+  for (let i = 0; i < (metingenCategoriesLength + verwachtingenCategoriesLength); i++) {
 
-    dataCategorized[i] = []
-    dataNullCounts[i] = 0
+    dataCategorized.push([])
+    dataNullCounts.push(0)
 
-    //Loop for every category through the amount of measurements
-    for (let j = 0; j < rawData.meting.values.length; j++) {
+    //(the length of looparray is always the same as # of metingen, since they are filled with null arrays, this is more general)
+    //(the relativeIndex needs to be determined though, because the array for verwachtingen is separate)
+    const { loopArray, relativeIndex } = loopArrayRelativeIndex(i, metingenCategoriesLength, rawData)
 
-      dataCategorized[i].push(rawData.meting.values[j][i])
-      if (!rawData.meting.values[j][i]) {
+    //Loop through every value of each category
+    for (let j = 0; j < loopArray.length; j++) {
+      dataCategorized[i].push(loopArray[j][relativeIndex])
+    }
+
+    dataCategorized[i].splice(lastMeasurementIndex(dataCategorized, i))
+
+    //Loop for every category again to count nulls and replace null characters with negative value
+    for (let j = 0; j < dataCategorized[i].length; j++) {
+      if (!loopArray[i]) {
         dataNullCounts[i]++
-        rawData.meting.values[j][i] = -999
+        dataCategorized[i][j] = -999
       }
     }
 
-
-
-
     if (dataNullCounts[i] >= nullTreshold) return
 
-    if (i == 2) {
-
-
-      // const lastMeasurement = dataCategorized[i].reverse().find(measurement => measurement != null)
-      // const lastMeasurementIndex = dataCategorized[i].indexOf(lastMeasurement, -1)
-      // dataCategorized[i].splice(lastMeasurementIndex + 1)
-      // console.log(lastMeasurement / 10 * 1.94384449)
-      // console.log(dataCategorized[i].reverse())
-      // console.log(lastMeasurementIndex)
-      // console.log(dataCategorized[i][lastMeasurementIndex])
-
-      //testing above functions, they should work, move outside if statement, so do for all measurement types
-
-      //forecast in the same way
-
-      //fix errors not showing (page is timing out)
-
-      wind_speed = dataCategorized[2].map(x => x / 10 * 1.94384449)
-    }
+    if (i == 2) wind_speed = dataCategorized[2].map(x => x / 10 * 1.94384449)
     if (i == 3) wind_gusts = dataCategorized[3].map(x => x / 10 * 1.94384449)
     if (i == 0) wind_direction = dataCategorized[0]
+    if (i == 4) wind_speedFOR = dataCategorized[4].map(x => x / 10 * 1.94384449)
+    if (i == 5) wind_directionFOR = dataCategorized[5]
 
   }
 
-
-  //Add all the data to the main array which will be returned
-  data["Rijkswaterstaat"] = [date, timeStamps, wind_speed, wind_gusts, wind_direction]
+  data["Rijkswaterstaat"] = [date, timeStamps, wind_speed, wind_gusts, wind_direction, wind_speedFOR, wind_directionFOR]
   resolve({ data })
 
 }

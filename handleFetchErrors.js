@@ -7,10 +7,10 @@ export function handleFetchErrors(dataFetched, response) {
     response.redirect('/error?e=76');
   else if (errorCode == "ETIMEDOUT")
     response.redirect('/error?e=99');
-  else if (errorCode == 24)
+  else if (errorCode == "LOGINFAILED")
+    response.redirect('/error?e=34');
+  else if (errorCode == "AUTHDENIED")
     response.redirect('/error?e=24');
-  else if (errorCode == 91)
-    response.redirect('/error?e=14');
   else {
     console.log("An error occured: " + JSON.stringify(dataFetched))
     response.redirect('/error');
