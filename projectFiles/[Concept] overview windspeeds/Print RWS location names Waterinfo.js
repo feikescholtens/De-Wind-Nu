@@ -1,3 +1,4 @@
+import { addMinutes } from "date-fns";
 import fetch from "node-fetch";
 
 
@@ -18,3 +19,13 @@ latestValues.forEach((measurement) => {
 })
 
 console.log(betterData)
+
+let names = []
+
+betterData.forEach(location => names.push(location.locationCode))
+
+names.sort()
+
+names.forEach(name => console.log(name))
+
+console.log(names.length)

@@ -644,17 +644,6 @@
     }
   },
   {
-    "id": "6688",
-    "name": "Lauwersoog",
-    "lat": "53.42",
-    "lon": "6.2",
-    "datasets": {
-      "KNMI": {
-        "location_id": "6277"
-      }
-    }
-  },
-  {
     "id": "5467",
     "name": "K14 Platform",
     "lat": "53.26667",
@@ -801,8 +790,8 @@
   {
     "id": "6503",
     "name": "Vlieland",
-    "lat": "53.25",
-    "lon": "4.92",
+    "lat": "53.2531261",
+    "lon": "4.9403581",
     "datasets": {
       "KNMI": {
         "location_id": "6242"
@@ -924,14 +913,80 @@
     }
   },
   {
-    "id": "3048",
-    "name": "Huibertgat",
-    "lat": "53.573889",
-    "lon": "6.398333",
+    "name": "D15 platform",
+    "lat": "54.31666",
+    "lon": "2.93333",
     "datasets": {
-      "KNMI": {
-        "location_id": "6285"
+      "Rijkswaterstaat": {
+        "location_id": "D15"
       }
-    }
+    },
+    "id": "2468"
+  },
+  {
+    "name": "L9 platform",
+    "lat": "53.61667",
+    "lon": "4.96667",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "L9"
+      }
+    },
+    "id": "7868"
+  },
+  {
+    "name": "Hoek van Holland Noorderdam ",
+    "lat": "51.98669",
+    "lon": "4.08413",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "NRD1"
+      }
+    },
+    "id": "0076"
+  },
+  {
+    "name": "Hoek van Holland Lage Licht",
+    "lat": "51.98140",
+    "lon": "4.08137",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "LGL1"
+      }
+    },
+    "id": "1046"
+  },
+  {
+    "name": "Hoek van Holland Lage Licht backup",
+    "lat": "51.981060",
+    "lon": "4.082803",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "LGL12"
+      }
+    },
+    "id": "3452"
+  },
+  {
+    "name": "Hoek van Holland",
+    "lat": "51.977537",
+    "lon": "4.119745",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "HOEK"
+      }
+    },
+    "id": "2922"
+  },
+  {
+    "name": "Lauwersoog",
+    "lat": "53.42",
+    "lon": "6.2",
+    "datasets": {
+      "Rijkswaterstaat": {
+        "location_id": "LAUW"
+      }
+    },
+    "id": "7622"
   }
 ]

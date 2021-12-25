@@ -14,21 +14,15 @@ let data;
 let pre = document.createElement("pre");
 
 const RWS_dataset = {
-  "location_id": "",
-  "measurents": ["wind", "wind gusts"],
-  "forecast": ["wind", "wind gusts"]
+  "location_id": ""
 };
 
 const KNMI_dataset = {
-  "location_id": "",
-  "measurents": ["wind", "wind gusts"],
-  "forecast": ["wind", "wind gusts"]
+  "location_id": ""
 };
 
 const MVB_dataset = {
-  "location_id": [],
-  "measurents": ["wind", "wind gusts"],
-  "forecast": ["wind", "wind gusts"]
+  "location_id": []
 };
 
 pre.style.fontSize = "1.2em";
@@ -143,7 +137,7 @@ RWS_id.addEventListener("input", updateJSON);
 KNMI_id.addEventListener("input", updateJSON);
 MVB_id.addEventListener("input", updateJSON);
 
-document.getElementById("submit").addEventListener("click", function () {
+document.getElementById("submit").addEventListener("click", function() {
   const options = {
     method: "POST",
     headers: {
