@@ -1,62 +1,53 @@
-//Declare variables
-mapboxgl.accessToken = 'pk.eyJ1IjoiZmVpa2VzY2hvbHRlbnMiLCJhIjoiY2t1aDlpZWEwMGhkYTJwbm02Zmt0Y21sOCJ9.PA3iy-3LQhjCkfxhxL2zUw';
-let markersLats = [];
-let markersLons = [];
+const urlParams = new URLSearchParams(window.location.search)
+const center = [urlParams.get("x") || 5.160544, urlParams.get("y") || 52.182725]
+const zoom = urlParams.get("z") || 6
+const excludeZoomFitMarkers = ["8971", "2417", "2367", "8287", "5643", "2468", "1919"]
 
-//Define map
+mapboxgl.accessToken = "pk.eyJ1IjoiZmVpa2VzY2hvbHRlbnMiLCJhIjoiY2t1aDlpZWEwMGhkYTJwbm02Zmt0Y21sOCJ9.PA3iy-3LQhjCkfxhxL2zUw";
+let markersLats = [],
+  markersLons = []
 const map = new mapboxgl.Map({
   container: "locations",
   style: "mapbox://styles/feikescholtens/ckuhc8nha9jft18s0muhoy0zf",
-  center: [5.160544, 52.182725],
-  zoom: 6
-});
+  center: center,
+  zoom: zoom
+})
+map.touchZoomRotate.disableRotation()
 
-//Loop though every location
 for (item of data) {
 
-  //Define variable
-  let popupId;
-
-  //Add coordinates of the locations to arrays, exept for the text location
-  if (item.id !== "1919" && item.id !== "8971" && item.id !== "2417" && item.id !== "2367" && item.id !== "8287" && item.id !== "5643") {
-    markersLats.push(item.lat);
-    markersLons.push(item.lon);
+  if (!excludeZoomFitMarkers.includes(item.id)) {
+    markersLats.push(item.lat)
+    markersLons.push(item.lon)
   }
 
-  //Marker options, in the if statements check what datasets are available for the spots and add an ID to the element
-  const marker = document.createElement("div");
-  marker.className = "marker";
+  let popupId, marker = document.createElement("div")
+  marker.className = "marker"
+
   if (item.datasets.KNMI) {
-    marker.id = "KNMI";
-    popupId = "popupKNMI";
+    marker.id = "KNMI"
+    popupId = "popupKNMI"
   } else if (item.datasets.Rijkswaterstaat) {
-    marker.id = "RWS";
-    popupId = "popupRWS";
+    marker.id = "RWS"
+    popupId = "popupRWS"
   } else if (item.datasets.MVB) {
-    marker.id = "MVB";
-    popupId = "popupMVB";
+    marker.id = "MVB"
+    popupId = "popupMVB"
   }
 
-  //Bind markers and popups to the map
   new mapboxgl.Marker(marker).setLngLat([item.lon, item.lat]).setPopup(
     new mapboxgl.Popup({
       offset: 13
     }).setHTML(`<button class="windPageButton ${popupId}" onClick="windPage('${item.id}')">${item.name}</button>`)
-  ).addTo(map);
+  ).addTo(map)
 }
 
-//Sorts the coordinates array and set bouds to the smallest and largest values in each direction
-markersLats.sort();
-markersLons.sort();
-map.fitBounds([
-  [markersLons.at(-1), markersLats[0]], // southwestern corner of the bounds
-  [markersLons[0], markersLats.at(-1)] // northeastern corner of the bounds
-], {
-  padding: 40
-});
+markersLats.sort()
+markersLons.sort()
+let loaded = false
+if (window.location.search == "") fitMap()
 
-//When the map is loaded, add the Openseamap tiles
-map.on('load', function() {
+map.on('load', () => {
   map.addLayer({
     'id': 'openseamap',
     'type': 'raster',
@@ -71,9 +62,38 @@ map.on('load', function() {
       "raster-opacity": .8
     }
   }, 'waterway-label')
-});
+})
 
-//Function to redirect to the windPage when popup is clicked
+let clickedPosition, letGoPosition
+
+map.on('click', () => {
+  clickedPosition = [map.getCenter().lng.toFixed(2), map.getCenter().lat.toFixed(2), map.getZoom().toFixed(2)]
+})
+
+
+map.on('idle', () => {
+
+  letGoPosition = [map.getCenter().lng.toFixed(2), map.getCenter().lat.toFixed(2), map.getZoom().toFixed(2)]
+  const mapMoved = JSON.stringify(clickedPosition) !== JSON.stringify(letGoPosition)
+
+  if (loaded && mapMoved)
+    history.replaceState({}, "De Wind Nu", `?x=${letGoPosition[0]}&y=${letGoPosition[1]}&z=${letGoPosition[2]}`)
+  loaded = true
+
+})
+
+function fitMap() {
+  map.fitBounds([
+    [markersLons.at(-1), markersLats[0]], // southwestern corner of the bounds
+    [markersLons[0], markersLats.at(-1)] // northeastern corner of the bounds
+  ], {
+    padding: 40
+  })
+
+  loaded = false
+  history.replaceState({}, "De Wind Nu", "/")
+}
+
 function windPage(id) {
-  window.location.assign(`${window.location.protocol}//${window.location.host}/wind/${id}`);
+  window.location.assign(`${window.location.protocol}//${window.location.host}/wind/${id}`)
 }
