@@ -16,8 +16,14 @@ const locationsString = JSON.stringify(locations)
 //Initialize Express
 app.listen(port, () => console.log("server running at port " + port))
 app.use(express.json({ limit: "500kb" }))
-app.use("/", express.static(path.resolve(__dirname, "public")))
-app.use("/wind/", express.static(path.resolve(__dirname, "public", "windPage")))
+
+app.use("/", express.static(path.resolve(__dirname, "public/homepage")))
+app.use("/wind/", express.static(path.resolve(__dirname, "public/windPage")))
+app.use("/error", express.static(path.resolve(__dirname, "public/error")))
+
+app.use("/jsPopUps", express.static(path.resolve(__dirname, "public/jsPopUps")))
+app.use("/images", express.static(path.resolve(__dirname, "public/images")))
+
 app.set("view-engine", "ejs")
 app.set("views", path.join(__dirname, "/public/windPage/"))
 
@@ -30,7 +36,7 @@ if (port == 3000) {
 }
 
 //Homepage API
-app.get("/", (request, response) => response.render(path.join(__dirname, "/public/index.ejs"), { locationsString }))
+app.get("/", (request, response) => response.render(path.join(__dirname, "/public/homepage/index.ejs"), { locationsString }))
 
 //Server wind page API
 app.get("/wind/:id", async (request, response) => {

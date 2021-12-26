@@ -1,4 +1,4 @@
-function directionToLetters(actuele_richting) {
+export function directionToLetters(actuele_richting) {
 
   //Define the variable
   let letters;

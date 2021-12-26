@@ -2,7 +2,11 @@ Array.prototype.lastMeasurement = function() {
   return this[this.length - 1]
 }
 
-function updateCurrentWind(units, ctx, size) {
+import { drawDirectionArrow } from "./drawDirectionArrow.js"
+import { directionToLetters } from "./directionToLetters.js"
+
+
+export function updateCurrentWind(units, ctx) {
 
   //Define all the DOM elements
   const DOM_actuele_wind = document.getElementById("actuele_wind");
@@ -22,7 +26,7 @@ function updateCurrentWind(units, ctx, size) {
   DOM_actuele_vlagen.innerHTML = "";
 
   //First, clear the canvas ortherwise two arrows will be shown when switching dataset
-  ctx.clearRect(0, 0, size, size);
+  ctx.clearRect(0, 0, currentWindBoxSize, currentWindBoxSize);
 
   //If there is a forecasted direction
   if (data_unit[6]) {
@@ -31,7 +35,7 @@ function updateCurrentWind(units, ctx, size) {
       const forecastedDirection = data_unit[6][data_unit[4].length - 1];
 
       //Call function to draw the right arrows in the canvas
-      drawDirectionArrow(forecastedDirection, ctx, size, "#ff9f43");
+      drawDirectionArrow(forecastedDirection, ctx, "#ff9f43");
 
       //Set new value in the box
       DOM_voorspelde_richting.innerHTML = forecastedDirection + "&#176;<label class='label2'> voorspeld</label>";
@@ -42,7 +46,7 @@ function updateCurrentWind(units, ctx, size) {
   if (actuele_richting !== null && actuele_richting !== undefined) {
 
     //Call function to draw the right arrows in the canvas
-    drawDirectionArrow(actuele_richting, ctx, size, "#5f27cd");
+    drawDirectionArrow(actuele_richting, ctx, "#5f27cd");
 
     //Get current direction in letters
     const actuele_richting_letters = directionToLetters(actuele_richting);

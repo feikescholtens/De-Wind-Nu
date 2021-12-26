@@ -1,0 +1,41 @@
+export function givePopUpData() {
+  return {
+    credit: { html: `
+   <h3>Credit / bronvermelding</h3>
+   <p class='messageBoxP'>De Wind Nu is non-profit en heeft als doel om surfers te informeren over het weer. Dit is
+     mogelijk gemaakt door de data van <a target='_blank' href='https://waterberichtgeving.rws.nl/'>Rijkswaterstaat</a>, het KNMI en het ECMWF. 
+     Data van Rijkswaterstaat is van de meetpalen van het <i>Waterberichtgeving</i>-
+     platform en de voorspellingen zijn door Rijkswaterstaat geleverd en berekend door het 
+     <a href="https://www.ecmwf.int/" target="_blank">ECMWF</a>. Data van het KNMI is aangeleverd door 
+     <a target='_blank' href='https://www.buienradar.nl'>Buienradar.nl</a>. Het Meetnet Vlaamse Banken van de Vlaamse Hydrografie (zie <a href="https://www.agentschapmdk.be/nl/vlaamse-hydrografie" target="_blank">Vlaamse Hydrografie | Agentschap MDK</a>) levert de winddata van voor de Belgische kust.
+     Niemand verdient geld aan deze website. Hier volgt een lijst met alle gebruikte toepassingen: <ul>
+     <li>Rijkswaterstaat</li>
+     <li>Het Europees Centrum voor Weersverwachtingen op Middellange Termijn / ECMWF</li>
+     <li>Koninklijk Nederlands Meteorologisch Instituut / KNMI</li>
+     <li>Agentschap Maritieme Dienstverlening en Kust</li>
+     <li>Mapbox</li>
+     <li>OpenStreetMap</li>
+     <li>OpenSeaMap</li>
+     </ul></p>` },
+    feedback: { html: `<h3>Geef feedback</h3>
+     <p class="messageBoxP">Feedback wordt erg gewaardeerd. Dit kan in de vorm van fouten/bugs, tips, gewenste functies, noem
+       maar op.
+       Alles is mogelijk, vul onderstaand formulier in om feedback te verzenden.</p>
+     <table id="feedbackForm">
+       <tr>
+         <td><label for="name">Je naam</label></td>
+         <td><input id="name" type="text" placeholder="Optioneel"></td>
+       </tr>
+       <tr>
+         <td><label for="email">Je e-mail</label></td>
+         <td><input id="email" type="email" placeholder="Optioneel"></td>
+       </tr>
+       <tr>
+         <td><label for="message">Je bericht*</label></td>
+         <td><textarea oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' placeholder="Verplicht" id="message"></textarea></td>
+       </tr>
+     </table>
+     <button id="send">Verzenden</button>` },
+    contact: { html: `<h3>Contact</h3><p class='messageBoxP'>E-mail: <a href='mailto:dewindnu@gmail.com'>dewindnu@gmail.com</a></p>` }
+  }
+}

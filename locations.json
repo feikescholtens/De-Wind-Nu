@@ -266,8 +266,8 @@
   {
     "id": "3107",
     "name": "Nieuw Beerta",
-    "lat": "53.2",
-    "lon": "7.15",
+    "lat": "53.194438",
+    "lon": "7.149327",
     "datasets": {
       "KNMI": {
         "location_id": "6286"
@@ -383,17 +383,6 @@
     "datasets": {
       "KNMI": {
         "location_id": "6283"
-      }
-    }
-  },
-  {
-    "id": "9880",
-    "name": "Nieuw Beerta",
-    "lat": "53.2",
-    "lon": "7.15",
-    "datasets": {
-      "KNMI": {
-        "location_id": "6286"
       }
     }
   },

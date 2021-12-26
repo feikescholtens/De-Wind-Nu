@@ -1,4 +1,4 @@
-function convertToBft(data, data_unit) {
+export function convertToBft(data, data_unit) {
 
   //Define variable
   let checkArray;

@@ -8,7 +8,6 @@ import { fetchMVB } from "./fetchScripts/Meetnet Vlaamse Banken.js"
 const times = JSON.parse(readFileSync("times.json"))
 
 export async function getData(request, response, locations) {
-
   if (!validID(request.params.id, locations, response)) return
 
   const location = locations.find(location => location.id == request.params.id)

@@ -18,28 +18,20 @@
 
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"> </script>
-    <script src="js/index.js" defer></script>
+    <script src="index.js" type="module" defer></script>
     <script src="js/objects/chartData.js"></script>
-    <script src="js/level 1/processData.js"></script>
-    <script src="js/level 1/level 2/level 3/updateCurrentWind.js"></script>
-    <script src="js/level 1/level 2/drawUpdateChart.js"></script>
-    <script src="js/level 1/level 2/level 3/convertToBft.js"></script>
-    <script src="js/level 1/level 2/level 3/level 4/directionToLetters.js"></script>
-    <script src="js/level 1/level 2/level 3/level 4/drawDirectionArrow.js"></script>
-    <script src="../jsPopUps/feedback.js"></script>
-    <script src="../jsPopUps/credit.js"></script>
-    <script src="../jsPopUps/contact.js"></script>
 
     <!-- ICO TAGS -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
-    <meta name="apple-mobile-web-app-title" content="De Wind Nu">
-    <meta name="application-name" content="De Wind Nu">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="theme-color" content="#000000">
+<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+  <link rel="manifest" href="../images/site.webmanifest">
+  <link rel="mask-icon" href="../images/safari-pinned-tab.svg" color="#000000">
+  <meta name="apple-mobile-web-app-title" content="De Wind Nu">
+  <meta name="application-name" content="De Wind Nu">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#000000">
 </head>
 
 <body>
@@ -99,25 +91,25 @@
     </main>
     <footer>
         <table id="footer">
-            <tr>
-                <td onClick="feedback()">
-                    <p>Geef feedback</p>
-                </td>
-                <td onClick="credit()">
-                    <p>Credit / bronvermelding</p>
-                </td>
-            </tr>
-            <tr>
-                <td onClick="contact()">
-                    <p>Contact</p>
-                </td>
-                <td><a id="source" href="https://github.com/feikescholtens/De-Wind-Nu" target="_blank">
-                        <p>Broncode op Github</p>
-                    </a>
-                </td>
-            </tr>
+          <tr>
+            <td id="feedback">
+              <p>Geef feedback</p>
+            </td>
+            <td id="credit">
+              <p>Credit / bronvermelding</p>
+            </td>
+          </tr>
+          <tr>
+            <td id="contact">
+              <p>Contact</p>
+            </td>
+            <td><a id="source" href="https://github.com/feikescholtens/De-Wind-Nu" target="_blank">
+                <p>Broncode op Github</p>
+              </a>
+            </td>
+          </tr>
         </table>
-    </footer>
+      </footer>
 </body>
 
 </html>

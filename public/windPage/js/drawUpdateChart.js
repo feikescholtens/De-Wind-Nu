@@ -1,12 +1,22 @@
-function drawUpdateChart(chart_windspeed, chart_winddirection, DOM_chart_windspeed, DOM_chart_winddirection, times, units, ctx, size) {
+import { updateCurrentWind } from "./updateCurrentWind.js"
+import { convertToBft } from "./convertToBft.js"
+
+export async function drawUpdateChart() {
+
+  const unitSelector = document.getElementById("eenheid")
 
   //Declare variables
-  unit = localStorage.getItem("unit");
-  decimals = localStorage.getItem("decimals");
+  globalThis.unit = localStorage.getItem("unit");
+  if (unitSelector.value == 4) globalThis.decimals = 0
+  else globalThis.decimals = localStorage.getItem("decimals")
+
+  const canvasWindspeed = document.getElementById('chart_windspeed').getContext('2d');
+  const canvasWinddirection = document.getElementById('chart_winddirection').getContext('2d');
+  const ctx = document.getElementById("wind_compass").getContext("2d");
 
   //Reset/define the datasets arrays
-  let datasetsChart1 = [];
-  let datasetsChart2 = [];
+  let chart_windspeed, chart_winddirection, datasetsChart1 = [],
+    datasetsChart2 = [];
 
   //If the set unit it not equal to Bft
   if (parseInt(unit) !== 4) {
@@ -48,7 +58,7 @@ function drawUpdateChart(chart_windspeed, chart_winddirection, DOM_chart_windspe
   }
 
   //Update the current wind section on top of the page in separte function
-  updateCurrentWind(units, ctx, size);
+  updateCurrentWind(units, ctx);
 
   const maxWind = Math.max(...data_unit[2].filter(function(value, index, arr) {
     return (value !== "NaN" && value !== undefined)
@@ -56,6 +66,8 @@ function drawUpdateChart(chart_windspeed, chart_winddirection, DOM_chart_windspe
   const maxGusts = Math.max(...data_unit[3].filter(function(value, index, arr) {
     return (value !== "NaN" && value !== undefined)
   }));
+
+
 
   wind_obj.label = `Windsterkte | max: ${maxWind.toFixed(decimals).replace(".", ",")} ${units[unit].afkorting}`
   wind_gusts_obj.label = `Windvlagen | max: ${maxGusts.toFixed(decimals).replace(".", ",")} ${units[unit].afkorting}`
@@ -97,7 +109,7 @@ function drawUpdateChart(chart_windspeed, chart_winddirection, DOM_chart_windspe
   //If chart is not created, create
   if (Chart.instances[0] == undefined) {
 
-    chart_windspeed = new Chart(DOM_chart_windspeed, {
+    chart_windspeed = new Chart(canvasWindspeed, {
       type: 'line',
       data: {
         labels: times,
@@ -145,7 +157,7 @@ function drawUpdateChart(chart_windspeed, chart_winddirection, DOM_chart_windspe
   //If chart is not created, create
   if (Chart.instances[1] == undefined) {
 
-    chart_winddirection = new Chart(DOM_chart_winddirection, {
+    chart_winddirection = new Chart(canvasWinddirection, {
       type: 'line',
       data: {
         labels: times,
