@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "dotenv": "^10.0.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "transform-coordinates": "^1.0.0"
   }
 }
