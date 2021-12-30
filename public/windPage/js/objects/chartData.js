@@ -18,11 +18,11 @@ const tooltipLine = {
   }
 };
 
-let wind_obj = {
-  label: 'Windsterkte',
-  data: '',
-  backgroundColor: 'rgba(106, 176, 76, 0.4)',
-  borderColor: '#6ab04c',
+let datasetObject = {
+  label: undefined,
+  data: undefined,
+  backgroundColor: undefined,
+  borderColor: undefined,
   borderWidth: 2,
   pointHoverBorderColor: 'rgb(111, 111, 111)',
   pointHoverBackgroundColor: 'rgb(111, 111, 111)',
@@ -30,55 +30,34 @@ let wind_obj = {
   pointHoverRadius: 3
 };
 
-let wind_gusts_obj = {
-  label: 'Windvlagen',
-  data: '',
-  backgroundColor: 'rgba(235, 77, 75, 0.4)',
-  borderColor: '#eb4d4b',
-  borderWidth: 2,
-  pointHoverBorderColor: 'rgb(111, 111, 111)',
-  pointHoverBackgroundColor: 'rgb(111, 111, 111)',
-  pointHoverBorderWidth: '3',
-  pointHoverRadius: 3
-};
+const datasetInfo = [{
+    label: "Windsterkte",
+    color: "rgba(106, 176, 76, 1)",
+    bgColor: "rgba(106, 176, 76, 0.4)"
+  },
+  {
+    label: "Windvlagen",
+    color: "rgba(235, 77, 75, 1)",
+    bgColor: "rgba(235, 77, 75, 0.4)"
+  },
+  {
+    label: "Windrichting",
+    color: "rgba(95, 39, 205, 1)",
+    bgColor: "rgba(95, 39, 205, 0.4)"
+  },
+  {
+    label: "Windvoorspelling",
+    color: "rgba(46, 134, 222, 1)",
+    bgColor: "rgba(46, 134, 222, 0.4)"
+  },
+  {
+    label: "Windrichting voorspelling",
+    color: "rgba(255, 159, 67, 1)",
+    bgColor: "rgba(255, 159, 67, 0.4)"
+  }
+]
 
-let winddirection_obj = {
-  label: 'Windrichting',
-  data: '',
-  backgroundColor: 'rgba(95, 39, 205,0.4)',
-  borderColor: '#5f27cd',
-  borderWidth: 2,
-  pointHoverBorderColor: 'rgb(111, 111, 111)',
-  pointHoverBackgroundColor: 'rgb(111, 111, 111)',
-  pointHoverBorderWidth: '3',
-  pointHoverRadius: 3
-};
-
-let wind_forecast_obj = {
-  label: 'Windvoorspelling',
-  data: '',
-  backgroundColor: 'rgba(46, 134, 222,0.4)',
-  borderColor: '#2e86de',
-  borderWidth: 2,
-  pointHoverBorderColor: 'rgb(111, 111, 111)',
-  pointHoverBackgroundColor: 'rgb(111, 111, 111)',
-  pointHoverBorderWidth: '3',
-  pointHoverRadius: 3
-};
-
-let winddirectionForecast_obj = {
-  label: 'Windrichting voorspelling',
-  data: '',
-  backgroundColor: 'rgba(255, 159, 67,0.4)',
-  borderColor: '#ff9f43',
-  borderWidth: 2,
-  pointHoverBorderColor: 'rgb(111, 111, 111)',
-  pointHoverBackgroundColor: 'rgb(111, 111, 111)',
-  pointHoverBorderWidth: '3',
-  pointHoverRadius: 3
-};
-
-const options_chart = {
+const optionsWindspeedChart = {
   scales: {
     y: {
       display: true,
@@ -126,34 +105,8 @@ const options_chart = {
     },
     tooltip: {
       callbacks: {
-        label: function (context) {
-          let label = context.dataset.label;
-          let title = context.label;
-
-          if (context.parsed.y !== null) {
-
-            if (context.chart.id == 0) {
-              if (context.datasetIndex == 0) {
-                label = "Windsnelheid: " + context.formattedValue + " " + units[unit].afkorting;
-              } else if (context.datasetIndex == 1) {
-                label = "Windvlagen: " + context.formattedValue + " " + units[unit].afkorting;
-              } else if (context.datasetIndex == 2) {
-                label = "Windvoorspelling: " + context.formattedValue + " " + units[unit].afkorting;
-              }
-
-            } else if (context.chart.id == 1) {
-              label += ": " + context.formattedValue + "°";
-            }
-          }
-          return label;
-        },
-        title: function (context) {
-          let title = context[0].label;
-          if (title !== null) {
-            title = "Vandaag om " + title;
-          }
-          return title;
-        }
+        label: undefined,
+        title: undefined
       },
       titleFont: {
         size: 12,
@@ -166,12 +119,50 @@ const options_chart = {
   }
 }
 
-const directionChartTicks = {
-  ticks: {
+let optionsWinddirectionChart = JSON.parse(JSON.stringify(optionsWindspeedChart))
+optionsWinddirectionChart.scales.y.title.text = "Windrichting [°]"
+optionsWinddirectionChart.scales.y = {
+  ...optionsWinddirectionChart.scales.y,
+  ...{
     max: 360,
     min: 0,
     ticks: {
       stepSize: 22.5
     }
   }
+}
+
+optionsWindspeedChart.plugins.tooltip.callbacks.label = (context) => setLabels(context)
+optionsWinddirectionChart.plugins.tooltip.callbacks.label = (context) => setLabels(context)
+
+optionsWindspeedChart.plugins.tooltip.callbacks.title = (context) => setTitle(context)
+optionsWinddirectionChart.plugins.tooltip.callbacks.title = (context) => setTitle(context)
+
+function setLabels(context) {
+  let label = context.dataset.label
+
+  if (context.parsed.y !== null) {
+
+    if (context.chart.id == 0) {
+      if (context.datasetIndex == 0) {
+        label = "Windsnelheid: " + context.formattedValue + " " + units[unit].afkorting
+      } else if (context.datasetIndex == 1) {
+        label = "Windvlagen: " + context.formattedValue + " " + units[unit].afkorting
+      } else if (context.datasetIndex == 2) {
+        label = "Windvoorspelling: " + context.formattedValue + " " + units[unit].afkorting
+      }
+
+    } else if (context.chart.id == 1) {
+      label += ": " + context.formattedValue + "°"
+    }
+  }
+  return label
+}
+
+function setTitle(context) {
+  let title = context[0].label
+  if (title !== null) {
+    title = "Vandaag om " + title
+  }
+  return title
 }

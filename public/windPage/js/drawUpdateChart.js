@@ -1,179 +1,148 @@
-import { updateCurrentWind } from "./updateCurrentWind.js"
+import { updateCurrentWind } from "./updateDisplayCurrentWind.js"
 import { convertToBft } from "./convertToBft.js"
+import { newChartOptions, checkInterpolated } from "./functions.js"
 
 export async function drawUpdateChart() {
 
   const unitSelector = document.getElementById("eenheid")
-
-  //Declare variables
-  globalThis.unit = localStorage.getItem("unit");
+  globalThis.unit = localStorage.getItem("unit")
   if (unitSelector.value == 4) globalThis.decimals = 0
   else globalThis.decimals = localStorage.getItem("decimals")
+  globalThis.interpolation = localStorage.getItem("interpolation")
 
-  const canvasWindspeed = document.getElementById('chart_windspeed').getContext('2d');
-  const canvasWinddirection = document.getElementById('chart_winddirection').getContext('2d');
-  const ctx = document.getElementById("wind_compass").getContext("2d");
+  const canvasWindspeed = document.getElementById('chart_windspeed').getContext('2d')
+  const canvasWinddirection = document.getElementById('chart_winddirection').getContext('2d')
+  let chartWindspeed, chartWinddirection, datasetsChartWindspeed = [],
+    datasetsChartWinddirection = []
 
-  //Reset/define the datasets arrays
-  let chart_windspeed, chart_winddirection, datasetsChart1 = [],
-    datasetsChart2 = [];
+  //This 'backup' is restored to the original 'data' variable so interpolation setting can change on the fly
+  const data_before_interpolation = data.copy()
 
-  //If the set unit it not equal to Bft
-  if (parseInt(unit) !== 4) {
-
-    //Loop through the data by windspeed indici
-    for (let i = 0; i < data_unit[2].length; i++) {
-
-      //Set the data to the windspeed array
-      data_unit[2][i] = (units[unit].factor * data[2][i]).toFixed(decimals);
-
-      //There is not always gusts data, therefore we check first and then do the same
-      if (data_unit[3].length !== 0) {
-        data_unit[3][i] = (units[unit].factor * data[3][i]).toFixed(decimals);
-      }
-    }
-
-    //Loop through the data by forecast indici
-    if (data_unit[5]) {
-      for (let i = 0; i < data_unit[5].length; i++) {
-
-        //Set the data to the windspeedFOR array
-        data_unit[5][i] = (units[unit].factor * data[5][i]).toFixed(decimals);
-      }
-    }
-
-    //Else convert the data to Bft in seperate function
-  } else if (parseInt(unit) == 4) {
-    convertToBft(data, data_unit);
-  }
-
-  for (let j = 0; j < 7; j++) {
-    for (let k = 0; k < times.length; k++) {
-      if (data[j]) {
+  for (let j = 2; j < 6 + 1; j++) {
+    if (data[j]) {
+      for (let k = 0; k < times.length; k++) {
         if (data[j][k] < 0) {
-          data_unit[j][k] = undefined
+          if (interpolation == "1") {
+
+            if (j == 2 || j == 3 || j == 4) {
+              const interpolatedValue = interpolatedData[j - 2].filter(element => element.index == k)[0].value
+
+              if (j == 2 || j == 3) data[j][k] = interpolatedValue
+              if (j == 4) data[j][k] = interpolatedValue
+
+            } else data[j][k] = undefined
+
+          } else data[j][k] = undefined
         }
       }
     }
   }
 
-  //Update the current wind section on top of the page in separte function
-  updateCurrentWind(units, ctx);
+  if (parseInt(unit) !== 4) {
 
-  const maxWind = Math.max(...data_unit[2].filter(function(value, index, arr) {
-    return (value !== "NaN" && value !== undefined)
-  }));
-  const maxGusts = Math.max(...data_unit[3].filter(function(value, index, arr) {
-    return (value !== "NaN" && value !== undefined)
-  }));
+    for (let i = 0; i < data_unit[2].length; i++) {
+      if (data_unit[2][i]) data_unit[2][i] = (units[unit].factor * data[2][i]).toFixed(decimals)
+    }
 
+    if (data_unit[3].length !== 0) {
+      for (let i = 0; i < data_unit[3].length; i++) {
+        if (data_unit[3][i]) data_unit[3][i] = (units[unit].factor * data[3][i]).toFixed(decimals)
+      }
+    }
 
+    if (data_unit[5]) {
+      for (let i = 0; i < data_unit[5].length; i++) {
+        if (data_unit[5][i]) data_unit[5][i] = (units[unit].factor * data[5][i]).toFixed(decimals)
+      }
+    }
 
-  wind_obj.label = `Windsterkte | max: ${maxWind.toFixed(decimals).replace(".", ",")} ${units[unit].afkorting}`
-  wind_gusts_obj.label = `Windvlagen | max: ${maxGusts.toFixed(decimals).replace(".", ",")} ${units[unit].afkorting}`
-  //Set unit on the chart's y-axis and set y-axis scale
-  options_chart.scales.y.title.text = "Windsnelheid [" + units[unit].afkorting + "]";
-  delete options_chart.scales.y.ticks;
-  delete options_chart.scales.y.min;
-  delete options_chart.scales.y.max;
-  options_chart.scales.y.ticks = {
-    precision: 0
+  } else if (parseInt(unit) == 4) {
+
+    //The 1 * is to convert undefined to NaN to prevent raising an error message
+
+    for (let i = 0; i < data_unit[2].length; i++) {
+      if (data_unit[2][i]) data_unit[2][i] = (1 * data[2][i]).toFixed(decimals)
+    }
+
+    if (data_unit[3].length !== 0) {
+      for (let i = 0; i < data_unit[3].length; i++) {
+        if (data_unit[3][i]) data_unit[3][i] = (1 * data[3][i]).toFixed(decimals)
+      }
+    }
+
+    if (data_unit[5]) {
+      for (let i = 0; i < data_unit[5].length; i++) {
+        if (data_unit[5][i]) data_unit[5][i] = (1 * data[5][i]).toFixed(decimals)
+      }
+    }
+
+    convertToBft(data, data_unit)
   }
 
-  //In any case add the wind_speed data to the dataset for the chart
-  datasetsChart1.push(wind_obj);
-  datasetsChart1[0].data = data_unit[2];
-
-  //If there is data for the windgusts, add it too
-  if (data_unit[3].length !== 0) {
-    datasetsChart1.push(wind_gusts_obj);
-    datasetsChart1[1].data = data_unit[3];
-
-    //If not, remove the windgusts from the dataset, this needs to be checked when the dataset is changed
-  } else if (data_unit[3].length == 0 && datasetsChart1.length == 2) {
-    datasetsChart1 = datasetsChart1.slice(0, 1);
-  }
-
-  //If there is forecast data for the wind, add it too
-  if (data_unit[5]) {
-    if (data_unit[5].length !== 0) {
-      datasetsChart1.push(wind_forecast_obj);
-      datasetsChart1[datasetsChart1.length - 1].data = data_unit[5];
-
-      //If not, remove from the forecast data from the dataset, this needs to be checked when the dataset is changed
-    } else if (data_unit[5].length == 0 && datasetsChart1.length == 3) {
-      datasetsChart1 = datasetsChart1.slice(0, 2);
+  if (data_unit[4].length !== 0) {
+    for (let i = 0; i < data_unit[4].length; i++) {
+      if (data_unit[4][i]) data_unit[4][i] = (1 * data[4][i]).toFixed(0)
     }
   }
 
-  //If chart is not created, create
-  if (Chart.instances[0] == undefined) {
+  updateCurrentWind()
 
-    chart_windspeed = new Chart(canvasWindspeed, {
-      type: 'line',
-      data: {
-        labels: times,
-        datasets: datasetsChart1
-      },
-      options: options_chart,
-      plugins: [tooltipLine],
-    });
+  //Initialize datasets
 
-    //Else, create chart
-  } else {
-    chart_windspeed = Chart.instances[0];
+  let datasets = new Array(datasetInfo.length).fill(datasetObject).copy()
 
-    //Set the data and options for the (already existing) chart and update
-    chart_windspeed.data.datasets = datasetsChart1;
-    chart_windspeed.options = options_chart;
-    chart_windspeed.update();
+  const maxWind = Math.max(...data_unit[2].filter((value) => {
+    return (value !== "NaN" && value !== undefined)
+  }))
+  const maxGusts = Math.max(...data_unit[3].filter((value) => {
+    return (value !== "NaN" && value !== undefined)
+  }))
+
+  for (let i = 0; i < datasets.length; i++) {
+    datasets[i].backgroundColor = datasetInfo[i].bgColor
+    datasets[i].borderColor = datasetInfo[i].color
+    if (i == 0) datasets[0].label = datasetInfo[0].label + ` | max: ${maxWind.toFixed(decimals).replace(".", ",")} ${units[unit].afkorting}`
+    else if (i == 1) datasets[1].label = datasetInfo[1].label + ` | max: ${maxGusts.toFixed(decimals).replace(".", ",")} ${units[unit].afkorting}`
+    else datasets[i].label = datasetInfo[i].label
+    if (data_unit[i + 2]) datasets[i].data = data_unit[i + 2]
+
+    if (i <= 2) datasets[i].segment = { borderColor: ctx => checkInterpolated(ctx, i, datasetInfo[i].bgColor) }
+
   }
 
-  //Set unit on the chart's y-axis and set y-axis scale
-  options_chart.scales.y.title.text = "Windrichting [°]";
-  options_chart.scales.y = {
-    ...options_chart.scales.y,
-    ...directionChartTicks.ticks
+  // Chart windspeed
+
+  datasetsChartWindspeed.push(datasets[0])
+  if (data_unit[3].length !== 0) datasetsChartWindspeed.push(datasets[1])
+  if (data_unit[5])
+    if (data_unit[5].length !== 0) datasetsChartWindspeed.push(datasets[3])
+
+  optionsWindspeedChart.scales.y.title.text = "Windsnelheid [" + units[unit].afkorting + "]"
+
+  if (!Chart.instances[0]) chartWindspeed = new Chart(canvasWindspeed, newChartOptions(datasetsChartWindspeed, optionsWindspeedChart))
+  else {
+    chartWindspeed = Chart.instances[0]
+
+    chartWindspeed.data.datasets = datasetsChartWindspeed
+    chartWindspeed.options = optionsWindspeedChart
+    chartWindspeed.update()
   }
 
-  //In any case add the wind_speed data to the dataset for the chart
-  datasetsChart2.push(winddirection_obj);
-  datasetsChart2[0].data = data_unit[4];
+  //Chart winddirection
 
-  //If there is data for the windgusts, add it too
-  if (data_unit[6]) {
-    if (data_unit[6].length !== 0) {
-      datasetsChart2.push(winddirectionForecast_obj);
-      datasetsChart2[1].data = data_unit[6];
+  datasetsChartWinddirection.push(datasets[2])
+  if (data_unit[6])
+    if (data_unit[6].length !== 0) datasetsChartWinddirection.push(datasets[4])
 
-      //If not, remove from the windgusts from the dataset, this needs to be checked when the dataset is changed
-    } else if (data_unit[6].length == 0 && datasetsChart2.length == 2) {
-      datasetsChart2 = datasetsChart2.slice(0, 1);
-    }
-  } else if (datasetsChart2.length == 2) {
-    datasetsChart2 = datasetsChart2.slice(0, 1);
+  if (!Chart.instances[1]) chartWinddirection = new Chart(canvasWinddirection, newChartOptions(datasetsChartWinddirection, optionsWinddirectionChart))
+  else {
+    chartWinddirection = Chart.instances[1]
+
+    chartWinddirection.data.datasets = datasetsChartWinddirection
+    chartWinddirection.options = optionsWinddirectionChart
+    chartWinddirection.update()
   }
 
-  //If chart is not created, create
-  if (Chart.instances[1] == undefined) {
+  data = data_before_interpolation.copy()
 
-    chart_winddirection = new Chart(canvasWinddirection, {
-      type: 'line',
-      data: {
-        labels: times,
-        datasets: datasetsChart2
-      },
-      options: options_chart,
-      plugins: [tooltipLine],
-    });
-
-    //Else, create chart
-  } else {
-    chart_winddirection = Chart.instances[1];
-
-    //Set the data and options for the (already existing) chart and update
-    chart_winddirection.data.datasets = datasetsChart2;
-    chart_winddirection.options = options_chart;
-    chart_winddirection.update();
-  }
 }

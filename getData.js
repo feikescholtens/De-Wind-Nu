@@ -28,7 +28,7 @@ export async function getData(request, response, locations) {
     if (location.datasets.MVB) {
       return fetchMVB(location, resolve, times)
     }
-  });
+  })
 
   if (dataFetched.data.error) {
     handleFetchErrors(dataFetched, response)

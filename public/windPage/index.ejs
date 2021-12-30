@@ -40,7 +40,7 @@
     </div>
 
     <header>
-        <a href="/"><img id="logo" src="../images/logo.svg"></a>
+        <a href="/"><img id="logo" src="../images/logo.svg" alt="Logo - navigeer home"></a>
         <a href="/">
             <h1 id="title">De Wind Nu</h1>
         </a>
@@ -59,16 +59,16 @@
                 <div id="voorspelde_richting"></div>
 
             </div>
-            <h2 id="heading_chart1">
+            <h2 id="heading_chart1">Windsterkte
             </h2>
             <canvas class="charts" id="chart_windspeed" height="300px"></canvas>
-            <h2 id="heading_chart2">
+            <h2 id="heading_chart2">Windrichting
             </h2>
             <canvas class="charts" id="chart_winddirection" height="300px"></canvas>
             <h2>Instellingen</h2>
-            <table id="settings">
+            <table id="settings" role="presentation">
                 <tr>
-                    <td>Eenheid</td>
+                    <td><label for="eenheid">Eenheid</label></td>
                     <td><select id="eenheid">
                             <option value="0">Knopen [kn]</option>
                             <option value="1">Meter per seconde [m/s]</option>
@@ -78,19 +78,25 @@
                         </select></td>
                 </tr>
                 <tr>
-                    <td>Aantal decimalen</td>
+                    <td><label for="decimals">Aantal decimalen</label></td>
                     <td><select id="decimals">
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2 (data slechts geleverd in één decimaal)</option>
                         </select></td>
                 </tr>
-                <!--		<tr><td>Donkere modus</td><td></td></tr>-->
+                <tr>
+                  <td><label for="interpolation">Interpoleer data</label></td>
+                  <td><select id="interpolation">
+                          <option value="1">Ja</option>
+                          <option value="0" selected="selected">Nee</option>
+                      </select></td>
+              </tr>
 
             </table>
     </main>
     <footer>
-        <table id="footer">
+        <table id="footer" role="presentation">
           <tr>
             <td id="feedback">
               <p>Geef feedback</p>

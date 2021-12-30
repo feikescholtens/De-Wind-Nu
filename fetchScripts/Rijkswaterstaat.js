@@ -32,9 +32,9 @@ export async function fetchRWS(databaseData, resolve, times) {
     wind_directionFOR = []
   let dataCategorized = [],
     dataNullCounts = []
-  const nullTreshold = 10
   const metingenCategoriesLength = rawData.meting.values[0].length
   const verwachtingenCategoriesLength = rawData.verwachting.values[0].length
+  const nullThresholdP = 40
 
   //Loop through # data categories
   for (let i = 0; i < (metingenCategoriesLength + verwachtingenCategoriesLength); i++) {
@@ -53,15 +53,17 @@ export async function fetchRWS(databaseData, resolve, times) {
 
     dataCategorized[i].splice(lastMeasurementIndex(dataCategorized, i))
 
-    //Loop for every category again to count nulls and replace null characters with negative value
+    //Loop for every category again to replace null characters with negative value
     for (let j = 0; j < dataCategorized[i].length; j++) {
-      if (!loopArray[i]) {
+      if (!loopArray[j][relativeIndex]) {
         dataNullCounts[i]++
         dataCategorized[i][j] = -999
       }
     }
 
-    if (dataNullCounts[i] >= nullTreshold) return
+    if (dataNullCounts[i] / dataCategorized[i].length > nullThresholdP / 100) {
+      dataCategorized[i] = []
+    }
 
     if (i == 2) wind_speed = dataCategorized[2].map(x => x / 10 * 1.94384449)
     if (i == 3) wind_gusts = dataCategorized[3].map(x => x / 10 * 1.94384449)
@@ -73,5 +75,4 @@ export async function fetchRWS(databaseData, resolve, times) {
 
   data["Rijkswaterstaat"] = [date, timeStamps, wind_speed, wind_gusts, wind_direction, wind_speedFOR, wind_directionFOR]
   resolve({ data })
-
 }
