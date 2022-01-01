@@ -9,14 +9,14 @@ let directionStuffDrawn = false
 
 export function updateCurrentWind() {
 
-  const currentWindLabel = document.getElementById("actuele_wind")
-  const forecastedWindLabel = document.getElementById("voorspelde_wind")
-  const currentGustsLabel = document.getElementById("actuele_vlagen")
-  const currentDirectionLabel = document.getElementById("actuele_richting")
-  const forecastedDirectionLabel = document.getElementById("voorspelde_richting")
+  const currentWindLabel = document.querySelector("[data-currentWind]")
+  const forecastedWindLabel = document.querySelector("[data-forecastedWind]")
+  const currentGustsLabel = document.querySelector("[data-currentGusts]")
+  const currentDirectionLabel = document.querySelector("[data-currentDirection]")
+  const forecastedDirectionLabel = document.querySelector("[data-forecastedDirection]")
 
-  const headingWithTime = document.getElementById("heading_current_wind")
-  const ctx = document.getElementById("wind_compass").getContext("2d")
+  const headingWithTime = document.querySelector("[data-headingCurrentWind]")
+  const ctx = document.querySelector("[data-compass]").getContext("2d")
 
   //Setting winddirection values / arrows
 
@@ -25,7 +25,7 @@ export function updateCurrentWind() {
       if (data_unit[6].length !== 0) {
         const forecastedDirection = data_unit[6][data_unit[4].length - 1]
         drawDirectionArrow(forecastedDirection, ctx, "#ff9f43")
-        forecastedDirectionLabel.innerHTML = forecastedDirection + "&#176;<label class='label2'> voorspeld</label>"
+        forecastedDirectionLabel.innerHTML = forecastedDirection + "&#176;<label class='labelSmall'> voorspeld</label>"
       }
     }
 
@@ -43,11 +43,11 @@ export function updateCurrentWind() {
 
   if (data_unit[2].length !== 0) currentWindLabel.innerText = `${data_unit[2].lastMeasurement().replace(".", ",")} ${units[unit].afkorting}`
   if (data_unit[3].length !== 0) {
-    currentGustsLabel.innerHTML = `${data_unit[3].lastMeasurement().replace(".", ",")} ${units[unit].afkorting} <label class='label'>&nbsp;vlagen</label>`
+    currentGustsLabel.innerHTML = `${data_unit[3].lastMeasurement().replace(".", ",")} ${units[unit].afkorting} <label class='labelBig'>&nbsp;vlagen</label>`
   }
   if (data_unit[5]) {
     if (data_unit[5].length !== 0) {
-      forecastedWindLabel.innerHTML = `${data_unit[5][data_unit[4].length - 1].replace(".", ",")} ${units[unit].afkorting} <label class='label2'> voorspeld</label>`
+      forecastedWindLabel.innerHTML = `${data_unit[5][data_unit[4].length - 1].replace(".", ",")} ${units[unit].afkorting} <label class='labelSmall'> voorspeld</label>`
     }
   }
 

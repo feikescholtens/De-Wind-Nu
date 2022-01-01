@@ -34,7 +34,7 @@ export function unHideElements() {
   document.getElementsByTagName("main")[0].style.visibility = "visible"
   document.getElementsByTagName("footer")[0].style.visibility = "visible"
 
-  document.getElementById("loader").style.display = "none"
+  document.querySelector("[data-loader]").style.display = "none"
 }
 
 export function calcInterpolation() {

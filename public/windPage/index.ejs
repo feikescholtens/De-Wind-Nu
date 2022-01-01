@@ -36,7 +36,7 @@
 
 <body>
     <div id="loader_box">
-        <div id="loader"></div>
+        <div data-loader id="loader"></div>
     </div>
 
     <header>
@@ -46,30 +46,30 @@
         </a>
 
     </header>
-    <h1 id="subtitle"></h1>
+    <h1 data-subtitle id="subtitle"></h1>
     <main>
-        <h2 id="heading_current_wind">
+        <h2 data-headingCurrentWind id="heading_current_wind" class="sectionHeader">
             </h1>
-            <canvas id="wind_compass" width="350px" height="350px"></canvas>
-            <div id="actuele_gegevens">
-                <div id="actuele_wind"></div>
-                <div id="voorspelde_wind"></div>
-                <div id="actuele_vlagen"></div>
-                <div id="actuele_richting"></div>
-                <div id="voorspelde_richting"></div>
+            <canvas data-compass id="wind_compass" width="350px" height="350px"></canvas>
+            <div data-currentWindBox id="actuele_gegevens">
+                <div data-currentWind id="actuele_wind"></div>
+                <div data-forecastedWind id="voorspelde_wind"></div>
+                <div data-currentGusts id="actuele_vlagen"></div>
+                <div data-currentDirection id="actuele_richting"></div>
+                <div data-forecastedDirection id="voorspelde_richting"></div>
 
             </div>
-            <h2 id="heading_chart1">Windsterkte
+            <h2 data-headingChartWindspeed id="heading_chart1" class="sectionHeader">Windsterkte
             </h2>
-            <canvas class="charts" id="chart_windspeed" height="300px"></canvas>
-            <h2 id="heading_chart2">Windrichting
+            <canvas data-chartWindspeed class="charts" id="chart_windspeed" height="300px"></canvas>
+            <h2 id="heading_chart2" class="sectionHeader">Windrichting
             </h2>
-            <canvas class="charts" id="chart_winddirection" height="300px"></canvas>
-            <h2>Instellingen</h2>
+            <canvas data-chartWinddirection class="charts" id="chart_winddirection" height="300px"></canvas>
+            <h2 class="sectionHeader">Instellingen</h2>
             <table id="settings" role="presentation">
                 <tr>
-                    <td><label for="eenheid">Eenheid</label></td>
-                    <td><select id="eenheid">
+                    <td><label for="unit">Eenheid</label></td>
+                    <td><select data-unit id="eenheid">
                             <option value="0">Knopen [kn]</option>
                             <option value="1">Meter per seconde [m/s]</option>
                             <option value="2">Kilometer per uur [km/h]</option>
@@ -79,7 +79,7 @@
                 </tr>
                 <tr>
                     <td><label for="decimals">Aantal decimalen</label></td>
-                    <td><select id="decimals">
+                    <td><select data-decimals id="decimals">
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2 (data slechts geleverd in één decimaal)</option>
@@ -87,7 +87,7 @@
                 </tr>
                 <tr>
                   <td><label for="interpolation">Interpoleer data</label></td>
-                  <td><select id="interpolation">
+                  <td><select data-interpolation id="interpolation">
                           <option value="1">Ja</option>
                           <option value="0" selected="selected">Nee</option>
                       </select></td>
@@ -98,15 +98,15 @@
     <footer>
         <table id="footer" role="presentation">
           <tr>
-            <td id="feedback">
+            <td data-feedback id="feedback">
               <p>Geef feedback</p>
             </td>
-            <td id="credit">
+            <td data-credit id="credit">
               <p>Credit / bronvermelding</p>
             </td>
           </tr>
           <tr>
-            <td id="contact">
+            <td data-contact id="contact">
               <p>Contact</p>
             </td>
             <td><a id="source" href="https://github.com/feikescholtens/De-Wind-Nu" target="_blank">

@@ -58,9 +58,8 @@ markersLons.sort()
 
 if (window.location.search == "") fitMap(map, markersLats, markersLons)
 history.replaceState({}, "De Wind Nu", "/")
-document.getElementById("logo").addEventListener("click", () => fitMap(map, markersLats, markersLons))
-document.getElementById("title").addEventListener("click", () => fitMap(map, markersLats, markersLons))
+document.querySelectorAll("[data-mapfit]").forEach(element => element.addEventListener("click", () => fitMap(map, markersLats, markersLons)))
 
-document.getElementById("contact").addEventListener("click", contact)
-document.getElementById("credit").addEventListener("click", credit)
-document.getElementById("feedback").addEventListener("click", feedback)
+document.querySelector("[data-feedback]").addEventListener("click", contact)
+document.querySelector("[data-credit]").addEventListener("click", credit)
+document.querySelector("[data-contact]").addEventListener("click", feedback)

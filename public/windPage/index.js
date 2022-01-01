@@ -23,13 +23,13 @@ globalThis.data = [],
 
   const dataset = dataFetched.dataset,
     spotName = dataFetched.spotName
-  const unitSelector = document.getElementById("eenheid"),
-    decimalsSelector = document.getElementById("decimals"),
-    interpolationSelector = document.getElementById("interpolation")
-  const subtitleNode = document.getElementById("subtitle"),
-    compassCanvas = document.getElementById("wind_compass"),
-    currentWindBox = document.getElementById("actuele_gegevens"),
-    headingChartWindspeed = document.getElementById("heading_chart1");
+  const unitSelector = document.querySelector("[data-unit]"),
+    decimalsSelector = document.querySelector("[data-decimals]"),
+    interpolationSelector = document.querySelector("[data-interpolation]")
+  const subtitleNode = document.querySelector("[data-subtitle]"),
+    compassCanvas = document.querySelector("[data-compass]"),
+    currentWindBox = document.querySelector("[data-currentWindBox]"),
+    headingChartWindspeed = document.querySelector("[data-headingChartWindspeed]")
 
   //Setting local storage variables if never set before
   if (!localStorage.getItem("unit")) localStorage.setItem("unit", 0)
@@ -66,7 +66,7 @@ globalThis.data = [],
   else if (dataset == "KNMI") subtitleNode.innerHTML = spotName + "<br><span class='small'>KNMI</span>"
   else if (dataset == "MVB") {
     subtitleNode.innerHTML = spotName + "<br><span class='small'>Meetnet Vlaamse Banken</span>"
-    document.getElementById("decimals").getElementsByTagName("option")[2].innerText = 2
+    document.querySelector("[data-decimals]").getElementsByTagName("option")[2].innerText = 2
   }
   unHideElements()
 
@@ -89,6 +89,6 @@ globalThis.data = [],
   drawUpdateChart()
 })()
 
-document.getElementById("contact").addEventListener("click", contact)
-document.getElementById("credit").addEventListener("click", credit)
-document.getElementById("feedback").addEventListener("click", feedback)
+document.querySelector("[data-feedback]").addEventListener("click", feedback)
+document.querySelector("[data-credit]").addEventListener("click", credit)
+document.querySelector("[data-contact]").addEventListener("click", contact)

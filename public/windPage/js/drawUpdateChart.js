@@ -4,14 +4,14 @@ import { newChartOptions, checkInterpolated } from "./functions.js"
 
 export async function drawUpdateChart() {
 
-  const unitSelector = document.getElementById("eenheid")
+  const unitSelector = document.querySelector("[data-unit]")
   globalThis.unit = localStorage.getItem("unit")
   if (unitSelector.value == 4) globalThis.decimals = 0
   else globalThis.decimals = localStorage.getItem("decimals")
   globalThis.interpolation = localStorage.getItem("interpolation")
 
-  const canvasWindspeed = document.getElementById('chart_windspeed').getContext('2d')
-  const canvasWinddirection = document.getElementById('chart_winddirection').getContext('2d')
+  const canvasWindspeed = document.querySelector("[data-chartWindspeed]").getContext("2d")
+  const canvasWinddirection = document.querySelector("[data-chartWinddirection]").getContext("2d")
   let chartWindspeed, chartWinddirection, datasetsChartWindspeed = [],
     datasetsChartWinddirection = []
 

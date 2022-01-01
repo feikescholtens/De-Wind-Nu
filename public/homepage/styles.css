@@ -183,9 +183,12 @@ div.messageBox {
     max-width: 800px;
 }
 
-p.messageBoxP,
-div.messageBox ul {
+p.messageBoxP {
     margin: 0 30px 10px 30px;
+}
+
+div.messageBox ul {
+    margin: 0 30px 10px 60px;
 }
 
 h3 {
