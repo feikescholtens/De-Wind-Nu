@@ -1,7 +1,7 @@
 import { format, sub, parseISO, getUnixTime } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 import fetch from "node-fetch";
-import { readFileSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { catchError, MessageError, saveNewApiKey, theoreticalMeasurements } from "./fetchUtilFunctions.js"
 
 export async function fetchMVB(databaseData, resolve, times) {
@@ -9,7 +9,9 @@ export async function fetchMVB(databaseData, resolve, times) {
   let data = []
 
   //Getting API key, if gotten, make request for data
-  const MVBAPIKey = JSON.parse(readFileSync("Meetnet Vlaamse Banken API key.json"));
+  let MVBAPIKey
+  if (existsSync("Meetnet Vlaamse Banken API key.json")) MVBAPIKey = JSON.parse(readFileSync("Meetnet Vlaamse Banken API key.json"))
+  else MVBAPIKey = {}
 
   if (Object.keys(MVBAPIKey).length == 0 || (getUnixTime(new Date()) + 5) > MVBAPIKey.expirationDate) {
 
