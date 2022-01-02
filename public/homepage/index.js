@@ -1,7 +1,20 @@
-import { fitMap, windPage } from "./functions.js"
+import { fitMap, windPage, changeTiles } from "./functions.js"
 import { contact } from "../jsPopUps/contact.js"
 import { credit } from "../jsPopUps/credit.js"
 import { feedback } from "../jsPopUps/feedback.js"
+const tilesObjects = await fetch("./OSMTiles.json").then(response => response.json())
+
+const tilesSelector = document.querySelector("[data-tiles]"),
+  seaMapCheckbox = document.querySelector("[data-seaMap]")
+
+if (!localStorage.getItem("tiles")) localStorage.setItem("tiles", "0")
+if (!localStorage.getItem("seaMap")) localStorage.setItem("seaMap", "1")
+
+tilesSelector.value = localStorage.getItem("tiles")
+if (localStorage.getItem("seaMap") == "1") seaMapCheckbox.checked = true
+
+tilesSelector.onchange = () => changeTiles(map, tilesSelector, seaMapCheckbox)
+seaMapCheckbox.onchange = () => changeTiles(map, tilesSelector, seaMapCheckbox)
 
 const urlParams = new URLSearchParams(window.location.search)
 const center = [urlParams.get("x") || 5.160544, urlParams.get("y") || 52.182725]
@@ -11,14 +24,18 @@ let markersLats = [],
   markersLons = []
 mapboxgl.accessToken = "pk.eyJ1IjoiZmVpa2VzY2hvbHRlbnMiLCJhIjoiY2t1aDlpZWEwMGhkYTJwbm02Zmt0Y21sOCJ9.PA3iy-3LQhjCkfxhxL2zUw";
 
-const map = new mapboxgl.Map({
-  container: "locations",
-  style: "mapbox://styles/feikescholtens/ckuhc8nha9jft18s0muhoy0zf",
+const mapOptions = {
+  container: "map",
   center: center,
   zoom: zoom
-})
+}
+if (parseInt(tilesSelector.value) == 0) mapOptions.style = tilesObjects.OpenStreetMap
+if (parseInt(tilesSelector.value) == 1) mapOptions.style = "mapbox://styles/feikescholtens/ckuhc8nha9jft18s0muhoy0zf"
+const map = new mapboxgl.Map(mapOptions)
 map.touchZoomRotate.disableRotation()
-map.on("load", async () => map.addLayer(await fetch("./OSMTiles.json").then(response => response.json()), "waterway-label"))
+map.on("load", () => {
+  if (localStorage.getItem("seaMap") == "1") map.addLayer(tilesObjects.OpenSeaMap)
+})
 
 data.forEach((item) => {
 
@@ -60,6 +77,6 @@ if (window.location.search == "") fitMap(map, markersLats, markersLons)
 history.replaceState({}, "De Wind Nu", "/")
 document.querySelectorAll("[data-mapfit]").forEach(element => element.addEventListener("click", () => fitMap(map, markersLats, markersLons)))
 
-document.querySelector("[data-feedback]").addEventListener("click", contact)
+document.querySelector("[data-feedback]").addEventListener("click", feedback)
 document.querySelector("[data-credit]").addEventListener("click", credit)
-document.querySelector("[data-contact]").addEventListener("click", feedback)
+document.querySelector("[data-contact]").addEventListener("click", contact)

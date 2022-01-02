@@ -85,6 +85,7 @@ const optionsWindspeedChart = {
     }
   },
   radius: 0,
+  tension: 0.3,
   tooltip: {
     enabled: true
   },

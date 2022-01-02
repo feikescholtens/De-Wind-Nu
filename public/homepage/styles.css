@@ -2,10 +2,8 @@
     --markerSize: 12px;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    font-family: 'Lato', sans-serif;
+body {
+    margin: 0 auto;
 }
 
 header {
@@ -14,64 +12,11 @@ header {
     margin: 0 auto;
 }
 
-img#logo {
-    margin: 10px 0 10px 10px;
-    height: 80px;
-    float: left;
-    cursor: pointer;
-}
-
-h1#title {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 2.8em;
-    overflow: hidden;
-    white-space: nowrap;
-    float: right;
-    margin-right: 10px;
-    text-transform: none;
-    font-style: normal;
-    cursor: pointer;
-    color: black;
-}
-
-@media screen and (max-width: 500px) {
-    h1#title {
-        top: 16px;
-        transform: none;
-    }
-}
-
-@media screen and (max-width: 350px) {
-    h1#title {
-        display: none;
-    }
-}
-
-main {
+div#mapWrapper,
+div#map {
     width: 100%;
-    height: calc(100% - 100px);
+    height: calc(100vh - 100px);
     background-color: rgb(170, 211, 223);
-}
-
-div#locations {
-    width: 100%;
-    height: 100%;
-}
-
-html {
-    height: 100%;
-}
-
-body {
-    height: 100%;
-    transform: translate3d(0, 0, 0);
-}
-
-img.icon {
-    height: 30px;
-    width: 30px;
 }
 
 div.marker {
@@ -127,10 +72,6 @@ button.popupRWS {
     background-color: rgb(46, 179, 99);
 }
 
-button:focus {
-    outline: none;
-}
-
 button.popupMVB:hover {
     background-color: rgba(201, 62, 28, 0.5);
 }
@@ -148,189 +89,6 @@ button.mapboxgl-popup-close-button {
     height: 18px;
 }
 
-footer {
-    width: 100%;
+button:focus {
+    outline: none;
 }
-
-table#footer {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-top: 60px;
-    padding-bottom: 60px;
-}
-
-table#footer td {
-    padding: 20px 40px 20px 40px;
-    width: 200px;
-}
-
-table#footer td p {
-    cursor: pointer;
-}
-
-div.messageBox {
-    position: absolute;
-    min-height: calc(100% - 2 * 20px);
-    width: calc(100% - 2 * 20px);
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 30px;
-    background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    z-index: 2;
-    max-width: 800px;
-}
-
-p.messageBoxP {
-    margin: 0 30px 10px 30px;
-}
-
-div.messageBox ul {
-    margin: 0 30px 10px 60px;
-}
-
-h3 {
-    margin: 30px 30px 15px 30px;
-}
-
-div.close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 10px 10px 0px 0px;
-    cursor: pointer;
-    padding: 20px;
-}
-
-div.messageBox table {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    margin: 15px 0;
-}
-
-div.messageBox table td {
-    padding: 5px;
-}
-
-input#name,
-input#email,
-textarea#message {
-    padding: 5px;
-    border-radius: 10px;
-    width: calc(800px / 2);
-    border: 2px grey solid;
-}
-
-textarea#message {
-    height: 100px;
-    resize: none;
-    outline: none !important;
-}
-
-button#send {
-    background-color: rgba(16, 172, 132, 1.0);
-    border: none;
-    padding: 10px;
-    color: white;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    font-weight: 600;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-bottom: 30px;
-}
-
-@media (hover: hover) {
-    button#send:hover {
-        background-color: rgba(16, 172, 132, 0.6);
-    }
-}
-
-@media screen and (max-width: 600px) {
-    div.messageBox table td {
-        display: block;
-    }
-}
-
-@media screen and (max-width: 550px) {
-
-    input#name,
-    input#email,
-    textarea#message {
-        width: calc(550px / 2) !important;
-    }
-}
-
-@media screen and (max-width: 400px) {
-
-    input#name,
-    input#email,
-    textarea#message {
-        width: calc(400px / 2) !important;
-    }
-}
-
-textarea.fillIn::placeholder {
-    color: red;
-}
-
-p.success,
-p.fail {
-    font-weight: 600;
-    font-size: 1.2em;
-    margin: 0 30px 10px 30px;
-}
-
-p.success {
-    color: #10ac84;
-}
-
-p.fail {
-    color: #ee5253;
-}
-
-div#loader {
-    border: 8px solid #95a5a6;
-    border-top: 8px solid #eb4d4b;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 0.5s linear infinite;
-}
-
-div#loader_boxPop {
-    position: relative;
-    left: 50%;
-    top: 50%;
-    height: 40px;
-    width: 40px;
-    transform: translateX(-50%);
-    z-index: 1000;
-    margin: 50px 0 20px 0;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-a#source {
-    color: black;
-    text-decoration: none;
-}
-
-/* @media (prefers-color-scheme: dark) {
-    body {
-        background-color: black;
-        color: white;
-    }
-} */

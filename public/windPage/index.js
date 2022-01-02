@@ -61,6 +61,14 @@ globalThis.data = [],
   }
 
   //Data is now loaded, so the content get can displayed and the loading symbol removed
+  document.querySelectorAll("[data-goBackHome]").forEach(element => element.addEventListener("click", () => {
+    if (document.referrer !== "") {
+      window.location.replace(document.referrer)
+    } else {
+      window.location.replace("/")
+    }
+  }))
+
   document.title = "De Wind Nu: " + spotName
   if (dataset == "Rijkswaterstaat") subtitleNode.innerHTML = spotName + "<br><span class='small'>Rijkswaterstaat & ECMWF</span"
   else if (dataset == "KNMI") subtitleNode.innerHTML = spotName + "<br><span class='small'>KNMI</span>"
@@ -68,6 +76,9 @@ globalThis.data = [],
     subtitleNode.innerHTML = spotName + "<br><span class='small'>Meetnet Vlaamse Banken</span>"
     document.querySelector("[data-decimals]").getElementsByTagName("option")[2].innerText = 2
   }
+  subtitleNode.style.right = (document.body.clientWidth - document.getElementsByTagName("main")[0].clientWidth) / 2 + "px"
+  window.addEventListener("resize", () => subtitleNode.style.right = (document.body.clientWidth - document.getElementsByTagName("main")[0].clientWidth) / 2 + "px")
+
   unHideElements()
 
   //Make the canvas of the current wind section dynamic (1: initially, 2: onwindowchange)

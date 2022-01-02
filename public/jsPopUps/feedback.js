@@ -1,32 +1,34 @@
 import { displayPopUp, emptyMessage } from "./functions.js"
 
 export async function feedback() {
+
   if (!document.getElementsByClassName("messageBox")[0]) {
 
     displayPopUp("feedback")
 
-    //Handle when Send button is pressed
-    document.getElementById("send").addEventListener("click", async () => {
+    const popUpBox = document.getElementsByClassName("messageBox")[0]
+
+    document.querySelector("[data-send]").addEventListener("click", async () => {
 
       //Set variables according to input fields
-      const name = document.getElementById("name").value,
-        email = document.getElementById("email").value,
-        DOM_message = document.getElementById("message"),
-        message = DOM_message.value
+      const name = document.querySelector("[data-name]").value,
+        email = document.querySelector("[data-email]").value,
+        messageContainer = document.querySelector("[data-message]"),
+        message = messageContainer.value
 
-      if (message == "") emptyMessage(DOM_message)
+      if (message == "") emptyMessage(messageContainer)
       else {
 
-        document.getElementById("feedbackForm").remove()
-        document.getElementById("send").remove()
+        document.querySelector("[data-feedbackForm]").remove()
+        document.querySelector("[data-send]").remove()
 
         //Add the loader to the messageBox
         const loaderbox = document.createElement("div")
         const loader = document.createElement("div")
-        loaderbox.id = "loader_boxPop"
+        loaderbox.id = "loaderBoxPopUp"
         loader.id = "loader"
         loaderbox.appendChild(loader)
-        document.getElementsByClassName("messageBox")[0].appendChild(loaderbox)
+        popUpBox.appendChild(loaderbox)
 
         //Data for making the fetch command
         const dataBody = {
@@ -46,10 +48,8 @@ export async function feedback() {
         const data = await fetch("/addFeedback", options)
           .then(response => response.text())
 
-        //If response is back, remove loader
-        if (document.getElementById("loader_boxPop")) {
-          document.getElementById("loader_boxPop").remove()
-        }
+        loaderbox.remove()
+
         const responseMessage = document.createElement("p")
 
         //If display message if email sent was succesful or not
@@ -60,10 +60,10 @@ export async function feedback() {
           responseMessage.innerHTML = "Verzenden mislukt. Contacteer <a href='mailto:dewindnu@gmail.com'>dewindnu@gmail.com</a>"
           responseMessage.classList.add("fail")
         }
-        document.getElementsByClassName("messageBox")[0].appendChild(responseMessage)
+        popUpBox.appendChild(responseMessage)
 
       }
-    });
+    })
 
   }
 }

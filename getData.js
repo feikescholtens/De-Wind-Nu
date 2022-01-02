@@ -1,6 +1,6 @@
 import { handleFetchErrors } from "./handleFetchErrors.js"
 import { validID, dataUseful } from "./validationFunctions.js"
-import { readFileSync } from 'fs';
+import { readFileSync } from 'fs'
 import { fetchRWS } from "./fetchScripts/Rijkswaterstaat.js"
 import { fetchKNMI } from "./fetchScripts/KNMI.js"
 import { fetchMVB } from "./fetchScripts/Meetnet Vlaamse Banken.js"

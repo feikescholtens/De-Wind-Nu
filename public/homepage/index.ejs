@@ -18,6 +18,7 @@
 
   <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/generalStyles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -57,21 +58,39 @@
     <img data-mapfit id="logo" src="images/logo.svg" alt="Logo - navigeer home">
     <h1 data-mapfit id="title">De Wind Nu</h1>
   </header>
+  <div id="mapWrapper"><div id="map"></div></div>
   <main>
-    <div id="locations"></div>
+    <h2 class="sectionHeader">Instellingen</h2>
+
+    <table id="settings" role="presentation">
+      <tr>
+          <td><label for="tiles">Standaard kaart</label></td>
+          <td><select data-tiles id="tiles">
+                  <option value="0">OpenStreetMap (sneller)</option>
+                  <option value="1">Mapbox (mooier)</option>
+              </select></td>
+      </tr>
+      <tr>
+        <td><label for="seaMap">Toon zeekaart</label></td>
+        <td><input type="checkbox" data-seaMap id="seaMap">
+            </input></td>
+    </tr>
+  </table>
+
+
   </main>
   <footer>
     <table id="footer" role="presentation">
       <tr>
-        <td data-feedback id="feedback">
+        <td data-feedback>
           <p>Geef feedback</p>
         </td>
-        <td data-credit id="credit">
+        <td data-credit>
           <p>Credit / bronvermelding</p>
         </td>
       </tr>
       <tr>
-        <td data-contact id="contact">
+        <td data-contact>
           <p>Contact</p>
         </td>
         <td><a id="source" href="https://github.com/feikescholtens/De-Wind-Nu" target="_blank">

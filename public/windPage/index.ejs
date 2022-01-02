@@ -17,6 +17,7 @@
     </script>
 
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/generalStyles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"> </script>
     <script src="index.js" type="module" defer></script>
     <script src="js/objects/chartData.js"></script>
@@ -35,41 +36,40 @@
 </head>
 
 <body>
-    <div id="loader_box">
+    <div id="loaderBox">
         <div data-loader id="loader"></div>
     </div>
 
     <header>
-        <a href="/"><img id="logo" src="../images/logo.svg" alt="Logo - navigeer home"></a>
-        <a href="/">
-            <h1 id="title">De Wind Nu</h1>
-        </a>
+        <img data-goBackHome id="logo" src="../images/logo.svg" alt="Logo - navigeer home">
+            <h1 data-goBackHome id="title">De Wind Nu</h1>
 
     </header>
     <h1 data-subtitle id="subtitle"></h1>
     <main>
-        <h2 data-headingCurrentWind id="heading_current_wind" class="sectionHeader">
+        <h2 data-headingCurrentWind class="sectionHeader">
             </h1>
-            <canvas data-compass id="wind_compass" width="350px" height="350px"></canvas>
-            <div data-currentWindBox id="actuele_gegevens">
-                <div data-currentWind id="actuele_wind"></div>
-                <div data-forecastedWind id="voorspelde_wind"></div>
-                <div data-currentGusts id="actuele_vlagen"></div>
-                <div data-currentDirection id="actuele_richting"></div>
-                <div data-forecastedDirection id="voorspelde_richting"></div>
+            <canvas data-compass id="compass" width="350px" height="350px"></canvas>
 
+            <div data-currentWindBox id="currentWindBox">
+                <div data-currentWind id="currentWind"></div>
+                <div data-forecastedWind id="forecastedWind"></div>
+                <div data-currentGusts id="currentGusts"></div>
+                <div data-currentDirection id="currentDirection"></div>
+                <div data-forecastedDirection id="forecastedDirection"></div>
             </div>
-            <h2 data-headingChartWindspeed id="heading_chart1" class="sectionHeader">Windsterkte
-            </h2>
-            <canvas data-chartWindspeed class="charts" id="chart_windspeed" height="300px"></canvas>
-            <h2 id="heading_chart2" class="sectionHeader">Windrichting
-            </h2>
-            <canvas data-chartWinddirection class="charts" id="chart_winddirection" height="300px"></canvas>
+
+            <h2 data-headingChartWindspeed class="sectionHeader">Windsterkte</h2>
+            <canvas data-chartWindspeed class="charts" height="300px"></canvas>
+
+            <h2 class="sectionHeader">Windrichting</h2>
+            <canvas data-chartWinddirection class="charts" height="300px"></canvas>
+
             <h2 class="sectionHeader">Instellingen</h2>
             <table id="settings" role="presentation">
                 <tr>
                     <td><label for="unit">Eenheid</label></td>
-                    <td><select data-unit id="eenheid">
+                    <td><select data-unit id="unit">
                             <option value="0">Knopen [kn]</option>
                             <option value="1">Meter per seconde [m/s]</option>
                             <option value="2">Kilometer per uur [km/h]</option>
@@ -98,15 +98,15 @@
     <footer>
         <table id="footer" role="presentation">
           <tr>
-            <td data-feedback id="feedback">
+            <td data-feedback>
               <p>Geef feedback</p>
             </td>
-            <td data-credit id="credit">
+            <td data-credit>
               <p>Credit / bronvermelding</p>
             </td>
           </tr>
           <tr>
-            <td data-contact id="contact">
+            <td data-contact>
               <p>Contact</p>
             </td>
             <td><a id="source" href="https://github.com/feikescholtens/De-Wind-Nu" target="_blank">

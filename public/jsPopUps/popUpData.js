@@ -24,21 +24,21 @@ export function givePopUpData() {
      <p class="messageBoxP">Feedback wordt erg gewaardeerd. Dit kan in de vorm van fouten/bugs, tips, gewenste functies, noem
        maar op.
        Alles is mogelijk, vul onderstaand formulier in om feedback te verzenden.</p>
-     <table id="feedbackForm">
+     <table data-feedbackForm>
        <tr>
          <td><label for="name">Je naam</label></td>
-         <td><input id="name" type="text" placeholder="Optioneel"></td>
+         <td><input data-name id="name" type="text" placeholder="Optioneel"></td>
        </tr>
        <tr>
          <td><label for="email">Je e-mail</label></td>
-         <td><input id="email" type="email" placeholder="Optioneel"></td>
+         <td><input data-email id="email" type="email" placeholder="Optioneel"></td>
        </tr>
        <tr>
          <td><label for="message">Je bericht*</label></td>
-         <td><textarea oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' placeholder="Verplicht" id="message"></textarea></td>
+         <td><textarea data-message oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' placeholder="Verplicht" id="message"></textarea></td>
        </tr>
      </table>
-     <button id="send">Verzenden</button>` },
+     <button data-send id="send">Verzenden</button>` },
     contact: { html: `<h3 class="popUpTitle">Contact</h3><p class='messageBoxP'>E-mail: <a href='mailto:dewindnu@gmail.com'>dewindnu@gmail.com</a></p>` }
   }
 }

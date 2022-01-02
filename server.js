@@ -19,10 +19,12 @@ app.use(express.json({ limit: "500kb" }))
 
 app.use("/", express.static(path.resolve(__dirname, "public/homepage")))
 app.use("/wind/", express.static(path.resolve(__dirname, "public/windPage")))
-app.use("/error", express.static(path.resolve(__dirname, "public/error")))
+app.use("/error", express.static(path.resolve(__dirname, "public/errorPage")))
 
 app.use("/jsPopUps", express.static(path.resolve(__dirname, "public/jsPopUps")))
 app.use("/images", express.static(path.resolve(__dirname, "public/images")))
+app.use("/generalStyles.css", express.static(path.resolve(__dirname, "public/generalStyles.css")))
+
 
 app.set("view-engine", "ejs")
 app.set("views", path.join(__dirname, "/public/windPage/"))
