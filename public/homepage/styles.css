@@ -32,6 +32,13 @@ div#RWS {
     background-color: rgb(46, 179, 99);
 }
 
+/* //////////////////////////////////////////// */
+div#RWS_OFFICIAL {
+    background-color: rgb(247, 0, 255);
+}
+
+/* /////////////////////////////////////////// */
+
 div#KNMI {
     background-color: rgb(101, 124, 201);
 }
@@ -72,6 +79,13 @@ button.popupRWS {
     background-color: rgb(46, 179, 99);
 }
 
+/* /////////////////////////////////////////// */
+button.popupRWS_OFFICIAL {
+    background-color: rgb(255, 0, 221);
+}
+
+/* /////////////////////////////////////////// */
+
 button.popupMVB:hover {
     background-color: rgba(201, 62, 28, 0.5);
 }
@@ -83,6 +97,13 @@ button.popupKNMI:hover {
 button.popupRWS:hover {
     background-color: rgba(46, 179, 99, 0.5);
 }
+
+/* /////////////////////////////////////////// */
+button.popupRWS_OFFICIAL:hover {
+    background-color: rgb(255, 0, 221);
+}
+
+/* /////////////////////////////////////////// */
 
 button.mapboxgl-popup-close-button {
     width: 18px;

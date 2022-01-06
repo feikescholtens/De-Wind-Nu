@@ -1,7 +1,3 @@
+const Access = require('hdf5/lib/globals.js').Access;
 var hdf5 = require('hdf5').hdf5;
-
-var Access = require('hdf5/lib/globals').Access;
-var file = new hdf5.File('CDF.h5', Access.ACC_RDONLY);
-var group = file.openGroup('ff');
-
-console.log(group)
+var h5lt = require('hdf5').h5lt;

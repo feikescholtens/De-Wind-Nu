@@ -19,7 +19,7 @@ export async function fetchKNMI(databaseData, resolve, times) {
 
   let rawData
   try { rawData = JSON.parse(rawDataString) } catch { return }
-
+  console.log(rawData.observations[0].values)
   const timeStamps = JSON.parse(JSON.stringify(times))
   let date = new Array(times.length).fill(dateToday),
     wind_speed = [],

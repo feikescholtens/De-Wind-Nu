@@ -1,78 +1,107 @@
-import { format, sub } from "date-fns"
+import { format, parseISO, add } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 import fetch from "node-fetch";
-import { catchError, loopArrayRelativeIndex, lastMeasurementIndex } from "./fetchUtilFunctions.js"
+import { catchError, theoreticalMeasurements, SuccesvolFalseError } from "./fetchUtilFunctions.js"
 
-const timeZone = 'Europe/Amsterdam'
+const timeZone = "Europe/Amsterdam"
 
 export async function fetchRWS(databaseData, resolve, times) {
 
   let data = []
 
-  const locationID = databaseData.datasets.Rijkswaterstaat.location_id
+  const locationID = databaseData.datasets.RWS_OFFICIAL.location_id
+  const locationX = databaseData.x
+  const locationY = databaseData.y
   const dateUTC = new Date()
   const dateZoned = utcToZonedTime(dateUTC, timeZone)
   const dateToday = format(dateZoned, "dd-MM-yyyy")
-  const dateYesterdayFetch = format(sub(dateZoned, { days: 1 }), "yyyy-MM-dd")
   const dateTodayFetch = format(dateZoned, "yyyy-MM-dd")
-  const time = "23:00:00"
+  const dateTomorrowFetch = format(add(dateZoned, { days: 1 }), "yyyy-MM-dd")
+  const time = "00:00:00"
 
-  const rawDataString = await fetch(`https://waterberichtgeving.rws.nl/wbviewer/wb_api.php?request=windrose&meting=WN_S_1.2-5&verwachting=WN_knmi_6.1-2&loc=${locationID}&start=${dateYesterdayFetch}T${time}Z&end=${dateTodayFetch}T${time}Z`)
-    .then(response => response.text()).catch((error) => catchError(resolve, data, error, "Rijkswaterstaat"))
+  const rawDataString = await fetch("https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenWaarnemingen", {
+    "headers": {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body": JSON.stringify({
+      "AquoPlusWaarnemingMetadata": {
+        "AquoMetadata": {
+          "Compartiment": { "Code": "LT" },
+          "Grootheid": { "Code": "WINDSHD" }
+        }
+      },
+      "Locatie": { "X": locationX, "Y": locationY, "Code": `${locationID}` },
+      "Periode": {
+        "Begindatumtijd": `${dateTodayFetch}T${time}.000+01:00`,
+        "Einddatumtijd": `${dateTomorrowFetch}T${time}.000+01:00`
+      }
+    }),
+    "method": "POST"
+  }).then(response => response.text()).catch((error) => catchError(resolve, data, error, "RWS"))
 
   let rawData
   try { rawData = JSON.parse(rawDataString) } catch { return }
+  // rawData = JSON.parse(readFileSync("projectFiles/discontinuous test data MVB.json"))
 
-  const timeStamps = JSON.parse(JSON.stringify(times))
-  let date = new Array(times.length).fill(dateToday),
-    wind_speed = [],
+  if (SuccesvolFalseError(rawData, data, resolve)) return
+
+  //Declare variables
+  let wind_speed = [],
     wind_gusts = [],
-    wind_direction = [],
-    wind_speedFOR = [],
-    wind_directionFOR = []
-  let dataCategorized = [],
-    dataNullCounts = []
-  const metingenCategoriesLength = rawData.meting.values[0].length
-  const verwachtingenCategoriesLength = rawData.verwachting.values[0].length
-  const nullThresholdP = 40
+    wind_direction = []
+  const date = new Array(times.length).fill(dateToday)
+  const timeStamps = JSON.parse(JSON.stringify(times))
 
-  //Loop through # data categories
-  for (let i = 0; i < (metingenCategoriesLength + verwachtingenCategoriesLength); i++) {
+  if (rawData.WaarnemingenLijst[0].MetingenLijst.length == 0) return
 
-    dataCategorized.push([])
-    dataNullCounts.push(0)
+  let measurementTimes = [],
+    tempArray = []
 
-    //(the length of looparray is always the same as # of metingen, since they are filled with null arrays, this is more general)
-    //(the relativeIndex needs to be determined though, because the array for verwachtingen is separate)
-    const { loopArray, relativeIndex } = loopArrayRelativeIndex(i, metingenCategoriesLength, rawData)
+  rawData.WaarnemingenLijst[0].MetingenLijst.forEach((measurement) => {
+    let time = format(utcToZonedTime(parseISO(measurement.Tijdstip), timeZone), "HH:mm")
+    measurementTimes.push(time)
+  })
 
-    //Loop through every value of each category
-    for (let j = 0; j < loopArray.length; j++) {
-      dataCategorized[i].push(loopArray[j][relativeIndex])
+  times.forEach((timeStamp) => {
+    if (!measurementTimes.includes(timeStamp)) {
+      tempArray.push(-999)
+      return
     }
 
-    dataCategorized[i].splice(lastMeasurementIndex(dataCategorized, i))
+    const indexTime = measurementTimes.indexOf(timeStamp);
 
-    //Loop for every category again to replace null characters with negative value
-    for (let j = 0; j < dataCategorized[i].length; j++) {
-      if (!loopArray[j][relativeIndex]) {
-        dataNullCounts[i]++
-        dataCategorized[i][j] = -999
+    if (rawData.WaarnemingenLijst[0].MetingenLijst[indexTime]) {
+      if (rawData.WaarnemingenLijst[0].MetingenLijst[indexTime].Meetwaarde) {
+        if (rawData.WaarnemingenLijst[0].MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek) {
+          if (rawData.WaarnemingenLijst[0].MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek == 999999999 + 1) {
+            tempArray.push(-999)
+          } else tempArray.push(rawData.WaarnemingenLijst[0].MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek)
+        } else {
+          tempArray.push(-999)
+        }
+      } else {
+        tempArray.push(-999)
       }
+    } else {
+      tempArray.push(-999)
     }
+  })
 
-    if (dataNullCounts[i] / dataCategorized[i].length > nullThresholdP / 100) {
-      dataCategorized[i] = []
-    }
+  const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes)
 
-    if (i == 2) wind_speed = dataCategorized[2].map(x => x / 10 * 1.94384449)
-    if (i == 3) wind_gusts = dataCategorized[3].map(x => x / 10 * 1.94384449)
-    if (i == 0) wind_direction = dataCategorized[0]
-    if (i == 4) wind_speedFOR = dataCategorized[4].map(x => x / 10 * 1.94384449)
-    if (i == 5) wind_directionFOR = dataCategorized[5]
-
+  for (let j = 0; j < (times.length - theoreticalMeasurementCount); j++) {
+    tempArray.pop()
   }
 
-  data["Rijkswaterstaat"] = [date, timeStamps, wind_speed, wind_gusts, wind_direction, wind_speedFOR, wind_directionFOR]
+  // if (measurementType.ID.includes("WC3")) wind_gusts = JSON.parse(JSON.stringify(tempArray)).map(x => x * 1.94384449)
+  wind_speed = JSON.parse(JSON.stringify(tempArray)).map(x => x * 1.94384449)
+  // if (measurementType.ID.includes("WRS")) wind_direction = JSON.parse(JSON.stringify(tempArray))
+
+
+  timeStamps.splice(wind_speed.length)
+
+  data["Rijkswaterstaat"] = [date, timeStamps, wind_speed, wind_gusts, wind_direction]
   resolve({ data })
+
 }

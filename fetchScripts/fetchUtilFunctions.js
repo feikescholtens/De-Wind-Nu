@@ -4,26 +4,41 @@ export function catchError(resolve, data, error, dataset) {
 }
 
 //Rijkswaterstaat specific
-export function loopArrayRelativeIndex(i, metingenCategoriesLength, rawData) {
-  let loopArray, relativeIndex
+export function SuccesvolFalseError(rawData, data, resolve) {
+  if (rawData.Foutmelding) {
+    if (rawData.Foutmelding == "Geen gegevens gevonden!") {
+      data = {
+        error: {
+          code: "14"
+        },
+        dataset: "RWS"
+      }
+    }
 
-  if (i < metingenCategoriesLength) {
-    loopArray = rawData.meting.values
-    relativeIndex = i
-  } else {
-    loopArray = rawData.verwachting.values
-    relativeIndex = i - metingenCategoriesLength
+    resolve({ data })
+    return true
   }
-
-  return { loopArray, relativeIndex }
 }
+// export function loopArrayRelativeIndex(i, metingenCategoriesLength, rawData) {
+//   let loopArray, relativeIndex
 
-export function lastMeasurementIndex(dataCategorized, i) {
-  const reverseArray = JSON.parse(JSON.stringify(dataCategorized[i])).reverse()
-  const lastMeasurementIndex = reverseArray.length - reverseArray.findIndex(measurement => measurement !== null)
+//   if (i < metingenCategoriesLength) {
+//     loopArray = rawData.meting.values
+//     relativeIndex = i
+//   } else {
+//     loopArray = rawData.verwachting.values
+//     relativeIndex = i - metingenCategoriesLength
+//   }
 
-  return lastMeasurementIndex
-}
+//   return { loopArray, relativeIndex }
+// }
+
+// export function lastMeasurementIndex(dataCategorized, i) {
+//   const reverseArray = JSON.parse(JSON.stringify(dataCategorized[i])).reverse()
+//   const lastMeasurementIndex = reverseArray.length - reverseArray.findIndex(measurement => measurement !== null)
+
+//   return lastMeasurementIndex
+// }
 
 //MVB specific
 export function MessageError(rawData, data, resolve) {

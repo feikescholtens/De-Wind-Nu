@@ -56,7 +56,13 @@ data.forEach((item) => {
   } else if (item.datasets.MVB) {
     marker.id = "MVB"
     popupId = "popupMVB"
+
+    ///////////////////////////////////////
+  } else if (item.datasets.RWS_OFFICIAL) {
+    marker.id = "RWS_OFFICIAL"
+    popupId = "popupRWS_OFFICIAL"
   }
+  //////////////////////////////////////
 
   const button = document.createElement("button")
   button.className = `windPageButton ${popupId}`

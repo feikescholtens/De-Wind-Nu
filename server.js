@@ -25,7 +25,6 @@ app.use("/jsPopUps", express.static(path.resolve(__dirname, "public/jsPopUps")))
 app.use("/images", express.static(path.resolve(__dirname, "public/images")))
 app.use("/generalStyles.css", express.static(path.resolve(__dirname, "public/generalStyles.css")))
 
-
 app.set("view-engine", "ejs")
 app.set("views", path.join(__dirname, "/public/windPage/"))
 
@@ -35,6 +34,10 @@ if (port == 3000) {
   dotenv.config()
 
   app.post("/addLocation", (request) => addLocation(request, locations))
+
+  app.use("/devTools/addLocation", express.static(path.resolve(__dirname, "public/devTools/addLocation")))
+  app.use("/devTools/stations", express.static(path.resolve(__dirname, "public/devTools/stations")))
+  app.use("/devTools/compareKNMI&RWS", express.static(path.resolve(__dirname, "public/devTools/compareKNMI&RWS")))
 }
 
 //Homepage API
