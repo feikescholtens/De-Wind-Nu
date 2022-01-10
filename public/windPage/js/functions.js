@@ -1,4 +1,35 @@
-import { drawUpdateChart } from "./drawUpdateChart.js"
+import { contentUpdate } from "./contentUpdate.js"
+
+export function changeShowBar(showBarSelector) {
+  let value
+  if (showBarSelector.checked == false) {
+    value = "0"
+    document.querySelector("[data-dataForm]").style.display = "none"
+  } else {
+    value = "1"
+    document.querySelector("[data-dataForm]").style.display = "block"
+  }
+
+  localStorage.setItem("showBar", value)
+}
+
+export function changeDataForm(dataFormSelector, e) {
+  let clickedOption
+  if (e) clickedOption = e.path[0].innerText
+
+  //Check if the dataForm is changed at all
+  if (clickedOption == "Grafieken" && localStorage.getItem("dataForm") == "0") return
+  if (clickedOption == "Tabel" && localStorage.getItem("dataForm") == "1") return
+
+  if (clickedOption == "Grafieken") dataFormSelector.value = "0"
+  if (clickedOption == "Tabel") dataFormSelector.value = "1"
+
+  document.querySelector("[data-graphs]").classList.toggle("deselected")
+  document.querySelector("[data-tabel]").classList.toggle("deselected")
+  localStorage.setItem("dataForm", dataFormSelector.value)
+
+  contentUpdate()
+}
 
 export function changeUnit(unitSelector, decimalsSelector) {
   localStorage.setItem("unit", unitSelector.value)
@@ -7,12 +38,12 @@ export function changeUnit(unitSelector, decimalsSelector) {
     decimalsSelector.setAttribute("disabled", "disabled")
     globalThis.decimals = 0
   } else decimalsSelector.removeAttribute("disabled")
-  drawUpdateChart()
+  contentUpdate()
 }
 
 export function changeDecimals(decimalsSelector) {
   localStorage.setItem("decimals", decimalsSelector.value)
-  drawUpdateChart()
+  contentUpdate()
 }
 
 export function changeInterpolation(interpolationSelector) {
@@ -26,7 +57,7 @@ export function changeInterpolation(interpolationSelector) {
       })
     }
   }
-  drawUpdateChart()
+  contentUpdate()
 }
 
 export function unHideElements() {
@@ -43,6 +74,7 @@ export function calcInterpolation() {
     interpolatedIndices = JSON.parse(JSON.stringify(new Array(3).fill([])))
 
   for (let h = 2; h < 5; h++) {
+
     for (let i = 0; i < data[h].length; i++) {
       let j
 
@@ -91,4 +123,18 @@ export function setLabelPostitions(labels, percentages) {
   for (let i = 0; i < labels.length; i++) {
     labels[i].style.top = percentages[i] + "%"
   }
+}
+
+export function changeTableSort(tableSort) {
+
+  if (localStorage.getItem("tableSort") == "0") {
+    localStorage.setItem("tableSort", "1")
+    tableSort.innerHTML = `Tijd <span id="sortArrow">▲</span>`
+  } else if (localStorage.getItem("tableSort") == "1") {
+    localStorage.setItem("tableSort", "0")
+    tableSort.innerHTML = `Tijd <span id="sortArrow">▼</span>`
+  }
+
+  contentUpdate()
+
 }

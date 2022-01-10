@@ -135,17 +135,6 @@
     }
   },
   {
-    "id": "2885",
-    "name": "Tholen",
-    "lat": "51.52",
-    "lon": "4.13",
-    "datasets": {
-      "KNMI": {
-        "location_id": "6331"
-      }
-    }
-  },
-  {
     "id": "3235",
     "name": "Zeebrugge Daminstrumentatie",
     "lat": "51.3541666666667",

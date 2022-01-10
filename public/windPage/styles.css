@@ -92,3 +92,54 @@ label.labelBig {
 canvas.charts {
     margin-bottom: 10px;
 }
+
+section {
+    letter-spacing: 1px;
+    word-spacing: 10px;
+    text-align: center;
+    padding-top: 10px;
+}
+
+section label {
+    cursor: pointer;
+}
+
+section label.deselected {
+    color: #bbb;
+}
+
+.hidden {
+    display: none !important;
+}
+
+table#data {
+    margin-top: 10px;
+    box-sizing: border-box;
+    margin-left: 10px;
+    max-width: calc(100% - 2 * 10px);
+    border-collapse: collapse;
+}
+
+table#data td:nth-child(1) {
+    border-right: 1px #bbb solid;
+    width: 80px;
+}
+
+
+table#data tr td:nth-child(2),
+table#data tr td:nth-child(3),
+table#data tr td:nth-child(4) {
+    max-width: 100px;
+}
+
+table#data th,
+table#data td {
+    text-align: left;
+    vertical-align: top;
+    padding: 0px 5px;
+}
+
+span#sortArrow {
+    float: right;
+    color: grey;
+}

@@ -74,18 +74,12 @@ export async function fetchRWS(databaseData, resolve, times) {
     if (rawData.WaarnemingenLijst[0].MetingenLijst[indexTime]) {
       if (rawData.WaarnemingenLijst[0].MetingenLijst[indexTime].Meetwaarde) {
         if (rawData.WaarnemingenLijst[0].MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek) {
-          if (rawData.WaarnemingenLijst[0].MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek == 999999999 + 1) {
+          if (rawData.WaarnemingenLijst[0].MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek == 999999999) {
             tempArray.push(-999)
           } else tempArray.push(rawData.WaarnemingenLijst[0].MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek)
-        } else {
-          tempArray.push(-999)
-        }
-      } else {
-        tempArray.push(-999)
-      }
-    } else {
-      tempArray.push(-999)
-    }
+        } else tempArray.push(-999)
+      } else tempArray.push(-999)
+    } else tempArray.push(-999)
   })
 
   const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes)

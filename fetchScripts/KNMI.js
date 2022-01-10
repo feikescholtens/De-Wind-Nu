@@ -19,7 +19,7 @@ export async function fetchKNMI(databaseData, resolve, times) {
 
   let rawData
   try { rawData = JSON.parse(rawDataString) } catch { return }
-  console.log(rawData.observations[0].values)
+
   const timeStamps = JSON.parse(JSON.stringify(times))
   let date = new Array(times.length).fill(dateToday),
     wind_speed = [],
@@ -36,8 +36,11 @@ export async function fetchKNMI(databaseData, resolve, times) {
     dataNullCounts[measurementType] = 0
 
     rawData.observations.forEach(measurement => {
-      dataCategorized[measurementType].push(measurement.values[measurementType])
-      if (!measurement) dataNullCounts[measurementType]++
+      if (!measurement.values[measurementType]) {
+
+        dataNullCounts[measurementType]++
+        dataCategorized[measurementType].push(-999)
+      } else dataCategorized[measurementType].push(measurement.values[measurementType])
     })
 
     if (dataNullCounts[measurementType] >= nullTreshold) return
