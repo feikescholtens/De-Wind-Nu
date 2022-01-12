@@ -4,9 +4,7 @@ import { feedback } from "../jsPopUps/feedback.js"
 import { contentUpdate } from "./js/contentUpdate.js"
 import { changeShowBar, changeDataForm, changeUnit, changeDecimals, unHideElements, changeInterpolation, calcInterpolation, changeTableSort } from "./js/functions.js"
 
-Array.prototype.copy = function() {
-  return JSON.parse(JSON.stringify(this))
-}
+Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 
 globalThis.reload = contentUpdate
 
@@ -93,7 +91,7 @@ globalThis.data = [],
   }))
 
   document.title = "De Wind Nu: " + spotName
-  if (dataset == "Rijkswaterstaat") subtitleNode.innerHTML = spotName + "<br><span class='small'>Rijkswaterstaat & ECMWF</span"
+  if (dataset == "Rijkswaterstaat") subtitleNode.innerHTML = spotName + "<br><span class='small'>Rijkswaterstaat</span"
   else if (dataset == "KNMI") {
     subtitleNode.innerHTML = spotName + "<br><span class='small'>KNMI</span>"
     document.querySelector("[data-decimals]").getElementsByTagName("option")[2].innerText = "2 (data slechts geleverd in één decimaal)"

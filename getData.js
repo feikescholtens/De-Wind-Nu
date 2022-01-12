@@ -19,11 +19,6 @@ export async function getData(request, response, locations) {
       return fetchRWS(location, resolve, times)
     }
 
-    // Rijkswaterstaat Official
-    if (location.datasets.RWS_OFFICIAL) {
-      return fetchRWS(location, resolve, times)
-    }
-
     //KNMI
     if (location.datasets.KNMI) {
       return fetchKNMI(location, resolve, times)

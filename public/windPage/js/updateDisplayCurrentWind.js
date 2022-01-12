@@ -69,6 +69,14 @@ export function updateCurrentWind() {
     setLabelPostitions(labels, [38, 0, 0, 69, 0])
 
   const lastMeasurementTime = data_unit[1][data_unit[2].length - 1]
-  headingWithTime.innerHTML = "Actueel (" + lastMeasurementTime + ")"
+
+  const lastMeasurementHH = parseInt(lastMeasurementTime.split(":")[0])
+  const lastMeasurementmm = parseInt(lastMeasurementTime.split(":")[1])
+  const nowHH = new Date().getHours()
+  const nowmm = new Date().getMinutes()
+
+  const minutesSinceLastMeasurement = nowHH * 60 + nowmm - (lastMeasurementHH * 60 + lastMeasurementmm)
+
+  headingWithTime.innerHTML = `Recentste meting (${minutesSinceLastMeasurement} minuten geleden)`
 
 }

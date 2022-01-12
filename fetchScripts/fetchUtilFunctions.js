@@ -1,9 +1,43 @@
+import { getUnixTime, parse, format, add, sub } from "date-fns"
+import { readFileSync, writeFile } from 'fs';
+
 export function catchError(resolve, data, error, dataset) {
   data = { error: error, dataset: dataset }
   resolve({ data })
 }
 
 //Rijkswaterstaat specific
+export function giveRWSFetchOptions(databaseData, dateZoned) {
+
+  const locationID = databaseData.datasets.Rijkswaterstaat.location_id
+  const locationX = databaseData.x
+  const locationY = databaseData.y
+
+  const dateTodayFetch = format(dateZoned, "yyyy-MM-dd")
+  const dateTomorrowFetch = format(add(dateZoned, { days: 1 }), "yyyy-MM-dd")
+  const time = "00:00:00"
+
+  return {
+    "headers": {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body": JSON.stringify({
+      "AquoPlusWaarnemingMetadata": {
+        "AquoMetadata": {
+          "Compartiment": { "Code": "LT" }
+        }
+      },
+      "Locatie": { "X": locationX, "Y": locationY, "Code": `${locationID}` },
+      "Periode": {
+        "Begindatumtijd": `${dateTodayFetch}T${time}.000+01:00`,
+        "Einddatumtijd": `${dateTomorrowFetch}T${time}.000+01:00`
+      }
+    }),
+    "method": "POST"
+  }
+}
+
 export function SuccesvolFalseError(rawData, data, resolve) {
   if (rawData.Foutmelding) {
     if (rawData.Foutmelding == "Geen gegevens gevonden!") {
@@ -41,6 +75,25 @@ export function SuccesvolFalseError(rawData, data, resolve) {
 // }
 
 //MVB specific
+export function giveMVBFetchOptions(databaseData, dateZoned, newToken) {
+
+  const keyFetch = newToken || JSON.parse(readFileSync("Meetnet Vlaamse Banken API key.json")).APIKey
+  const locationID = JSON.stringify(databaseData.datasets.MVB.location_id)
+  const dateYesterdayFetch = format(sub(dateZoned, {
+    days: 1
+  }), "yyyy-MM-dd")
+  const dateTodayFetch = format(dateZoned, "yyyy-MM-dd")
+
+  return {
+    "headers": {
+      "authorization": `Bearer ${keyFetch}`,
+      "content-type": "application/json; charset=UTF-8"
+    },
+    "body": `{\"StartTime\":\"${dateYesterdayFetch}T23:00:00.000Z\",\"EndTime\":\"${dateTodayFetch}T23:00:00.000Z\",\"IDs\":${locationID}}`,
+    "method": "POST"
+  }
+}
+
 export function MessageError(rawData, data, resolve) {
   if (rawData.Message) {
     if (rawData.Message == "Login failed") {
@@ -64,9 +117,6 @@ export function MessageError(rawData, data, resolve) {
     return true
   }
 }
-
-import { writeFile } from 'fs';
-import { getUnixTime, parse, add } from "date-fns"
 
 export function saveNewApiKey(rawData) {
   const expiresString = add(parse(rawData[".expires"], "EEE, dd MMM yyyy HH:mm:ss 'GMT'", new Date()), { hours: 1 })

@@ -1,8 +1,10 @@
-import { format, sub, parseISO, getUnixTime } from "date-fns"
+import { format, parseISO, getUnixTime } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 import fetch from "node-fetch";
 import { existsSync, readFileSync } from 'fs';
-import { catchError, MessageError, saveNewApiKey, theoreticalMeasurements } from "./fetchUtilFunctions.js"
+import { catchError, MessageError, saveNewApiKey, theoreticalMeasurements, giveMVBFetchOptions } from "./fetchUtilFunctions.js"
+
+Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 
 export async function fetchMVB(databaseData, resolve, times) {
 
@@ -37,25 +39,13 @@ export async function fetchMVB(databaseData, resolve, times) {
 
   async function fetchDataMVB(newToken) {
 
-    const keyFetch = newToken || JSON.parse(readFileSync("Meetnet Vlaamse Banken API key.json")).APIKey
-    const locationID = JSON.stringify(databaseData.datasets.MVB.location_id)
     const timeZone = 'Europe/Amsterdam'
     const dateUTC = new Date()
     const dateZoned = utcToZonedTime(dateUTC, timeZone)
     const dateToday = format(dateZoned, "dd-MM-yyyy")
-    const dateYesterdayFetch = format(sub(dateZoned, {
-      days: 1
-    }), "yyyy-MM-dd")
-    const dateTodayFetch = format(dateZoned, "yyyy-MM-dd")
 
-    const rawDataString = await fetch("https://api.meetnetvlaamsebanken.be/V2/getData", {
-      "headers": {
-        "authorization": `Bearer ${keyFetch}`,
-        "content-type": "application/json; charset=UTF-8"
-      },
-      "body": `{\"StartTime\":\"${dateYesterdayFetch}T23:00:00.000Z\",\"EndTime\":\"${dateTodayFetch}T23:00:00.000Z\",\"IDs\":${locationID}}`,
-      "method": "POST"
-    }).then(response => response.text()).catch((error) => catchError(resolve, data, error, "MVB"))
+    const rawDataString = await fetch("https://api.meetnetvlaamsebanken.be/V2/getData", giveMVBFetchOptions(databaseData, dateZoned, newToken))
+      .then(response => response.text()).catch((error) => catchError(resolve, data, error, "MVB"))
 
     let rawData
     try { rawData = JSON.parse(rawDataString) } catch { return }
@@ -67,36 +57,32 @@ export async function fetchMVB(databaseData, resolve, times) {
       wind_gusts = [],
       wind_direction = []
     const date = new Array(times.length).fill(dateToday)
-    const timeStamps = JSON.parse(JSON.stringify(times))
+    const timeStamps = times
 
-    rawData.Values.forEach((measurementType) => {
+    rawData.Values.forEach(measurementType => {
       if (measurementType.Values.length == 0) return
 
       let measurementTimes = [],
         tempArray = []
 
-      measurementType.Values.forEach((measurement) => {
+      measurementType.Values.forEach(measurement => {
         let time = format(utcToZonedTime(parseISO(measurement.Timestamp), timeZone), "HH:mm")
         measurementTimes.push(time)
       })
 
-      times.forEach((timeStamp) => {
+      times.forEach(timeStamp => {
         if (!measurementTimes.includes(timeStamp)) {
           tempArray.push(-999)
           return
         }
 
-        const indexTime = measurementTimes.indexOf(timeStamp);
+        const indexTime = measurementTimes.indexOf(timeStamp)
 
         if (measurementType.Values[indexTime]) {
           if (measurementType.Values[indexTime].Value) {
             tempArray.push(measurementType.Values[indexTime].Value)
-          } else {
-            tempArray.push(-999)
-          }
-        } else {
-          tempArray.push(-999)
-        }
+          } else tempArray.push(-999)
+        } else tempArray.push(-999)
       })
 
       const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes)
@@ -105,9 +91,9 @@ export async function fetchMVB(databaseData, resolve, times) {
         tempArray.pop()
       }
 
-      if (measurementType.ID.includes("WC3")) wind_gusts = JSON.parse(JSON.stringify(tempArray)).map(x => x * 1.94384449)
-      if (measurementType.ID.includes("WVC")) wind_speed = JSON.parse(JSON.stringify(tempArray)).map(x => x * 1.94384449)
-      if (measurementType.ID.includes("WRS")) wind_direction = JSON.parse(JSON.stringify(tempArray))
+      if (measurementType.ID.includes("WC3")) wind_gusts = tempArray.copy().map(x => x * 1.94384449)
+      if (measurementType.ID.includes("WVC")) wind_speed = tempArray.copy().map(x => x * 1.94384449)
+      if (measurementType.ID.includes("WRS")) wind_direction = tempArray.copy()
     })
 
     timeStamps.splice(wind_speed.length)

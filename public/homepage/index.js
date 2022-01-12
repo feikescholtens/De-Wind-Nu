@@ -19,7 +19,7 @@ seaMapCheckbox.onchange = () => changeTiles(map, tilesSelector, seaMapCheckbox)
 const urlParams = new URLSearchParams(window.location.search)
 const center = [urlParams.get("x") || 5.160544, urlParams.get("y") || 52.182725]
 const zoom = urlParams.get("z") || 6
-const excludeZoomFitMarkers = ["8971", "2417", "2367", "8287", "5643", "2468", "1919"]
+const excludeZoomFitMarkers = ["3318", "4806", "0727", "1843", "9057", "8609", "6823"]
 let markersLats = [],
   markersLons = []
 mapboxgl.accessToken = "pk.eyJ1IjoiZmVpa2VzY2hvbHRlbnMiLCJhIjoiY2t1aDlpZWEwMGhkYTJwbm02Zmt0Y21sOCJ9.PA3iy-3LQhjCkfxhxL2zUw";
@@ -37,8 +37,7 @@ map.on("load", () => {
   if (localStorage.getItem("seaMap") == "1") map.addLayer(tilesObjects.OpenSeaMap)
 })
 
-data.forEach((item) => {
-
+data.forEach(item => {
   if (!excludeZoomFitMarkers.includes(item.id)) {
     markersLats.push(item.lat)
     markersLons.push(item.lon)
@@ -47,22 +46,16 @@ data.forEach((item) => {
   let popupId, marker = document.createElement("div")
   marker.className = "marker"
 
-  if (item.datasets.KNMI) {
-    marker.id = "KNMI"
-    popupId = "popupKNMI"
-  } else if (item.datasets.Rijkswaterstaat) {
+  if (item.datasets.Rijkswaterstaat) {
     marker.id = "RWS"
     popupId = "popupRWS"
+  } else if (item.datasets.KNMI) {
+    marker.id = "KNMI"
+    popupId = "popupKNMI"
   } else if (item.datasets.MVB) {
     marker.id = "MVB"
     popupId = "popupMVB"
-
-    ///////////////////////////////////////
-  } else if (item.datasets.RWS_OFFICIAL) {
-    marker.id = "RWS_OFFICIAL"
-    popupId = "popupRWS_OFFICIAL"
   }
-  //////////////////////////////////////
 
   const button = document.createElement("button")
   button.className = `windPageButton ${popupId}`

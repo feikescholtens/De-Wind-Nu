@@ -10,28 +10,6 @@
     }
   },
   {
-    "id": "8474",
-    "name": "Hansweert",
-    "lat": "51.44571",
-    "lon": "3.99745",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "HAWI"
-      }
-    }
-  },
-  {
-    "id": "3545",
-    "name": "Oosterschelde zeezijde (Schaar)",
-    "lat": "51.65588",
-    "lon": "3.69395",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "OS4"
-      }
-    }
-  },
-  {
     "id": "9690",
     "name": "Blankenberge",
     "lat": "51.3152777777778",
@@ -47,39 +25,6 @@
     }
   },
   {
-    "id": "7807",
-    "name": "K13 Platform Alpha",
-    "lat": "53.21598",
-    "lon": "3.21879",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "K132"
-      }
-    }
-  },
-  {
-    "id": "3595",
-    "name": "Lichteiland Goeree",
-    "lat": "51.92575",
-    "lon": "3.66987",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "LEG1"
-      }
-    }
-  },
-  {
-    "id": "9673",
-    "name": "Houtribdijk (Trintelhaven)",
-    "lat": "52.634268",
-    "lon": "5.416504",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "HOUD"
-      }
-    }
-  },
-  {
     "id": "1141",
     "name": "Den Helder",
     "lat": 52.924177,
@@ -87,50 +32,6 @@
     "datasets": {
       "KNMI": {
         "location_id": "6235"
-      }
-    }
-  },
-  {
-    "id": "5643",
-    "name": "F3 Platform",
-    "lat": "54.85",
-    "lon": "4.73",
-    "datasets": {
-      "KNMI": {
-        "location_id": "6239"
-      }
-    }
-  },
-  {
-    "id": "8287",
-    "name": "Gannet Alpha Platform",
-    "lat": "57.19150",
-    "lon": "1.00180",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "GAN1"
-      }
-    }
-  },
-  {
-    "id": "4072",
-    "name": "Oesterdam (Diepsluis)",
-    "lat": "51.51020",
-    "lon": "4.17390",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "BDWI"
-      }
-    }
-  },
-  {
-    "id": "5803",
-    "name": "Vlakte van de Raan",
-    "lat": "51.50372",
-    "lon": "3.24205",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "VR"
       }
     }
   },
@@ -187,28 +88,6 @@
     }
   },
   {
-    "id": "3007",
-    "name": "IJmuiden haven",
-    "lat": "52.46228",
-    "lon": "4.55482",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "IJMH"
-      }
-    }
-  },
-  {
-    "id": "0856",
-    "name": "Wierumergronden",
-    "lat": "53.51583",
-    "lon": "5.95826",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "WIER"
-      }
-    }
-  },
-  {
     "id": "1612",
     "name": "Hoogeveen",
     "lat": 52.749056,
@@ -231,17 +110,6 @@
     }
   },
   {
-    "id": "5647",
-    "name": "Brouwershavensegat",
-    "lat": "51.76653",
-    "lon": "3.62175",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "BG2"
-      }
-    }
-  },
-  {
     "id": "3107",
     "name": "Nieuw Beerta",
     "lat": "53.194438",
@@ -253,28 +121,6 @@
     }
   },
   {
-    "id": "7043",
-    "name": "Markermeer",
-    "lat": "52.53207",
-    "lon": "5.24215",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "FL42"
-      }
-    }
-  },
-  {
-    "id": "1980",
-    "name": "Zeelandbrug",
-    "lat": "51.62860",
-    "lon": "3.91778",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "ZBWI"
-      }
-    }
-  },
-  {
     "id": "1218",
     "name": "De Bilt",
     "lat": 52.098822,
@@ -282,17 +128,6 @@
     "datasets": {
       "KNMI": {
         "location_id": "6260"
-      }
-    }
-  },
-  {
-    "id": "1412",
-    "name": "Stavenisse",
-    "lat": "51.59541",
-    "lon": "4.00601",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "STAV"
       }
     }
   },
@@ -315,17 +150,6 @@
     "datasets": {
       "KNMI": {
         "location_id": "6273"
-      }
-    }
-  },
-  {
-    "id": "2367",
-    "name": "J6 Platform",
-    "lat": "53.81663",
-    "lon": "2.95001",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "J61"
       }
     }
   },
@@ -365,17 +189,6 @@
     }
   },
   {
-    "id": "8412",
-    "name": "Haringvlietsluis",
-    "lat": "51.83617",
-    "lon": "4.05438",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "HVS01"
-      }
-    }
-  },
-  {
     "id": "7619",
     "name": "Wandelaar",
     "lat": "51.3944444444444",
@@ -402,28 +215,6 @@
     }
   },
   {
-    "id": "7234",
-    "name": "Q11 Platform",
-    "lat": "52.92534",
-    "lon": "4.15036",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "Q11"
-      }
-    }
-  },
-  {
-    "id": "8650",
-    "name": "Europlatform",
-    "lat": "51.99780",
-    "lon": "3.27507",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "EPL1"
-      }
-    }
-  },
-  {
     "id": "3406",
     "name": "Stavoren",
     "lat": "52.89660",
@@ -442,61 +233,6 @@
     "datasets": {
       "KNMI": {
         "location_id": "6323"
-      }
-    }
-  },
-  {
-    "id": "2417",
-    "name": "A12 Platform",
-    "lat": "55.41666",
-    "lon": "3.81669",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "A121"
-      }
-    }
-  },
-  {
-    "id": "8971",
-    "name": "Nelson Platform",
-    "lat": "57.66832",
-    "lon": "1.14725",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "NLS1"
-      }
-    }
-  },
-  {
-    "id": "4123",
-    "name": "Terneuzen (Westsluis)",
-    "lat": "51.32778",
-    "lon": "3.81621",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "TNWS"
-      }
-    }
-  },
-  {
-    "id": "1919",
-    "name": "North Cormorant 1 Platform",
-    "lat": "61.33819",
-    "lon": "1.16610",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "NC1"
-      }
-    }
-  },
-  {
-    "id": "5428",
-    "name": "Lichteiland Goeree",
-    "lat": "51.92575",
-    "lon": "3.66987",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "LEG1"
       }
     }
   },
@@ -541,61 +277,6 @@
     "datasets": {
       "KNMI": {
         "location_id": "6348"
-      }
-    }
-  },
-  {
-    "id": "0900",
-    "name": "IJmuiden buitenhaven (zuid pier)",
-    "lat": "52.46369",
-    "lon": "4.53228",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "IJZ1"
-      }
-    }
-  },
-  {
-    "id": "1254",
-    "name": "Huibertgat",
-    "lat": "53.57375",
-    "lon": "6.39843",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "HUIB"
-      }
-    }
-  },
-  {
-    "id": "4686",
-    "name": "Cadzand",
-    "lat": "51.37989",
-    "lon": "3.37905",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "CAWI"
-      }
-    }
-  },
-  {
-    "id": "5467",
-    "name": "K14 Platform",
-    "lat": "53.26667",
-    "lon": "3.63333",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "K141"
-      }
-    }
-  },
-  {
-    "id": "0160",
-    "name": "Terschelling Noordzee",
-    "lat": "53.42792",
-    "lon": "5.33323",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "TERS"
       }
     }
   },
@@ -667,39 +348,6 @@
     }
   },
   {
-    "id": "4859",
-    "name": "Hoorn, Terschelling",
-    "lat": "53.39926",
-    "lon": "5.34865",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "HOTE"
-      }
-    }
-  },
-  {
-    "id": "6822",
-    "name": "Grevelingensluis",
-    "lat": "51.66661",
-    "lon": "4.09566",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "GRWI"
-      }
-    }
-  },
-  {
-    "id": "5107",
-    "name": "Platform Borssele Alpha",
-    "lat": "51.69993",
-    "lon": "3.05670",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "BSA"
-      }
-    }
-  },
-  {
     "id": "9990",
     "name": "Herwijnen",
     "lat": 51.85759,
@@ -759,39 +407,6 @@
     }
   },
   {
-    "id": "3392",
-    "name": "Nes, Ameland",
-    "lat": "53.42997",
-    "lon": "5.76046",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "NESS"
-      }
-    }
-  },
-  {
-    "id": "9170",
-    "name": "AWG Platform",
-    "lat": "53.491449",
-    "lon": "5.940918",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "AWG1"
-      }
-    }
-  },
-  {
-    "id": "2347",
-    "name": "Rotterdamse hoek (IJsselmeer)",
-    "lat": "52.74935",
-    "lon": "5.55995",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "FL02"
-      }
-    }
-  },
-  {
     "id": "2721",
     "name": "Volkel",
     "lat": 51.65852,
@@ -799,17 +414,6 @@
     "datasets": {
       "KNMI": {
         "location_id": "6375"
-      }
-    }
-  },
-  {
-    "id": "7092",
-    "name": "Stroompaal IJmond",
-    "lat": "52.46444",
-    "lon": "4.51860",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "SPY1"
       }
     }
   },
@@ -825,83 +429,6 @@
     }
   },
   {
-    "name": "D15 platform",
-    "lat": "54.31666",
-    "lon": "2.93333",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "D15"
-      }
-    },
-    "id": "2468"
-  },
-  {
-    "name": "L9 platform",
-    "lat": "53.61667",
-    "lon": "4.96667",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "L9"
-      }
-    },
-    "id": "7868"
-  },
-  {
-    "name": "Hoek van Holland Noorderdam ",
-    "lat": "51.98669",
-    "lon": "4.08413",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "NRD1"
-      }
-    },
-    "id": "0076"
-  },
-  {
-    "name": "Hoek van Holland Lage Licht",
-    "lat": "51.98140",
-    "lon": "4.08137",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "LGL1"
-      }
-    },
-    "id": "1046"
-  },
-  {
-    "name": "Hoek van Holland Lage Licht backup",
-    "lat": "51.981060",
-    "lon": "4.082803",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "LGL12"
-      }
-    },
-    "id": "3452"
-  },
-  {
-    "name": "Hoek van Holland",
-    "lat": "51.977537",
-    "lon": "4.119745",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "HOEK"
-      }
-    },
-    "id": "2922"
-  },
-  {
-    "name": "Lauwersoog",
-    "lat": "53.42",
-    "lon": "6.2",
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "LAUW"
-      }
-    },
-    "id": "7622"
-  },
-  {
     "id": "4352",
     "name": "Lauwersoog",
     "lat": 53.411574,
@@ -909,7 +436,7 @@
     "x": 712485.362427151,
     "y": 5922496.96218518,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "LAUW"
       }
     }
@@ -922,20 +449,20 @@
     "x": 630087.998728811,
     "y": 5942671.15254043,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "L9"
       }
     }
   },
   {
     "id": "8700",
-    "name": "Oosterschelde 4",
+    "name": "Oosterschelde zeezijde (Schaar)",
     "lat": 51.655880000000046,
     "lon": 3.693954000000001,
     "x": 548004.476484997,
     "y": 5722993.34058284,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "OS4"
       }
     }
@@ -948,7 +475,7 @@
     "x": 695106.58080376,
     "y": 5930990.21887629,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "AWG"
       }
     }
@@ -961,7 +488,7 @@
     "x": 610215.841475144,
     "y": 6079449.4135779,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "F3"
       }
     }
@@ -974,7 +501,7 @@
     "x": 696130.296598613,
     "y": 5933727.14138876,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "WIER"
       }
     }
@@ -987,7 +514,7 @@
     "x": 579718.089134798,
     "y": 5756557.4430131,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "MLKZ"
       }
     }
@@ -1000,7 +527,7 @@
     "x": 556868.640270215,
     "y": 5686592.99245246,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "TNWS"
       }
     }
@@ -1013,33 +540,20 @@
     "x": 496708.794769268,
     "y": 5963121.52220118,
     "datasets": {
-      "RWS_OFFICIAL": {
-        "location_id": "J6"
-      }
-    }
-  },
-  {
-    "id": "4883",
-    "name": "Platform J6",
-    "lat": 53.816632419275315,
-    "lon": 2.950009502645602,
-    "x": 496708.762057664,
-    "y": 5963121.56887158,
-    "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "J6"
       }
     }
   },
   {
     "id": "3318",
-    "name": "Nelson platform1",
+    "name": "Nelson platform",
     "lat": 57.66168999999975,
     "lon": 1.144999999999313,
     "x": 389328.47782212,
     "y": 6392559.95957432,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "NLS1"
       }
     }
@@ -1052,7 +566,7 @@
     "x": 569683.338543064,
     "y": 5716519.09441382,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "STAV"
       }
     }
@@ -1065,59 +579,46 @@
     "x": 551697.869815018,
     "y": 6141462.20430188,
     "datasets": {
-      "RWS_OFFICIAL": {
-        "location_id": "A12"
-      }
-    }
-  },
-  {
-    "id": "7052",
-    "name": "Platform A12",
-    "lat": 55.383333333333084,
-    "lon": 3.8000000000000087,
-    "x": 550685.198107023,
-    "y": 6137740.93724544,
-    "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "A12"
       }
     }
   },
   {
     "id": "5098",
-    "name": "Brouwershavense Gat 2",
+    "name": "Brouwershavense Gat",
     "lat": 51.76652700000006,
     "lon": 3.621747000000003,
     "x": 542904.767180805,
     "y": 5735254.0584802,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "BG2"
       }
     }
   },
   {
     "id": "6353",
-    "name": "Bergsediepsluis wind",
+    "name": "Bergsediepsluis (Oesterdam)",
     "lat": 51.51019700000009,
     "lon": 4.173901000000157,
     "x": 581464.221684069,
     "y": 5707216.45883811,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "BDWI"
       }
     }
   },
   {
     "id": "5503",
-    "name": "Hansweert wind",
+    "name": "Hansweert",
     "lat": 51.44577000000008,
     "lon": 3.9975180000000674,
     "x": 569321.823604248,
     "y": 5699870.02269172,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "HAWI"
       }
     }
@@ -1130,7 +631,7 @@
     "x": 724996.335864394,
     "y": 5941470.2703589,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "HUB1"
       }
     }
@@ -1143,7 +644,7 @@
     "x": 590411.766154589,
     "y": 5749466.62406122,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "ROT2"
       }
     }
@@ -1156,7 +657,7 @@
     "x": 651339.91252293,
     "y": 5822566.22032937,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "FL42b"
       }
     }
@@ -1169,46 +670,33 @@
     "x": 495663.241516565,
     "y": 6018756.72170369,
     "datasets": {
-      "RWS_OFFICIAL": {
-        "location_id": "D15"
-      }
-    }
-  },
-  {
-    "id": "3237",
-    "name": "Platform D15-A",
-    "lat": 54.32566666666657,
-    "lon": 2.935750000000001,
-    "x": 495821.3824242,
-    "y": 6019758.38164838,
-    "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "D15"
       }
     }
   },
   {
     "id": "6823",
-    "name": "Brent Charlie Platform",
+    "name": "Brent Charlie platform",
     "lat": 61.09610999999952,
     "lon": 1.721389999999954,
     "x": 431057.398943666,
     "y": 6774166.0702699,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "BTC1"
       }
     }
   },
   {
     "id": "2829",
-    "name": "Haringvlietsluizen sch 1",
+    "name": "Haringvlietsluizen",
     "lat": 51.83616700000008,
     "lon": 4.054385000000098,
     "x": 572647.08352493,
     "y": 5743342.08299768,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "HVS01"
       }
     }
@@ -1221,7 +709,7 @@
     "x": 749387.579062717,
     "y": 5930678.90555067,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "UHWD"
       }
     }
@@ -1234,7 +722,7 @@
     "x": 646538.674114683,
     "y": 5833598.51786221,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "WIJD"
       }
     }
@@ -1247,7 +735,7 @@
     "x": 753602.88269246,
     "y": 5931845.6170377,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "SPE"
       }
     }
@@ -1260,7 +748,7 @@
     "x": 518884.956435892,
     "y": 5760829.35541647,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "EPL"
       }
     }
@@ -1273,33 +761,33 @@
     "x": 724996.335864394,
     "y": 5941470.2703589,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "HUIB"
       }
     }
   },
   {
     "id": "5367",
-    "name": "Kats Zandkreeksluis",
+    "name": "Zandkreeksluis (Kats)",
     "lat": 51.543971000000084,
     "lon": 3.8652760000000286,
     "x": 560002.850035323,
     "y": 5710674.15809413,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "KATS"
       }
     }
   },
   {
     "id": "4037",
-    "name": "Cadzand wind",
+    "name": "Cadzand",
     "lat": 51.37989000000014,
     "lon": 3.379060000000014,
     "x": 526380.65436293,
     "y": 5692139.65195593,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "CAWI"
       }
     }
@@ -1312,7 +800,7 @@
     "x": 576917.675576278,
     "y": 5759136.13463449,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "HOEK"
       }
     }
@@ -1325,20 +813,20 @@
     "x": 655016.251709493,
     "y": 5922412.47580659,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "TERS"
       }
     }
   },
   {
     "id": "0577",
-    "name": "Lage Licht",
+    "name": "Lage Licht (Hoek van Holland)",
     "lat": 51.98139300000006,
     "lon": 4.081434000000092,
     "x": 574270.750149378,
     "y": 5759520.90939086,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "LGL1"
       }
     }
@@ -1351,20 +839,20 @@
     "x": 672717.142704692,
     "y": 5847343.70995726,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "FL02"
       }
     }
   },
   {
     "id": "9099",
-    "name": "Marker wadden",
+    "name": "Marker Wadden",
     "lat": 52.600320000000785,
     "lon": 5.391229000004971,
     "x": 661941.941846159,
     "y": 5830496.19165586,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "MWAD"
       }
     }
@@ -1377,33 +865,33 @@
     "x": 577332.855010984,
     "y": 5864584.14461751,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "Q1"
       }
     }
   },
   {
     "id": "9866",
-    "name": "Platform Hoorn Q1-A",
+    "name": "Q1-A platform (Hoorn)",
     "lat": 52.92535269059845,
     "lon": 4.150285753428387,
     "x": 577327.765231775,
     "y": 5864586.03138184,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "Q1"
       }
     }
   },
   {
     "id": "5852",
-    "name": "Borssele Alpha",
+    "name": "Borssele Alpha platform",
     "lat": 51.6999210000001,
     "lon": 3.056706999999991,
     "x": 503918.942357358,
     "y": 5727664.94973239,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "BSA"
       }
     }
@@ -1416,33 +904,33 @@
     "x": 542240.42600117,
     "y": 5902123.13674842,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "K14"
       }
     }
   },
   {
     "id": "6862",
-    "name": "Grevelingensluis wind",
+    "name": "Grevelingensluis (Bruinisse)",
     "lat": 51.66661100000014,
     "lon": 4.095666000000117,
     "x": 575774.487899888,
     "y": 5724527.14821832,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "GRWI"
       }
     }
   },
   {
     "id": "4662",
-    "name": "Zeelandbrug wind",
+    "name": "Zeelandbrug",
     "lat": 51.6286000000001,
     "lon": 3.9177850000000363,
     "x": 563525.897877064,
     "y": 5720130.26737017,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "ZBWI"
       }
     }
@@ -1455,7 +943,7 @@
     "x": 662396.645469852,
     "y": 5835825.85858452,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "HOUD"
       }
     }
@@ -1468,59 +956,59 @@
     "x": 546063.014918327,
     "y": 5752991.39166245,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "LEG"
       }
     }
   },
   {
     "id": "0906",
-    "name": "Nes",
+    "name": "Nes (Ameland)",
     "lat": 53.429970000002214,
     "lon": 5.7589400000091455,
     "x": 683288.335482817,
     "y": 5923648.18977766,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "NES"
       }
     }
   },
   {
     "id": "0890",
-    "name": "IJgeul stroommeetpaal",
+    "name": "Stroommeetpaal IJgeul",
     "lat": 52.46373600000007,
     "lon": 4.517361000000503,
     "x": 603084.756918076,
     "y": 5813700.79688048,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "SPY"
       }
     }
   },
   {
     "id": "1843",
-    "name": "Gannet platform 1",
+    "name": "Gannet platform",
     "lat": 57.185029999999784,
     "lon": 0.9999999999989315,
     "x": 379117.977891604,
     "y": 6339756.30889541,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "GAN1"
       }
     }
   },
   {
     "id": "3554",
-    "name": "K13 Alpha",
+    "name": "K13 Alpha platform",
     "lat": 53.21700999999997,
     "lon": 3.218931999999991,
     "x": 514618.822878979,
     "y": 5896433.91304204,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "K13"
       }
     }
@@ -1533,7 +1021,7 @@
     "x": 605632.956827924,
     "y": 5813598.08945097,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "IJMH"
       }
     }
@@ -1546,20 +1034,20 @@
     "x": 541518.745919649,
     "y": 5699254.96425966,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "VLIS"
       }
     }
   },
   {
     "id": "4426",
-    "name": "Vlakte v/d Raan",
+    "name": "Vlakte van de Raan",
     "lat": 51.5037190000001,
     "lon": 3.2420519999999953,
     "x": 516800.113958171,
     "y": 5705870.5430126,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "VR"
       }
     }
@@ -1572,21 +1060,8 @@
     "x": 523256.298159867,
     "y": 5800986.61235339,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "P11"
-      }
-    }
-  },
-  {
-    "id": "3310",
-    "name": "Schaar",
-    "lat": 51.655880000000046,
-    "lon": 3.693954000000001,
-    "x": 548004.476484997,
-    "y": 5722993.34058284,
-    "datasets": {
-      "RWS_OFFICIAL": {
-        "location_id": "SCHA"
       }
     }
   },
@@ -1598,33 +1073,33 @@
     "x": 617438.130657321,
     "y": 5873703.05052095,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "TEHO"
       }
     }
   },
   {
     "id": "3885",
-    "name": "Geulhaven Radarpost 10",
+    "name": "Geulhaven radarpost",
     "lat": 51.89181400000011,
     "lon": 4.31253100000026,
     "x": 590321.143000125,
     "y": 5749819.65457646,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "RP10"
       }
     }
   },
   {
     "id": "0904",
-    "name": "IJmuiden Zuid havenhoofd",
+    "name": "IJmuiden havenhoofd zuid",
     "lat": 52.463693000000085,
     "lon": 4.5322830000005405,
     "x": 604098.550551581,
     "y": 5813717.41176161,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "IJZ1"
       }
     }
@@ -1637,7 +1112,7 @@
     "x": 627792.566605279,
     "y": 5901709.86707934,
     "datasets": {
-      "RWS_OFFICIAL": {
+      "Rijkswaterstaat": {
         "location_id": "VLI1"
       }
     }

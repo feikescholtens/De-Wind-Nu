@@ -3,11 +3,10 @@ export function givePopUpData() {
     credit: { html: `
    <h3 class="popUpTitle">Credit / bronvermelding</h3>
    <p class='messageBoxP'>De Wind Nu is non-profit en heeft als doel om surfers te informeren over het weer. Dit is
-     mogelijk gemaakt door de data van <a target='_blank' href='https://waterberichtgeving.rws.nl/'>Rijkswaterstaat</a>, het KNMI, 
-     het Meetnet Vlaamse Banken en het ECMWF. 
-     Data van Rijkswaterstaat is van de meetpalen van het <i>Waterberichtgeving</i>-
-     platform en de voorspellingen zijn door Rijkswaterstaat geleverd en berekend door het 
-     <a href="https://www.ecmwf.int/" target="_blank">ECMWF</a>. Data van het KNMI is aangeleverd door 
+     mogelijk gemaakt door de data van <a target='_blank' href='https://waterberichtgeving.rws.nl/'>Rijkswaterstaat</a>, het KNMI en 
+     het Meetnet Vlaamse Banken. 
+     Data van Rijkswaterstaat is van de meetpalen van het <i>Rijkswaterstaat waterdata</i>-
+     netwerk. Data van het KNMI is aangeleverd door 
      <a target='_blank' href='https://www.buienradar.nl'>Buienradar.nl</a>. Het Meetnet Vlaamse Banken van de Vlaamse Hydrografie 
      (zie <a href="https://www.agentschapmdk.be/nl/vlaamse-hydrografie" target="_blank">Vlaamse Hydrografie | Agentschap MDK</a>) 
      levert de winddata van voor de Belgische kust.
