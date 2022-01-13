@@ -2,9 +2,7 @@ import { drawDirectionArrow } from "./drawDirectionArrow.js"
 import { directionToLetters } from "./directionToLetters.js"
 import { setLabelPostitions } from "./functions.js"
 
-Array.prototype.lastMeasurement = function() {
-  return this[this.length - 1]
-}
+Array.prototype.lastMeasurement = function() { return this[this.length - 1] }
 let directionStuffDrawn = false
 
 export function updateCurrentWind() {

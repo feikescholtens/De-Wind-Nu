@@ -28,7 +28,6 @@ export async function fetchRWS(databaseData, resolve, times) {
     wind_gusts = [],
     wind_direction = []
   const date = new Array(times.length).fill(dateToday)
-  const timeStamps = times
 
   rawData.WaarnemingenLijst.forEach(measurementType => {
     if (measurementType.MetingenLijst.length == 0) return
@@ -71,9 +70,7 @@ export async function fetchRWS(databaseData, resolve, times) {
     if (measurementType.AquoMetadata.Grootheid.Code == "WINDRTG") wind_direction = tempArray.copy()
   })
 
-  timeStamps.splice(wind_speed.length)
-
-  data["Rijkswaterstaat"] = [date, timeStamps, wind_speed, wind_gusts, wind_direction]
+  data["Rijkswaterstaat"] = [date, times, wind_speed, wind_gusts, wind_direction]
   resolve({ data })
 
 }

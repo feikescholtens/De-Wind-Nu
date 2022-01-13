@@ -22,7 +22,6 @@ export async function fetchKNMI(databaseData, resolve, times) {
 
   console.log(rawDataString)
 
-  const timeStamps = times
   let date = new Array(times.length).fill(dateToday),
     wind_speed = [],
     wind_gusts = [],
@@ -56,8 +55,6 @@ export async function fetchKNMI(databaseData, resolve, times) {
     }
   })
 
-  // timeStamps.splice(wind_speed.length)
-
-  data["KNMI"] = [date, timeStamps, wind_speed, wind_gusts, wind_direction]
+  data["KNMI"] = [date, times, wind_speed, wind_gusts, wind_direction]
   resolve({ data })
 }

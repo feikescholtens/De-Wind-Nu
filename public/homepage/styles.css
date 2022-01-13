@@ -45,6 +45,7 @@ div#MVB {
 
 div.mapboxgl-popup {
     max-width: 200px;
+    z-index: 1000;
 }
 
 div.mapboxgl-popup-content {

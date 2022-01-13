@@ -57,7 +57,6 @@ export async function fetchMVB(databaseData, resolve, times) {
       wind_gusts = [],
       wind_direction = []
     const date = new Array(times.length).fill(dateToday)
-    const timeStamps = times
 
     rawData.Values.forEach(measurementType => {
       if (measurementType.Values.length == 0) return
@@ -96,9 +95,7 @@ export async function fetchMVB(databaseData, resolve, times) {
       if (measurementType.ID.includes("WRS")) wind_direction = tempArray.copy()
     })
 
-    timeStamps.splice(wind_speed.length)
-
-    data["MVB"] = [date, timeStamps, wind_speed, wind_gusts, wind_direction]
+    data["MVB"] = [date, times, wind_speed, wind_gusts, wind_direction]
     resolve({ data })
   }
 }
