@@ -38,6 +38,34 @@ export function giveRWSFetchOptions(databaseData, dateZoned) {
   }
 }
 
+export function giveRWSOverviewFetchOptions(locationsArray) {
+  const fetchBody = {
+    "AquoPlusWaarnemingMetadataLijst": [{
+      "AquoMetadata": {
+        "Grootheid": {
+          "Code": "WINDSHD"
+        }
+      }
+    }, {
+      "AquoMetadata": {
+        "Grootheid": {
+          "Code": "WINDRTG"
+        }
+      }
+    }],
+    "LocatieLijst": locationsArray
+  }
+
+  return {
+    "headers": {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body": JSON.stringify(fetchBody),
+    "method": "POST"
+  }
+}
+
 export function SuccesvolFalseError(rawData, data, resolve) {
   if (rawData.Foutmelding) {
     if (rawData.Foutmelding == "Geen gegevens gevonden!") {
@@ -53,26 +81,6 @@ export function SuccesvolFalseError(rawData, data, resolve) {
     return true
   }
 }
-// export function loopArrayRelativeIndex(i, metingenCategoriesLength, rawData) {
-//   let loopArray, relativeIndex
-
-//   if (i < metingenCategoriesLength) {
-//     loopArray = rawData.meting.values
-//     relativeIndex = i
-//   } else {
-//     loopArray = rawData.verwachting.values
-//     relativeIndex = i - metingenCategoriesLength
-//   }
-
-//   return { loopArray, relativeIndex }
-// }
-
-// export function lastMeasurementIndex(dataCategorized, i) {
-//   const reverseArray = JSON.parse(JSON.stringify(dataCategorized[i])).reverse()
-//   const lastMeasurementIndex = reverseArray.length - reverseArray.findIndex(measurement => measurement !== null)
-
-//   return lastMeasurementIndex
-// }
 
 //MVB specific
 export function giveMVBFetchOptions(databaseData, dateZoned, newToken) {
@@ -92,6 +100,22 @@ export function giveMVBFetchOptions(databaseData, dateZoned, newToken) {
     "body": `{\"StartTime\":\"${dateYesterdayFetch}T23:00:00.000Z\",\"EndTime\":\"${dateTodayFetch}T23:00:00.000Z\",\"IDs\":${locationID}}`,
     "method": "POST"
   }
+}
+
+export function giveMVBOverviewFetchOptions(locationsArray, newToken) {
+
+  const keyFetch = newToken || JSON.parse(readFileSync("Meetnet Vlaamse Banken API key.json")).APIKey
+  return {
+    "headers": {
+      "authorization": `Bearer ${keyFetch}`,
+      "content-type": "application/json; charset=UTF-8"
+    },
+    "body": `{
+      "IDs": ${JSON.stringify(locationsArray)}
+    }`,
+    "method": "POST"
+  }
+
 }
 
 export function MessageError(rawData, data, resolve) {

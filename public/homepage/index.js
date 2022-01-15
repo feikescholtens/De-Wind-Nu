@@ -1,4 +1,4 @@
-import { fitMap, windPage, changeTiles } from "./functions.js"
+import { fitMap, windPage, changeTiles, setOverviewData } from "./functions.js"
 import { contact } from "../jsPopUps/contact.js"
 import { credit } from "../jsPopUps/credit.js"
 import { feedback } from "../jsPopUps/feedback.js"
@@ -37,6 +37,10 @@ map.on("load", () => {
   if (localStorage.getItem("seaMap") == "1") map.addLayer(tilesObjects.OpenSeaMap)
 })
 
+fetch("getOverviewData/Rijkswaterstaat").then(response => response.json()).then(data => setOverviewData(data))
+fetch("getOverviewData/KNMI").then(response => response.json()).then(data => setOverviewData(data))
+fetch("getOverviewData/MVB").then(response => response.json()).then(data => setOverviewData(data))
+
 data.forEach(item => {
   if (!excludeZoomFitMarkers.includes(item.id)) {
     markersLats.push(item.lat)
@@ -44,18 +48,20 @@ data.forEach(item => {
   }
 
   let popupId, marker = document.createElement("div")
-  marker.className = "marker"
+  marker.className = "markerContainer"
+  marker.innerHTML = `<div class="marker" title="${item.name}"></div>`
 
   if (item.datasets.Rijkswaterstaat) {
-    marker.id = "RWS"
+    Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("RWS") })
     popupId = "popupRWS"
   } else if (item.datasets.KNMI) {
-    marker.id = "KNMI"
+    Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("KNMI") })
     popupId = "popupKNMI"
   } else if (item.datasets.MVB) {
-    marker.id = "MVB"
+    Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("MVB") })
     popupId = "popupMVB"
   }
+  Array.from(marker.getElementsByTagName("div")).forEach(element => { element.id = item.id })
 
   const button = document.createElement("button")
   button.className = `windPageButton ${popupId}`

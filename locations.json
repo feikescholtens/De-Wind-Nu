@@ -624,19 +624,6 @@
     }
   },
   {
-    "id": "8306",
-    "name": "Huibertgat",
-    "lat": 53.57375000001183,
-    "lon": 6.398433000025506,
-    "x": 724996.335864394,
-    "y": 5941470.2703589,
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "HUB1"
-      }
-    }
-  },
-  {
     "id": "5260",
     "name": "Rotterdam Geulhaven",
     "lat": 51.88862600000009,

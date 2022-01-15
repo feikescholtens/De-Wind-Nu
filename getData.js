@@ -1,9 +1,9 @@
 import { handleFetchErrors } from "./handleFetchErrors.js"
 import { validID, dataUseful } from "./validationFunctions.js"
 import { readFileSync } from 'fs'
-import { fetchRWS } from "./fetchScripts/Rijkswaterstaat.js"
-import { fetchKNMI } from "./fetchScripts/KNMI.js"
-import { fetchMVB } from "./fetchScripts/Meetnet Vlaamse Banken.js"
+import { fetchRWS } from "./fetchScripts/getData/Rijkswaterstaat.js"
+import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
+import { fetchMVB } from "./fetchScripts/getData/MVB.js"
 
 const times = JSON.parse(readFileSync("times.json"))
 

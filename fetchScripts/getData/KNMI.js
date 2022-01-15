@@ -1,7 +1,7 @@
 import { format } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 import fetch from "node-fetch";
-import { catchError } from "./fetchUtilFunctions.js"
+import { catchError } from "../fetchUtilFunctions.js"
 const timeZone = 'Europe/Amsterdam'
 
 export async function fetchKNMI(databaseData, resolve, times) {

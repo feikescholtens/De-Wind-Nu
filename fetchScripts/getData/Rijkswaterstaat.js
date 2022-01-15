@@ -1,7 +1,7 @@
 import { format, parseISO } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
-import fetch from "node-fetch";
-import { catchError, theoreticalMeasurements, SuccesvolFalseError, giveRWSFetchOptions } from "./fetchUtilFunctions.js"
+import fetch from "node-fetch"
+import { catchError, theoreticalMeasurements, SuccesvolFalseError, giveRWSFetchOptions } from "../fetchUtilFunctions.js"
 
 Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 

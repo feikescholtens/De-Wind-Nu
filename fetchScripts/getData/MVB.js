@@ -1,8 +1,8 @@
 import { format, parseISO, getUnixTime } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
-import fetch from "node-fetch";
-import { existsSync, readFileSync } from 'fs';
-import { catchError, MessageError, saveNewApiKey, theoreticalMeasurements, giveMVBFetchOptions } from "./fetchUtilFunctions.js"
+import fetch from "node-fetch"
+import { existsSync, readFileSync } from 'fs'
+import { catchError, MessageError, saveNewApiKey, theoreticalMeasurements, giveMVBFetchOptions } from "../fetchUtilFunctions.js"
 
 Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 

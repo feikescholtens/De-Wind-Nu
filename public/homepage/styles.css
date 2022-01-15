@@ -1,5 +1,5 @@
 :root {
-    --markerSize: 12px;
+    --markerSize: 25px;
 }
 
 body {
@@ -19,28 +19,61 @@ div#map {
     background-color: rgb(170, 211, 223);
 }
 
+div.markerContainer {
+    width: calc(3 * var(--markerSize));
+    height: calc(3 * var(--markerSize));
+}
+
 div.marker {
+    position: relative;
+    transform-origin: center;
+    box-sizing: content-box;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     background-size: cover;
     width: var(--markerSize);
     height: var(--markerSize);
     border-radius: 50%;
     cursor: pointer;
-    border: 2px black solid;
+    border: 3px white solid;
+    text-align: center;
+    line-height: var(--markerSize);
+    font-size: calc(0.7 * var(--markerSize));
+    font-weight: 800;
+    color: white;
+    border-color: white !important;
+    box-shadow: 0 0 5px 3px grey;
+    text-shadow: 1px 1px #5c5c5c;
 }
 
-div#RWS {
+div.arrowArm {
+    position: absolute;
+    width: calc(0.2 * var(--markerSize));
+    border-top: calc(1.5 * var(--markerSize)) solid;
+    border-left: calc(0.2 * var(--markerSize)) solid transparent;
+    border-right: calc(0.2 * var(--markerSize)) solid transparent;
+    left: calc(1.5 * var(--markerSize));
+    top: calc(1.5 * var(--markerSize));
+    transform-origin: top;
+    transform: translateX(calc(-0.3 * var(--markerSize))) rotate(0);
+    background-color: unset !important;
+    filter: drop-shadow(3px 0 white) drop-shadow(0 3px white) drop-shadow(-3px 0 white) drop-shadow(1px 1px 1px grey) drop-shadow(-1px 1px 1px grey);
+}
+
+div.RWS {
     background-color: rgb(46, 179, 99);
-    z-index: 1;
+    border-top-color: rgb(46, 179, 99);
 }
 
-div#KNMI {
+div.KNMI {
     background-color: rgb(101, 124, 201);
-    z-index: 3;
+    border-top-color: rgb(101, 124, 201);
 }
 
-div#MVB {
+div.MVB {
     background-color: rgb(201, 62, 28);
-    z-index: 2;
+    border-top-color: rgb(201, 62, 28);
 }
 
 div.mapboxgl-popup {

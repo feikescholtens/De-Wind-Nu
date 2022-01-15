@@ -3,6 +3,7 @@ import express from "express"
 import path from "path"
 import { readFileSync } from "fs"
 import { getData } from "./getData.js"
+import { getOverviewData } from "./getOverviewData.js"
 import { addLocation } from "./addLocation.js"
 import { addFeedback } from "./addFeedback.js"
 
@@ -24,6 +25,7 @@ app.use("/error", express.static(path.resolve(__dirname, "public/errorPage")))
 app.use("/jsPopUps", express.static(path.resolve(__dirname, "public/jsPopUps")))
 app.use("/images", express.static(path.resolve(__dirname, "public/images")))
 app.use("/generalStyles.css", express.static(path.resolve(__dirname, "public/generalStyles.css")))
+app.use("/redirect.js", express.static(path.resolve(__dirname, "public/redirect.js")))
 
 app.set("view-engine", "ejs")
 app.set("views", path.join(__dirname, "/public/windPage/"))
@@ -49,10 +51,13 @@ app.get("/wind/:id", async (request, response) => {
   const data = JSON.stringify(dataText)
 
   if (data) response.render(path.join(__dirname, "/public/windPage/index.ejs"), { data })
-});
+})
+
+//Overview API
+app.get("/getOverviewData/:dataSource", (request, response) => getOverviewData(request, response, locations))
 
 //Add data to database when feedback received
 app.post("/addFeedback", (request, response) => addFeedback(request, response))
 
 //If unknown url is typed in
-app.use("/*", (request, response) => response.redirect("/"));
+app.use("/*", (request, response) => response.redirect("/"))
