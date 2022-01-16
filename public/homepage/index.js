@@ -1,7 +1,6 @@
 import { fitMap, windPage, changeTiles, setOverviewData } from "./functions.js"
-import { contact } from "../jsPopUps/contact.js"
-import { credit } from "../jsPopUps/credit.js"
-import { feedback } from "../jsPopUps/feedback.js"
+import { displayPopUpWithName } from "../jsPopUps/functions.js"
+import { displayPopUpFeedback } from "../jsPopUps/feedback.js"
 const tilesObjects = await fetch("./OSMTiles.json").then(response => response.json())
 
 const tilesSelector = document.querySelector("[data-tiles]"),
@@ -54,12 +53,15 @@ data.forEach(item => {
   if (item.datasets.Rijkswaterstaat) {
     Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("RWS") })
     popupId = "popupRWS"
+    marker.style.zIndex = 1
   } else if (item.datasets.KNMI) {
     Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("KNMI") })
     popupId = "popupKNMI"
+    marker.style.zIndex = 2
   } else if (item.datasets.MVB) {
     Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("MVB") })
     popupId = "popupMVB"
+    marker.style.zIndex = 3
   }
   Array.from(marker.getElementsByTagName("div")).forEach(element => { element.id = item.id })
 
@@ -82,6 +84,8 @@ if (window.location.search == "") fitMap(map, markersLats, markersLons)
 history.replaceState({}, "De Wind Nu", "/")
 document.querySelectorAll("[data-mapfit]").forEach(element => element.addEventListener("click", () => fitMap(map, markersLats, markersLons)))
 
-document.querySelector("[data-feedback]").addEventListener("click", feedback)
-document.querySelector("[data-credit]").addEventListener("click", credit)
-document.querySelector("[data-contact]").addEventListener("click", contact)
+document.querySelector("[data-about]").addEventListener("click", () => displayPopUpWithName("about"))
+document.querySelector("[data-disclaimer]").addEventListener("click", () => displayPopUpWithName("disclaimer"))
+document.querySelector("[data-feedback]").addEventListener("click", () => displayPopUpFeedback())
+document.querySelector("[data-credit]").addEventListener("click", () => displayPopUpWithName("credit"))
+document.querySelector("[data-contact]").addEventListener("click", () => displayPopUpWithName("contact"))

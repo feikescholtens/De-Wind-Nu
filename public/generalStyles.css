@@ -126,18 +126,45 @@ h2.sectionHeader {
 }
 
 /* Footer styling */
-table#footer {
-    padding: 60px 0;
-    margin: 0 auto;
+footer {
+    padding: 30px 0;
+    text-align: center;
 }
 
-table#footer td {
+div#footerItemWrapper {
+    display: inline;
+}
+
+div.footerItem {
     padding: 20px 40px 20px 40px;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 33%;
+    text-align: left;
 }
 
-table#footer td p {
+div.footerItem p {
     cursor: pointer;
 }
+
+@media screen and (max-width: 615px) {
+
+    div.footerItem {
+        width: 49%;
+    }
+}
+
+@media screen and (max-width: 320px) {
+
+    div.footerItem {
+        display: block;
+        width: auto;
+        padding: 20px 40px 10px 40px;
+        max-width: calc(180px + 2 * 40px);
+        margin: 0 auto;
+    }
+}
+
 
 table#settings {
     width: calc(100% - 20px);
@@ -159,7 +186,7 @@ div.messageBox {
     border-radius: 30px;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    z-index: 2;
+    z-index: 999;
     max-width: 800px;
 }
 
@@ -173,6 +200,10 @@ div.messageBox ul {
 
 h3.popUpTitle {
     margin: 30px 30px 15px 30px;
+}
+
+h4.popUpHeading {
+    margin: 0 30px 0 30px;
 }
 
 div.close {

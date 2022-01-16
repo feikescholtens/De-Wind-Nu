@@ -1,6 +1,5 @@
-import { contact } from "../jsPopUps/contact.js"
-import { credit } from "../jsPopUps/credit.js"
-import { feedback } from "../jsPopUps/feedback.js"
+import { displayPopUpWithName } from "../jsPopUps/functions.js"
+import { displayPopUpFeedback } from "../jsPopUps/feedback.js"
 import { contentUpdate } from "./js/contentUpdate.js"
 import { changeShowBar, changeDataForm, changeUnit, changeDecimals, unHideElements, changeInterpolation, calcInterpolation, changeTableSort } from "./js/functions.js"
 
@@ -128,6 +127,8 @@ globalThis.data = [],
   contentUpdate()
 })()
 
-document.querySelector("[data-feedback]").addEventListener("click", feedback)
-document.querySelector("[data-credit]").addEventListener("click", credit)
-document.querySelector("[data-contact]").addEventListener("click", contact)
+document.querySelector("[data-about]").addEventListener("click", () => displayPopUpWithName("about"))
+document.querySelector("[data-disclaimer]").addEventListener("click", () => displayPopUpWithName("disclaimer"))
+document.querySelector("[data-feedback]").addEventListener("click", () => displayPopUpFeedback())
+document.querySelector("[data-credit]").addEventListener("click", () => displayPopUpWithName("credit"))
+document.querySelector("[data-contact]").addEventListener("click", () => displayPopUpWithName("contact"))

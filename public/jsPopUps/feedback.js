@@ -1,6 +1,6 @@
 import { displayPopUp, emptyMessage } from "./functions.js"
 
-export async function feedback() {
+export async function displayPopUpFeedback() {
 
   if (!document.getElementsByClassName("messageBox")[0]) {
 

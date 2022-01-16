@@ -1,5 +1,11 @@
-import { givePopUpData } from "./popUpData.js"
-const popUpData = givePopUpData()
+import { popUpData } from "./popUpData.js"
+
+export function displayPopUpWithName(name) {
+  if (!document.getElementsByClassName("messageBox")[0]) {
+
+    displayPopUp(name)
+  }
+}
 
 export function displayPopUp(content) {
   document.body.scrollTop = document.documentElement.scrollTop = 0;

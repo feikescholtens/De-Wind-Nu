@@ -37,7 +37,6 @@ export function changeTiles(map, tilesSelector, seaMapCheckbox) {
 
 export function setOverviewData(data) {
   Object.keys(data).forEach(locationID => {
-
     const dataSourceClass = document.getElementById(locationID).classList[1]
 
     const arrow = document.createElement("div")

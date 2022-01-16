@@ -1,7 +1,7 @@
 {
   "name": "de-wind-nu",
   "version": "1.2.0",
-  "description": "De Wind Nu verzamelt actuele weerdata van meetstations door heel Nederland.",
+  "description": "De Wind Nu verzamelt actuele weerdata van meetstations door heel Nederland. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.",
   "main": "\u001b[D\u001b[D\u001b[D\u001bapp",
   "scripts": {
     "start": "node server.js"
