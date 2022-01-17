@@ -1,1 +1,1 @@
-if (window.location.host == "dewindnu.herokuapp.com") window.location.replace(`http://www.dewindnu.nl${window.location.pathname}`)
+// if (window.location.host == "dewindnu.herokuapp.com") window.location.replace(`https://dewindnu.nl${window.location.pathname}`)
