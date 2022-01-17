@@ -10,6 +10,7 @@
   "author": "Feike Scholtens",
   "license": "GPL-3.0",
   "dependencies": {
+    "cors": "^2.8.5",
     "date-fns": "^2.27.0",
     "date-fns-tz": "^1.1.7",
     "ejs": "^3.1.6",

@@ -1,6 +1,7 @@
 //Import dependencies
 import express from "express"
 import path from "path"
+import cors from "cors"
 import { readFileSync } from "fs"
 import { getData } from "./getData.js"
 import { getOverviewData } from "./getOverviewData.js"
@@ -23,7 +24,7 @@ app.use("/wind/", express.static(path.resolve(__dirname, "public/windPage")))
 app.use("/error", express.static(path.resolve(__dirname, "public/errorPage")))
 
 app.use("/jsPopUps", express.static(path.resolve(__dirname, "public/jsPopUps")))
-app.use("/images", express.static(path.resolve(__dirname, "public/images")))
+app.use("/images", cors(), express.static(path.resolve(__dirname, "public/images")))
 app.use("/generalStyles.css", express.static(path.resolve(__dirname, "public/generalStyles.css")))
 app.use("/redirect.js", express.static(path.resolve(__dirname, "public/redirect.js")))
 
