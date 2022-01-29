@@ -78,7 +78,7 @@ const j = schedule.scheduleJob(date, async () => {
     });
   });
 });
-// console.log(j.pendingInvocations[0].fireDate)
+console.log(j.pendingInvocations[0].fireDate)
 
 //If unknown url is typed in
 app.use("/*", (request, response) => response.redirect("/"))
