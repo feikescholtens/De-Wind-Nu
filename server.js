@@ -18,7 +18,7 @@ const locationsString = JSON.stringify(locations)
 const forecastData = JSON.parse(readFileSync("forecastData.json"))
 const rule = new schedule.RecurrenceRule()
 rule.hour = [3, 9, 15, 30, 21, 22]
-rule.minute = [55, 18]
+rule.minute = [55, 21]
 rule.tz = "Europe/Amsterdam"
 
 //Initialize Express
