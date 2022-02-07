@@ -10,7 +10,6 @@ html {
 
 body {
     height: 100%;
-    transform: translate3d(0, 0, 0);
 }
 
 header,
@@ -177,7 +176,7 @@ table#settings tr {
 
 /* Popup styling */
 div.messageBox {
-    position: absolute;
+    position: fixed;
     min-height: calc(100% - 2 * 20px);
     width: calc(100% - 2 * 20px);
     top: 20px;

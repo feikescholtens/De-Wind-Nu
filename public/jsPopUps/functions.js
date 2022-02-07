@@ -8,7 +8,6 @@ export function displayPopUpWithName(name) {
 }
 
 export function displayPopUp(content) {
-  document.body.scrollTop = document.documentElement.scrollTop = 0;
 
   let messageBox = document.createElement("div")
   messageBox.classList.add("messageBox")
