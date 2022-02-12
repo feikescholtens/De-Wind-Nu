@@ -30,6 +30,8 @@ export async function fetchKNMI(databaseData, resolve, times) {
     measurementTimes.push(time)
   })
 
+  console.log(measurementTimes)
+
   times.forEach(timeStamp => {
     if (!measurementTimes.includes(timeStamp)) {
       wind_speed.push(-999)
