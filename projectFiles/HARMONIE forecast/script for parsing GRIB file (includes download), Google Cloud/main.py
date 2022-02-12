@@ -3,7 +3,12 @@ import numpy as np
 from requests import get
 from io import BytesIO
 from datetime import timedelta
-from flask import jsonify
+import pytz
+import os
+
+os.environ["TZ"] = "Europe/Amsterdam"
+timezone = pytz.timezone("Europe/Amsterdam")
+returnObject = {}
 
 def runFunc(request):
     requestJson = request.get_json()
@@ -25,9 +30,21 @@ def runFunc(request):
         #This is the same for all messages
         if (i == 1):
             timeRun = msg.get_time()
+            timeRunUTC = timeRun.isoformat()
+            returnObject["timeRun"] = timeRunUTC
             for row in msg.get_coordinates()[1]:
                 latPoints.append(row[0])
                 lonPoints = msg.get_coordinates()[0][0]
+
+    parseNoHours = len(values) / 3
+    if (timeRun.strftime("%H") == "00"):
+        parseNoHours = 24
+    if (timeRun.strftime("%H") == "06"):
+        parseNoHours = 18
+    if (timeRun.strftime("%H") == "12"):
+        parseNoHours = 12
+    if (timeRun.strftime("%H") == "18"):
+        parseNoHours = 30
 
     #Loop for every location
     for location in locations:
@@ -47,22 +64,28 @@ def runFunc(request):
             nearestPointLat_Index = np.where(latPoints == nearestPointLat)[0][0]
             nearestPointLon_Index = np.where(lonPoints == nearestPointLon)[0][0]
 
-            #Loop though every hour (3 messages for every hour)
-            for messageIndex in range(int(len(values) / 3)):
+            #Loop though every hour
+            for messageIndex in range(int(parseNoHours)):
                 uIndex = messageIndex * 3
                 vIndex = messageIndex * 3 + 1
+                gustIndex = messageIndex * 3 + 2
 
                 u = values[uIndex][nearestPointLat_Index][nearestPointLon_Index]
                 v = values[vIndex][nearestPointLat_Index][nearestPointLon_Index]
 
                 #In knots and degrees
-                speed = round(np.sqrt(u**2 + v**2) * 3.6 / 1.852, 1)
+                speed = round(np.sqrt(u**2 + v**2) * 3.6 / 1.852, 3)
+                gust = round(values[gustIndex][nearestPointLat_Index][nearestPointLon_Index] * 3.6 / 1.852, 3)
                 direction = round((np.degrees(np.arctan2(u, v)) + 180) % 360)
 
-                timeStamp = (timeRun + timedelta(hours=messageIndex)).isoformat()
+                timeStamp = timeRun + timedelta(hours=messageIndex)
+                timeStampLocal = timeStamp.astimezone(timezone)
 
-                series.append({"time": timeStamp, "s": speed, "d": direction})
+                time = timeStampLocal.strftime("%H:%M")
+                date = timeStampLocal.strftime("%d-%m-%Y")
+
+                series.append({"time": time, "date": date , "s": speed, "g": gust, "d": direction})
             
                 returnObject[location["id"]] = series
 
-    return jsonify(returnObject)
+    return returnObject

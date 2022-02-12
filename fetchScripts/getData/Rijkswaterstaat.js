@@ -13,7 +13,6 @@ export async function fetchRWS(databaseData, resolve, times) {
 
   const dateUTC = new Date()
   const dateZoned = utcToZonedTime(dateUTC, timeZone)
-  const dateToday = format(dateZoned, "dd-MM-yyyy")
 
   const rawDataString = await fetch("https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenWaarnemingen", giveRWSFetchOptions(databaseData, dateZoned))
     .then(response => response.text()).catch((error) => catchError(resolve, data, error, "RWS"))
@@ -21,13 +20,13 @@ export async function fetchRWS(databaseData, resolve, times) {
   let rawData
   try { rawData = JSON.parse(rawDataString) } catch { return }
 
-  if (SuccesvolFalseError(rawData, data, resolve)) return
+
+  if (SuccesvolFalseError(rawData, databaseData.name, data, resolve)) return
 
   //Declare variables
   let wind_speed = [],
     wind_gusts = [],
     wind_direction = []
-  const date = new Array(times.length).fill(dateToday)
 
   rawData.WaarnemingenLijst.forEach(measurementType => {
     if (measurementType.MetingenLijst.length == 0) return
@@ -70,7 +69,7 @@ export async function fetchRWS(databaseData, resolve, times) {
     if (measurementType.AquoMetadata.Grootheid.Code == "WINDRTG") wind_direction = tempArray.copy()
   })
 
-  data["Rijkswaterstaat"] = [date, times, wind_speed, wind_gusts, wind_direction]
+  data["Rijkswaterstaat"] = [wind_speed, wind_gusts, wind_direction]
   resolve({ data })
 
 }

@@ -51,7 +51,6 @@
     <link rel="stylesheet" href="/generalStyles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"> </script>
 
-    <script src="/redirect.js"></script>
     <script src="index.js" type="module" defer></script>
     <script src="js/objects/chartData.js"></script>
 
@@ -76,12 +75,10 @@
     <header>
         <img data-goBackHome id="logo" src="../images/logo.svg" alt="Logo - navigeer home">
             <h1 data-goBackHome id="title">De Wind Nu</h1>
-
+            <h1 data-location id="location"></h1>
     </header>
-    <h1 data-subtitle id="subtitle"></h1>
     <main>
-        <h2 data-headingCurrentWind class="sectionHeader">
-            </h1>
+        <h2 data-headingCurrentWind class="sectionHeader"></h2>
             <canvas data-compass id="compass" width="350px" height="350px"></canvas>
 
             <div data-currentWindBox id="currentWindBox">
@@ -96,8 +93,11 @@
 
             <h2 data-headingTabel class="sectionHeader hidden">Windsterkte</h2>
             <table data-dataTable id="data">
-              <tr><th data-timeHeading rowspan="2" style="cursor: pointer">Tijd <span id="sortArrow">▲</span></th><th colspan="3">Wind-</th></tr>
-              <tr data-tableHeaderRow></tr>
+              <tr id="tableFirstHeaderRow">
+                <th data-timeHeading rowspan="2" style="cursor: pointer">Tijd <span id="sortArrow">▲</span></th>
+                <th>Metingen</th>
+                <th colspan="3">Voorspelling</th></tr>
+              <tr id="tableHeaderRow" data-tableHeaderRow></tr>
             </table>
 
             <h2 data-headingChartWindspeed class="sectionHeader">Windsterkte</h2>
@@ -106,6 +106,8 @@
             <h2 data-headingchartwinddirection class="sectionHeader hidden">Windrichting</h2>
             <canvas data-chartWinddirection class="charts hidden" height="300px"></canvas>
 
+            <h3 data-dataInfo id="dataInfo">Metingen: <span data-measurementSource></span> | 
+              Voorspellingen: HARMONIE model van het KNMI, run van <span data-forecastRun></span> uur, volgende update ± <span data-nextForecastRun></span> uur</h3>
             <h2 class="sectionHeader">Instellingen</h2>
             <table id="settings" role="presentation">
               <tr>

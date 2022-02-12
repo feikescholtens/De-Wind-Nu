@@ -1,19 +1,62 @@
 export const popUpData = {
-  about: { html: `
+  welkom: { html: `
+    <h3 style="font-size: 24px;" class="popUpTitle">De Wind Nu | Welkom!</h3>
+    <p class='messageBoxP'>
+    De Wind Nu verzamelt actuele weerdata van meetstations door heel Nederland. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.
+    <br><br>
+    Zodra je deze boodschap wegklikt zie je een kaart met alle beschikbare locaties. 
+    In dit overzicht zijn ook de wind- krachten en richtingen weergegeven.
+    <br><br>
+    <button class="windPageButton popupRWS">Groene</button> locaties zijn van Rijkswaterstaat<br>
+    <button class="windPageButton popupKNMI">Blauwe</button> locaties zijn van het KNMI<br>
+    <button class="windPageButton popupMVB">Rode</button> locaties zijn van het Meetnet Vlaamse Banken<br>
+    <br>
+    Bijna elke locatie bevat ook de laatste windvoorspelling van het KNMI.
+    Na het klikken op een van de locaties wordt de data van vandaag getoond voor deze locatie. Onderaan zijn opties te vinden,
+    om bijvoorbeeld de eenheid te veranderen of om een tabel weer te geven in plaats van de grafieken.
+    <br><br>
+    Veel plezier en houdt het veilig op het water!
+    <br><br>
+    <i>PS: Deze informatie is ook onder elke pagina te vinden onder het "Over" kopje!</i>
+    ` },
+  over: { html: `
     <h3 class="popUpTitle">Over</h3>
     <p class='messageBoxP'>
     De Wind Nu verzamelt actuele weerdata van meetstations door heel Nederland. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.
     <br><br>
-    Bij het openen van de website is het overzicht weergegeven met de wind- snelheden en richtingen in Beaufort. 
+    Bij het openen van de website is een overzicht weergegeven met de wind- krachten en richtingen.
     Opties zoals als de kaart tegels, met keuze tussen de standaardtegels van OpenStreetMap en tegels van hogere resolutie van Mapbox, 
     kunnen onderaan veranderd worden (scroll op de witte balk bovenaan). Ook kan er een zeekaart toegevoegd worden.
     <br><br>
-    Na het klikken op een van de locaties wordt de data van de dezelfde dag getoond voor deze locatie.
-    Bovenaan zijn de naam van de locatie en de bron weergegeven. Onder het eerste kopje zijn de gegevens van de recentste meting weergegeven. 
+    <button class="windPageButton popupRWS popUp">Groene</button> locaties zijn van Rijkswaterstaat<br>
+    <button class="windPageButton popupKNMI popUp">Blauwe</button> locaties zijn van het KNMI<br>
+    <button class="windPageButton popupMVB popUp">Rode</button> locaties zijn van het Meetnet Vlaamse Banken<br>
+    <br>
+    Na het klikken op een van de locaties wordt de data van vandaag getoond voor deze locatie. Deze data is standaard weergegeven als twee grafieken,
+    maar er kan boven het tweede kopje ook gekozen worden voor een tabel (dit kan overigens ook onderaan de pagina gekozen worden). 
+    Alle tijden op de website zijn in de Midden-Europese Tijd.
+    <br><br>
+    Bovenaan is de naam van de locatie weergegeven. Onder het eerste kopje zijn de gegevens van de recentste metingen en de voorspellingen voor dit tijdstip weergegeven. 
     Daaronder is een grafiek te zien met de gemeten windsnelheden (gemiddelde snelheid over de afgelopen 10 minuten) en de windvlagen (maximale, 3 seconde durende, 
-      windstoot in de afgelopen 10 minuten). Eronder is nog een grafiek weergegeven met de gegevens over de windrichting (windrichting ten opzichte van het ware Noorden), 
-      indien deze beschikbaar zijn. Tenslotte zijn onderaan nog wat instellingen weergegeven. Zo kunnen bijvoorbeeld de eenheden of het aantal decimalen gewijzigd worden. 
-      Ook is het mogelijk de data te laten interpoleren.
+      windstoot in de afgelopen 10 minuten). 
+      
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;Eronder is nog een grafiek weergegeven met de gegevens over de windrichting (windrichting ten opzichte van het ware Noorden), 
+      indien deze beschikbaar zijn. 
+      <br><br>
+      Tenslotte zijn onderaan nog wat instellingen weergegeven. Zo kunnen bijvoorbeeld de eenheden of het aantal decimalen gewijzigd worden. 
+      Ook is het mogelijk de data te laten interpoleren.</p>
+      
+      <h4 class="popUpHeading">Informatie over metingen en voorspellingen</h4>
+      <p class='messageBoxP'>
+      Metingen worden gemaakt, in het geval van het KNMI, 
+      door meetstations in kleine veldjes op open plekken, welke een uitgebreid arsenaal aan meetinstrumenten bevatten. Zo kan het KNMI bijvoorbeeld zicht, 
+      wolkenhoogte en luchtdruk meten, naast de meer bekende parameters als temperatuur en wind. Rijkswaterstaat en het Meetnet Vlaamse Banken hebben minder geavanceerde stations,
+      en meten voornamelijk de wind met meetpalen (vaak in of nabij zee).
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;De voorspellingen, die ook in de grafieken zijn weergegeven, komen uit het HARMONIE-AROME Cy40 model van het KNMI. Dit model
+      bevat 39 parameters - dus niet alleen wind - en berekent de voorspelling voor elk uur van de komende twee dagen over een gebied, met de grootte van Frankrijk, 
+      waarin Nederland centraal ligt. Dit wordt gedaan op supercomputers,
+      elke dag om 01:00, 07:00, 13:00 en 19:00 (Nederlandse tijd), wat ongeveer drie uur duurt per run. Als dit klaar is worden de 
+      voorspellingen zo snel mogelijk geupdate op de site. Onderaan de pagina is te zien van welke run je de voorspellingen bekijkt.
       </p>
     <h4 class="popUpHeading">Fouten / bugs</h4>
     <p class='messageBoxP'>

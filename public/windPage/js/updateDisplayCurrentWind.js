@@ -22,8 +22,10 @@ export function updateCurrentWind() {
     if (data_unit[6]) {
       if (data_unit[6].length !== 0) {
         const forecastedDirection = data_unit[6][data_unit[4].length - 1]
-        drawDirectionArrow(forecastedDirection, ctx, "#ff9f43")
-        forecastedDirectionLabel.innerHTML = forecastedDirection + "&#176;<label class='labelSmall'> voorspeld</label>"
+        if (forecastedDirection) {
+          drawDirectionArrow(forecastedDirection, ctx, "#ff9f43")
+          forecastedDirectionLabel.innerHTML = forecastedDirection + "&#176;<label class='labelSmall'> voorspeld</label>"
+        }
       }
     }
 
@@ -44,7 +46,7 @@ export function updateCurrentWind() {
     currentGustsLabel.innerHTML = `${data_unit[3].lastMeasurement().replace(".", ",")} ${units[unit].afkorting} <label class='labelBig'>&nbsp;vlagen</label>`
   }
   if (data_unit[5]) {
-    if (data_unit[5].length !== 0) {
+    if (data_unit[5].length !== 0 && data_unit[5][data_unit[4].length - 1]) {
       forecastedWindLabel.innerHTML = `${data_unit[5][data_unit[4].length - 1].replace(".", ",")} ${units[unit].afkorting} <label class='labelSmall'> voorspeld</label>`
     }
   }

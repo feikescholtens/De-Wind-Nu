@@ -5,6 +5,26 @@ footer {
     visibility: hidden;
 }
 
+h1#location {
+    color: grey;
+    float: right;
+    font-size: 1.5em;
+
+    text-align: right;
+    top: 80px;
+    position: absolute;
+    margin-right: 10px;
+    width: 400px;
+}
+
+h3#dataInfo {
+    font-weight: 400;
+    font-size: 16px;
+    padding: 0 10px;
+    margin-bottom: 20px;
+    color: grey;
+}
+
 #currentWindBox {
     position: relative;
     left: 50%;
@@ -113,11 +133,19 @@ section label.deselected {
 }
 
 table#data {
-    margin-top: 10px;
+    margin: 10px 0 20px 0;
     box-sizing: border-box;
     margin-left: 10px;
     max-width: calc(100% - 2 * 10px);
     border-collapse: collapse;
+}
+
+tr#tableFirstHeaderRow th {
+    font-size: 1.2em;
+}
+
+tr#tableHeaderRow th {
+    font-weight: 600;
 }
 
 table#data td:nth-child(1) {

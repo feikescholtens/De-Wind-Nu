@@ -1,7 +1,7 @@
-import { format } from "date-fns"
+import { format, parseISO } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 import fetch from "node-fetch";
-import { catchError } from "../fetchUtilFunctions.js"
+import { catchError, theoreticalMeasurements } from "../fetchUtilFunctions.js"
 const timeZone = 'Europe/Amsterdam'
 
 export async function fetchKNMI(databaseData, resolve, times) {
@@ -20,41 +20,67 @@ export async function fetchKNMI(databaseData, resolve, times) {
   let rawData
   try { rawData = JSON.parse(rawDataString) } catch { return }
 
-  console.log(rawDataString)
-
-  let date = new Array(times.length).fill(dateToday),
-    wind_speed = [],
+  let wind_speed = [],
     wind_gusts = [],
     wind_direction = []
-  let dataCategorized = {}
-  let dataNullCounts = {}
-  const nullTreshold = 10
+  let measurementTimes = []
 
-  Object.keys(rawData.observations[0].values).forEach(measurementType => {
-    if (!["ff", "fx", "dd"].includes(measurementType)) return
-
-    dataCategorized[measurementType] = []
-    dataNullCounts[measurementType] = 0
-
-    rawData.observations.forEach(measurement => {
-      if (!measurement.values[measurementType]) {
-
-        dataNullCounts[measurementType]++
-        dataCategorized[measurementType].push(-999)
-      } else dataCategorized[measurementType].push(measurement.values[measurementType])
-    })
-
-    if (dataNullCounts[measurementType] >= nullTreshold) return
-
-    if (measurementType == "ff") {
-      wind_speed = dataCategorized[measurementType].map(x => x * 0.53995726994149)
-    } else if (measurementType == "fx") {
-      wind_gusts = dataCategorized[measurementType].map(x => x * 0.53995726994149)
-    } else if (measurementType == "dd") {
-      wind_direction = dataCategorized[measurementType]
-    }
+  rawData.observations.forEach(measurement => {
+    let time = format(utcToZonedTime(parseISO(measurement.datetime), timeZone), "HH:mm")
+    measurementTimes.push(time)
   })
 
-  data["KNMI"] = [date, times, wind_speed, wind_gusts, wind_direction]
+  times.forEach(timeStamp => {
+    if (!measurementTimes.includes(timeStamp)) {
+      wind_speed.push(-999)
+      wind_gusts.push(-999)
+      wind_direction.push(-999)
+      return
+    }
+
+    const indexTime = measurementTimes.indexOf(timeStamp)
+
+    if (rawData.observations[indexTime].values.ff && rawData.observations[indexTime].values.ff > 0) {
+      wind_speed.push(rawData.observations[indexTime].values.ff * 0.53995726994149)
+    } else wind_speed.push(-999)
+
+    if (rawData.observations[indexTime].values.fx && rawData.observations[indexTime].values.fx > 0) {
+      wind_gusts.push(rawData.observations[indexTime].values.fx * 0.53995726994149)
+    } else wind_gusts.push(-999)
+
+    if (rawData.observations[indexTime].values.dd && rawData.observations[indexTime].values.dd > 0) {
+      wind_direction.push(rawData.observations[indexTime].values.dd)
+    } else wind_direction.push(-999)
+  })
+
+  const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes)
+  if (!theoreticalMeasurementCount) {
+    resolve({
+      data: {
+        KNMI: [
+          [],
+          [],
+          []
+        ]
+      }
+    })
+    return
+  }
+
+  for (let j = 0; j < (times.length - theoreticalMeasurementCount); j++) {
+    wind_speed.pop()
+    wind_gusts.pop()
+    wind_direction.pop()
+  }
+
+  //All other errors (exept for when there's no data at all) are handled in logFetchErrors.js
+  if (wind_speed.length == 0 && wind_gusts.length == 0 && wind_direction.length == 0) {
+    resolve({
+      data: { error: { code: "ENOMEASUREMENTS" }, location: { name: databaseData.name } }
+    })
+    return
+  }
+
+  data["KNMI"] = [wind_speed, wind_gusts, wind_direction]
   resolve({ data })
 }

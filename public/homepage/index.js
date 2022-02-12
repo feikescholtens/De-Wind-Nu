@@ -1,11 +1,17 @@
 import { fitMap, windPage, changeTiles, setOverviewData } from "./functions.js"
 import { displayPopUpWithName } from "../jsPopUps/functions.js"
 import { displayPopUpFeedback } from "../jsPopUps/feedback.js"
+import { redirect } from "../redirect.js"
+redirect()
 const tilesObjects = await fetch("./OSMTiles.json").then(response => response.json())
 
 const tilesSelector = document.querySelector("[data-tiles]"),
   seaMapCheckbox = document.querySelector("[data-seaMap]")
 
+if (!localStorage.getItem("firstVisit")) {
+  displayPopUpWithName("welkom")
+  localStorage.setItem("firstVisit", "1")
+}
 if (!localStorage.getItem("tiles")) localStorage.setItem("tiles", "0")
 if (!localStorage.getItem("seaMap")) localStorage.setItem("seaMap", "1")
 
@@ -84,7 +90,7 @@ if (window.location.search == "") fitMap(map, markersLats, markersLons)
 history.replaceState({}, "De Wind Nu", "/")
 document.querySelectorAll("[data-mapfit]").forEach(element => element.addEventListener("click", () => fitMap(map, markersLats, markersLons)))
 
-document.querySelector("[data-about]").addEventListener("click", () => displayPopUpWithName("about"))
+document.querySelector("[data-about]").addEventListener("click", () => displayPopUpWithName("over"))
 document.querySelector("[data-disclaimer]").addEventListener("click", () => displayPopUpWithName("disclaimer"))
 document.querySelector("[data-feedback]").addEventListener("click", () => displayPopUpFeedback())
 document.querySelector("[data-credit]").addEventListener("click", () => displayPopUpWithName("credit"))

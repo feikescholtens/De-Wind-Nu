@@ -2,6 +2,8 @@ import { displayPopUpWithName } from "../jsPopUps/functions.js"
 import { displayPopUpFeedback } from "../jsPopUps/feedback.js"
 import { contentUpdate } from "./js/contentUpdate.js"
 import { changeShowBar, changeDataForm, changeUnit, changeDecimals, unHideElements, changeInterpolation, calcInterpolation, changeTableSort } from "./js/functions.js"
+import { redirect } from "../redirect.js"
+redirect()
 
 Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 
@@ -26,8 +28,12 @@ globalThis.data = [],
     decimalsSelector = document.querySelector("[data-decimals]"),
     interpolationSelector = document.querySelector("[data-interpolation]")
 
-  const subtitleNode = document.querySelector("[data-subtitle]"),
-    compassCanvas = document.querySelector("[data-compass]"),
+  const locationLabelNode = document.querySelector("[data-location]"),
+    measurementSourceLabelNode = document.querySelector("[data-measurementSource]"),
+    forecastRunLabelNode = document.querySelector("[data-forecastRun]"),
+    nextForecastRunLabelNode = document.querySelector("[data-nextForecastRun]")
+
+  const compassCanvas = document.querySelector("[data-compass]"),
     currentWindBox = document.querySelector("[data-currentWindBox]"),
     headingChartWindspeed = document.querySelector("[data-headingChartWindspeed]"),
     headingTable = document.querySelector("[data-headingtabel]"),
@@ -90,14 +96,18 @@ globalThis.data = [],
   }))
 
   document.title = "De Wind Nu: " + spotName
-  if (dataset == "Rijkswaterstaat") subtitleNode.innerHTML = spotName + "<br><span class='small'>Rijkswaterstaat</span"
-  else if (dataset == "KNMI") {
-    subtitleNode.innerHTML = spotName + "<br><span class='small'>KNMI</span>"
-    document.querySelector("[data-decimals]").getElementsByTagName("option")[2].innerText = "2 (data slechts geleverd in één decimaal)"
-  } else if (dataset == "MVB") subtitleNode.innerHTML = spotName + "<br><span class='small'>Meetnet Vlaamse Banken</span>"
+  locationLabelNode.innerText = spotName
+  locationLabelNode.style.right = (document.body.clientWidth - document.getElementsByTagName("main")[0].clientWidth) / 2 + "px"
+  window.addEventListener("resize", () => locationLabelNode.style.right = (document.body.clientWidth - document.getElementsByTagName("main")[0].clientWidth) / 2 + "px")
 
-  subtitleNode.style.right = (document.body.clientWidth - document.getElementsByTagName("main")[0].clientWidth) / 2 + "px"
-  window.addEventListener("resize", () => subtitleNode.style.right = (document.body.clientWidth - document.getElementsByTagName("main")[0].clientWidth) / 2 + "px")
+  if (dataset == "Rijkswaterstaat") measurementSourceLabelNode.innerText = "Rijkswaterstaat"
+  else if (dataset == "KNMI") {
+    measurementSourceLabelNode.innerText = "KNMI"
+    document.querySelector("[data-decimals]").getElementsByTagName("option")[2].innerText = "2 (metingen slechts geleverd in één decimaal)"
+  } else if (dataset == "MVB") measurementSourceLabelNode.innerText = "Meetnet Vlaamse Banken"
+
+  forecastRunLabelNode.innerText = dataFetched.forecastRun
+  nextForecastRunLabelNode.innerText = dataFetched.nextForecastRun
 
   unHideElements()
 
@@ -115,19 +125,22 @@ globalThis.data = [],
   currentWindBox.style.width = currentWindBox.style.height = (compassCanvas.clientWidth * (200 / currentWindBoxSize)) / Math.sqrt(2) + "px"
   currentWindBox.style.marginTop = -(175 / currentWindBoxSize) * compassCanvas.clientWidth + "px"
 
-  //Set headers
-  if (data_unit[3].length !== 0) {
-    headingChartWindspeed.innerText = "Windsterkte en -vlagen"
-
-    if (data_unit[4].length !== 0) headingTable.innerText = "Windsterkte, -vlagen en -richting"
-    else headingTable.innerText = "Windsterkte en -vlagen"
+  //Remove current wind box if no mearurements are available and set headings
+  if (data_unit[2].length == 0 && data_unit[3].length == 0 && data_unit[4].length == 0) {
+    document.querySelector("[data-headingcurrentwind]").classList.add("hidden")
+    document.querySelector("[data-currentwindbox]").classList.add("hidden")
+    document.querySelector("[data-compass]").classList.add("hidden")
   }
+  const NoMeasurementTypesAvailable = [data_unit[2].length !== 0, data_unit[3].length !== 0, data_unit[4].length !== 0].filter(array => array !== false).length;
+  if (data_unit[3].length !== 0 || data_unit[5]) headingChartWindspeed.innerText = "Windsterkte en -vlagen"
+  if (NoMeasurementTypesAvailable == 3 || data_unit[5]) headingTable.innerText = "Windsterkte, -vlagen en -richting"
+  else if (NoMeasurementTypesAvailable !== 3 && !data_unit[5]) headingTable.innerText = "Windsterkte, en -richting"
 
   //For both graphs and table
   contentUpdate()
 })()
 
-document.querySelector("[data-about]").addEventListener("click", () => displayPopUpWithName("about"))
+document.querySelector("[data-about]").addEventListener("click", () => displayPopUpWithName("over"))
 document.querySelector("[data-disclaimer]").addEventListener("click", () => displayPopUpWithName("disclaimer"))
 document.querySelector("[data-feedback]").addEventListener("click", () => displayPopUpFeedback())
 document.querySelector("[data-credit]").addEventListener("click", () => displayPopUpWithName("credit"))

@@ -1,4 +1,4 @@
-import { getUnixTime, parse, format, add, sub } from "date-fns"
+import { getUnixTime, parse, format, add, sub, parseISO } from "date-fns"
 import { readFileSync, writeFile } from 'fs';
 
 export function catchError(resolve, data, error, dataset) {
@@ -66,20 +66,19 @@ export function giveRWSOverviewFetchOptions(locationsArray) {
   }
 }
 
-export function SuccesvolFalseError(rawData, data, resolve) {
+export function SuccesvolFalseError(rawData, locationName, data, resolve) {
+  //All other errors (exept for when there's no data at all) are handled in logFetchErrors.js
   if (rawData.Foutmelding) {
     if (rawData.Foutmelding == "Geen gegevens gevonden!") {
-      data = {
-        error: {
-          code: "14"
-        },
-        dataset: "RWS"
-      }
+
+      resolve({
+        data: { error: { code: "ENOMEASUREMENTS" }, location: { name: locationName } }
+      })
+      return true
     }
 
-    resolve({ data })
-    return true
   }
+  return false
 }
 
 //MVB specific
@@ -158,6 +157,8 @@ export function saveNewApiKey(rawData) {
 }
 
 export function theoreticalMeasurements(measurementTimes) {
+  if (measurementTimes.length == 0) return
+
   const lastMeasurementHH = measurementTimes[measurementTimes.length - 1].substring(0, 2)
   const lastMeasurementmm = measurementTimes[measurementTimes.length - 1].substring(3, 5)
   const theoreticalMeasurementCount = lastMeasurementHH * 6 + lastMeasurementmm / 10 + 1

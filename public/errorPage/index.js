@@ -1,3 +1,6 @@
+import { redirect } from "../redirect.js"
+redirect()
+
 window.onload = async function() {
 
   const errors = await fetch("errors.json")

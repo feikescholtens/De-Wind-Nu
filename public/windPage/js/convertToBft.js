@@ -3,23 +3,13 @@ export function convertToBft(data, data_unit) {
   let checkArray, loopCount
 
   //Check if there is forecast data, if so loop through that array, else, through the normal windspeed array
-  if (data[5]) {
-    if (data[5].length > data[2].length) {
-      checkArray = data[5]
-      loopCount = 6
-    } else {
-      checkArray = data[2]
-      loopCount = 5
-    }
-  } else {
-    checkArray = data[2]
-    loopCount = 5
-  }
+  checkArray = data[5]
+  loopCount = 7
 
   for (let i = 0; i < checkArray.length; i++) {
     //Loop 3 times both the indices 2, 3, 5 for respectively normal wind and gusts
     for (let k = 2; k < loopCount; k++) {
-      if (k !== 4) {
+      if (k !== 4 && k !== 6) {
 
         //Check first extreme: windforce 0
         if (parseFloat(data[k][i]) < units[4].ranges[0]) {

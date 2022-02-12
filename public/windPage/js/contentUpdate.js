@@ -11,8 +11,9 @@ export async function contentUpdate() {
   else globalThis.decimals = localStorage.getItem("decimals")
   globalThis.interpolation = localStorage.getItem("interpolation")
 
-  //This 'backup' is restored to the original 'data' variable so interpolation setting can change on the fly
+  //Windspeeds
   const data_before_interpolation = data.copy()
+  //(This 'backup' is restored to the original 'data' variable so interpolation setting can change on the fly)
 
   for (let j = 2; j < 6 + 1; j++) {
     if (data[j]) {
@@ -52,6 +53,12 @@ export async function contentUpdate() {
       }
     }
 
+    if (data_unit[7]) {
+      for (let i = 0; i < data_unit[7].length; i++) {
+        if (data_unit[7][i]) data_unit[7][i] = (units[unit].factor * data[7][i]).toFixed(decimals)
+      }
+    }
+
   } else if (parseInt(unit) == 4) {
 
     //The 1 * is to convert undefined to NaN to prevent raising an error message
@@ -72,16 +79,28 @@ export async function contentUpdate() {
       }
     }
 
+    if (data_unit[7]) {
+      for (let i = 0; i < data_unit[7].length; i++) {
+        if (data_unit[7][i]) data_unit[7][i] = (1 * data[7][i]).toFixed(decimals)
+      }
+    }
+
     convertToBft(data, data_unit)
   }
 
+  //Directions
   if (data_unit[4].length !== 0) {
     for (let i = 0; i < data_unit[4].length; i++) {
       if (data_unit[4][i]) data_unit[4][i] = (1 * data[4][i]).toFixed(0)
     }
   }
+  if (data_unit[6]) {
+    for (let i = 0; i < data_unit[6].length; i++) {
+      if (data_unit[6][i]) data_unit[6][i] = (1 * data[6][i]).toFixed(0)
+    }
+  }
 
-  updateCurrentWind()
+  if (data_unit[2].length !== 0 || data_unit[3].length !== 0 || data_unit[4].length !== 0) updateCurrentWind()
 
   if (localStorage.getItem("dataForm") == "0") updateGraphs()
   if (localStorage.getItem("dataForm") == "1") updateTable()

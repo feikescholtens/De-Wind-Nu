@@ -12,13 +12,3 @@ export function validID(checkID, locations, response) {
   return true
 
 }
-
-export function dataUseful(dataFetched, dataset, response) {
-
-  if (dataFetched.data[dataset][2].length == 0 && dataFetched.data[dataset][3].length == 0 && dataFetched.data[dataset][4].length == 0) {
-    response.redirect('/error?e=14');
-    return false
-  }
-  return true
-
-}

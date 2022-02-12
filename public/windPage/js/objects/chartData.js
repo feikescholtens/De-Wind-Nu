@@ -46,7 +46,7 @@ const datasetInfo = [{
     bgColor: "rgba(95, 39, 205, 0.4)"
   },
   {
-    label: "Windvoorspelling",
+    label: "Windsterkte voorspelling",
     color: "rgba(46, 134, 222, 1)",
     bgColor: "rgba(46, 134, 222, 0.4)"
   },
@@ -54,6 +54,11 @@ const datasetInfo = [{
     label: "Windrichting voorspelling",
     color: "rgba(255, 159, 67, 1)",
     bgColor: "rgba(255, 159, 67, 0.4)"
+  },
+  {
+    label: "Windvlagen voorspelling",
+    color: "rgba(255, 159, 243, 1)",
+    bgColor: "rgba(255, 159, 243, 0.4)"
   }
 ]
 
@@ -146,11 +151,13 @@ function setLabels(context) {
 
     if (context.chart.id == 0) {
       if (context.datasetIndex == 0) {
-        label = "Windsnelheid: " + context.formattedValue + " " + units[unit].afkorting
+        label = "Windsterkte: " + context.formattedValue + " " + units[unit].afkorting
       } else if (context.datasetIndex == 1) {
         label = "Windvlagen: " + context.formattedValue + " " + units[unit].afkorting
       } else if (context.datasetIndex == 2) {
-        label = "Windvoorspelling: " + context.formattedValue + " " + units[unit].afkorting
+        label = "Windsterkte voorspelling: " + context.formattedValue + " " + units[unit].afkorting
+      } else if (context.datasetIndex == 3) {
+        label = "Windvlagen voorspelling: " + context.formattedValue + " " + units[unit].afkorting
       }
 
     } else if (context.chart.id == 1) {

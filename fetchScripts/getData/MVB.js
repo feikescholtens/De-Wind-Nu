@@ -39,10 +39,9 @@ export async function fetchMVB(databaseData, resolve, times) {
 
   async function fetchDataMVB(newToken) {
 
-    const timeZone = 'Europe/Amsterdam'
+    const timeZone = "Europe/Amsterdam"
     const dateUTC = new Date()
     const dateZoned = utcToZonedTime(dateUTC, timeZone)
-    const dateToday = format(dateZoned, "dd-MM-yyyy")
 
     const rawDataString = await fetch("https://api.meetnetvlaamsebanken.be/V2/getData", giveMVBFetchOptions(databaseData, dateZoned, newToken))
       .then(response => response.text()).catch((error) => catchError(resolve, data, error, "MVB"))
@@ -56,7 +55,6 @@ export async function fetchMVB(databaseData, resolve, times) {
     let wind_speed = [],
       wind_gusts = [],
       wind_direction = []
-    const date = new Array(times.length).fill(dateToday)
 
     rawData.Values.forEach(measurementType => {
       if (measurementType.Values.length == 0) return
@@ -95,7 +93,15 @@ export async function fetchMVB(databaseData, resolve, times) {
       if (measurementType.ID.includes("WRS")) wind_direction = tempArray.copy()
     })
 
-    data["MVB"] = [date, times, wind_speed, wind_gusts, wind_direction]
+    //All other errors (exept for when there's no data at all) are handled in logFetchErrors.js
+    if (wind_speed.length == 0 && wind_gusts.length == 0 && wind_direction.length == 0) {
+      resolve({
+        data: { error: { code: "ENOMEASUREMENTS" }, location: { name: databaseData.name } }
+      })
+      return
+    }
+
+    data["MVB"] = [wind_speed, wind_gusts, wind_direction]
     resolve({ data })
   }
 }

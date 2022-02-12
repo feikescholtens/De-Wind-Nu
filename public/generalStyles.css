@@ -107,21 +107,45 @@ h1#title {
     }
 }
 
-h1#subtitle {
-    color: grey;
-    float: right;
-    font-size: 1.5em;
-
-    text-align: right;
-    top: -30px;
-    position: relative;
-    margin-right: 10px;
-    width: 400px;
-}
-
 h2.sectionHeader {
     width: calc(100% - 20px);
     padding: 10px 10px 0 10px;
+}
+
+button.windPageButton {
+    margin: 5px;
+    padding: 8px;
+    border-radius: 12px;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    text-shadow: 1px 1px #5c5c5c;
+    font-weight: 600;
+}
+
+button.popupMVB {
+    background-color: rgb(201, 62, 28);
+}
+
+button.popupKNMI {
+    background-color: rgb(101, 124, 201);
+}
+
+button.popupRWS {
+    background-color: rgb(46, 179, 99);
+}
+
+button.popupMVB:hover {
+    background-color: rgba(201, 62, 28, 0.5);
+}
+
+button.popupKNMI:hover {
+    background-color: rgba(101, 124, 201, 0.5);
+}
+
+button.popupRWS:hover {
+    background-color: rgba(46, 179, 99, 0.5);
 }
 
 /* Footer styling */
@@ -177,8 +201,9 @@ table#settings tr {
 /* Popup styling */
 div.messageBox {
     position: fixed;
-    min-height: calc(100% - 2 * 20px);
+    height: calc(100% - 2 * 20px);
     width: calc(100% - 2 * 20px);
+    overflow-y: auto;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
@@ -187,6 +212,8 @@ div.messageBox {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     z-index: 999;
     max-width: 800px;
+    padding-bottom: 15px;
+    box-sizing: border-box;
 }
 
 p.messageBoxP {
@@ -205,6 +232,10 @@ h4.popUpHeading {
     margin: 0 30px 0 30px;
 }
 
+button.popUp {
+    margin: 5px 5px 5px 0;
+}
+
 div.close {
     position: absolute;
     top: 0;
@@ -212,6 +243,7 @@ div.close {
     margin: 10px 10px 0px 0px;
     cursor: pointer;
     padding: 20px;
+    color: red;
 }
 
 div.messageBox table {

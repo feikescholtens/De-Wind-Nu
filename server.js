@@ -5,8 +5,10 @@ import cors from "cors"
 import { readFileSync } from "fs"
 import { getData } from "./getData.js"
 import { getOverviewData } from "./getOverviewData.js"
+import { getForecast, deleteForecastYesterday } from "./forecastFunctions.js"
 import { addLocation } from "./addLocation.js"
 import { addFeedback } from "./addFeedback.js"
+import { parseISO, add } from "date-fns"
 import schedule from "node-schedule"
 
 //Define variables
@@ -15,10 +17,10 @@ const app = express()
 const port = process.env.PORT || 3000
 const locations = JSON.parse(readFileSync("locations.json"))
 const locationsString = JSON.stringify(locations)
-const forecastData = JSON.parse(readFileSync("forecastData.json"))
+let forecastData = JSON.parse(readFileSync("forecastData.json"))
 const rule = new schedule.RecurrenceRule()
-rule.hour = [3, 9, 15, 30, 21, 22]
-rule.minute = [55, 21]
+rule.hour = [3, 9, 15, 30, 21]
+rule.minute = 55
 rule.tz = "Europe/Amsterdam"
 
 //Initialize Express
@@ -33,6 +35,7 @@ app.use("/jsPopUps", express.static(path.resolve(__dirname, "public/jsPopUps")))
 app.use("/images", cors(), express.static(path.resolve(__dirname, "public/images")))
 app.use("/generalStyles.css", express.static(path.resolve(__dirname, "public/generalStyles.css")))
 app.use("/redirect.js", express.static(path.resolve(__dirname, "public/redirect.js")))
+app.use("/forecastData.json", express.static(path.resolve(__dirname, "forecastData.json")))
 
 app.set("view-engine", "ejs")
 app.set("views", path.join(__dirname, "/public/windPage/"))
@@ -54,7 +57,7 @@ app.get("/", (request, response) => response.render(path.join(__dirname, "/publi
 
 //Server wind page API
 app.get("/wind/:id", async (request, response) => {
-  const dataText = await getData(request, response, locations)
+  const dataText = await getData(request, response, locations, forecastData)
   const data = JSON.stringify(dataText)
 
   if (data) response.render(path.join(__dirname, "/public/windPage/index.ejs"), { data })
@@ -69,14 +72,31 @@ app.post("/addFeedback", (request, response) => addFeedback(request, response))
 //If unknown url is typed in
 app.use("/*", (request, response) => response.redirect("/"))
 
-if (Object.keys(forecastData) == 0) {
-  forecast()
+//Fetching forecast data (all times here in UTC)
+if (Object.keys(forecastData).length == 0) {
+  callGetForecast(forecastData)
+} else if (!forecastData.timeRun) {
+  callGetForecast(forecastData)
+} else {
+  const timeStampRun = parseISO(`${forecastData.timeRun}Z`)
+  const timeNewRunAvailable = add(timeStampRun, { hours: (2 + 6), minutes: 55 })
+
+  if (new Date() > timeNewRunAvailable) {
+    callGetForecast(forecastData)
+  }
 }
 
 schedule.scheduleJob(rule, () => {
-  forecast()
+  callGetForecast(forecastData)
 })
 
-function forecast() {
-  console.log("Fetching forecast run...")
+async function callGetForecast() {
+  const response = await new Promise(async (resolve) => {
+    getForecast(forecastData, resolve)
+  })
+  if (response !== "ENOTAVAILABLE") forecastData = response
 }
+
+//Deleting forecast data from yesterday
+schedule.scheduleJob("0 0 0 * * *", async () => { forecastData = await deleteForecastYesterday(forecastData) });
+(async () => { forecastData = await deleteForecastYesterday(forecastData) })()

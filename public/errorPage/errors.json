@@ -1,11 +1,4 @@
 [
   ["47", "Geen of foute ID in de URL gevonden of er bestaat geen locatie bij de gegeven ID"],
-  ["14", "API heeft (nog) geen gegevens voor deze meetlocatie"],
-  ["11", "Fetch fout, API link is niet geldig / netwerkprobleem"],
-  ["76", "De server kon geen verbinding maken met de API (netwerkfout)"],
-  ["37", "Kan locaties niet fetchen, foutieve JSON"],
-  ["24", "Toegang geweigerd tot de data"],
-  ["57", "Inloggen mislukt bij Token endpoint"],
-  ["99", "Verbinding timed out"],
-  ["34", "Inloggen API mislukt"]
+  ["14", "Er zijn geen gegevens beschikbaar voor deze locatie!"]
 ]
