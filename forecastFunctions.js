@@ -7,7 +7,7 @@ import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 const timeZone = "Europe/Amsterdam"
 
 let retryCount = 0
-const maxRetries = 2 - 1 //Normaly 5 - 1 for max 5 tries, now 2 tries
+const maxRetries = 5 - 1
 export async function getForecast(forecastData, resolve) {
 
   console.log("Checking new forecast run...")

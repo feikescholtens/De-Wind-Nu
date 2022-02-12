@@ -20,7 +20,7 @@ const locationsString = JSON.stringify(locations)
 let forecastData = JSON.parse(readFileSync("forecastData.json"))
 const rule = new schedule.RecurrenceRule()
 rule.hour = [3, 9, 15, 30, 21]
-rule.minute = 55
+rule.minute = 59
 rule.tz = "Europe/Amsterdam"
 
 //Initialize Express
@@ -79,7 +79,7 @@ if (Object.keys(forecastData).length == 0) {
   callGetForecast(forecastData)
 } else {
   const timeStampRun = parseISO(`${forecastData.timeRun}Z`)
-  const timeNewRunAvailable = add(timeStampRun, { hours: (2 + 6), minutes: 55 })
+  const timeNewRunAvailable = add(timeStampRun, { hours: (2 + 6), minutes: 59 })
 
   if (new Date() > timeNewRunAvailable) {
     callGetForecast(forecastData)
