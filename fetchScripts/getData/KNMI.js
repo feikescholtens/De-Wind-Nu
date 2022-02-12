@@ -2,7 +2,7 @@ import { format, parseISO } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 import fetch from "node-fetch";
 import { catchError, theoreticalMeasurements } from "../fetchUtilFunctions.js"
-const timeZone = 'Europe/Amsterdam'
+const timeZone = "Europe/Amsterdam"
 
 export async function fetchKNMI(databaseData, resolve, times) {
 
@@ -11,7 +11,6 @@ export async function fetchKNMI(databaseData, resolve, times) {
   const locationID = databaseData.datasets.KNMI.location_id
   const dateUTC = new Date()
   const dateZoned = utcToZonedTime(dateUTC, timeZone)
-  const dateToday = format(dateZoned, "dd-MM-yyyy")
   const dateTodayFetch = format(dateZoned, "yyyy-M-d")
 
   const rawDataString = await fetch(`https://graphdata.buienradar.nl/1.0/actualarchive/weatherstation/${locationID}/?startDate=${dateTodayFetch}`)
@@ -26,11 +25,9 @@ export async function fetchKNMI(databaseData, resolve, times) {
   let measurementTimes = []
 
   rawData.observations.forEach(measurement => {
-    let time = format(utcToZonedTime(parseISO(measurement.datetime), timeZone), "HH:mm")
+    let time = format(parseISO(measurement.datetime), "HH:mm")
     measurementTimes.push(time)
   })
-
-  console.log(measurementTimes)
 
   times.forEach(timeStamp => {
     if (!measurementTimes.includes(timeStamp)) {
