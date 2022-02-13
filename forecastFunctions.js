@@ -105,6 +105,9 @@ export async function getForecast(forecastData, resolve) {
 }
 
 export function deleteForecastYesterday(forecastData) {
+
+  console.log(`${format(new Date(), "dd-MM-yyyy HH:mm")}: [Debug] deleting forecast yesterday...`)
+
   if (Object.keys(forecastData).length <= 1) return forecastData
 
   //Working in CET
