@@ -112,8 +112,6 @@ export async function getForecast(forecastData, resolve) {
 
 export function deleteForecastYesterday(forecastData) {
 
-  console.log(`${format(new Date(), "dd-MM-yyyy HH:mm")}: [Debug] deleting forecast yesterday...`)
-
   if (Object.keys(forecastData).length <= 1) return forecastData
 
   //Working in CET
@@ -121,13 +119,18 @@ export function deleteForecastYesterday(forecastData) {
   const timeFirstForecastData = forecastData[Object.keys(forecastData)[0]][0].time.substring(0, 5)
   const dateFirstForecastData = forecastData[Object.keys(forecastData)[0]][0].date
 
-  console.log(timeFirstForecastData)
+  console.log("dateToday: " + dateToday)
+  console.log("timeFirstForecastData: " + timeFirstForecastData)
+  console.log("dateFirstForecastData: " + dateFirstForecastData)
 
   if (timeFirstForecastData == "00:00" && dateFirstForecastData == dateToday) return forecastData
 
   const indexFirstForecastTimeToday = forecastData[Object.keys(forecastData)[0]].findIndex(location => location.time == "00:00" && location.date == dateToday)
   if (indexFirstForecastTimeToday == -1) return forecastData
   const hoursToDelete = indexFirstForecastTimeToday - 1
+
+  console.log("hoursToDelete: " + hoursToDelete)
+
 
   for (let i = 0; i < Object.keys(forecastData).length - 1; i++) {
     for (let j = 0; j < hoursToDelete; j++) {
