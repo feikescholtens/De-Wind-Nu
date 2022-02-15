@@ -127,7 +127,7 @@ export function deleteForecastYesterday(forecastData) {
 
   const indexFirstForecastTimeToday = forecastData[Object.keys(forecastData)[0]].findIndex(location => location.time == "00:00" && location.date == dateToday)
   if (indexFirstForecastTimeToday == -1) return forecastData
-  const hoursToDelete = indexFirstForecastTimeToday - 1
+  const hoursToDelete = indexFirstForecastTimeToday
 
   console.log("hoursToDelete: " + hoursToDelete)
 

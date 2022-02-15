@@ -75,7 +75,7 @@ export async function getData(request, response, locations, forecastData) {
 
   //Rest of the errors are handled in logFetchErrors.js
   if (values[2].length == 0 && values[3].length == 0 && values[4].length == 0 && !values[5]) {
-    console.log(`${format(new Date(), "dd-MM-yyyy HH:mm")}: Location "${location.name}" doesn't have any data (neither measurements nor forecast)!`)
+    console.log(`${format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy HH:mm")}: Location "${location.name}" doesn't have any data (neither measurements nor forecast)!`)
     response.redirect('/error?e=14')
   }
 
