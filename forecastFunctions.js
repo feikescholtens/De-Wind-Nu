@@ -74,15 +74,8 @@ export async function getForecast(forecastData, resolve) {
         //Deleting old forecasts (for which newer is available)
         const dateToday = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy")
         const dateFirstForecastData = forecastJson[locationID][0].time
-
-        console.log("dateToday: " + dateToday)
-        console.log("dateFirstForecastData: " + dateFirstForecastData)
-
         const indexTimeNewForecast = forecastData[locationID].findIndex(location => location.time == dateFirstForecastData && location.date == dateToday)
         const NoTimesToDelete = forecastData[locationID].length - indexTimeNewForecast
-
-        console.log("NoTimesToDelete: " + NoTimesToDelete)
-
 
         for (let j = 0; j < NoTimesToDelete; j++) {
           forecastData[locationID].pop()
@@ -111,7 +104,6 @@ export async function getForecast(forecastData, resolve) {
 }
 
 export function deleteForecastYesterday(forecastData) {
-  console.log("DELETING FORECAST RUN FROM YESTERDAY")
   if (Object.keys(forecastData).length <= 1) return forecastData
 
   //Working in CET
@@ -119,21 +111,13 @@ export function deleteForecastYesterday(forecastData) {
   const timeFirstForecastData = forecastData[Object.keys(forecastData)[0]][0].time.substring(0, 5)
   const dateFirstForecastData = forecastData[Object.keys(forecastData)[0]][0].date
 
-  console.log("dateToday: " + dateToday)
-  console.log("timeFirstForecastData: " + timeFirstForecastData)
-  console.log("dateFirstForecastData: " + dateFirstForecastData)
-
   if (timeFirstForecastData == "00:00" && dateFirstForecastData == dateToday) return forecastData
 
-  const indexFirstForecastTimeToday = forecastData[Object.keys(forecastData)[0]].findIndex(location => location.time == "00:00" && location.date == dateToday)
+  const indexFirstForecastTimeToday = forecastData[Object.keys(forecastData)[0]].findIndex(location => location.time == "00:00" && location.date == dateToday) //Equals the No. hours to delete
   if (indexFirstForecastTimeToday == -1) return forecastData
-  const hoursToDelete = indexFirstForecastTimeToday
-
-  console.log("hoursToDelete: " + hoursToDelete)
-
 
   for (let i = 0; i < Object.keys(forecastData).length - 1; i++) {
-    for (let j = 0; j < hoursToDelete; j++) {
+    for (let j = 0; j < indexFirstForecastTimeToday; j++) {
       forecastData[Object.keys(forecastData)[i]].shift()
     }
   }
