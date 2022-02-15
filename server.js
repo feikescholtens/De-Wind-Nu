@@ -18,10 +18,14 @@ const port = process.env.PORT || 3000
 const locations = JSON.parse(readFileSync("locations.json"))
 const locationsString = JSON.stringify(locations)
 let forecastData = JSON.parse(readFileSync("forecastData.json"))
-const rule = new schedule.RecurrenceRule()
-rule.hour = [3, 9, 15, 30, 21]
-rule.minute = 59
-rule.tz = "Europe/Amsterdam"
+const ruleNewForecast = new schedule.RecurrenceRule()
+ruleNewForecast.hour = [3, 9, 15, 30, 21]
+ruleNewForecast.minute = 59
+ruleNewForecast.tz = "Europe/Amsterdam"
+const ruleDelOldForecast = new schedule.RecurrenceRule()
+ruleDelOldForecast.hour = 0
+ruleDelOldForecast.minute = 44
+ruleDelOldForecast.tz = "Europe/Amsterdam"
 
 //Initialize Express
 app.listen(port, () => console.log("server running at port " + port))
@@ -86,7 +90,7 @@ if (Object.keys(forecastData).length == 0) {
   }
 }
 
-schedule.scheduleJob(rule, () => {
+schedule.scheduleJob(ruleNewForecast, () => {
   callGetForecast(forecastData)
 })
 
@@ -98,5 +102,5 @@ async function callGetForecast() {
 }
 
 //Deleting forecast data from yesterday
-schedule.scheduleJob("0 0 0 * * *", async () => { forecastData = await deleteForecastYesterday(forecastData) });
+schedule.scheduleJob(ruleDelOldForecast, async () => { forecastData = await deleteForecastYesterday(forecastData) });
 (async () => { forecastData = await deleteForecastYesterday(forecastData) })()

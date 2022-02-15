@@ -93,14 +93,6 @@ export async function fetchMVB(databaseData, resolve, times) {
       if (measurementType.ID.includes("WRS")) wind_direction = tempArray.copy()
     })
 
-    //All other errors (exept for when there's no data at all) are handled in logFetchErrors.js
-    if (wind_speed.length == 0 && wind_gusts.length == 0 && wind_direction.length == 0) {
-      resolve({
-        data: { error: { code: "ENOMEASUREMENTS" }, location: { name: databaseData.name } }
-      })
-      return
-    }
-
     data["MVB"] = [wind_speed, wind_gusts, wind_direction]
     resolve({ data })
   }

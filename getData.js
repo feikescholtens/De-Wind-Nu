@@ -73,9 +73,14 @@ export async function getData(request, response, locations, forecastData) {
   const timeRun = format(timeStampRun, "HH:mm")
   const timeNextRun = format(add(timeStampRun, { hours: (2 + 6), minutes: 58 }), "HH:mm")
 
-  //Rest of the errors are handled in logFetchErrors.js
+  //Rest of the errors are logged/handled in logFetchErrors.js
+  const dateTime = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy HH:mm") + " (CET)"
+
+  if (values[2].length == 0 && values[3].length == 0 && values[4].length == 0 && values[5]) {
+    console.log(`${dateTime}: Location "${location.name}" doesn't have any measurements!`)
+  }
   if (values[2].length == 0 && values[3].length == 0 && values[4].length == 0 && !values[5]) {
-    console.log(`${format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy HH:mm")}: Location "${location.name}" doesn't have any data (neither measurements nor forecast)!`)
+    console.log(`${dateTime}: Location "${location.name}" doesn't have any data (neither measurements nor forecast)!`)
     response.redirect('/error?e=14')
   }
 

@@ -28,46 +28,48 @@ export async function fetchRWS(databaseData, resolve, times) {
     wind_gusts = [],
     wind_direction = []
 
-  rawData.WaarnemingenLijst.forEach(measurementType => {
-    if (measurementType.MetingenLijst.length == 0) return
+  if (rawData.WaarnemingenLijst) {
+    rawData.WaarnemingenLijst.forEach(measurementType => {
+      if (measurementType.MetingenLijst.length == 0) return
 
-    let measurementTimes = [],
-      tempArray = []
+      let measurementTimes = [],
+        tempArray = []
 
-    measurementType.MetingenLijst.forEach(measurement => {
-      let time = format(utcToZonedTime(parseISO(measurement.Tijdstip), timeZone), "HH:mm")
-      measurementTimes.push(time)
-    })
+      measurementType.MetingenLijst.forEach(measurement => {
+        let time = format(utcToZonedTime(parseISO(measurement.Tijdstip), timeZone), "HH:mm")
+        measurementTimes.push(time)
+      })
 
-    times.forEach(timeStamp => {
-      if (!measurementTimes.includes(timeStamp)) {
-        tempArray.push(-999)
-        return
-      }
+      times.forEach(timeStamp => {
+        if (!measurementTimes.includes(timeStamp)) {
+          tempArray.push(-999)
+          return
+        }
 
-      const indexTime = measurementTimes.indexOf(timeStamp)
+        const indexTime = measurementTimes.indexOf(timeStamp)
 
-      if (measurementType.MetingenLijst[indexTime]) {
-        if (measurementType.MetingenLijst[indexTime].Meetwaarde) {
-          if (measurementType.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek) {
-            if (measurementType.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek == 999999999) {
-              tempArray.push(-999)
-            } else tempArray.push(measurementType.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek)
+        if (measurementType.MetingenLijst[indexTime]) {
+          if (measurementType.MetingenLijst[indexTime].Meetwaarde) {
+            if (measurementType.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek) {
+              if (measurementType.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek == 999999999) {
+                tempArray.push(-999)
+              } else tempArray.push(measurementType.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek)
+            } else tempArray.push(-999)
           } else tempArray.push(-999)
         } else tempArray.push(-999)
-      } else tempArray.push(-999)
+      })
+
+      const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes)
+
+      for (let j = 0; j < (times.length - theoreticalMeasurementCount); j++) {
+        tempArray.pop()
+      }
+
+      if (measurementType.AquoMetadata.Grootheid.Code == "WINDSHD") wind_speed = tempArray.copy().map(x => x * 1.94384449)
+      if (measurementType.AquoMetadata.Grootheid.Code == "WINDSTOOT") wind_gusts = tempArray.copy().map(x => x * 1.94384449)
+      if (measurementType.AquoMetadata.Grootheid.Code == "WINDRTG") wind_direction = tempArray.copy()
     })
-
-    const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes)
-
-    for (let j = 0; j < (times.length - theoreticalMeasurementCount); j++) {
-      tempArray.pop()
-    }
-
-    if (measurementType.AquoMetadata.Grootheid.Code == "WINDSHD") wind_speed = tempArray.copy().map(x => x * 1.94384449)
-    if (measurementType.AquoMetadata.Grootheid.Code == "WINDSTOOT") wind_gusts = tempArray.copy().map(x => x * 1.94384449)
-    if (measurementType.AquoMetadata.Grootheid.Code == "WINDRTG") wind_direction = tempArray.copy()
-  })
+  }
 
   data["Rijkswaterstaat"] = [wind_speed, wind_gusts, wind_direction]
   resolve({ data })
