@@ -75,8 +75,14 @@ export async function getForecast(forecastData, resolve) {
         const dateToday = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy")
         const dateFirstForecastData = forecastJson[locationID][0].time
 
+        console.log("dateToday: " + dateToday)
+        console.log("dateFirstForecastData: " + dateFirstForecastData)
+
         const indexTimeNewForecast = forecastData[locationID].findIndex(location => location.time == dateFirstForecastData && location.date == dateToday)
         const NoTimesToDelete = forecastData[locationID].length - indexTimeNewForecast
+
+        console.log("NoTimesToDelete: " + NoTimesToDelete)
+
 
         for (let j = 0; j < NoTimesToDelete; j++) {
           forecastData[locationID].pop()
@@ -115,11 +121,13 @@ export function deleteForecastYesterday(forecastData) {
   const timeFirstForecastData = forecastData[Object.keys(forecastData)[0]][0].time.substring(0, 5)
   const dateFirstForecastData = forecastData[Object.keys(forecastData)[0]][0].date
 
+  console.log(timeFirstForecastData)
+
   if (timeFirstForecastData == "00:00" && dateFirstForecastData == dateToday) return forecastData
 
   const indexFirstForecastTimeToday = forecastData[Object.keys(forecastData)[0]].findIndex(location => location.time == "00:00" && location.date == dateToday)
   if (indexFirstForecastTimeToday == -1) return forecastData
-  const hoursToDelete = indexFirstForecastTimeToday
+  const hoursToDelete = indexFirstForecastTimeToday - 1
 
   for (let i = 0; i < Object.keys(forecastData).length - 1; i++) {
     for (let j = 0; j < hoursToDelete; j++) {
