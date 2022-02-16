@@ -10,6 +10,8 @@ import { addLocation } from "./addLocation.js"
 import { addFeedback } from "./addFeedback.js"
 import { parseISO, add } from "date-fns"
 import schedule from "node-schedule"
+import { log } from "./globalFunctions.js"
+global.log = log
 
 //Define variables
 const __dirname = path.resolve()
@@ -28,7 +30,7 @@ ruleDelOldForecast.minute = 44
 ruleDelOldForecast.tz = "Europe/Amsterdam"
 
 //Initialize Express
-app.listen(port, () => console.log("server running at port " + port))
+app.listen(port, () => log(`server running at port ${port}`, "info"))
 app.use(express.json({ limit: "500kb" }))
 
 app.use("/", express.static(path.resolve(__dirname, "public/homepage")))
@@ -86,6 +88,10 @@ if (Object.keys(forecastData).length == 0) {
   const timeNewRunAvailable = add(timeStampRun, { hours: (2 + 6), minutes: 59 })
 
   if (new Date() > timeNewRunAvailable) {
+
+    log(new Date(), "debug", true)
+    log(timeNewRunAvailable, "debug", true)
+
     callGetForecast(forecastData)
   }
 }

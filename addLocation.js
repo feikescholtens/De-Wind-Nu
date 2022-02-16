@@ -10,9 +10,9 @@ export async function addLocation(request, locations) {
   newLocation.id = id;
   locations.push(newLocation);
 
-  writeFile("locations.json", JSON.stringify(locations, null, 2), (err) => {
-    if (err) {
-      console.log(err)
+  writeFile("locations.json", JSON.stringify(locations, null, 2), error => {
+    if (error) {
+      console.log(error)
       return
     }
 

@@ -1,25 +1,19 @@
-import { format } from "date-fns"
-import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
-const timeZone = "Europe/Amsterdam"
-
 export function logFetchErrors(dataFetched, response) {
   const errorCode = dataFetched.data.error.code
-  const location = dataFetched.data.location
-  const dateTime = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy HH:mm") + " (CET)"
 
   if (errorCode == "ENOTFOUND")
-    console.log(`${dateTime}: API endpoint ${dataFetched.data.dataset} doesn't exist, or there's a network error!`)
+    log(`API endpoint ${dataFetched.data.dataset} doesn't exist, or there's a network error!`, "fetchError")
   else if (errorCode == "ECONNRESET" || errorCode == "EPROTO")
-    console.log(`${dateTime}:  Network problem reaching API!`)
+    log(`Network problem reaching API!`, "fetchError")
   else if (errorCode == "ETIMEDOUT")
-    console.log(`${dateTime}: Request timed out of API ${dataFetched.data.dataset}!`)
+    log(`Request timed out of API ${dataFetched.data.dataset}!`, "fetchError")
   else if (errorCode == "LOGINFAILED")
-    console.log(`${dateTime}: Loggin in MVB API failed!`)
+    log(`Loggin in MVB API failed!`, "fetchError")
   else if (errorCode == "AUTHDENIED")
-    console.log(`${dateTime}: Access denied accessing MVB API!`)
+    log(` Access denied accessing MVB API!`, "fetchError")
   else {
-    console.log(`${dateTime}: ${JSON.stringify(dataFetched)}`)
-    response.redirect('/error');
+    log(JSON.stringify(dataFetched), "fetchError")
+    response.redirect('/error')
   }
 
 }

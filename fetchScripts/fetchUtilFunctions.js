@@ -142,9 +142,9 @@ export function saveNewApiKey(rawData) {
     "expirationDate": getUnixTime(expiresString),
     "issuedDate": getUnixTime(issuedString),
     "APIKey": rawData["access_token"]
-  }, null, 2), (err) => {
-    if (err) {
-      console.log(err)
+  }, null, 2), error => {
+    if (error) {
+      log(error, "error")
       resolve({ data })
     }
   })

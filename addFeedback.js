@@ -23,7 +23,7 @@ export async function addFeedback(request, response) {
   mailOptions.html = `<h1>Nieuwe feedback</h1><table border="1px"><tr><td>Naam:</td><td>${data.name.slice(1,-1)}</td></tr><tr><td>E-mail:</td><td>${data.email.slice(1,-1)}</td></tr><tr><td>Bericht:</td><td>${data.message.replace(regex, '<br>').slice(1,-1)}</td></tr></table>`;
   transporter.sendMail(mailOptions, function(error, info) {
     if (error) {
-      console.log(error);
+      log(error, "error")
     } else {
       response.send(info.response.substring(0, 12));
     }

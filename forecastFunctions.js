@@ -2,6 +2,7 @@ import { readFileSync, writeFile } from "fs"
 import fetch from "node-fetch"
 import jsdom from "jsdom"
 const { JSDOM } = jsdom
+import { JWT } from "google-auth-library"
 import { parseISO, format } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 const timeZone = "Europe/Amsterdam"
@@ -10,7 +11,7 @@ let retryCount = 0
 const maxRetries = 5 - 1
 export async function getForecast(forecastData, resolve) {
 
-  console.log("Checking new forecast run...")
+  log("Checking new forecast run...", "info", true)
 
   const HTML = await fetch("https://www.euroszeilen.utwente.nl/weer/grib/").then(response => response.text())
   const DOM = new JSDOM(HTML)
@@ -25,29 +26,38 @@ export async function getForecast(forecastData, resolve) {
     if (retryCount < maxRetries) {
       setTimeout(() => { getForecast(forecastData, resolve) }, 5 * 60 * 1000)
       retryCount++
-      console.log("New forecast run not available yet, scheduled new request in 5 minutes!")
+      log("New forecast run not available yet, scheduled new request in 5 minutes!", "info", true)
       return
     } else {
-      console.log("Forecast was not available after 5 times trying!")
+      log("Forecast was not available after 5 times trying!", "error", true)
       retryCount = 0
       resolve("ENOTAVAILABLE")
       return
     }
   }
 
-  console.log("New run available, fetching and saving it...")
+  log("New run available, fetching and saving it...", "info", true)
   retryCount = 0
+
+  const JSWClient = new JWT(
+    process.env.GCP_CLIENT_EMAIL,
+    null,
+    process.env.GCP_PRIVATE_KEY,
+    []
+  )
+  const accessID = await JSWClient.fetchIdToken(process.env.GCP_AUDIENCE)
 
   const locationsFetch = giveLocationsFetch()
   const fetchOptions = {
     method: "POST",
     headers: {
+      "Authorization": `Bearer ${accessID}`,
       "Content-Type": "application/json"
     },
     body: JSON.stringify({ "locations": locationsFetch })
   }
   const forecastString = await fetch("https://europe-west1-de-wind-nu.cloudfunctions.net/parseGribHarmonie", fetchOptions)
-    .catch(error => console.log(error))
+    .catch(error => log(error, "error", true))
     .then(response => response.text())
 
   try {
@@ -57,10 +67,10 @@ export async function getForecast(forecastData, resolve) {
       if (retryCount < maxRetries) {
         setTimeout(() => { getForecast(forecastData, resolve) }, 5 * 60 * 1000)
         retryCount++
-        console.log("New forecast run not available yet, scheduled new request in 5 minutes!")
+        log("New forecast run not available yet, scheduled new request in 5 minutes!", "info", true)
         return
       } else {
-        console.log("Forecast was not available after 5 times trying!")
+        log("Forecast was not available after 5 times trying!", "error", true)
         resolve("ENOTAVAILABLE")
         return
       }
@@ -88,22 +98,23 @@ export async function getForecast(forecastData, resolve) {
 
     forecastData["timeRun"] = forecastJson["timeRun"]
 
-    writeFile("forecastData.json", JSON.stringify(forecastData, null, 2), (err) => {
-      if (err) {
-        console.log(err)
+    writeFile("forecastData.json", JSON.stringify(forecastData, null, 2), error => {
+      if (error) {
+        log(error, "error", true)
         return
       } else {
-        console.log("New forecast run saved!")
+        log("New forecast run saved!", "info", true)
         resolve(forecastData)
         return
       }
     })
   } catch (error) {
-    console.log(error)
+    log(error, "error", true)
   }
 }
 
 export function deleteForecastYesterday(forecastData) {
+
   if (Object.keys(forecastData).length <= 1) return forecastData
 
   //Working in CET
@@ -122,12 +133,9 @@ export function deleteForecastYesterday(forecastData) {
     }
   }
 
-  writeFile("forecastData.json", JSON.stringify(forecastData, null, 2), (err) => {
-    if (err) {
-      console.log(err)
-    } else {
-      console.log("Removed forecast data from yesterday!")
-    }
+  writeFile("forecastData.json", JSON.stringify(forecastData, null, 2), error => {
+    if (error) log(error, "error", true)
+    else log("Removed forecast data from yesterday!", "info", true)
   })
 
   return forecastData

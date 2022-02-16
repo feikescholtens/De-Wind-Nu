@@ -77,10 +77,10 @@ export async function getData(request, response, locations, forecastData) {
   const dateTime = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy HH:mm") + " (CET)"
 
   if (values[2].length == 0 && values[3].length == 0 && values[4].length == 0 && values[5]) {
-    console.log(`${dateTime}: Location "${location.name}" doesn't have any measurements!`)
+    log(`Location "${location.name}" doesn't have any measurements!`, "fetchError", true)
   }
   if (values[2].length == 0 && values[3].length == 0 && values[4].length == 0 && !values[5]) {
-    console.log(`${dateTime}: Location "${location.name}" doesn't have any data (neither measurements nor forecast)!`)
+    log(`Location "${location.name}" doesn't have any data (neither measurements nor forecast)!`, "fetchError", true)
     response.redirect('/error?e=14')
   }
 
