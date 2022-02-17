@@ -82,9 +82,10 @@ export async function getForecast(forecastData, resolve) {
       if (!forecastData[locationID]) forecastData[locationID] = []
       else {
         //Deleting old forecasts (for which newer is available)
-        const dateToday = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy")
-        const dateFirstForecastData = forecastJson[locationID][0].time
-        const indexTimeNewForecast = forecastData[locationID].findIndex(location => location.time == dateFirstForecastData && location.date == dateToday)
+        const timeFirstForecastData = forecastJson[locationID][0].time
+        const dateFirstForecastData = forecastJson[locationID][0].date
+        const indexTimeNewForecast = forecastData[locationID].findIndex(location => location.time == timeFirstForecastData && location.date == dateFirstForecastData)
+
         const NoTimesToDelete = forecastData[locationID].length - indexTimeNewForecast
 
         for (let j = 0; j < NoTimesToDelete; j++) {

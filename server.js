@@ -26,7 +26,7 @@ ruleNewForecast.minute = 59
 ruleNewForecast.tz = "Europe/Amsterdam"
 const ruleDelOldForecast = new schedule.RecurrenceRule()
 ruleDelOldForecast.hour = 0
-ruleDelOldForecast.minute = 44
+ruleDelOldForecast.minute = 0
 ruleDelOldForecast.tz = "Europe/Amsterdam"
 
 //Initialize Express
@@ -88,11 +88,9 @@ if (Object.keys(forecastData).length == 0) {
   const timeNewRunAvailable = add(timeStampRun, { hours: (2 + 6), minutes: 59 })
 
   if (new Date() > timeNewRunAvailable) {
-
-    log(new Date(), "debug", true)
-    log(timeNewRunAvailable, "debug", true)
-
     callGetForecast(forecastData)
+  } else {
+    forecastData = deleteForecastYesterday(forecastData)
   }
 }
 
@@ -104,9 +102,8 @@ async function callGetForecast() {
   const response = await new Promise(async (resolve) => {
     getForecast(forecastData, resolve)
   })
-  if (response !== "ENOTAVAILABLE") forecastData = response
+  if (response !== "ENOTAVAILABLE") forecastData = deleteForecastYesterday(forecastData)
 }
 
 //Deleting forecast data from yesterday
-schedule.scheduleJob(ruleDelOldForecast, async () => { forecastData = await deleteForecastYesterday(forecastData) });
-(async () => { forecastData = await deleteForecastYesterday(forecastData) })()
+schedule.scheduleJob(ruleDelOldForecast, () => { forecastData = deleteForecastYesterday(forecastData) })

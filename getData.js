@@ -56,12 +56,13 @@ export async function getData(request, response, locations, forecastData) {
       wind_forecastGust = new Array(times.length),
       wind_forecastDirection = new Array(times.length)
 
-    const amountHourValues = (times.length - startForecastTimeIndex) / 6
+    const indexFirstForecastTimeToday = forecastData[Object.keys(forecastData)[0]].findIndex(location => location.date == dateToday)
+    const amountHourValues = forecastData[location.id].length - indexFirstForecastTimeToday
 
     for (let i = 0; i < amountHourValues; i++) {
-      wind_forecast[startForecastTimeIndex + i * 6] = forecastData[location.id][i].s
-      wind_forecastDirection[startForecastTimeIndex + i * 6] = forecastData[location.id][i].d
-      wind_forecastGust[startForecastTimeIndex + i * 6] = forecastData[location.id][i].g
+      wind_forecast[startForecastTimeIndex + i * 6] = forecastData[location.id][i + indexFirstForecastTimeToday].s
+      wind_forecastDirection[startForecastTimeIndex + i * 6] = forecastData[location.id][i + indexFirstForecastTimeToday].d
+      wind_forecastGust[startForecastTimeIndex + i * 6] = forecastData[location.id][i + indexFirstForecastTimeToday].g
     }
 
     values.push(calcInterpolation(wind_forecast, times, startForecastTimeIndex))
@@ -74,8 +75,6 @@ export async function getData(request, response, locations, forecastData) {
   const timeNextRun = format(add(timeStampRun, { hours: (2 + 6), minutes: 58 }), "HH:mm")
 
   //Rest of the errors are logged/handled in logFetchErrors.js
-  const dateTime = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy HH:mm") + " (CET)"
-
   if (values[2].length == 0 && values[3].length == 0 && values[4].length == 0 && values[5]) {
     log(`Location "${location.name}" doesn't have any measurements!`, "fetchError", true)
   }
