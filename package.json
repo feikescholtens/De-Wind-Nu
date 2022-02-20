@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "google-auth-library": "^7.11.0",
     "jsdom": "^19.0.0",
+    "jsfive": "^0.3.8",
     "node-fetch": "^3.2.0",
     "node-schedule": "^2.1.0",
     "nodemailer": "^6.7.0"
