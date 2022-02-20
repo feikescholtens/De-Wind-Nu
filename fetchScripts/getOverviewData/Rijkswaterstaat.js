@@ -36,10 +36,20 @@ export async function overviewFetchRWS(locations, resolve) {
     for (let i = 0; i < IDMatches.length; i++) {
       if (IDMatches[i].Rijkswaterstaat == locationData.Locatie.Code) {
 
-        locationData.MetingenLijst.forEach(() => {
+        locationData.MetingenLijst.forEach((a, b) => {
 
-          const wind_speed = locationData.MetingenLijst[0].Meetwaarde.Waarde_Numeriek * 1.94384449,
-            wind_direction = locationData.MetingenLijst[0].Meetwaarde.Waarde_Numeriek
+          //This is needed b.c. messy RWS API
+          locationData.MetingenLijst.sort((a, b) => {
+            return new Date(b.Tijdstip) - new Date(a.Tijdstip)
+          })
+
+          let correctIndex
+          if (locationData.MetingenLijst[0].Meetwaarde.Waarde_Numeriek !== 9.99999999E8) correctIndex = 0
+          else correctIndex = 1
+          //
+
+          const wind_speed = locationData.MetingenLijst[correctIndex].Meetwaarde.Waarde_Numeriek * 1.94384449,
+            wind_direction = locationData.MetingenLijst[correctIndex].Meetwaarde.Waarde_Numeriek
 
           if (locationData.AquoMetadata.Grootheid.Code == "WINDSHD") {
             if (!data[IDMatches[i].applicationID]) data[IDMatches[i].applicationID] = { wind_speed: wind_speed }
