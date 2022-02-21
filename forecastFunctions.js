@@ -22,18 +22,21 @@ export async function getForecast(forecastData, resolve) {
   const timeMostRecentRun = parseISO(timeString)
   const timeSavedRun = parseISO(`${forecastData.timeRun}Z`)
 
-  if (timeMostRecentRun <= timeSavedRun) {
+  log(`timeMostRecentRun: ${timeMostRecentRun}`)
+  log(`timeSavedRun: ${timeSavedRun}`)
+  log(timeMostRecentRun <= timeSavedRun)
+
+  if (timeMostRecentRun > timeSavedRun) {
     if (retryCount < maxRetries) {
       setTimeout(() => { getForecast(forecastData, resolve) }, 5 * 60 * 1000)
       retryCount++
       log("New forecast run not available yet, scheduled new request in 5 minutes!", "info", true)
-      return
     } else {
       log("Forecast was not available after 5 times trying!", "error", true)
       retryCount = 0
       resolve("ENOTAVAILABLE")
-      return
     }
+    return
   }
 
   log("New run available, fetching and saving it...", "info", true)

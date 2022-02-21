@@ -79,6 +79,7 @@ app.post("/addFeedback", (request, response) => addFeedback(request, response))
 app.use("/*", (request, response) => response.redirect("/"))
 
 //Fetching forecast data (all times here in UTC)
+console.log(forecastData)
 if (Object.keys(forecastData).length == 0) {
   callGetForecast(forecastData)
 } else if (!forecastData.timeRun) {
@@ -87,6 +88,10 @@ if (Object.keys(forecastData).length == 0) {
   const timeStampRun = parseISO(`${forecastData.timeRun}Z`)
   const timeNewRunAvailable = add(timeStampRun, { hours: (2 + 6), minutes: 59 })
 
+  log(new Date())
+  log(timeNewRunAvailable)
+  log(new Date() > timeNewRunAvailable)
+  callGetForecast(forecastData)
   if (new Date() > timeNewRunAvailable) {
     callGetForecast(forecastData)
   } else {
@@ -107,27 +112,3 @@ async function callGetForecast() {
 
 //Deleting forecast data from yesterday
 schedule.scheduleJob(ruleDelOldForecast, () => { forecastData = deleteForecastYesterday(forecastData) })
-
-//TESTING NEW KNMI API
-import { sub, format } from "date-fns"
-
-
-const TimeWithMostLikelyAFile = sub(parseISO(new Date().toISOString().replace('Z', '')), { minutes: 10 + 6 })
-const StingWithMostLikelyAFile = format(TimeWithMostLikelyAFile, "yyyyMMddHHmm")
-
-const fileName = `KMDS__OPER_P___10M_OBS_L2_${StingWithMostLikelyAFile}.nc`
-
-console.log(fileName)
-
-import * as hdf5 from 'jsfive'
-
-const file = readFileSync("./TEST.nc")
-const data = new hdf5.File(file.buffer)
-
-// console.log(data.keys)
-
-// log(f.get("station").value.indexOf("06310"))
-
-log(data.get("ff").value[33])
-log(data.get("dd").value[33])
-log(data.get("gff").value[33])
