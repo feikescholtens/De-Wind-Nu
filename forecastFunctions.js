@@ -26,7 +26,7 @@ export async function getForecast(forecastData, resolve) {
   log(`timeSavedRun: ${timeSavedRun}`)
   log(timeMostRecentRun <= timeSavedRun)
 
-  if (timeMostRecentRun > timeSavedRun) {
+  if (timeMostRecentRun <= timeSavedRun) {
     if (retryCount < maxRetries) {
       setTimeout(() => { getForecast(forecastData, resolve) }, 5 * 60 * 1000)
       retryCount++
