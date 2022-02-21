@@ -90,7 +90,7 @@ if (Object.keys(forecastData).length == 0) {
   log(new Date())
   log(timeNewRunAvailable)
   log(new Date() > timeNewRunAvailable)
-  callGetForecast(forecastData)
+  // callGetForecast(forecastData)
   if (new Date() > timeNewRunAvailable) {
     callGetForecast(forecastData)
   } else {
