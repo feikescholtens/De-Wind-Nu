@@ -79,7 +79,6 @@ app.post("/addFeedback", (request, response) => addFeedback(request, response))
 app.use("/*", (request, response) => response.redirect("/"))
 
 //Fetching forecast data (all times here in UTC)
-console.log(forecastData)
 if (Object.keys(forecastData).length == 0) {
   callGetForecast(forecastData)
 } else if (!forecastData.timeRun) {
