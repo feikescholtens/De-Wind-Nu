@@ -88,6 +88,7 @@ if (Object.keys(forecastData).length == 0) {
   const timeNewRunAvailable = add(timeStampRun, { hours: (2 + 6), minutes: 59 })
 
   log(new Date())
+  log(timeStampRun)
   log(timeNewRunAvailable)
   log(new Date() > timeNewRunAvailable)
   // callGetForecast(forecastData)
