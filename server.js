@@ -5,11 +5,8 @@ import cors from "cors"
 import { readFileSync } from "fs"
 import { getData } from "./getData.js"
 import { getOverviewData } from "./getOverviewData.js"
-import { getForecast, deleteForecastYesterday } from "./forecastFunctions.js"
 import { addLocation } from "./addLocation.js"
 import { addFeedback } from "./addFeedback.js"
-import { parseISO, add } from "date-fns"
-import schedule from "node-schedule"
 import { log } from "./globalFunctions.js"
 global.log = log
 
@@ -19,15 +16,7 @@ const app = express()
 const port = process.env.PORT || 3000
 const locations = JSON.parse(readFileSync("locations.json"))
 const locationsString = JSON.stringify(locations)
-let forecastData = JSON.parse(readFileSync("forecastData.json"))
-const ruleNewForecast = new schedule.RecurrenceRule()
-ruleNewForecast.hour = [3, 9, 15, 30, 21]
-ruleNewForecast.minute = 59
-ruleNewForecast.tz = "Europe/Amsterdam"
-const ruleDelOldForecast = new schedule.RecurrenceRule()
-ruleDelOldForecast.hour = 0
-ruleDelOldForecast.minute = 0
-ruleDelOldForecast.tz = "Europe/Amsterdam"
+const forecastData = {}
 
 //Initialize Express
 app.listen(port, () => log(`server running at port ${port}`, "info"))
@@ -77,38 +66,3 @@ app.post("/addFeedback", (request, response) => addFeedback(request, response))
 
 //If unknown url is typed in
 app.use("/*", (request, response) => response.redirect("/"))
-
-//Fetching forecast data (all times here in UTC)
-if (Object.keys(forecastData).length == 0) {
-  callGetForecast(forecastData)
-} else if (!forecastData.timeRun) {
-  callGetForecast(forecastData)
-} else {
-  const timeStampRun = parseISO(`${forecastData.timeRun}Z`)
-  const timeNewRunAvailable = add(timeStampRun, { hours: (2 + 6), minutes: 59 })
-
-  log(new Date())
-  log(timeStampRun)
-  log(timeNewRunAvailable)
-  log(new Date() > timeNewRunAvailable)
-  // callGetForecast(forecastData)
-  if (new Date() > timeNewRunAvailable) {
-    callGetForecast(forecastData)
-  } else {
-    forecastData = deleteForecastYesterday(forecastData)
-  }
-}
-
-schedule.scheduleJob(ruleNewForecast, () => {
-  callGetForecast(forecastData)
-})
-
-async function callGetForecast() {
-  const response = await new Promise(async (resolve) => {
-    getForecast(forecastData, resolve)
-  })
-  if (response !== "ENOTAVAILABLE") forecastData = deleteForecastYesterday(forecastData)
-}
-
-//Deleting forecast data from yesterday
-schedule.scheduleJob(ruleDelOldForecast, () => { forecastData = deleteForecastYesterday(forecastData) })

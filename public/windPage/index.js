@@ -30,6 +30,7 @@ globalThis.data = [],
 
   const locationLabelNode = document.querySelector("[data-location]"),
     measurementSourceLabelNode = document.querySelector("[data-measurementSource]"),
+    forecastSourceLabelNode = document.querySelector("[data-forecastSource]"),
     forecastRunLabelNode = document.querySelector("[data-forecastRun]"),
     nextForecastRunLabelNode = document.querySelector("[data-nextForecastRun]")
 
@@ -106,6 +107,7 @@ globalThis.data = [],
     document.querySelector("[data-decimals]").getElementsByTagName("option")[2].innerText = "2 (metingen slechts geleverd in één decimaal)"
   } else if (dataset == "MVB") measurementSourceLabelNode.innerText = "Meetnet Vlaamse Banken"
 
+  if (dataFetched.forecastRun == "N.A.") forecastSourceLabelNode.innerText = "niet beschikbaar"
   forecastRunLabelNode.innerText = dataFetched.forecastRun
   nextForecastRunLabelNode.innerText = dataFetched.nextForecastRun
 

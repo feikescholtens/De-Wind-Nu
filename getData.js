@@ -70,9 +70,14 @@ export async function getData(request, response, locations, forecastData) {
     values.push(calcInterpolation(wind_forecastGust, times, startForecastTimeIndex))
   }
 
-  const timeStampRun = utcToZonedTime(parseISO(`${forecastData.timeRun}Z`), timeZone)
-  const timeRun = format(timeStampRun, "HH:mm")
-  const timeNextRun = format(add(timeStampRun, { hours: (2 + 6), minutes: 58 }), "HH:mm")
+  let timeStampRun,
+    timeRun = "N.A.",
+    timeNextRun
+  if (forecastData.timeRun) {
+    timeStampRun = utcToZonedTime(parseISO(`${forecastData.timeRun}Z`), timeZone)
+    timeRun = format(timeStampRun, "HH:mm")
+    timeNextRun = format(add(timeStampRun, { hours: (2 + 6), minutes: 58 }), "HH:mm")
+  }
 
   //Rest of the errors are logged/handled in logFetchErrors.js
   if (values[2].length == 0 && values[3].length == 0 && values[4].length == 0 && values[5]) {
