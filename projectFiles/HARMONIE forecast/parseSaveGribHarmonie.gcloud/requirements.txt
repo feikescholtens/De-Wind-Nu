@@ -1,0 +1,9 @@
+# Function dependencies, for example:
+# package>=version
+pupygrib
+requests
+pytz
+google-cloud-storage
+python-dateutil
+lxml
+cssselect
