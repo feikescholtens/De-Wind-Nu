@@ -32,8 +32,10 @@ export async function fetchForecast() {
 
   const storage = new Storage({
     projectId: process.env.GCP_PROJECT_ID,
-    client_email: process.env.GCP_CLIENT_EMAIL,
-    private_key: process.env.GCP_PRIVATE_KEY
+    credentials: {
+      client_email: process.env.GCP_CLIENT_EMAIL,
+      private_key: process.env.GCP_PRIVATE_KEY
+    }
   })
 
   const fileExists = await storage.bucket("de-wind-nu").file("forecastData.json").exists()
