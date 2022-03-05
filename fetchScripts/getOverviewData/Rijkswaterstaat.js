@@ -36,7 +36,7 @@ export async function overviewFetchRWS(locations, resolve) {
     for (let i = 0; i < IDMatches.length; i++) {
       if (IDMatches[i].Rijkswaterstaat == locationData.Locatie.Code) {
 
-        locationData.MetingenLijst.forEach((a, b) => {
+        locationData.MetingenLijst.forEach(() => {
 
           //This is needed b.c. messy RWS API
           locationData.MetingenLijst.sort((a, b) => {

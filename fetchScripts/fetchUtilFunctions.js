@@ -68,6 +68,8 @@ export function giveRWSOverviewFetchOptions(locationsArray) {
 
 export function SuccesvolFalseError(rawData, locationName, data, resolve) {
 
+  if (!rawData) return true
+
   //All other errors (exept for when there's no data at all) are handled in logFetchErrors.js
   if (rawData.Foutmelding) {
     if (rawData.Foutmelding == "Geen gegevens gevonden!") return false //This error is not handled here
