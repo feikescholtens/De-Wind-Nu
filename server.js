@@ -94,7 +94,7 @@ app.post("/logGCPMessage", (request, response) => {
 app.use("/*", (request, response) => response.redirect("/"))
 
 //Load forecast and schedule updates
-let forecastData = {};
+global.forecastData = {};
 (async () => forecastData = await fetchForecast())()
 
 const ruleUpdatedForecast = createRecurrenceRule([3, 9, 15, 21], [55], [30])
