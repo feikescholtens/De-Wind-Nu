@@ -113,6 +113,16 @@ export function giveMVBOverviewFetchOptions(locationsArray, newToken) {
 
 }
 
+export function JSONError(rawData) {
+  if (!rawData || !rawData.length) return true
+
+  //All other errors (exept for when there's no data at all) are handled in logFetchErrors.js
+  if (rawData.error) {
+    if (rawData.error == "not found") return false //This error is not handled here
+  }
+  return false
+}
+
 export function MessageError(rawData, data, resolve) {
   if (rawData.Message) {
     if (rawData.Message == "Login failed") {
@@ -152,12 +162,12 @@ export function saveNewApiKey(rawData) {
   })
 }
 
-export function theoreticalMeasurements(measurementTimes) {
+export function theoreticalMeasurements(measurementTimes, measurementEveryXMinutes) {
   if (measurementTimes.length == 0) return
 
   const lastMeasurementHH = measurementTimes[measurementTimes.length - 1].substring(0, 2)
   const lastMeasurementmm = measurementTimes[measurementTimes.length - 1].substring(3, 5)
-  const theoreticalMeasurementCount = lastMeasurementHH * 6 + lastMeasurementmm / 10 + 1
+  const theoreticalMeasurementCount = lastMeasurementHH * (60 / measurementEveryXMinutes) + lastMeasurementmm / measurementEveryXMinutes + 1
 
   return theoreticalMeasurementCount
 }

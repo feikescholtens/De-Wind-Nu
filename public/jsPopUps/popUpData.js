@@ -5,19 +5,23 @@ export const popUpData = {
     De Wind Nu verzamelt actuele weerdata van meetstations door heel Nederland. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.
     <br><br>
     Zodra je deze boodschap wegklikt zie je een kaart met alle beschikbare locaties. 
-    In dit overzicht zijn ook de wind- krachten en richtingen weergegeven.
-    <br><br>
-    <button class="windPageButton popupRWS">Groene</button> locaties zijn van Rijkswaterstaat<br>
-    <button class="windPageButton popupKNMI">Blauwe</button> locaties zijn van het KNMI<br>
-    <button class="windPageButton popupMVB">Rode</button> locaties zijn van het Meetnet Vlaamse Banken<br>
+    In dit overzicht zijn ook de wind- krachten en richtingen weergegeven.</p>
     <br>
+    <div id="gridWrapper">
+      <div><button class="windPageButton popupRWS">Groene</button></div><div>locaties zijn van Rijkswaterstaat</div>
+      <div><button class="windPageButton popupKNMI">Blauwe</button></div><div>locaties zijn van het KNMI</div>
+      <div><button class="windPageButton popupMVB">Rode</button></div><div>locaties zijn van het Meetnet Vlaamse Banken</div>
+      <div><button class="windPageButton popupVLINDER">Gele</button></div><div>locaties zijn van het VLINDER project van de UGent (deze voldoen niet aan de officiële eisen voor meetstations 
+        en kunnen daarom lagere waardes aangeven)</div>
+    </div><br>
+    <p class='messageBoxP'>
     Bijna elke locatie bevat ook de laatste windvoorspelling van het KNMI.
     Na het klikken op een van de locaties wordt de data van vandaag getoond voor deze locatie. Onderaan zijn opties te vinden,
     om bijvoorbeeld de eenheid te veranderen of om een tabel weer te geven in plaats van de grafieken.
     <br><br>
     Veel plezier en houdt het veilig op het water!
     <br><br>
-    <i>PS: Deze informatie is ook onder elke pagina te vinden onder het "Over" kopje!</i>
+    <i>PS: Deze informatie is ook onder elke pagina te vinden onder het "Over" kopje!</i></p>
     ` },
   over: { html: `
     <h3 class="popUpTitle">Over</h3>
@@ -26,12 +30,16 @@ export const popUpData = {
     <br><br>
     Bij het openen van de website is een overzicht weergegeven met de wind- krachten en richtingen.
     Opties zoals als de kaart tegels, met keuze tussen de standaardtegels van OpenStreetMap en tegels van hogere resolutie van Mapbox, 
-    kunnen onderaan veranderd worden (scroll op de witte balk bovenaan). Ook kan er een zeekaart toegevoegd worden.
-    <br><br>
-    <button class="windPageButton popupRWS popUp">Groene</button> locaties zijn van Rijkswaterstaat<br>
-    <button class="windPageButton popupKNMI popUp">Blauwe</button> locaties zijn van het KNMI<br>
-    <button class="windPageButton popupMVB popUp">Rode</button> locaties zijn van het Meetnet Vlaamse Banken<br>
+    kunnen onderaan veranderd worden (scroll op de witte balk bovenaan). Ook kan er een zeekaart toegevoegd worden.</p>
     <br>
+    <div id="gridWrapper">
+      <div><button class="windPageButton popupRWS">Groene</button></div><div>locaties zijn van Rijkswaterstaat</div>
+      <div><button class="windPageButton popupKNMI">Blauwe</button></div><div>locaties zijn van het KNMI</div>
+      <div><button class="windPageButton popupMVB">Rode</button></div><div>locaties zijn van het Meetnet Vlaamse Banken</div>
+      <div><button class="windPageButton popupVLINDER">Gele</button></div><div>locaties zijn van het VLINDER project van de UGent (deze voldoen niet aan de officiële eisen voor meetstations 
+        en kunnen daarom lagere waardes aangeven)</div>
+    </div><br>
+    <p class='messageBoxP'>
     Na het klikken op een van de locaties wordt de data van vandaag getoond voor deze locatie. Deze data is standaard weergegeven als twee grafieken,
     maar er kan boven het tweede kopje ook gekozen worden voor een tabel (dit kan overigens ook onderaan de pagina gekozen worden). 
     Alle tijden op de website zijn in de Midden-Europese Tijd.
@@ -51,7 +59,9 @@ export const popUpData = {
       Metingen worden gemaakt, in het geval van het KNMI, 
       door meetstations in kleine veldjes op open plekken, welke een uitgebreid arsenaal aan meetinstrumenten bevatten. Zo kan het KNMI bijvoorbeeld zicht, 
       wolkenhoogte en luchtdruk meten, naast de meer bekende parameters als temperatuur en wind. Rijkswaterstaat en het Meetnet Vlaamse Banken hebben minder geavanceerde stations,
-      en meten voornamelijk de wind met meetpalen (vaak in of nabij zee).
+      en meten voornamelijk de wind met meetpalen (vaak in of nabij zee). Het VLINDER project is onderdeel van de UGent in België. Dit is een netwerk van kleine meetstations welke maar een handvol parameters meten.
+      Deze meetstations liggen meestal niet op open plekken en liggen niet op de juiste hoogte om aan de eisen van een officieel meetstation
+      te voldoen. Daarom geven ze een stuk lagere waardes aan. Deze afwijzing kan je zien door te kijken naar het verschil met de voorspellingslijn (bij de officiële meetstations is dit verschil een stuk kleiner).
       <br>&nbsp;&nbsp;&nbsp;&nbsp;De voorspellingen, die ook in de grafieken zijn weergegeven, komen uit het HARMONIE-AROME Cy40 model van het KNMI. Dit model
       bevat 39 parameters - dus niet alleen wind - en berekent de voorspelling voor elk uur van de komende twee dagen over een gebied, met de grootte van Frankrijk, 
       waarin Nederland centraal ligt. Dit wordt gedaan op supercomputers,
@@ -78,22 +88,23 @@ export const popUpData = {
     ` },
   credit: { html: `
    <h3 class="popUpTitle">Credit / bronvermelding</h3>
-   <p class='messageBoxP'>De Wind Nu is non-profit en heeft als doel om surfers te informeren over het weer. Dit is
-     mogelijk gemaakt door de data van <a target='_blank' href='https://waterberichtgeving.rws.nl/'>Rijkswaterstaat</a>, het KNMI en 
-     het Meetnet Vlaamse Banken. 
-     Data van Rijkswaterstaat is van de meetpalen van het <i>Rijkswaterstaat waterdata</i>-
-     netwerk. Data van het KNMI is aangeleverd door 
-     <a target='_blank' href='https://www.buienradar.nl'>Buienradar.nl</a>. Het Meetnet Vlaamse Banken van de Vlaamse Hydrografie 
-     (zie <a href="https://www.agentschapmdk.be/nl/vlaamse-hydrografie" target="_blank">Vlaamse Hydrografie | Agentschap MDK</a>) 
-     levert de winddata van voor de Belgische kust.
-     Niemand verdient geld aan deze website. 
-     <br><br>
-     Hier volgt een lijst met alle gebruikte toepassingen van de front-end: 
+   <p class='messageBoxP'>De Wind Nu is non-profit en heeft als doel om surfers te informeren over het weer. Niemand verdient geld aan deze website. Dit is
+     mogelijk gemaakt door de data van de volgende bronnen: </p>
      <ul>
-     <li>Mapbox</li>
-     <li>OpenStreetMap</li>
-     <li>OpenSeaMap</li>
-     <li>ChartJS</li>
+     <li><a target='_blank' href='https://rijkswaterstaat.nl/'>Rijkswaterstaat</a> waterdata;</li>
+     <li>KNMI, aangeleverd door de website van <a target='_blank' href='https://www.buienradar.nl'>Buienradar.nl</a>;</li>
+     <li>Meetnet Vlaamse Banken, van de Vlaamse Hydrografie 
+     (zie <a href="https://www.agentschapmdk.be/nl/vlaamse-hydrografie" target="_blank">Vlaamse Hydrografie | Agentschap MDK</a>);</li>
+     <li><a target='_blank' href='https://vlinder.ugent.be/'>VLINDER.nl</a> project van de UGent.</li>
+     </ul>
+     
+     <p class='messageBoxP'>
+     Hier volgt een lijst met alle gebruikte toepassingen aan de front-end: 
+     <ul>
+     <li>Mapbox;</li>
+     <li>OpenStreetMap;</li>
+     <li>OpenSeaMap;</li>
+     <li>ChartJS.</li>
      </ul></p>` },
   feedback: { html: `<h3 class="popUpTitle">Geef feedback</h3>
      <p class="messageBoxP">Feedback wordt erg gewaardeerd. Dit kan in de vorm van fouten/bugs, tips, gewenste functies, noem

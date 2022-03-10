@@ -1,7 +1,7 @@
 import { displayPopUpWithName } from "../jsPopUps/functions.js"
 import { displayPopUpFeedback } from "../jsPopUps/feedback.js"
 import { contentUpdate } from "./js/contentUpdate.js"
-import { changeShowBar, changeDataForm, changeUnit, changeDecimals, unHideElements, changeInterpolation, calcInterpolation, changeTableSort } from "./js/functions.js"
+import { generateTimes, changeShowBar, changeDataForm, changeUnit, changeDecimals, unHideElements, changeInterpolation, calcInterpolation, changeTableSort } from "./js/functions.js"
 import { redirect } from "../redirect.js"
 redirect()
 
@@ -17,11 +17,13 @@ globalThis.data = [],
 
 (async () => {
 
-  globalThis.times = await fetch("json/chartTimes.json").then(response => response.json())
-  globalThis.units = await fetch("json/units.json").then(response => response.json())
-
   const dataset = dataFetched.dataset,
     spotName = dataFetched.spotName
+
+  if (["Rijkswaterstaat", "KNMI", "MVB"].includes(dataset)) globalThis.times = generateTimes(10)
+  if (["VLINDER"].includes(dataset)) globalThis.times = generateTimes(5)
+  globalThis.units = await fetch("json/units.json").then(response => response.json())
+
   const showBarSelector = document.querySelector("[data-showBar]"),
     dataFormSelector = document.querySelector("[data-dataFormUnderSettings]"),
     unitSelector = document.querySelector("[data-unit]"),
@@ -101,11 +103,11 @@ globalThis.data = [],
   locationLabelNode.style.right = (document.body.clientWidth - document.getElementsByTagName("main")[0].clientWidth) / 2 + "px"
   window.addEventListener("resize", () => locationLabelNode.style.right = (document.body.clientWidth - document.getElementsByTagName("main")[0].clientWidth) / 2 + "px")
 
-  if (dataset == "Rijkswaterstaat") measurementSourceLabelNode.innerText = "Rijkswaterstaat"
-  else if (dataset == "KNMI") {
-    measurementSourceLabelNode.innerText = "KNMI"
+  measurementSourceLabelNode.innerText = dataset
+  if (dataset == "MVB") measurementSourceLabelNode.innerText = "Meetnet Vlaamse Banken"
+  if (dataset == "VLINDER") measurementSourceLabelNode.innerText = "UGent VLINDER project"
+  if (dataset == "KNMI" || dataset == "VLINDER")
     document.querySelector("[data-decimals]").getElementsByTagName("option")[2].innerText = "2 (metingen slechts geleverd in één decimaal)"
-  } else if (dataset == "MVB") measurementSourceLabelNode.innerText = "Meetnet Vlaamse Banken"
 
   if (dataFetched.forecastRun == "N.A.") forecastSourceLabelNode.innerText = "niet beschikbaar"
   forecastRunLabelNode.innerText = dataFetched.forecastRun

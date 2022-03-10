@@ -39,20 +39,20 @@ export async function fetchKNMI(databaseData, resolve, times) {
 
     const indexTime = measurementTimes.indexOf(timeStamp)
 
-    if (rawData.observations[indexTime].values.ff && rawData.observations[indexTime].values.ff > 0) {
+    if (rawData.observations[indexTime].values.ff && rawData.observations[indexTime].values.ff >= 0) {
       wind_speed.push(rawData.observations[indexTime].values.ff * 0.53995726994149)
     } else wind_speed.push(-999)
 
-    if (rawData.observations[indexTime].values.fx && rawData.observations[indexTime].values.fx > 0) {
+    if (rawData.observations[indexTime].values.fx && rawData.observations[indexTime].values.fx >= 0) {
       wind_gusts.push(rawData.observations[indexTime].values.fx * 0.53995726994149)
     } else wind_gusts.push(-999)
 
-    if (rawData.observations[indexTime].values.dd && rawData.observations[indexTime].values.dd > 0) {
+    if (rawData.observations[indexTime].values.dd && rawData.observations[indexTime].values.dd >= 0) {
       wind_direction.push(rawData.observations[indexTime].values.dd)
     } else wind_direction.push(-999)
   })
 
-  const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes)
+  const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes, 10)
   if (!theoreticalMeasurementCount) {
     resolve({
       data: {

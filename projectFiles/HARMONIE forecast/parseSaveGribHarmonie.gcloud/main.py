@@ -10,6 +10,7 @@ import pupygrib
 import numpy as np
 from io import BytesIO
 import pytz
+import base64
 
 def logNodeApp(message, Type, addTimeStamp):
   print(message)
@@ -32,6 +33,15 @@ projectIdAndBucket = os.environ.get("GCP_PROJECT_ID")
 
 def runFunc (event, context):
 
+  if "data" in event:
+    if (event["data"] == "forceSave"):
+      forceFetchandSave = True
+      print("Fetching and saving forecast regardless of the state of data in bucket!")
+    else:
+      forceFetchandSave = False
+  else:
+    forceFetchandSave = False
+
   client = storage.Client(project=projectIdAndBucket)
   blob = client.get_bucket(projectIdAndBucket).blob("forecastData.json")
   oldForecast = json.loads(blob.download_as_string(client=None))
@@ -40,7 +50,7 @@ def runFunc (event, context):
 
   if ("timeRun" in oldForecast.keys()):
     nextRunAvailable = parse(oldForecast["timeRun"]) + timedelta(hours=(2 + 6), minutes=55)
-    if (now < nextRunAvailable): 
+    if (now < nextRunAvailable and forceFetchandSave == False): 
       logNodeApp("Won't check for forecast availability, update not online yet!", "info", True)
       return
 
@@ -50,7 +60,7 @@ def runFunc (event, context):
   timeMostRecentRun = parse(tree.cssselect(".container:nth-child(2) .row:nth-child(4) div p")[0].text_content()[11:27])
 
   if ("timeRun" in oldForecast.keys()):
-    if (timeMostRecentRun <= parse(oldForecast["timeRun"])):
+    if (timeMostRecentRun <= parse(oldForecast["timeRun"]) and forceFetchandSave == False):
       logNodeApp("New forecast run not available yet (retrieved from scraped page), retrying in 1 minute!", "info", True)
       if (datetime.now().minute == 5):
         logNodeApp("This was the last time trying to fetch!", "info", True)
@@ -135,7 +145,7 @@ def runFunc (event, context):
       
   #Joining the two forecast files
   if "timeRun" in oldForecast.keys():
-    if (oldForecast["timeRun"] == saveForecast["timeRun"]):
+    if (oldForecast["timeRun"] == saveForecast["timeRun"] and forceFetchandSave == False):
       logNodeApp("New forecast run not available yet (retrieved from parsed data), retrying in 1 minute!", "info", True)
       if (datetime.now().minute == 5):
         logNodeApp("This was the last time trying to fetch!", "error", True)
@@ -170,8 +180,12 @@ def runFunc (event, context):
         oldForecast[locationID] = []
 
       #Deleting old forecasts (for which newer is available)
-      for j in range(NoTimesToDelete):
-        oldForecast[locationID].pop()
+      if (len(oldForecast[locationID]) >= NoTimesToDelete):
+        for j in range(NoTimesToDelete):
+          oldForecast[locationID].pop()
+      else:
+        for j in range(len(oldForecast[locationID])):
+          oldForecast[locationID].pop()
 
       saveForecast[locationID] = oldForecast[locationID] + newForecast[locationID]
 

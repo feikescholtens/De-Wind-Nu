@@ -136,6 +136,10 @@ button.popupRWS {
     background-color: rgb(46, 179, 99);
 }
 
+button.popupVLINDER {
+    background-color: rgb(254, 202, 87);
+}
+
 button.popupMVB:hover {
     background-color: rgba(201, 62, 28, 0.5);
 }
@@ -146,6 +150,10 @@ button.popupKNMI:hover {
 
 button.popupRWS:hover {
     background-color: rgba(46, 179, 99, 0.5);
+}
+
+button.popupVLINDER:hover {
+    background-color: rgb(254, 202, 87, 0.5);
 }
 
 /* Footer styling */
@@ -230,6 +238,14 @@ h3.popUpTitle {
 
 h4.popUpHeading {
     margin: 0 30px 0 30px;
+}
+
+div#gridWrapper {
+    margin: 0 30px 10px 30px;
+    display: grid;
+    grid-gap: 10px;
+    align-items: center;
+    grid-template-columns: auto auto;
 }
 
 button.popUp {

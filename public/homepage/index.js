@@ -42,6 +42,7 @@ map.on("load", () => {
   if (localStorage.getItem("seaMap") == "1") map.addLayer(tilesObjects.OpenSeaMap)
 })
 
+fetch("getOverviewData/VLINDER").then(response => response.json()).then(data => setOverviewData(data))
 fetch("getOverviewData/Rijkswaterstaat").then(response => response.json()).then(data => setOverviewData(data))
 fetch("getOverviewData/KNMI").then(response => response.json()).then(data => setOverviewData(data))
 fetch("getOverviewData/MVB").then(response => response.json()).then(data => setOverviewData(data))
@@ -56,18 +57,22 @@ data.forEach(item => {
   marker.className = "markerContainer"
   marker.innerHTML = `<div class="marker" title="${item.name}"></div>`
 
-  if (item.datasets.Rijkswaterstaat) {
+  if (item.datasets.VLINDER) {
+    Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("VLINDER") })
+    popupId = "popupVLINDER"
+    marker.style.zIndex = 1
+  } else if (item.datasets.Rijkswaterstaat) {
     Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("RWS") })
     popupId = "popupRWS"
-    marker.style.zIndex = 1
+    marker.style.zIndex = 2
   } else if (item.datasets.KNMI) {
     Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("KNMI") })
     popupId = "popupKNMI"
-    marker.style.zIndex = 2
+    marker.style.zIndex = 3
   } else if (item.datasets.MVB) {
     Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("MVB") })
     popupId = "popupMVB"
-    marker.style.zIndex = 3
+    marker.style.zIndex = 4
   }
   Array.from(marker.getElementsByTagName("div")).forEach(element => { element.id = item.id })
 

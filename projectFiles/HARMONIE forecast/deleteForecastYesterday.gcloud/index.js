@@ -58,19 +58,17 @@ export async function runFunc() {
 
     //Working in CET
     const dateToday = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy")
-    const timeFirstForecastData = forecastData[Object.keys(forecastData)[0]][0].time
-    const dateFirstForecastData = forecastData[Object.keys(forecastData)[0]][0].date
 
-    if (timeFirstForecastData == "00:00" && dateFirstForecastData == dateToday) return forecastData
-
-    const indexFirstForecastTimeToday = forecastData[Object.keys(forecastData)[0]].findIndex(location => location.time == "00:00" && location.date == dateToday) //Equals the No. hours to delete
-    if (indexFirstForecastTimeToday == -1) return forecastData
-
-    for (let i = 0; i < Object.keys(forecastData).length - 1; i++) {
+    for (let i = 0; i < Object.keys(forecastData).length; i++) {
       if (Object.keys(forecastData)[i] !== "timeRun") {
-        for (let j = 0; j < indexFirstForecastTimeToday; j++) {
-          forecastData[Object.keys(forecastData)[i]].shift()
+
+        const indexFirstForecastTimeToday = forecastData[Object.keys(forecastData)[i]].findIndex(location => location.time == "00:00" && location.date == dateToday) //Equals the No. hours to delete
+        if (indexFirstForecastTimeToday !== -1) {
+          for (let j = 0; j < indexFirstForecastTimeToday; j++) {
+            forecastData[Object.keys(forecastData)[i]].shift()
+          }
         }
+
       }
     }
 

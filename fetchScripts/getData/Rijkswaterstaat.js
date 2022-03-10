@@ -59,7 +59,7 @@ export async function fetchRWS(databaseData, resolve, times) {
         } else tempArray.push(-999)
       })
 
-      const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes)
+      const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes, 10)
 
       for (let j = 0; j < (times.length - theoreticalMeasurementCount); j++) {
         tempArray.pop()

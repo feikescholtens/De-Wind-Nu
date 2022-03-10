@@ -1,3 +1,20 @@
+export function generateTimes(measurementEveryXMinutes) {
+  let times = []
+  for (let i = 0; i < 24; i++) {
+    for (let j = 0; j < 60 / measurementEveryXMinutes; j++) {
+      let hour = i
+      let minute = measurementEveryXMinutes * j
+
+      if (hour < 10 && minute < 10) times.push(`0${hour}:0${minute}`)
+      if (hour < 10 && minute >= 10) times.push(`0${hour}:${minute}`)
+      if (hour >= 10 && minute < 10) times.push(`${hour}:0${minute}`)
+      if (hour >= 10 && minute >= 10) times.push(`${hour}:${minute}`)
+    }
+  }
+  times.push("00:00")
+  return times
+}
+
 export function calcInterpolation(array, times, startInterpolationIndex) {
   let interpolatedData = []
 

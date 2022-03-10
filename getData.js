@@ -1,17 +1,17 @@
 import { logFetchErrors } from "./logFetchErrors.js"
 import { validID } from "./validationFunctions.js"
-import { readFileSync } from 'fs'
+import { fetchVLINDER } from "./fetchScripts/getData/VLINDER.js"
 import { fetchRWS } from "./fetchScripts/getData/Rijkswaterstaat.js"
 import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
 import { fetchMVB } from "./fetchScripts/getData/MVB.js"
-import { calcInterpolation } from "./getScriptUtilFunctions.js"
+import { generateTimes, calcInterpolation } from "./getScriptUtilFunctions.js"
 import { format, add, parseISO } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 
 const timeZone = "Europe/Amsterdam"
-const times = JSON.parse(readFileSync("times.json"))
 
 export async function getData(request, response, locations, forecastData) {
+
   if (!validID(request.params.id, locations, response)) return
 
   const location = locations.find(location => location.id == request.params.id)
@@ -19,6 +19,11 @@ export async function getData(request, response, locations, forecastData) {
   let values = []
 
   //Date and times 
+  let NoMeasurementsXHour
+  if (["Rijkswaterstaat", "KNMI", "MVB"].includes(dataset)) NoMeasurementsXHour = 6
+  if (["VLINDER"].includes(dataset)) NoMeasurementsXHour = 12
+  const times = generateTimes(60 / NoMeasurementsXHour)
+
   const dateUTC = new Date()
   const dateZoned = utcToZonedTime(dateUTC, timeZone)
   const dateToday = format(dateZoned, "dd-MM-yyyy")
@@ -27,6 +32,10 @@ export async function getData(request, response, locations, forecastData) {
 
   //Measurements
   const dataFetched = await new Promise(async (resolve) => {
+    // VLINDER
+    if (location.datasets.VLINDER) {
+      return fetchVLINDER(location, resolve, times)
+    }
     // Rijkswaterstaat
     if (location.datasets.Rijkswaterstaat) {
       return fetchRWS(location, resolve, times)
@@ -60,11 +69,10 @@ export async function getData(request, response, locations, forecastData) {
     const amountHourValues = forecastData[location.id].length - indexFirstForecastTimeToday
 
     for (let i = 0; i < amountHourValues; i++) {
-      wind_forecast[startForecastTimeIndex + i * 6] = forecastData[location.id][i + indexFirstForecastTimeToday].s
-      wind_forecastDirection[startForecastTimeIndex + i * 6] = forecastData[location.id][i + indexFirstForecastTimeToday].d
-      wind_forecastGust[startForecastTimeIndex + i * 6] = forecastData[location.id][i + indexFirstForecastTimeToday].g
+      wind_forecast[startForecastTimeIndex + i * NoMeasurementsXHour] = forecastData[location.id][i + indexFirstForecastTimeToday].s
+      wind_forecastDirection[startForecastTimeIndex + i * NoMeasurementsXHour] = forecastData[location.id][i + indexFirstForecastTimeToday].d
+      wind_forecastGust[startForecastTimeIndex + i * NoMeasurementsXHour] = forecastData[location.id][i + indexFirstForecastTimeToday].g
     }
-
     values.push(calcInterpolation(wind_forecast, times, startForecastTimeIndex))
     values.push(calcInterpolation(wind_forecastDirection, times, startForecastTimeIndex))
     values.push(calcInterpolation(wind_forecastGust, times, startForecastTimeIndex))
@@ -73,7 +81,7 @@ export async function getData(request, response, locations, forecastData) {
   let timeStampRun,
     timeRun = "N.A.",
     timeNextRun
-  if (forecastData.timeRun) {
+  if (forecastData.timeRun && forecastData[location.id]) {
     timeStampRun = utcToZonedTime(parseISO(`${forecastData.timeRun}Z`), timeZone)
     timeRun = format(timeStampRun, "HH:mm")
     timeNextRun = format(add(timeStampRun, { hours: (2 + 6), minutes: 58 }), "HH:mm")
@@ -86,6 +94,7 @@ export async function getData(request, response, locations, forecastData) {
   if (values[2].length == 0 && values[3].length == 0 && values[4].length == 0 && !values[5]) {
     log(`Location "${location.name}" doesn't have any data (neither measurements nor forecast)!`, "fetchError", true)
     response.redirect('/error?e=14')
+    return
   }
 
   return {

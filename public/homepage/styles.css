@@ -61,6 +61,11 @@ div.arrowArm {
     filter: drop-shadow(3px 0 white) drop-shadow(0 3px white) drop-shadow(-3px 0 white) drop-shadow(1px 1px 1px grey) drop-shadow(-1px 1px 1px grey);
 }
 
+div.VLINDER {
+    background-color: rgb(254, 202, 87);
+    border-top-color: rgb(254, 202, 87);
+}
+
 div.RWS {
     background-color: rgb(46, 179, 99);
     border-top-color: rgb(46, 179, 99);

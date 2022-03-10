@@ -16,7 +16,7 @@ export async function contentUpdate() {
   //(This 'backup' is restored to the original 'data' variable so interpolation setting can change on the fly)
 
   for (let j = 2; j < 6 + 1; j++) {
-    if (data[j]) {
+    if (data[j] || data[j] == 0) {
       for (let k = 0; k < times.length; k++) {
         if (data[j][k] < 0) {
           if (interpolation == "1") {
@@ -38,24 +38,24 @@ export async function contentUpdate() {
   if (parseInt(unit) !== 4) {
 
     for (let i = 0; i < data_unit[2].length; i++) {
-      if (data_unit[2][i]) data_unit[2][i] = (units[unit].factor * data[2][i]).toFixed(decimals)
+      if (data_unit[2][i] || data_unit[2][i] == 0) data_unit[2][i] = (units[unit].factor * data[2][i]).toFixed(decimals)
     }
 
     if (data_unit[3].length !== 0) {
       for (let i = 0; i < data_unit[3].length; i++) {
-        if (data_unit[3][i]) data_unit[3][i] = (units[unit].factor * data[3][i]).toFixed(decimals)
+        if (data_unit[3][i] || data_unit[3][i] == 0) data_unit[3][i] = (units[unit].factor * data[3][i]).toFixed(decimals)
       }
     }
 
     if (data_unit[5]) {
       for (let i = 0; i < data_unit[5].length; i++) {
-        if (data_unit[5][i]) data_unit[5][i] = (units[unit].factor * data[5][i]).toFixed(decimals)
+        if (data_unit[5][i] || data_unit[5][i] == 0) data_unit[5][i] = (units[unit].factor * data[5][i]).toFixed(decimals)
       }
     }
 
     if (data_unit[7]) {
       for (let i = 0; i < data_unit[7].length; i++) {
-        if (data_unit[7][i]) data_unit[7][i] = (units[unit].factor * data[7][i]).toFixed(decimals)
+        if (data_unit[7][i] || data_unit[7][i] == 0) data_unit[7][i] = (units[unit].factor * data[7][i]).toFixed(decimals)
       }
     }
 
@@ -64,24 +64,24 @@ export async function contentUpdate() {
     //The 1 * is to convert undefined to NaN to prevent raising an error message
 
     for (let i = 0; i < data_unit[2].length; i++) {
-      if (data_unit[2][i]) data_unit[2][i] = (1 * data[2][i]).toFixed(decimals)
+      if (data_unit[2][i] || data_unit[2][i] == 0) data_unit[2][i] = (1 * data[2][i]).toFixed(decimals)
     }
 
     if (data_unit[3].length !== 0) {
       for (let i = 0; i < data_unit[3].length; i++) {
-        if (data_unit[3][i]) data_unit[3][i] = (1 * data[3][i]).toFixed(decimals)
+        if (data_unit[3][i] || data_unit[3][i] == 0) data_unit[3][i] = (1 * data[3][i]).toFixed(decimals)
       }
     }
 
     if (data_unit[5]) {
       for (let i = 0; i < data_unit[5].length; i++) {
-        if (data_unit[5][i]) data_unit[5][i] = (1 * data[5][i]).toFixed(decimals)
+        if (data_unit[5][i] || data_unit[5][i] == 0) data_unit[5][i] = (1 * data[5][i]).toFixed(decimals)
       }
     }
 
     if (data_unit[7]) {
       for (let i = 0; i < data_unit[7].length; i++) {
-        if (data_unit[7][i]) data_unit[7][i] = (1 * data[7][i]).toFixed(decimals)
+        if (data_unit[7][i] || data_unit[7][i] == 0) data_unit[7][i] = (1 * data[7][i]).toFixed(decimals)
       }
     }
 
@@ -91,12 +91,12 @@ export async function contentUpdate() {
   //Directions
   if (data_unit[4].length !== 0) {
     for (let i = 0; i < data_unit[4].length; i++) {
-      if (data_unit[4][i]) data_unit[4][i] = (1 * data[4][i]).toFixed(0)
+      if (data_unit[4][i] || data_unit[4][i] == 0) data_unit[4][i] = (1 * data[4][i]).toFixed(0)
     }
   }
   if (data_unit[6]) {
     for (let i = 0; i < data_unit[6].length; i++) {
-      if (data_unit[6][i]) data_unit[6][i] = (1 * data[6][i]).toFixed(0)
+      if (data_unit[6][i] || data_unit[4][i] == 0) data_unit[6][i] = (1 * data[6][i]).toFixed(0)
     }
   }
 

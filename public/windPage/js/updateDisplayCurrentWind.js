@@ -77,6 +77,9 @@ export function updateCurrentWind() {
 
   const minutesSinceLastMeasurement = nowHH * 60 + nowmm - (lastMeasurementHH * 60 + lastMeasurementmm)
 
-  headingWithTime.innerHTML = `Recentste meting (${minutesSinceLastMeasurement} minuten geleden)`
+  if (minutesSinceLastMeasurement > 0)
+    headingWithTime.innerHTML = `Recentste meting (${minutesSinceLastMeasurement} minuten geleden)`
+  else
+    headingWithTime.innerHTML = `Recentste meting (${new Date().getSeconds()} seconden geleden)`
 
 }
