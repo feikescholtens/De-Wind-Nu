@@ -37,7 +37,7 @@ export async function fetchVLINDER(databaseData, resolve, times) {
     log(startOfToday(new Date()).getTime())
 
     let time = parse(rawData[indexToday].time.substring(5, rawData[indexToday].time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date())
-    if (time.getTime() == startOfToday(new Date()).getTime()) break
+    if (time.getTime() == startOfToday(utcToZonedTime(new Date(), timeZone)).getTime()) break
   }
   rawData.splice(0, indexToday)
 
