@@ -34,7 +34,13 @@ export async function fetchVLINDER(databaseData, resolve, times) {
   rawData.forEach(measurement => {
     let time = format(parse(measurement.time.substring(5, measurement.time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()), "HH:mm")
     measurementTimes.push(time)
+
+    log(measurement.time.substring(5, measurement.time.length - 4) + " Z")
+    log(parse(measurement.time.substring(5, measurement.time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()))
+    log(time)
   })
+
+  // log(JSON.stringify(measurementTimes))
 
   times.forEach(timeStamp => {
     if (!measurementTimes.includes(timeStamp)) {
