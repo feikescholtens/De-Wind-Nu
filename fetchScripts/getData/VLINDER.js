@@ -28,24 +28,23 @@ export async function fetchVLINDER(databaseData, resolve, times) {
   //Remove measurements from yesterday
   let indexToday
   for (indexToday = 0; indexToday < rawData.length; indexToday++) {
+
+    log(parse(rawData[indexToday].time.substring(5, rawData[indexToday].time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()))
+    log(utcToZonedTime(parse(rawData[indexToday].time.substring(5, rawData[indexToday].time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()), timeZone))
+
+    log(parse(rawData[indexToday].time.substring(5, rawData[indexToday].time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()).getTime())
+    log(utcToZonedTime(parse(rawData[indexToday].time.substring(5, rawData[indexToday].time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()), timeZone).getTime())
+    log(startOfToday(new Date()).getTime())
+
     let time = parse(rawData[indexToday].time.substring(5, rawData[indexToday].time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date())
     if (time.getTime() == startOfToday(new Date()).getTime()) break
   }
   rawData.splice(0, indexToday)
 
   rawData.forEach(measurement => {
-
-
-    log(measurement.time.substring(5, measurement.time.length - 4) + " Z")
-    log(parse(measurement.time.substring(5, measurement.time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()))
-    log(utcToZonedTime(parse(measurement.time.substring(5, measurement.time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()), timeZone))
-    log(format(utcToZonedTime(parse(measurement.time.substring(5, measurement.time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()), timeZone), "HH:mm"))
-
     let time = format(utcToZonedTime(parse(measurement.time.substring(5, measurement.time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()), timeZone), "HH:mm")
     measurementTimes.push(time)
   })
-
-  // log(JSON.stringify(measurementTimes))
 
   times.forEach(timeStamp => {
     if (!measurementTimes.includes(timeStamp)) {
