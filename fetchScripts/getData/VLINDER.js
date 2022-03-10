@@ -28,14 +28,6 @@ export async function fetchVLINDER(databaseData, resolve, times) {
   //Remove measurements from yesterday
   let indexToday
   for (indexToday = 0; indexToday < rawData.length; indexToday++) {
-
-    log(parse(rawData[indexToday].time.substring(5, rawData[indexToday].time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()))
-    log(utcToZonedTime(parse(rawData[indexToday].time.substring(5, rawData[indexToday].time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()), timeZone))
-
-    log(parse(rawData[indexToday].time.substring(5, rawData[indexToday].time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()).getTime())
-    log(utcToZonedTime(parse(rawData[indexToday].time.substring(5, rawData[indexToday].time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()), timeZone).getTime())
-    log(startOfToday(new Date()).getTime())
-
     let time = parse(rawData[indexToday].time.substring(5, rawData[indexToday].time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date())
     if (utcToZonedTime(time, timeZone).getTime() == startOfToday(utcToZonedTime(new Date(), timeZone)).getTime()) break
   }
