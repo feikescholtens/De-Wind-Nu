@@ -1,6 +1,8 @@
 import { format, parse, startOfToday } from "date-fns"
+import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 import fetch from "node-fetch"
 import { catchError, JSONError, theoreticalMeasurements } from "../fetchUtilFunctions.js"
+const timeZone = "Europe/Amsterdam"
 
 Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 
@@ -32,12 +34,15 @@ export async function fetchVLINDER(databaseData, resolve, times) {
   rawData.splice(0, indexToday)
 
   rawData.forEach(measurement => {
-    let time = format(parse(measurement.time.substring(5, measurement.time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()), "HH:mm")
-    measurementTimes.push(time)
+
 
     log(measurement.time.substring(5, measurement.time.length - 4) + " Z")
     log(parse(measurement.time.substring(5, measurement.time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()))
-    log(time)
+    log(utcToZonedTime(parse(measurement.time.substring(5, measurement.time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()), timeZone))
+    log(format(utcToZonedTime(parse(measurement.time.substring(5, measurement.time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()), timeZone), "HH:mm"))
+
+    let time = format(utcToZonedTime(parse(measurement.time.substring(5, measurement.time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()), timeZone), "HH:mm")
+    measurementTimes.push(time)
   })
 
   // log(JSON.stringify(measurementTimes))
