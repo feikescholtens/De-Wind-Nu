@@ -16,6 +16,7 @@ export function generateTimes(measurementEveryXMinutes) {
 }
 
 export function calcInterpolation(array, times, startInterpolationIndex) {
+
   let interpolatedData = []
 
   for (let i = startInterpolationIndex; i < array.length; i++) {
@@ -45,6 +46,8 @@ export function calcInterpolation(array, times, startInterpolationIndex) {
       array[k] = interpolatedValue
     }
   }
+
+  array = array.slice(0, times.length)
 
   return array
 }

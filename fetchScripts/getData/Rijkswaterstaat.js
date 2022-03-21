@@ -1,7 +1,7 @@
 import { format, parseISO } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 import fetch from "node-fetch"
-import { catchError, theoreticalMeasurements, SuccesvolFalseError, giveRWSFetchOptions } from "../fetchUtilFunctions.js"
+import { catchError, theoreticalMeasurements, SuccesvolFalseError, giveRWSFetchOptions, RWSProcessAllNegativeArrays } from "../fetchUtilFunctions.js"
 
 Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 
@@ -51,7 +51,7 @@ export async function fetchRWS(databaseData, resolve, times) {
         if (measurementType.MetingenLijst[indexTime]) {
           if (measurementType.MetingenLijst[indexTime].Meetwaarde) {
             if (measurementType.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek) {
-              if (measurementType.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek == 999999999) {
+              if (measurementType.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek >= 999) {
                 tempArray.push(-999)
               } else tempArray.push(measurementType.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek)
             } else tempArray.push(-999)
@@ -71,7 +71,7 @@ export async function fetchRWS(databaseData, resolve, times) {
     })
   }
 
-  data["Rijkswaterstaat"] = [wind_speed, wind_gusts, wind_direction]
+  data["Rijkswaterstaat"] = RWSProcessAllNegativeArrays(wind_speed, wind_gusts, wind_direction)
   resolve({ data })
 
 }

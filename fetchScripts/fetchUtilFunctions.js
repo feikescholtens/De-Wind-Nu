@@ -77,6 +77,18 @@ export function SuccesvolFalseError(rawData, locationName, data, resolve) {
   return false
 }
 
+export function RWSProcessAllNegativeArrays(wind_speed, wind_gusts, wind_direction) {
+  if (!wind_speed.some(value => value > 0) && !wind_gusts.some(value => value > 0) && !wind_direction.some(value => value > 0)) {
+    return [
+      [],
+      [],
+      []
+    ] //This error is not handled here, just return empty arrays
+  }
+
+  return [wind_speed, wind_gusts, wind_direction]
+}
+
 //MVB specific
 export function giveMVBFetchOptions(databaseData, dateZoned, newToken) {
 
