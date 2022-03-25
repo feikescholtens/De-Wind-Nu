@@ -1,7 +1,7 @@
 import { format, parseISO } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 import fetch from "node-fetch";
-import { catchError, theoreticalMeasurements } from "../fetchUtilFunctions.js"
+import { catchError, theoreticalMeasurements, processAllNegativeArrays } from "../fetchUtilFunctions.js"
 const timeZone = "Europe/Amsterdam"
 
 export async function fetchKNMI(databaseData, resolve, times) {
@@ -72,6 +72,6 @@ export async function fetchKNMI(databaseData, resolve, times) {
     wind_direction.pop()
   }
 
-  data["KNMI"] = [wind_speed, wind_gusts, wind_direction]
+  data["KNMI"] = processAllNegativeArrays(wind_speed, wind_gusts, wind_direction)
   resolve({ data })
 }

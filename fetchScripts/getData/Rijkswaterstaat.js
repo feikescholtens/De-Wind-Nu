@@ -1,7 +1,7 @@
 import { format, parseISO } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 import fetch from "node-fetch"
-import { catchError, theoreticalMeasurements, SuccesvolFalseError, giveRWSFetchOptions, RWSProcessAllNegativeArrays } from "../fetchUtilFunctions.js"
+import { catchError, theoreticalMeasurements, SuccesvolFalseError, giveRWSFetchOptions, processAllNegativeArrays } from "../fetchUtilFunctions.js"
 
 Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 
@@ -71,7 +71,7 @@ export async function fetchRWS(databaseData, resolve, times) {
     })
   }
 
-  data["Rijkswaterstaat"] = RWSProcessAllNegativeArrays(wind_speed, wind_gusts, wind_direction)
+  data["Rijkswaterstaat"] = processAllNegativeArrays(wind_speed, wind_gusts, wind_direction)
   resolve({ data })
 
 }
