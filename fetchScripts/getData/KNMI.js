@@ -27,7 +27,7 @@ export async function fetchKNMI(databaseData, resolve, times) {
   let measurementTimes = []
 
   rawData.observations.forEach(measurement => {
-    let time = format(parseISO(measurement.datetime + "+01:00"), "HH:mm")
+    let time = format(utcToZonedTime(parseISO(measurement.datetime + "+01:00"), timeZone), "HH:mm")
     measurementTimes.push(time)
   })
 
