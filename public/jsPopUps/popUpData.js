@@ -42,7 +42,7 @@ export const popUpData = {
     <p class='messageBoxP'>
     Na het klikken op een van de locaties wordt de data van vandaag getoond voor deze locatie. Deze data is standaard weergegeven als twee grafieken,
     maar er kan boven het tweede kopje ook gekozen worden voor een tabel (dit kan overigens ook onderaan de pagina gekozen worden). 
-    Alle tijden op de website zijn in de Midden-Europese Tijd.
+    Alle tijden op de website zijn in de Midden-Europese (zomer)tijd.
     <br><br>
     Bovenaan is de naam van de locatie weergegeven. Onder het eerste kopje zijn de gegevens van de recentste metingen en de voorspellingen voor dit tijdstip weergegeven. 
     Daaronder is een grafiek te zien met de gemeten windsnelheden (gemiddelde snelheid over de afgelopen 10 minuten) en de windvlagen (maximale, 3 seconde durende, 

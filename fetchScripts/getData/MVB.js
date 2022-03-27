@@ -49,6 +49,7 @@ export async function fetchMVB(databaseData, resolve, times) {
     let rawData
     try { rawData = JSON.parse(rawDataString) } catch { return }
     // rawData = JSON.parse(readFileSync("projectFiles/discontinuous test data MVB.json"))
+    // rawData = JSON.parse(readFileSync("projectFiles/test files DST/from CET to CEST/MVB.json"))
     if (MessageError(rawData, data, resolve)) return
 
     //Declare variables
@@ -82,7 +83,7 @@ export async function fetchMVB(databaseData, resolve, times) {
         } else tempArray.push(-999)
       })
 
-      const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes, 10)
+      const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes, times)
 
       for (let j = 0; j < (times.length - theoreticalMeasurementCount); j++) {
         tempArray.pop()

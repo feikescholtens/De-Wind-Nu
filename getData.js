@@ -4,7 +4,7 @@ import { fetchVLINDER } from "./fetchScripts/getData/VLINDER.js"
 import { fetchRWS } from "./fetchScripts/getData/Rijkswaterstaat.js"
 import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
 import { fetchMVB } from "./fetchScripts/getData/MVB.js"
-import { generateTimes, calcInterpolation } from "./getScriptUtilFunctions.js"
+import { getTimeChangeDates, generateTimes, calcInterpolation } from "./getScriptUtilFunctions.js"
 import { format, add, parseISO } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 
@@ -22,7 +22,15 @@ export async function getData(request, response, locations, forecastData) {
   let NoMeasurementsXHour
   if (["Rijkswaterstaat", "KNMI", "MVB"].includes(dataset)) NoMeasurementsXHour = 6
   if (["VLINDER"].includes(dataset)) NoMeasurementsXHour = 12
-  const times = generateTimes(60 / NoMeasurementsXHour)
+  let times
+  const DSTDates = getTimeChangeDates()
+
+  const dateToDST = format(utcToZonedTime(DSTDates[0], timeZone), "dd-MM")
+  const dateFromDST = format(utcToZonedTime(DSTDates[1], timeZone), "dd-MM")
+  const dateNow = format(utcToZonedTime(new Date(), timeZone), "dd-MM")
+  if (dateNow == dateToDST) times = generateTimes(60 / NoMeasurementsXHour, "toDST")
+  else if (dateNow == dateFromDST) times = generateTimes(60 / NoMeasurementsXHour, "fromDST")
+  else times = generateTimes(60 / NoMeasurementsXHour)
 
   const dateUTC = new Date()
   const dateZoned = utcToZonedTime(dateUTC, timeZone)

@@ -56,7 +56,7 @@ export async function runFunc() {
 
     if (Object.keys(forecastData).length <= 1) return forecastData
 
-    //Working in CET
+    //Working in local times
     const dateToday = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy")
 
     for (let i = 0; i < Object.keys(forecastData).length; i++) {

@@ -1,6 +1,7 @@
 import { format, parseISO } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 import fetch from "node-fetch"
+import { readFileSync } from "fs"
 import { catchError, theoreticalMeasurements, SuccesvolFalseError, giveRWSFetchOptions, processAllNegativeArrays } from "../fetchUtilFunctions.js"
 
 Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
@@ -19,7 +20,7 @@ export async function fetchRWS(databaseData, resolve, times) {
 
   let rawData
   try { rawData = JSON.parse(rawDataString) } catch { return }
-
+  // rawData = JSON.parse(readFileSync("projectFiles/test files DST/from CET to CEST/RWS.json"))
 
   if (SuccesvolFalseError(rawData, databaseData.name, data, resolve)) return
 
@@ -59,7 +60,7 @@ export async function fetchRWS(databaseData, resolve, times) {
         } else tempArray.push(-999)
       })
 
-      const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes, 10)
+      const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes, times)
 
       for (let j = 0; j < (times.length - theoreticalMeasurementCount); j++) {
         tempArray.pop()

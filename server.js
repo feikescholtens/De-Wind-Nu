@@ -99,38 +99,3 @@ global.forecastData = {};
 
 const ruleUpdatedForecast = createRecurrenceRule([3, 9, 15, 21], [55], [30])
 schedule.scheduleJob(ruleUpdatedForecast, async () => { scheduledGetForecast(11) })
-
-import { format, add, isSunday, sub } from "date-fns"
-
-const currentYear = new Date().getFullYear()
-
-let DSTStart = new Date(currentYear, 2 + 1)
-
-for (let i = 0; i <= 7; i++) {
-  DSTStart = sub(DSTStart, { days: 1 })
-  if (isSunday(DSTStart)) break
-}
-
-console.log(DSTStart)
-console.log(format(DSTStart, "dd HH:mm"))
-
-let DSTEnd = new Date(currentYear, 9 + 1)
-
-for (let i = 0; i <= 7; i++) {
-  DSTEnd = sub(DSTEnd, { days: 1 })
-  if (isSunday(DSTEnd)) break
-}
-
-console.log(DSTEnd)
-console.log(format(DSTEnd, "dd HH:mm"))
-
-const dateNow = new Date()
-console.log(dateNow)
-
-if (dateNow < DSTStart || dateNow >= DSTEnd) {
-  console.log("+1 Winter time :(, so local time: ", format(add(new Date(), { hours: 1, minutes: new Date().getTimezoneOffset() }), "dd-MM-yyyy HH:mm"))
-}
-
-if (dateNow >= DSTStart && dateNow < DSTEnd) {
-  console.log("+2 Summer time :), so local time: ", format(add(new Date(), { hours: 1, minutes: new Date().getTimezoneOffset() }), "dd-MM-yyyy HH:mm"))
-}

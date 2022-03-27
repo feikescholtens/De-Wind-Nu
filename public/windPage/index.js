@@ -1,7 +1,7 @@
 import { displayPopUpWithName } from "../jsPopUps/functions.js"
 import { displayPopUpFeedback } from "../jsPopUps/feedback.js"
 import { contentUpdate } from "./js/contentUpdate.js"
-import { generateTimes, changeShowBar, changeDataForm, changeUnit, changeDecimals, unHideElements, changeInterpolation, calcInterpolation, changeTableSort } from "./js/functions.js"
+import { changeShowBar, changeDataForm, changeUnit, changeDecimals, unHideElements, changeInterpolation, calcInterpolation, changeTableSort } from "./js/functions.js"
 import { redirect } from "../redirect.js"
 redirect()
 
@@ -20,8 +20,7 @@ globalThis.data = [],
   const dataset = dataFetched.dataset,
     spotName = dataFetched.spotName
 
-  if (["Rijkswaterstaat", "KNMI", "MVB"].includes(dataset)) globalThis.times = generateTimes(10)
-  if (["VLINDER"].includes(dataset)) globalThis.times = generateTimes(5)
+  globalThis.times = dataFetched.values[1]
   globalThis.units = await fetch("json/units.json").then(response => response.json())
 
   const showBarSelector = document.querySelector("[data-showBar]"),

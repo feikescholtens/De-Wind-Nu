@@ -174,12 +174,13 @@ export function saveNewApiKey(rawData) {
   })
 }
 
-export function theoreticalMeasurements(measurementTimes, measurementEveryXMinutes) {
+export function theoreticalMeasurements(measurementTimes, times) {
   if (measurementTimes.length == 0) return
 
   const lastMeasurementHH = measurementTimes[measurementTimes.length - 1].substring(0, 2)
   const lastMeasurementmm = measurementTimes[measurementTimes.length - 1].substring(3, 5)
-  const theoreticalMeasurementCount = lastMeasurementHH * (60 / measurementEveryXMinutes) + lastMeasurementmm / measurementEveryXMinutes + 1
 
-  return theoreticalMeasurementCount
+  const theoreticalMeasurementCount = times.indexOf(`${lastMeasurementHH}:${lastMeasurementmm}`)
+
+  return theoreticalMeasurementCount + 1
 }
