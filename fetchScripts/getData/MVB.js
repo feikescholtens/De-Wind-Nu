@@ -1,20 +1,16 @@
-import { format, parseISO, getUnixTime } from "date-fns"
+import { format, parseISO, getUnixTime, add, parse } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 import fetch from "node-fetch"
-import { existsSync, readFileSync } from 'fs'
-import { catchError, MessageError, saveNewApiKey, theoreticalMeasurements, giveMVBFetchOptions } from "../fetchUtilFunctions.js"
+import { readFileSync } from "fs"
+import { catchError, MessageError, theoreticalMeasurements, giveMVBFetchOptions } from "../fetchUtilFunctions.js"
 
 Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 
-export async function fetchMVB(databaseData, resolve, times) {
+export async function fetchMVB(databaseData, resolve, times, DSTDates) {
 
   let data = []
 
   //Getting API key, if gotten, make request for data
-  let MVBAPIKey
-  if (existsSync("Meetnet Vlaamse Banken API key.json")) MVBAPIKey = JSON.parse(readFileSync("Meetnet Vlaamse Banken API key.json"))
-  else MVBAPIKey = {}
-
   if (Object.keys(MVBAPIKey).length == 0 || (getUnixTime(new Date()) + 5) > MVBAPIKey.expirationDate) {
 
     const rawDataString = await fetch("https://api.meetnetvlaamsebanken.be/Token", {
@@ -31,7 +27,13 @@ export async function fetchMVB(databaseData, resolve, times) {
 
     fetchDataMVB(rawData["access_token"])
 
-    saveNewApiKey(rawData)
+    const expiresString = add(parse(rawData[".expires"], "EEE, dd MMM yyyy HH:mm:ss 'GMT'", new Date()), { hours: 1 })
+    const issuedString = add(parse(rawData[".issued"], "EEE, dd MMM yyyy HH:mm:ss 'GMT'", new Date()), { hours: 1 })
+    MVBAPIKey = {
+      "expirationDate": getUnixTime(expiresString),
+      "issuedDate": getUnixTime(issuedString),
+      "APIKey": rawData["access_token"]
+    }
 
   } else {
     fetchDataMVB()
@@ -43,7 +45,7 @@ export async function fetchMVB(databaseData, resolve, times) {
     const dateUTC = new Date()
     const dateZoned = utcToZonedTime(dateUTC, timeZone)
 
-    const rawDataString = await fetch("https://api.meetnetvlaamsebanken.be/V2/getData", giveMVBFetchOptions(databaseData, dateZoned, newToken))
+    const rawDataString = await fetch("https://api.meetnetvlaamsebanken.be/V2/getData", giveMVBFetchOptions(databaseData, dateZoned, newToken, DSTDates))
       .then(response => response.text()).catch((error) => catchError(resolve, data, error, "MVB"))
 
     let rawData

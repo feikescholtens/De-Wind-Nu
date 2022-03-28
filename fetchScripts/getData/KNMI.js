@@ -26,8 +26,10 @@ export async function fetchKNMI(databaseData, resolve, times) {
     wind_direction = []
   let measurementTimes = []
 
+  const UTCOffset = rawData.timeOffset
+
   rawData.observations.forEach(measurement => {
-    let time = format(utcToZonedTime(parseISO(measurement.datetime + "+01:00"), timeZone), "HH:mm")
+    let time = format(utcToZonedTime(parseISO(measurement.datetime + "+0" + UTCOffset + ":00"), timeZone), "HH:mm")
     measurementTimes.push(time)
   })
 

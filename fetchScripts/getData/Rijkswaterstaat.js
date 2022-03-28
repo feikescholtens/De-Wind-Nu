@@ -8,14 +8,14 @@ Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 
 const timeZone = "Europe/Amsterdam"
 
-export async function fetchRWS(databaseData, resolve, times) {
+export async function fetchRWS(databaseData, resolve, times, DSTDates) {
 
   let data = []
 
   const dateUTC = new Date()
   const dateZoned = utcToZonedTime(dateUTC, timeZone)
 
-  const rawDataString = await fetch("https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenWaarnemingen", giveRWSFetchOptions(databaseData, dateZoned))
+  const rawDataString = await fetch("https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenWaarnemingen", giveRWSFetchOptions(databaseData, dateZoned, DSTDates))
     .then(response => response.text()).catch((error) => catchError(resolve, data, error, "RWS"))
 
   let rawData

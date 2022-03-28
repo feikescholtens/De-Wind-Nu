@@ -24,7 +24,6 @@ export async function getData(request, response, locations, forecastData) {
   if (["VLINDER"].includes(dataset)) NoMeasurementsXHour = 12
   let times
   const DSTDates = getTimeChangeDates()
-
   const dateToDST = format(utcToZonedTime(DSTDates[0], timeZone), "dd-MM")
   const dateFromDST = format(utcToZonedTime(DSTDates[1], timeZone), "dd-MM")
   const dateNow = format(utcToZonedTime(new Date(), timeZone), "dd-MM")
@@ -46,7 +45,7 @@ export async function getData(request, response, locations, forecastData) {
     }
     // Rijkswaterstaat
     if (location.datasets.Rijkswaterstaat) {
-      return fetchRWS(location, resolve, times)
+      return fetchRWS(location, resolve, times, DSTDates)
     }
     //KNMI
     if (location.datasets.KNMI) {
@@ -54,7 +53,7 @@ export async function getData(request, response, locations, forecastData) {
     }
     //Meetnet Vlaamse Banken
     if (location.datasets.MVB) {
-      return fetchMVB(location, resolve, times)
+      return fetchMVB(location, resolve, times, DSTDates)
     }
   })
 

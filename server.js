@@ -11,6 +11,7 @@ import { log } from "./globalFunctions.js"
 import schedule from "node-schedule"
 import { createRecurrenceRule, fetchForecast, scheduledGetForecast } from "./forecastFunctions.js"
 global.log = log
+global.MVBAPIKey = {}
 
 //Define variables
 const __dirname = path.resolve()
