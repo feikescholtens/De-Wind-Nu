@@ -1,5 +1,4 @@
 import { format, add, sub } from "date-fns"
-import { readFileSync } from 'fs'
 
 export function catchError(resolve, data, error, dataset) {
   data = { error: error, dataset: dataset }
@@ -99,7 +98,7 @@ export function SuccesvolFalseError(rawData, locationName, data, resolve) {
 //MVB specific
 export function giveMVBFetchOptions(databaseData, dateZoned, newToken, DSTDates) {
 
-  const keyFetch = newToken || JSON.parse(readFileSync("Meetnet Vlaamse Banken API key.json")).APIKey
+  const keyFetch = newToken || MVBAPIKey.APIKey
   const locationID = JSON.stringify(databaseData.datasets.MVB.location_id)
   const dateYesterdayFetch = format(sub(dateZoned, {
     days: 1
@@ -125,7 +124,7 @@ export function giveMVBFetchOptions(databaseData, dateZoned, newToken, DSTDates)
 
 export function giveMVBOverviewFetchOptions(locationsArray, newToken) {
 
-  const keyFetch = newToken || JSON.parse(readFileSync("Meetnet Vlaamse Banken API key.json")).APIKey
+  const keyFetch = newToken || MVBAPIKey.APIKey
   return {
     "headers": {
       "authorization": `Bearer ${keyFetch}`,
