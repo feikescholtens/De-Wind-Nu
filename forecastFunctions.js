@@ -6,7 +6,6 @@ export function createRecurrenceRule(hours, minutes, seconds) {
   rule.hour = hours
   rule.minute = minutes
   rule.second = seconds
-  rule.tz = "Europe/Amsterdam"
   return rule
 }
 

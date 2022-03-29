@@ -11,6 +11,7 @@ import { log } from "./globalFunctions.js"
 import schedule from "node-schedule"
 import { createRecurrenceRule, fetchForecast, scheduledGetForecast } from "./forecastFunctions.js"
 global.log = log
+global.MVBAPIKey = {}
 
 //Define variables
 const __dirname = path.resolve()
@@ -97,5 +98,5 @@ app.use("/*", (request, response) => response.redirect("/"))
 global.forecastData = {};
 (async () => forecastData = await fetchForecast())()
 
-const ruleUpdatedForecast = createRecurrenceRule([3, 9, 15, 21], [55], [30])
+const ruleUpdatedForecast = createRecurrenceRule([2, 8, 14, 20], [55], [30])
 schedule.scheduleJob(ruleUpdatedForecast, async () => { scheduledGetForecast(11) })

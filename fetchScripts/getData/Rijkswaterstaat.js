@@ -1,25 +1,26 @@
 import { format, parseISO } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 import fetch from "node-fetch"
-import { catchError, theoreticalMeasurements, SuccesvolFalseError, giveRWSFetchOptions } from "../fetchUtilFunctions.js"
+import { readFileSync } from "fs"
+import { catchError, theoreticalMeasurements, SuccesvolFalseError, giveRWSFetchOptions, processAllNegativeArrays } from "../fetchUtilFunctions.js"
 
 Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 
 const timeZone = "Europe/Amsterdam"
 
-export async function fetchRWS(databaseData, resolve, times) {
+export async function fetchRWS(databaseData, resolve, times, DSTDates) {
 
   let data = []
 
   const dateUTC = new Date()
   const dateZoned = utcToZonedTime(dateUTC, timeZone)
 
-  const rawDataString = await fetch("https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenWaarnemingen", giveRWSFetchOptions(databaseData, dateZoned))
+  const rawDataString = await fetch("https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenWaarnemingen", giveRWSFetchOptions(databaseData, dateZoned, DSTDates))
     .then(response => response.text()).catch((error) => catchError(resolve, data, error, "RWS"))
 
   let rawData
   try { rawData = JSON.parse(rawDataString) } catch { return }
-
+  // rawData = JSON.parse(readFileSync("projectFiles/test files DST/from CET to CEST/RWS.json"))
 
   if (SuccesvolFalseError(rawData, databaseData.name, data, resolve)) return
 
@@ -30,6 +31,7 @@ export async function fetchRWS(databaseData, resolve, times) {
 
   if (rawData.WaarnemingenLijst) {
     rawData.WaarnemingenLijst.forEach(measurementType => {
+      console.log(measurementType.MetingenLijst[0])
       if (measurementType.MetingenLijst.length == 0) return
 
       let measurementTimes = [],
@@ -37,6 +39,11 @@ export async function fetchRWS(databaseData, resolve, times) {
 
       measurementType.MetingenLijst.forEach(measurement => {
         let time = format(utcToZonedTime(parseISO(measurement.Tijdstip), timeZone), "HH:mm")
+        console.log("------------------")
+        console.log(measurement.Tijdstip)
+        console.log(parseISO(measurement.Tijdstip))
+        console.log(utcToZonedTime(parseISO(measurement.Tijdstip), timeZone))
+        console.log(time)
         measurementTimes.push(time)
       })
 
@@ -51,7 +58,7 @@ export async function fetchRWS(databaseData, resolve, times) {
         if (measurementType.MetingenLijst[indexTime]) {
           if (measurementType.MetingenLijst[indexTime].Meetwaarde) {
             if (measurementType.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek) {
-              if (measurementType.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek == 999999999) {
+              if (measurementType.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek >= 999) {
                 tempArray.push(-999)
               } else tempArray.push(measurementType.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek)
             } else tempArray.push(-999)
@@ -59,7 +66,7 @@ export async function fetchRWS(databaseData, resolve, times) {
         } else tempArray.push(-999)
       })
 
-      const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes, 10)
+      const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes, times)
 
       for (let j = 0; j < (times.length - theoreticalMeasurementCount); j++) {
         tempArray.pop()
@@ -71,7 +78,7 @@ export async function fetchRWS(databaseData, resolve, times) {
     })
   }
 
-  data["Rijkswaterstaat"] = [wind_speed, wind_gusts, wind_direction]
+  data["Rijkswaterstaat"] = processAllNegativeArrays(wind_speed, wind_gusts, wind_direction)
   resolve({ data })
 
 }

@@ -1,15 +1,11 @@
 import fetch from "node-fetch"
-import { getUnixTime } from "date-fns"
-import { existsSync, readFileSync } from 'fs'
-import { MessageError, saveNewApiKey, giveMVBOverviewFetchOptions } from "../fetchUtilFunctions.js"
+import { getUnixTime, add, parse } from "date-fns"
+import { readFileSync } from "fs"
+import { MessageError, giveMVBOverviewFetchOptions } from "../fetchUtilFunctions.js"
 
 export async function overviewFetchMVB(locations, resolve) {
 
   //Getting API key, if gotten, make request for data
-  let MVBAPIKey
-  if (existsSync("Meetnet Vlaamse Banken API key.json")) MVBAPIKey = JSON.parse(readFileSync("Meetnet Vlaamse Banken API key.json"))
-  else MVBAPIKey = {}
-
   if (Object.keys(MVBAPIKey).length == 0 || (getUnixTime(new Date()) + 5) > MVBAPIKey.expirationDate) {
 
     const rawDataString = await fetch("https://api.meetnetvlaamsebanken.be/Token", {
@@ -26,7 +22,13 @@ export async function overviewFetchMVB(locations, resolve) {
 
     fetchDataMVB(rawData["access_token"])
 
-    saveNewApiKey(rawData)
+    const expiresString = add(parse(rawData[".expires"], "EEE, dd MMM yyyy HH:mm:ss 'GMT'", new Date()), { hours: 1 })
+    const issuedString = add(parse(rawData[".issued"], "EEE, dd MMM yyyy HH:mm:ss 'GMT'", new Date()), { hours: 1 })
+    MVBAPIKey = {
+      "expirationDate": getUnixTime(expiresString),
+      "issuedDate": getUnixTime(issuedString),
+      "APIKey": rawData["access_token"]
+    }
 
   } else {
     fetchDataMVB()

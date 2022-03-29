@@ -4,7 +4,7 @@ import { fetchVLINDER } from "./fetchScripts/getData/VLINDER.js"
 import { fetchRWS } from "./fetchScripts/getData/Rijkswaterstaat.js"
 import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
 import { fetchMVB } from "./fetchScripts/getData/MVB.js"
-import { generateTimes, calcInterpolation } from "./getScriptUtilFunctions.js"
+import { getTimeChangeDates, generateTimes, calcInterpolation } from "./getScriptUtilFunctions.js"
 import { format, add, parseISO } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 
@@ -22,7 +22,14 @@ export async function getData(request, response, locations, forecastData) {
   let NoMeasurementsXHour
   if (["Rijkswaterstaat", "KNMI", "MVB"].includes(dataset)) NoMeasurementsXHour = 6
   if (["VLINDER"].includes(dataset)) NoMeasurementsXHour = 12
-  const times = generateTimes(60 / NoMeasurementsXHour)
+  let times
+  const DSTDates = getTimeChangeDates()
+  const dateToDST = format(utcToZonedTime(DSTDates[0], timeZone), "dd-MM")
+  const dateFromDST = format(utcToZonedTime(DSTDates[1], timeZone), "dd-MM")
+  const dateNow = format(utcToZonedTime(new Date(), timeZone), "dd-MM")
+  if (dateNow == dateToDST) times = generateTimes(60 / NoMeasurementsXHour, "toDST")
+  else if (dateNow == dateFromDST) times = generateTimes(60 / NoMeasurementsXHour, "fromDST")
+  else times = generateTimes(60 / NoMeasurementsXHour)
 
   const dateUTC = new Date()
   const dateZoned = utcToZonedTime(dateUTC, timeZone)
@@ -38,7 +45,7 @@ export async function getData(request, response, locations, forecastData) {
     }
     // Rijkswaterstaat
     if (location.datasets.Rijkswaterstaat) {
-      return fetchRWS(location, resolve, times)
+      return fetchRWS(location, resolve, times, DSTDates)
     }
     //KNMI
     if (location.datasets.KNMI) {
@@ -46,7 +53,7 @@ export async function getData(request, response, locations, forecastData) {
     }
     //Meetnet Vlaamse Banken
     if (location.datasets.MVB) {
-      return fetchMVB(location, resolve, times)
+      return fetchMVB(location, resolve, times, DSTDates)
     }
   })
 
@@ -58,24 +65,25 @@ export async function getData(request, response, locations, forecastData) {
 
   //Forecast
   if (forecastData[location.id]) {
-    const startForecastTime = forecastData[location.id][0].time
-    const startForecastTimeIndex = times.indexOf(startForecastTime)
+    const startForecastTimeIndex = forecastData[location.id].findIndex(location => location.date == dateToday)
+    const startForecastTime = forecastData[location.id][startForecastTimeIndex].time
+    const startForecastTimeIndexInTimeSeries = times.indexOf(startForecastTime)
 
     let wind_forecast = new Array(times.length),
       wind_forecastGust = new Array(times.length),
       wind_forecastDirection = new Array(times.length)
 
-    const indexFirstForecastTimeToday = forecastData[Object.keys(forecastData)[0]].findIndex(location => location.date == dateToday)
+    const indexFirstForecastTimeToday = forecastData[location.id].findIndex(location => location.date == dateToday)
     const amountHourValues = forecastData[location.id].length - indexFirstForecastTimeToday
 
     for (let i = 0; i < amountHourValues; i++) {
-      wind_forecast[startForecastTimeIndex + i * NoMeasurementsXHour] = forecastData[location.id][i + indexFirstForecastTimeToday].s
-      wind_forecastDirection[startForecastTimeIndex + i * NoMeasurementsXHour] = forecastData[location.id][i + indexFirstForecastTimeToday].d
-      wind_forecastGust[startForecastTimeIndex + i * NoMeasurementsXHour] = forecastData[location.id][i + indexFirstForecastTimeToday].g
+      wind_forecast[startForecastTimeIndexInTimeSeries + i * NoMeasurementsXHour] = forecastData[location.id][i + startForecastTimeIndex].s
+      wind_forecastDirection[startForecastTimeIndexInTimeSeries + i * NoMeasurementsXHour] = forecastData[location.id][i + startForecastTimeIndex].d
+      wind_forecastGust[startForecastTimeIndexInTimeSeries + i * NoMeasurementsXHour] = forecastData[location.id][i + startForecastTimeIndex].g
     }
-    values.push(calcInterpolation(wind_forecast, times, startForecastTimeIndex))
-    values.push(calcInterpolation(wind_forecastDirection, times, startForecastTimeIndex))
-    values.push(calcInterpolation(wind_forecastGust, times, startForecastTimeIndex))
+    values.push(calcInterpolation(wind_forecast, times, startForecastTimeIndexInTimeSeries))
+    values.push(calcInterpolation(wind_forecastDirection, times, startForecastTimeIndexInTimeSeries))
+    values.push(calcInterpolation(wind_forecastGust, times, startForecastTimeIndexInTimeSeries))
   }
 
   let timeStampRun,

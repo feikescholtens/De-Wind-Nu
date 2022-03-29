@@ -1,7 +1,8 @@
 import { format, parseISO } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
-import fetch from "node-fetch";
-import { catchError, theoreticalMeasurements } from "../fetchUtilFunctions.js"
+import fetch from "node-fetch"
+import { readFileSync } from "fs"
+import { catchError, theoreticalMeasurements, processAllNegativeArrays } from "../fetchUtilFunctions.js"
 const timeZone = "Europe/Amsterdam"
 
 export async function fetchKNMI(databaseData, resolve, times) {
@@ -18,14 +19,17 @@ export async function fetchKNMI(databaseData, resolve, times) {
 
   let rawData
   try { rawData = JSON.parse(rawDataString) } catch { return }
+  // rawData = JSON.parse(readFileSync("projectFiles/test files DST/from CET to CEST/KNMI.json"))
 
   let wind_speed = [],
     wind_gusts = [],
     wind_direction = []
   let measurementTimes = []
 
+  const UTCOffset = rawData.timeOffset
+
   rawData.observations.forEach(measurement => {
-    let time = format(parseISO(measurement.datetime), "HH:mm")
+    let time = format(utcToZonedTime(parseISO(measurement.datetime + "+0" + UTCOffset + ":00"), timeZone), "HH:mm")
     measurementTimes.push(time)
   })
 
@@ -52,7 +56,7 @@ export async function fetchKNMI(databaseData, resolve, times) {
     } else wind_direction.push(-999)
   })
 
-  const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes, 10)
+  const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes, times)
   if (!theoreticalMeasurementCount) {
     resolve({
       data: {
@@ -72,6 +76,6 @@ export async function fetchKNMI(databaseData, resolve, times) {
     wind_direction.pop()
   }
 
-  data["KNMI"] = [wind_speed, wind_gusts, wind_direction]
+  data["KNMI"] = processAllNegativeArrays(wind_speed, wind_gusts, wind_direction)
   resolve({ data })
 }

@@ -4,7 +4,7 @@ export function convertToBft(data, data_unit) {
 
   //Check if there is forecast data, if so loop through that array, else, through the normal windspeed array
   checkArray = data[5]
-  loopCount = 7
+  loopCount = 8
 
   for (let i = 0; i < checkArray.length; i++) {
     //Loop 3 times both the indices 2, 3, 5 for respectively normal wind and gusts

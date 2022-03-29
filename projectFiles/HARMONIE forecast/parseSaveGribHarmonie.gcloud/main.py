@@ -24,6 +24,33 @@ def logNodeApp(message, Type, addTimeStamp):
   if (response.status_code != 200):
     print(response)
 
+def parseLessDueToDST (timeRun):
+ currentYear = datetime.today().astimezone(timezone).year
+
+ DSTStart = datetime(currentYear, 3, 31)
+ for i in range(7 + 1):
+  if (DSTStart.weekday() == 6):
+   break
+  DSTStart = DSTStart - timedelta(days=1)
+
+ DSTEnd = datetime(currentYear, 10, 31)
+ for i in range(7 + 1):
+  if (DSTEnd.weekday() == 6):
+   break
+  DSTEnd = DSTEnd - timedelta(days=1)
+
+ if (datetime.today() >= DSTStart and datetime.today() < DSTEnd):
+  parseLess = 1
+ else:
+  parseLess = 0
+  
+ if (datetime.today().strftime("%d-%m") == (DSTStart - timedelta(days=1)).strftime("%d-%m") and timeRun == "18"):
+  parseLess = 1
+ if (datetime.today().strftime("%d-%m") == (DSTEnd - timedelta(days=1)).strftime("%d-%m") and timeRun == "18"):
+  parseLess = 0
+
+ return parseLess
+
 os.environ["TZ"] = "Europe/Amsterdam"
 timezone = pytz.timezone("Europe/Amsterdam")
 
@@ -100,6 +127,8 @@ def runFunc (event, context):
       parseNoHours = 12
   if (timeRun.strftime("%H") == "18"):
       parseNoHours = 30
+
+  parseNoHours -= parseLessDueToDST(timeRun.strftime("%H"))
 
   #Loop for every location
   for location in locations:
