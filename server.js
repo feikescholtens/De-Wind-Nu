@@ -99,4 +99,4 @@ global.forecastData = {};
 (async () => forecastData = await fetchForecast())()
 
 const ruleUpdatedForecast = createRecurrenceRule([2, 8, 14, 20], [55], [30])
-schedule.scheduleJob(ruleUpdatedForecast, async () => { scheduledGetForecast(11) })
+schedule.scheduleJob(ruleUpdatedForecast, async () => { scheduledGetForecast(16) })

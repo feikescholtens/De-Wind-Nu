@@ -89,7 +89,7 @@ def runFunc (event, context):
   if ("timeRun" in oldForecast.keys()):
     if (timeMostRecentRun <= parse(oldForecast["timeRun"]) and forceFetchandSave == False):
       logNodeApp("New forecast run not available yet (retrieved from scraped page), retrying in 1 minute!", "info", True)
-      if (datetime.now().minute == 5):
+      if (datetime.now().minute == 10):
         logNodeApp("This was the last time trying to fetch!", "info", True)
       return
   

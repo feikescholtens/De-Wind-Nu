@@ -31,7 +31,6 @@ export async function fetchRWS(databaseData, resolve, times, DSTDates) {
 
   if (rawData.WaarnemingenLijst) {
     rawData.WaarnemingenLijst.forEach(measurementType => {
-      console.log(measurementType.MetingenLijst[0])
       if (measurementType.MetingenLijst.length == 0) return
 
       let measurementTimes = [],
@@ -39,11 +38,6 @@ export async function fetchRWS(databaseData, resolve, times, DSTDates) {
 
       measurementType.MetingenLijst.forEach(measurement => {
         let time = format(utcToZonedTime(parseISO(measurement.Tijdstip), timeZone), "HH:mm")
-        console.log("------------------")
-        console.log(measurement.Tijdstip)
-        console.log(parseISO(measurement.Tijdstip))
-        console.log(utcToZonedTime(parseISO(measurement.Tijdstip), timeZone))
-        console.log(time)
         measurementTimes.push(time)
       })
 
