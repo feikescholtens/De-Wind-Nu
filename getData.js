@@ -65,24 +65,25 @@ export async function getData(request, response, locations, forecastData) {
 
   //Forecast
   if (forecastData[location.id]) {
-    const startForecastTime = forecastData[location.id][0].time
-    const startForecastTimeIndex = times.indexOf(startForecastTime)
+    const startForecastTimeIndex = forecastData[location.id].findIndex(location => location.date == dateToday)
+    const startForecastTime = forecastData[location.id][startForecastTimeIndex].time
+    const startForecastTimeIndexInTimeSeries = times.indexOf(startForecastTime)
 
     let wind_forecast = new Array(times.length),
       wind_forecastGust = new Array(times.length),
       wind_forecastDirection = new Array(times.length)
 
-    const indexFirstForecastTimeToday = forecastData[Object.keys(forecastData)[0]].findIndex(location => location.date == dateToday)
+    const indexFirstForecastTimeToday = forecastData[location.id].findIndex(location => location.date == dateToday)
     const amountHourValues = forecastData[location.id].length - indexFirstForecastTimeToday
 
     for (let i = 0; i < amountHourValues; i++) {
-      wind_forecast[startForecastTimeIndex + i * NoMeasurementsXHour] = forecastData[location.id][i + indexFirstForecastTimeToday].s
-      wind_forecastDirection[startForecastTimeIndex + i * NoMeasurementsXHour] = forecastData[location.id][i + indexFirstForecastTimeToday].d
-      wind_forecastGust[startForecastTimeIndex + i * NoMeasurementsXHour] = forecastData[location.id][i + indexFirstForecastTimeToday].g
+      wind_forecast[startForecastTimeIndexInTimeSeries + i * NoMeasurementsXHour] = forecastData[location.id][i + startForecastTimeIndex].s
+      wind_forecastDirection[startForecastTimeIndexInTimeSeries + i * NoMeasurementsXHour] = forecastData[location.id][i + startForecastTimeIndex].d
+      wind_forecastGust[startForecastTimeIndexInTimeSeries + i * NoMeasurementsXHour] = forecastData[location.id][i + startForecastTimeIndex].g
     }
-    values.push(calcInterpolation(wind_forecast, times, startForecastTimeIndex))
-    values.push(calcInterpolation(wind_forecastDirection, times, startForecastTimeIndex))
-    values.push(calcInterpolation(wind_forecastGust, times, startForecastTimeIndex))
+    values.push(calcInterpolation(wind_forecast, times, startForecastTimeIndexInTimeSeries))
+    values.push(calcInterpolation(wind_forecastDirection, times, startForecastTimeIndexInTimeSeries))
+    values.push(calcInterpolation(wind_forecastGust, times, startForecastTimeIndexInTimeSeries))
   }
 
   let timeStampRun,
