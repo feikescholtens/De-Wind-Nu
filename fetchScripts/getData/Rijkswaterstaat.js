@@ -15,8 +15,7 @@ export async function fetchRWS(databaseData, resolve, times, DSTDates) {
   const dateUTC = new Date()
   const dateZoned = utcToZonedTime(dateUTC, timeZone)
 
-  // const rawDataString = await fetch("https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenWaarnemingen", giveRWSFetchOptions(databaseData, dateZoned, DSTDates))
-  const rawDataString = await fetch("http://localhost:3000/testTimeout", giveRWSFetchOptions(databaseData, dateZoned, DSTDates))
+  const rawDataString = await fetch("https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenWaarnemingen", giveRWSFetchOptions(databaseData, dateZoned, DSTDates))
     .then(response => response.text()).catch((error) => catchError(resolve, data, error, "RWS"))
 
   let rawData
@@ -25,9 +24,6 @@ export async function fetchRWS(databaseData, resolve, times, DSTDates) {
 
   if (SuccesvolFalseError(rawData, databaseData.name, data, resolve)) return
 
-  console.log(rawData)
-  console.log(rawData.WaarnemingenLijst)
-  console.log(rawData.WaarnemingenLijst.length)
   //Declare variables
   let wind_speed = [],
     wind_gusts = [],
