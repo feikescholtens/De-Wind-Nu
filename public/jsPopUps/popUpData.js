@@ -65,7 +65,7 @@ export const popUpData = {
       <br>&nbsp;&nbsp;&nbsp;&nbsp;De voorspellingen, die ook in de grafieken zijn weergegeven, komen uit het HARMONIE-AROME Cy40 model van het KNMI. Dit model
       bevat 39 parameters - dus niet alleen wind - en berekent de voorspelling voor elk uur van de komende twee dagen over een gebied, met de grootte van Frankrijk, 
       waarin Nederland centraal ligt. Dit wordt gedaan op supercomputers,
-      elke dag om 01:00, 07:00, 13:00 en 19:00 (Nederlandse tijd), wat ongeveer drie uur duurt per run. Als dit klaar is worden de 
+      elke dag om 00:00, 06:00, 12:00 en 18:00 (UTC), wat ongeveer drie uur duurt per run. Als dit klaar is worden de 
       voorspellingen zo snel mogelijk geupdate op de site. Onderaan de pagina is te zien van welke run je de voorspellingen bekijkt. Voorspellingen 
       van vóór de tijd van de meest recente run, zijn van de vorige run, aangezien het model alleen in de toekomst de wind berekent.
       </p>

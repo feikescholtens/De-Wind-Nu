@@ -73,6 +73,10 @@ data.forEach(item => {
     Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("MVB") })
     popupId = "popupMVB"
     marker.style.zIndex = 4
+  } else {
+    Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("Other") })
+    popupId = "popupOther"
+    marker.style.zIndex = 5
   }
   Array.from(marker.getElementsByTagName("div")).forEach(element => { element.id = item.id })
 

@@ -81,6 +81,11 @@ div.MVB {
     border-top-color: rgb(201, 62, 28);
 }
 
+div.Other {
+    background-color: rgb(140, 140, 140);
+    border-top-color: rgb(140, 140, 140);
+}
+
 div.mapboxgl-popup {
     max-width: 200px;
     z-index: 998;

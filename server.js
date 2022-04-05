@@ -34,7 +34,6 @@ app.use("/generalStyles.css", express.static(path.resolve(__dirname, "public/gen
 app.use("/redirect.js", express.static(path.resolve(__dirname, "public/redirect.js")))
 
 app.set("view-engine", "ejs")
-app.set("views", path.join(__dirname, "/public/windPage/"))
 
 //Add location API and DOTENV, only on localhost
 if (port == 3000) {
@@ -59,18 +58,15 @@ if (port == 3000) {
   app.use("/devTools/compareKNMI&RWS", express.static(path.resolve(__dirname, "public/devTools/compareKNMI&RWS")))
 }
 
-//Homepage API
+//Homepage & windpage
 app.get("/", (request, response) => response.render(path.join(__dirname, "/public/homepage/index.ejs"), { locationsString }))
+app.use("/wind/:id", express.static(path.resolve(__dirname, "public/windPage/index.html")))
 
-//Server wind page API
-app.get("/wind/:id", async (request, response) => {
+//Data API's
+app.get("/getData/:id", async (request, response) => {
   const dataText = await getData(request, response, locations, forecastData)
-  const data = JSON.stringify(dataText)
-
-  if (data) response.render(path.join(__dirname, "/public/windPage/index.ejs"), { data })
+  response.json(dataText)
 })
-
-//Overview API
 app.get("/getOverviewData/:dataSource", (request, response) => getOverviewData(request, response, locations))
 
 //Add data to database when feedback received
@@ -90,6 +86,8 @@ app.post("/logGCPMessage", (request, response) => {
   log(message, type, addTimeStamp)
   response.status(200).json()
 })
+
+app.get("/testTimeout", (request, response) => {})
 
 //If unknown url is typed in
 app.use("/*", (request, response) => response.redirect("/"))

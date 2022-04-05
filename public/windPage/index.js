@@ -16,6 +16,8 @@ globalThis.data = [],
   globalThis.times, globalThis.units, globalThis.currentWindBoxSize = 350;
 
 (async () => {
+  const locationID = location.pathname.substring(6, 10)
+  const dataFetched = await fetch(`/getData/${locationID}`).then(response => response.json())
 
   const dataset = dataFetched.dataset,
     spotName = dataFetched.spotName

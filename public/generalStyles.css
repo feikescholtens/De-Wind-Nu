@@ -140,20 +140,12 @@ button.popupVLINDER {
     background-color: rgb(254, 202, 87);
 }
 
-button.popupMVB:hover {
-    background-color: rgba(201, 62, 28, 0.5);
+button.popupOther {
+    background-color: rgb(140, 140, 140);
 }
 
-button.popupKNMI:hover {
-    background-color: rgba(101, 124, 201, 0.5);
-}
-
-button.popupRWS:hover {
-    background-color: rgba(46, 179, 99, 0.5);
-}
-
-button.popupVLINDER:hover {
-    background-color: rgb(254, 202, 87, 0.5);
+button.windPageButton:hover {
+    opacity: 0.5;
 }
 
 /* Footer styling */

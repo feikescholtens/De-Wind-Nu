@@ -10,7 +10,9 @@ export function logFetchErrors(dataFetched, response) {
   else if (errorCode == "LOGINFAILED")
     log(`Loggin in MVB API failed!`, "fetchError")
   else if (errorCode == "AUTHDENIED")
-    log(` Access denied accessing MVB API!`, "fetchError")
+    log(`Access denied accessing MVB API!`, "fetchError")
+  else if (errorCode == "ERR_INVALID_URL")
+    log(`Invalid URL!`, "fetchError")
   else {
     log(JSON.stringify(dataFetched), "fetchError")
     response.redirect('/error')
