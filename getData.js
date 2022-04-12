@@ -95,13 +95,12 @@ export async function getData(request, response, locations, forecastData) {
     timeNextRun = format(add(timeStampRun, { hours: (2 + 6), minutes: 58 }), "HH:mm")
   }
 
-  //Rest of the errors are logged/handled in logFetchErrors.js
   if (values[2].length == 0 && values[3].length == 0 && values[4].length == 0 && values[5]) {
     log(`Location "${location.name}" doesn't have any measurements!`, "fetchError", true)
   }
   if (values[2].length == 0 && values[3].length == 0 && values[4].length == 0 && !values[5]) {
     log(`Location "${location.name}" doesn't have any data (neither measurements nor forecast)!`, "fetchError", true)
-    response.redirect('/error?e=14')
+    response.json({ errorCode: 14 })
     return
   }
 

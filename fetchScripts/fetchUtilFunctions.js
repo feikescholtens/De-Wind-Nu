@@ -84,15 +84,27 @@ export function giveRWSOverviewFetchOptions(locationsArray) {
   }
 }
 
-export function SuccesvolFalseError(rawData, locationName, data, resolve) {
+export function SuccesvolFalseError(rawData, resolve) {
+  //All fetcherrors are handled in logFetchErrors.js
 
-  if (!rawData) return true
+  if (rawData.Foutmelding) log(`Rijkswaterstaat API "Succesvol"-error: ${rawData.Foutmelding}`, "error", true)
 
-  //All other errors (exept for when there's no data at all) are handled in logFetchErrors.js
-  if (rawData.Foutmelding) {
-    if (rawData.Foutmelding == "Geen gegevens gevonden!") return false //This error is not handled here
+  if (!rawData.Succesvol) {
+    resolve({
+      data: {
+        "Rijkswaterstaat": [
+          [],
+          [],
+          []
+        ]
+      }
+    })
+
+    return true
   }
+
   return false
+
 }
 
 //MVB specific

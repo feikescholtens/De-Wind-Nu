@@ -1,5 +1,5 @@
 import fetch from "node-fetch"
-import { giveRWSOverviewFetchOptions, SuccesvolFalseError } from "../fetchUtilFunctions.js"
+import { catchError, giveRWSOverviewFetchOptions, SuccesvolFalseError } from "../fetchUtilFunctions.js"
 
 export async function overviewFetchRWS(locations, resolve) {
 
@@ -21,14 +21,14 @@ export async function overviewFetchRWS(locations, resolve) {
   })
 
   const rawDataString = await fetch("https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenLaatsteWaarnemingen", giveRWSOverviewFetchOptions(locationsArray))
-    .then(response => response.text())
+    .then(response => response.text()).catch((error) => catchError(resolve, {}, error, "RWS"))
 
   let rawData
   try { rawData = JSON.parse(rawDataString) } catch { return }
 
   let data = {}
 
-  if (SuccesvolFalseError(rawData, data, resolve)) return
+  if (SuccesvolFalseError(rawData, resolve)) return
 
   rawData.WaarnemingenLijst.forEach(locationData => {
 

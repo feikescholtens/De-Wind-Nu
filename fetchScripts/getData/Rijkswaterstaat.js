@@ -22,7 +22,7 @@ export async function fetchRWS(databaseData, resolve, times, DSTDates) {
   try { rawData = JSON.parse(rawDataString) } catch { return }
   // rawData = JSON.parse(readFileSync("projectFiles/test files DST/from CET to CEST/RWS.json"))
 
-  if (SuccesvolFalseError(rawData, databaseData.name, data, resolve)) return
+  if (SuccesvolFalseError(rawData, resolve)) return
 
   //Declare variables
   let wind_speed = [],

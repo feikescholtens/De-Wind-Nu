@@ -1,3 +1,4 @@
+import { logFetchErrors } from "./logFetchErrors.js"
 import { overviewFetchVLINDER } from "./fetchScripts/getOverviewData/VLINDER.js"
 import { overviewFetchRWS } from "./fetchScripts/getOverviewData/Rijkswaterstaat.js"
 import { overviewFetchKNMI } from "./fetchScripts/getOverviewData/KNMI.js"
@@ -19,6 +20,12 @@ export async function getOverviewData(request, response, locations) {
     if (dataSource == "KNMI") return overviewFetchKNMI(locations, resolve)
     if (dataSource == "MVB") return overviewFetchMVB(locations, resolve)
   })
+
+  if (dataFetched.data) {
+    if (dataFetched.data.error) {
+      logFetchErrors(dataFetched, response)
+    }
+  }
 
   response.json(dataFetched)
 }
