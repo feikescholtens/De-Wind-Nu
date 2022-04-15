@@ -62,7 +62,7 @@ export function calcInterpolation(array, times, startInterpolationIndex) {
   for (let i = startInterpolationIndex; i < array.length; i++) {
     let j
 
-    if (!array[i]) {
+    if (!array[i] && array[i] !== 0) {
       for (j = i + 1; j < array.length; j++) {
         if (array[j]) break
       }
@@ -81,7 +81,7 @@ export function calcInterpolation(array, times, startInterpolationIndex) {
   }
 
   for (let k = startInterpolationIndex; k < times.length; k++) {
-    if (!array[k]) {
+    if (!array[k] && array[k] !== 0) {
       const interpolatedValue = interpolatedData.filter(element => element.index == k)[0].value
       array[k] = interpolatedValue
     }

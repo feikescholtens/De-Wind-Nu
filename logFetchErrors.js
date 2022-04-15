@@ -7,10 +7,6 @@ export function logFetchErrors(dataFetched, response) {
     log(`Network problem reaching API!`, "fetchError", true)
   else if (errorCode == "ETIMEDOUT")
     log(`Request timed out of API ${dataFetched.data.dataset}!`, "fetchError", true)
-  else if (errorCode == "LOGINFAILED")
-    log(`Loggin in MVB API failed!`, "fetchError", true)
-  else if (errorCode == "AUTHDENIED")
-    log(`Access denied accessing MVB API!`, "fetchError", true)
   else if (errorCode == "ERR_INVALID_URL")
     log(`Invalid URL!`, "fetchError", true)
   else {

@@ -161,27 +161,25 @@ export function JSONError(rawData) {
 }
 
 export function MessageError(rawData, data, resolve) {
+  //All fetcherrors are handled in logFetchErrors.js
+
   if (rawData.Message) {
-    if (rawData.Message == "Login failed") {
-      data = {
-        error: {
-          code: "LOGINFAILED"
-        },
-        dataset: "MVB"
-      }
-    }
+    log(`Meetnet Vlaamse Banken API "Message"-error: ${rawData.Message}`, "error", true)
 
-    if (rawData.Message == "Authorization has been denied for this request.") {
-      data = {
-        error: { code: "AUTHDENIED" },
-        dataset: "MVB"
+    resolve({
+      data: {
+        "MVB": [
+          [],
+          [],
+          []
+        ]
       }
-      resolve({ data })
-    }
+    })
 
-    resolve({ data })
     return true
   }
+
+  return false
 }
 
 export function theoreticalMeasurements(measurementTimes, times) {
