@@ -5,6 +5,13 @@ footer {
     visibility: hidden;
 }
 
+div#loaderText {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, calc(-50% + 50px));
+}
+
 h1#location {
     color: grey;
     float: right;
@@ -126,10 +133,6 @@ section label {
 
 section label.deselected {
     color: #bbb;
-}
-
-.hidden {
-    display: none !important;
 }
 
 table#data {

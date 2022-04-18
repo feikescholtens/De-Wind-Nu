@@ -38,8 +38,6 @@
     <meta property="twitter:image" content="https://dewindnu.nl/images/logoEncircled.png">
     <meta property="twitter:description" content="De Wind Nu verzamelt actuele weerdata van meetstations door heel Nederland. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
 
-
-  
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
@@ -65,9 +63,10 @@
 </head>
 
 <body>
-    <div id="loaderBox">
-        <div data-loader id="loader"></div>
-    </div>
+    <div data-markerContainer class="markerContainer centerAndMiddle">
+    <div class="arrowArm loader spin">
+    </div><div class="marker loader">5</div></div>
+    <div data-loaderText id="loaderText"><b>Data ophalen...</b></div>
 
     <header>
         <img data-goBackHome id="logo" src="../images/logo.svg" alt="Logo - navigeer home">

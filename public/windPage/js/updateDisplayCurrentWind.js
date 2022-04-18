@@ -30,7 +30,7 @@ export function updateCurrentWind() {
     }
 
     const currentDirection = data_unit[4].lastMeasurement()
-    if (currentDirection) {
+    if (currentDirection && !isNaN(currentDirection)) {
       drawDirectionArrow(currentDirection, ctx, "#5f27cd")
       const currentDirectionLetters = directionToLetters(currentDirection)
       currentDirectionLabel.innerHTML = currentDirection + "&#176; / " + currentDirectionLetters

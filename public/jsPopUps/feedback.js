@@ -23,12 +23,7 @@ export async function displayPopUpFeedback() {
         document.querySelector("[data-send]").remove()
 
         //Add the loader to the messageBox
-        const loaderbox = document.createElement("div")
-        const loader = document.createElement("div")
-        loaderbox.id = "loaderBoxPopUp"
-        loader.id = "loader"
-        loaderbox.appendChild(loader)
-        popUpBox.appendChild(loaderbox)
+        document.getElementsByClassName("markerContainer center hidden")[0].classList.remove("hidden")
 
         //Data for making the fetch command
         const dataBody = {
@@ -48,7 +43,7 @@ export async function displayPopUpFeedback() {
         const data = await fetch("/addFeedback", options)
           .then(response => response.text())
 
-        loaderbox.remove()
+        document.getElementsByClassName("markerContainer center")[0].remove()
 
         const responseMessage = document.createElement("p")
 

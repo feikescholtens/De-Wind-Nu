@@ -7,18 +7,38 @@ redirect()
 
 Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 
-globalThis.reload = contentUpdate
-
 //These need to be global because of other .js files!
 globalThis.data = [],
   globalThis.data_unit = [],
   globalThis.unit, globalThis.decimals, globalThis.interpolation,
   globalThis.times, globalThis.units, globalThis.currentWindBoxSize = 350;
 
+const changeNumbersLoadingSymbolInterval = setInterval(() => setNewNumber(), 80)
+
+function setNewNumber() {
+  const latestNumber = document.getElementsByClassName("marker")[0].innerText
+  const newNumber = parseInt(String(Math.random())[2])
+
+  if (latestNumber !== newNumber) {
+    document.getElementsByClassName("marker")[0].innerText = parseInt(String(Math.random())[2])
+  } else {
+    setNewNumber()
+  }
+}
+
 (async () => {
   const locationID = location.pathname.substring(6, 10)
-  const dataFetched = await fetch(`/getData/${locationID}`).then(response => response.json())
+  const dataFetched = await fetch(`/getData/${locationID}`)
+    .then(response => {
+      if (response.status !== 200) {
+        window.location.replace(`${location.origin}/error?e=${response.status}`)
+        return
+      }
 
+      return response.json()
+    })
+
+  clearInterval(changeNumbersLoadingSymbolInterval)
   if (dataFetched.errorCode) window.location.replace(`${window.location.origin}/error?e=${dataFetched.errorCode}`)
 
   const dataset = dataFetched.dataset,

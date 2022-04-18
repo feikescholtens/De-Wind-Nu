@@ -12,12 +12,15 @@ window.onload = async function() {
     error = param[1]
   }
 
-  for (let i = 0; i < errors.length; i++) {
-    if (error == errors[i][0]) {
-      document.getElementById("error").innerHTML = `Er is een fout opgetreden!<br>${error}: ${errors[i][1]}`
-      break
-    } else {
-      document.getElementById("error").innerHTML = `Er is een onbekende fout opgetreden!`
+  if (error[0] == 5) document.getElementById("error").innerHTML = `Er is een fout opgetreden!<br>${error}: Interne server fout`
+  else {
+    for (let i = 0; i < errors.length; i++) {
+      if (error == errors[i][0]) {
+        document.getElementById("error").innerHTML = `Er is een fout opgetreden!<br>${error}: ${errors[i][1]}`
+        break
+      } else {
+        document.getElementById("error").innerHTML = `Er is een onbekende fout opgetreden!`
+      }
     }
   }
 

@@ -1,5 +1,9 @@
+:root {
+    --markerSize: 25px;
+}
+
 * {
-    font-family: 'Lato', sans-serif;
+    font-family: "Lato", sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -19,46 +23,12 @@ footer {
     margin: 0 auto;
 }
 
+.hidden {
+    display: none !important;
+}
+
 header {
     height: 100px;
-}
-
-div#loader {
-    border: 8px solid #95a5a6;
-    border-top: 8px solid #eb4d4b;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 0.5s linear infinite;
-}
-
-div#loaderBox {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-}
-
-div#loaderBoxPopUp {
-    position: relative;
-    left: 50%;
-    top: 50%;
-    height: 40px;
-    width: 40px;
-    transform: translateX(-50%);
-    z-index: 1000;
-    margin: 50px 0 20px 0;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
 }
 
 header {
@@ -70,7 +40,6 @@ img#logo {
     height: 80px;
     float: left;
     cursor: pointer;
-
 }
 
 h1#title {
@@ -111,6 +80,87 @@ h2.sectionHeader {
     width: calc(100% - 20px);
     padding: 10px 10px 0 10px;
 }
+
+/* Marker & loader styling */
+div.markerContainer {
+    width: calc(3 * var(--markerSize));
+    height: calc(3 * var(--markerSize));
+    position: absolute;
+}
+
+div.marker {
+    position: relative;
+    transform-origin: center;
+    box-sizing: content-box;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-size: cover;
+    width: var(--markerSize);
+    height: var(--markerSize);
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px white solid;
+    text-align: center;
+    line-height: var(--markerSize);
+    font-size: calc(0.7 * var(--markerSize));
+    font-weight: 800;
+    color: white;
+    border-color: white !important;
+    box-shadow: 0 0 5px 3px grey;
+    text-shadow: 1px 1px #5c5c5c;
+}
+
+div.arrowArm {
+    position: absolute;
+    width: calc(0.2 * var(--markerSize));
+    border-top-width: calc(1.5 * var(--markerSize));
+    border-top-style: solid;
+    border-left: calc(0.2 * var(--markerSize)) solid transparent;
+    border-right: calc(0.2 * var(--markerSize)) solid transparent;
+    left: calc(1.5 * var(--markerSize));
+    top: calc(1.5 * var(--markerSize));
+    transform-origin: top;
+    transform: translateX(calc(-0.3 * var(--markerSize))) rotate(0);
+    background-color: unset !important;
+    filter: drop-shadow(3px 0 white) drop-shadow(0 3px white) drop-shadow(-3px 0 white) drop-shadow(1px 1px 1px grey) drop-shadow(-1px 1px 1px grey);
+}
+
+div.center {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+div.centerAndMiddle {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+div.loader {
+    background-color: black;
+    border-top-color: black;
+}
+
+div.spin {
+    animation-name: spin;
+    animation-iteration-count: infinite;
+    animation-duration: 0.35s;
+    animation-timing-function: linear;
+    transform: translateX(calc(-0.3 * var(--markerSize))) rotate(0deg);
+}
+
+@keyframes spin {
+    0% {
+        transform: translateX(calc(-0.3 * var(--markerSize))) rotate(0deg);
+    }
+
+    100% {
+        transform: translateX(calc(-0.3 * var(--markerSize))) rotate(360deg);
+    }
+}
+
+/* Popup styling */
 
 button.windPageButton {
     margin: 5px;

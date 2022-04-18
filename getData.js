@@ -100,7 +100,7 @@ export async function getData(request, response, locations, forecastData) {
   }
   if (values[2].length == 0 && values[3].length == 0 && values[4].length == 0 && !values[5]) {
     log(`Location "${location.name}" doesn't have any data (neither measurements nor forecast)!`, "fetchError", true)
-    response.json({ errorCode: 14 })
+    response.json({ errorCode: 204 })
     return
   }
 

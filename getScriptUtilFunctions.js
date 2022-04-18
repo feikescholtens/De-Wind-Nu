@@ -64,7 +64,7 @@ export function calcInterpolation(array, times, startInterpolationIndex) {
 
     if (!array[i] && array[i] !== 0) {
       for (j = i + 1; j < array.length; j++) {
-        if (array[j]) break
+        if (array[j] || array[j] == 0) break
       }
 
       const startIndex = i - 1,

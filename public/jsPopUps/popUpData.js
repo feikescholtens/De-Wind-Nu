@@ -124,6 +124,10 @@ export const popUpData = {
          <td><textarea data-message oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' placeholder="Verplicht" id="message"></textarea></td>
        </tr>
      </table>
-     <button data-send id="send">Verzenden</button>` },
+     <button data-send id="send">Verzenden</button>
+      <div data-markerContainer class="markerContainer center hidden">
+        <div class="arrowArm loader spin"></div>
+        <div class="marker loader"></div>
+      </div>` },
   contact: { html: `<h3 class="popUpTitle">Contact</h3><p class='messageBoxP'>E-mail: <a href='mailto:dewindnu@gmail.com'>dewindnu@gmail.com</a></p>` }
 }
