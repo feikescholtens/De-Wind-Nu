@@ -20,7 +20,8 @@ export async function getData(request, response, locations, forecastData) {
 
     log("Restarting server due to timed out request!", "info", true)
     restartHerokuDynos()
-  }, 30 * 1000)
+  }, 29.5 * 1000)
+  //Triggering timeout 1/2 a second before Heroku does
 
   const location = locations.find(location => location.id == request.params.id)
   const dataset = Object.keys(location.datasets)[0]
