@@ -2,11 +2,11 @@ export function validID(checkID, locations, response) {
 
   if (checkID !== "" && checkID.length == 4 && /^\d+$/.test(checkID) == true) {
     if (!locations.find(location => location.id == checkID)) {
-      response.status(400).json()
+      response.json({ errorCode: 400 })
       return false
     }
   } else {
-    response.status(400).json()
+    response.json({ errorCode: 400 })
     return false
   }
   return true

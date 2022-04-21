@@ -34,7 +34,6 @@ function setNewNumber() {
         window.location.replace(`${location.origin}/fout/${response.status}`)
         return
       }
-
       return response.json()
     })
 

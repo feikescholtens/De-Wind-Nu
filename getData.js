@@ -15,7 +15,7 @@ export async function getData(request, response, locations, forecastData) {
   if (!validID(request.params.id, locations, response)) return
 
   const timeOutTimer = setTimeout(() => {
-    response.status(5040).json()
+    response.json({ errorCode: 504 })
     //Basically 504 error but this prevents CloudFlare from showing it's message
     if (port == 3000) return
 
@@ -111,12 +111,11 @@ export async function getData(request, response, locations, forecastData) {
   if (values[2].length == 0 && values[3].length == 0 && values[4].length == 0 && !values[5]) {
     log(`Location "${location.name}" doesn't have any data (neither measurements nor forecast)!`, "fetchError", true)
     response.json({ errorCode: 204 })
-    return
   }
 
   //Simulate a timeout
-  const sleep = ms => new Promise(r => setTimeout(r, ms))
-  await sleep(30000)
+  // const sleep = ms => new Promise(r => setTimeout(r, ms))
+  // await sleep(30000)
 
   clearTimeout(timeOutTimer)
 

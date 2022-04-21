@@ -84,7 +84,7 @@ app.post("/logGCPMessage", (request, response) => {
   const addTimeStamp = request.body.addTimeStamp
 
   log(message, type, addTimeStamp)
-  response.status(200).json()
+  response.json()
 })
 
 app.get("/testTimeout", (request, response) => {})
