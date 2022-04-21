@@ -15,7 +15,8 @@ export async function getData(request, response, locations, forecastData) {
   if (!validID(request.params.id, locations, response)) return
 
   const timeOutTimer = setTimeout(() => {
-    response.status(504).json()
+    response.status(5040).json()
+    //Basically 504 error but this prevents CloudFlare from showing it's message
     if (port == 3000) return
 
     log("Restarting server due to timed out request!", "info", true)
