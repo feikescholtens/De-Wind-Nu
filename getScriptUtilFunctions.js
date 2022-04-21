@@ -1,4 +1,5 @@
 import { sub } from "date-fns"
+import fetch from "node-fetch"
 
 export function getTimeChangeDates() {
 
@@ -90,4 +91,19 @@ export function calcInterpolation(array, times, startInterpolationIndex) {
   array = array.slice(0, times.length)
 
   return array
+}
+
+export function restartHerokuDynos() {
+  fetch("https://api.heroku.com/apps/dewindnu/dynos/", {
+    "headers": {
+      "Accept": "application/vnd.heroku+json; version=3",
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${process.env.HEROKU_API_TOKEN}`
+    },
+    "method": "DELETE"
+  }).then(response => {
+    if (response.status !== 202) {
+      log(`An error in the Heroku API request occured while restarting dynos, status code ${response.status}!`, "fetchError", true)
+    }
+  })
 }

@@ -1,21 +1,8 @@
-body {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
 p#error {
     font-size: 1.5em;
     color: red;
     font-weight: 600;
     margin: 0 40px;
-}
-
-img#logo {
-    margin: 10px 0 10px 10px;
-    height: 80px;
-    float: left;
-    cursor: pointer;
-
 }
 
 p#backButton {

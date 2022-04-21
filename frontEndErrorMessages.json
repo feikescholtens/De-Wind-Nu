@@ -1,0 +1,5 @@
+{
+  "400": "Geen of foute ID in de URL gevonden, of er bestaat geen locatie bij de gegeven ID!",
+  "204": "Er zijn geen gegevens beschikbaar voor deze locatie!",
+  "504": "De API heeft geen reactie verzonden (Gateway Timeout server)! Probeer het opnieuw."
+}

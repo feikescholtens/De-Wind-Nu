@@ -11,7 +11,7 @@ Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 globalThis.data = [],
   globalThis.data_unit = [],
   globalThis.unit, globalThis.decimals, globalThis.interpolation,
-  globalThis.times, globalThis.units, globalThis.currentWindBoxSize = 350;
+  globalThis.times, globalThis.units, globalThis.currentWindBoxSize = 350
 
 const changeNumbersLoadingSymbolInterval = setInterval(() => setNewNumber(), 80)
 
@@ -31,7 +31,7 @@ function setNewNumber() {
   const dataFetched = await fetch(`/getData/${locationID}`)
     .then(response => {
       if (response.status !== 200) {
-        window.location.replace(`${location.origin}/error?e=${response.status}`)
+        window.location.replace(`${location.origin}/fout/${response.status}`)
         return
       }
 
@@ -39,7 +39,7 @@ function setNewNumber() {
     })
 
   clearInterval(changeNumbersLoadingSymbolInterval)
-  if (dataFetched.errorCode) window.location.replace(`${window.location.origin}/error?e=${dataFetched.errorCode}`)
+  if (dataFetched.errorCode) window.location.replace(`${window.location.origin}/fout/${dataFetched.errorCode}`)
 
   const dataset = dataFetched.dataset,
     spotName = dataFetched.spotName

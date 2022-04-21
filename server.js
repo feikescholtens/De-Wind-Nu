@@ -2,6 +2,7 @@
 import express from "express"
 import path from "path"
 import cors from "cors"
+import { getFrontEndErrorMessage } from "./serverFunctions.js"
 import { readFileSync } from "fs"
 import { getData } from "./getData.js"
 import { getOverviewData } from "./getOverviewData.js"
@@ -12,13 +13,14 @@ import schedule from "node-schedule"
 import { createRecurrenceRule, fetchForecast, scheduledGetForecast } from "./forecastFunctions.js"
 global.log = log
 global.MVBAPIKey = {}
+global.port = process.env.PORT || 3000
 
 //Define variables
 const __dirname = path.resolve()
 const app = express()
-const port = process.env.PORT || 3000
 const locations = JSON.parse(readFileSync("locations.json"))
 const locationsString = JSON.stringify(locations)
+const frontEndErrorMessages = JSON.parse(readFileSync("frontEndErrorMessages.json"))
 
 //Initialize Express
 app.listen(port, () => log(`server running at port ${port}`, "info"))
@@ -26,7 +28,7 @@ app.use(express.json({ limit: "500kb" }))
 
 app.use("/", express.static(path.resolve(__dirname, "public/homepage")))
 app.use("/wind/", express.static(path.resolve(__dirname, "public/windPage")))
-app.use("/error", express.static(path.resolve(__dirname, "public/errorPage")))
+app.use("/fout", express.static(path.resolve(__dirname, "public/errorPage")))
 
 app.use("/jsPopUps", express.static(path.resolve(__dirname, "public/jsPopUps")))
 app.use("/images", cors(), express.static(path.resolve(__dirname, "public/images")))
@@ -58,15 +60,13 @@ if (port == 3000) {
   app.use("/devTools/compareKNMI&RWS", express.static(path.resolve(__dirname, "public/devTools/compareKNMI&RWS")))
 }
 
-//Homepage & windpage
+//Homepage, windpage & errorpage
 app.get("/", (request, response) => response.render(path.join(__dirname, "/public/homepage/index.ejs"), { locationsString }))
 app.use("/wind/:id", express.static(path.resolve(__dirname, "public/windPage/index.html")))
+app.get("/fout/:errorId?", (request, response) => response.render(path.join(__dirname, "/public/errorPage/index.ejs"), getFrontEndErrorMessage(request, frontEndErrorMessages)))
 
 //Data API's
-app.get("/getData/:id", async (request, response) => {
-  const dataText = await getData(request, response, locations, forecastData)
-  response.json(dataText)
-})
+app.get("/getData/:id", async (request, response) => getData(request, response, locations, forecastData))
 app.get("/getOverviewData/:dataSource", (request, response) => getOverviewData(request, response, locations))
 
 //Add data to database when feedback received

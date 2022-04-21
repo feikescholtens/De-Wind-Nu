@@ -1,10 +1,10 @@
 import { logFetchErrors } from "./logFetchErrors.js"
-import { validID } from "./validationFunctions.js"
+import { validID } from "./serverFunctions.js"
 import { fetchVLINDER } from "./fetchScripts/getData/VLINDER.js"
 import { fetchRWS } from "./fetchScripts/getData/Rijkswaterstaat.js"
 import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
 import { fetchMVB } from "./fetchScripts/getData/MVB.js"
-import { getTimeChangeDates, generateTimes, calcInterpolation } from "./getScriptUtilFunctions.js"
+import { getTimeChangeDates, generateTimes, calcInterpolation, restartHerokuDynos } from "./getScriptUtilFunctions.js"
 import { format, add, parseISO } from "date-fns"
 import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
 
@@ -13,6 +13,14 @@ const timeZone = "Europe/Amsterdam"
 export async function getData(request, response, locations, forecastData) {
 
   if (!validID(request.params.id, locations, response)) return
+
+  const timeOutTimer = setTimeout(() => {
+    response.status(504).json()
+    if (port == 3000) return
+
+    log("Restarting server due to timed out request!", "info", true)
+    restartHerokuDynos()
+  }, 30 * 1000)
 
   const location = locations.find(location => location.id == request.params.id)
   const dataset = Object.keys(location.datasets)[0]
@@ -104,11 +112,19 @@ export async function getData(request, response, locations, forecastData) {
     return
   }
 
-  return {
-    values: values,
-    spotName: location.name,
-    dataset: dataset,
-    forecastRun: timeRun,
-    nextForecastRun: timeNextRun
-  }
+  //Simulate a timeout
+  const sleep = ms => new Promise(r => setTimeout(r, ms))
+  await sleep(30000)
+
+  clearTimeout(timeOutTimer)
+
+  if (!response.headersSent)
+    // AKA if a timeout hasn't occured
+    response.json({
+      values: values,
+      spotName: location.name,
+      dataset: dataset,
+      forecastRun: timeRun,
+      nextForecastRun: timeNextRun
+    })
 }
