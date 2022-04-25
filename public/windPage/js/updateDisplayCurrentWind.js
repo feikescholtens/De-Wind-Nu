@@ -19,9 +19,9 @@ export function updateCurrentWind() {
   //Setting winddirection values / arrows
 
   if (!directionStuffDrawn) {
-    if (data_unit[6]) {
-      if (data_unit[6].length !== 0) {
-        const forecastedDirection = data_unit[6][data_unit[4].length - 1]
+    if (dataWUnits.windDirectionForecast) {
+      if (dataWUnits.windDirectionForecast.length !== 0) {
+        const forecastedDirection = dataWUnits.windDirectionForecast[dataWUnits.windDirection.length - 1]
         if (forecastedDirection) {
           drawDirectionArrow(forecastedDirection, ctx, "#ff9f43")
           forecastedDirectionLabel.innerHTML = forecastedDirection + "&#176;<label class='labelSmall'> voorspeld</label>"
@@ -29,7 +29,7 @@ export function updateCurrentWind() {
       }
     }
 
-    const currentDirection = data_unit[4].lastMeasurement()
+    const currentDirection = dataWUnits.windDirection.lastMeasurement()
     if (currentDirection && !isNaN(currentDirection)) {
       drawDirectionArrow(currentDirection, ctx, "#5f27cd")
       const currentDirectionLetters = directionToLetters(currentDirection)
@@ -41,13 +41,13 @@ export function updateCurrentWind() {
 
   //Setting numerical values (not of winddirection data, that never changes without page reload)
 
-  if (data_unit[2].length !== 0) currentWindLabel.innerText = `${data_unit[2].lastMeasurement().replace(".", ",")} ${units[unit].afkorting}`
-  if (data_unit[3].length !== 0) {
-    currentGustsLabel.innerHTML = `${data_unit[3].lastMeasurement().replace(".", ",")} ${units[unit].afkorting} <label class='labelBig'>&nbsp;vlagen</label>`
+  if (dataWUnits.windSpeed.length !== 0) currentWindLabel.innerText = `${dataWUnits.windSpeed.lastMeasurement().replace(".", ",")} ${unit}`
+  if (dataWUnits.windGusts.length !== 0) {
+    currentGustsLabel.innerHTML = `${dataWUnits.windGusts.lastMeasurement().replace(".", ",")} ${unit} <label class='labelBig'>&nbsp;vlagen</label>`
   }
-  if (data_unit[5]) {
-    if (data_unit[5].length !== 0 && data_unit[5][data_unit[4].length - 1]) {
-      forecastedWindLabel.innerHTML = `${data_unit[5][data_unit[4].length - 1].replace(".", ",")} ${units[unit].afkorting} <label class='labelSmall'> voorspeld</label>`
+  if (dataWUnits.windSpeedForecast) {
+    if (dataWUnits.windSpeedForecast.length !== 0 && dataWUnits.windSpeedForecast[dataWUnits.windDirection.length - 1]) {
+      forecastedWindLabel.innerHTML = `${dataWUnits.windSpeedForecast[dataWUnits.windDirection.length - 1].replace(".", ",")} ${unit} <label class='labelSmall'> voorspeld</label>`
     }
   }
 
@@ -68,7 +68,7 @@ export function updateCurrentWind() {
   if (currentGustsLabel.innerHTML == "" && forecastedDirectionLabel.innerHTML == "" && forecastedWindLabel.innerHTML == "")
     setLabelPostitions(labels, [38, 0, 0, 69, 0])
 
-  const lastMeasurementTime = data_unit[1][data_unit[2].length - 1]
+  const lastMeasurementTime = dataWUnits.times[dataWUnits.windSpeed.length - 1]
 
   const lastMeasurementHH = parseInt(lastMeasurementTime.split(":")[0])
   const lastMeasurementmm = parseInt(lastMeasurementTime.split(":")[1])

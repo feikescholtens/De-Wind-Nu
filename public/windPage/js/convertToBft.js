@@ -1,35 +1,28 @@
-export function convertToBft(data, data_unit) {
+export function convertToBft(data, dataWUnits) {
 
-  let checkArray, loopCount
+  const arraysToConvert = ["windSpeed", "windGusts", "windSpeedForecast", "windGustsForecast"]
+  arraysToConvert.forEach(dataType => {
 
-  //Check if there is forecast data, if so loop through that array, else, through the normal windspeed array
-  checkArray = data[5]
-  loopCount = 8
+    for (let i = 0; i < data[dataType].length; i++) {
 
-  for (let i = 0; i < checkArray.length; i++) {
-    //Loop 3 times both the indices 2, 3, 5 for respectively normal wind and gusts
-    for (let k = 2; k < loopCount; k++) {
-      if (k !== 4 && k !== 6) {
+      // Check first extreme: windforce 0
+      if (parseFloat(data[dataType][i]) < units["Bft"].ranges[0]) {
+        if (dataWUnits[dataType][i]) dataWUnits[dataType][i] = "0"
+      }
 
-        //Check first extreme: windforce 0
-        if (parseFloat(data[k][i]) < units[4].ranges[0]) {
-          if (data_unit[k][i]) data_unit[k][i] = "0"
-        }
-
-        //Loop through every windforce and check if the value falls into that category
-        for (let j = 0; j < (units[4].ranges.length - 2); j++) {
-          if ((parseFloat(data[k][i]) >= units[4].ranges[j]) && (parseFloat(data[k][i]) < units[4].ranges[j + 1])) {
-            if (data_unit[k][i]) data_unit[k][i] = (j + 1).toString()
-          }
-        }
-
-        //Check second extreme: windforce 12
-        if (parseFloat(data[k][i]) >= units[4].ranges[11]) {
-          if (data_unit[k][i]) data_unit[k][i] = "12"
+      //Loop through every windforce and check if the value falls into that category
+      for (let j = 0; j < (units["Bft"].ranges.length - 2); j++) {
+        if ((parseFloat(data[dataType][i]) >= units["Bft"].ranges[j]) && (parseFloat(data[dataType][i]) < units["Bft"].ranges[j + 1])) {
+          if (dataWUnits[dataType][i]) dataWUnits[dataType][i] = (j + 1).toString()
         }
       }
-    }
-  }
 
+      //Check second extreme: windforce 12
+      if (parseFloat(data[dataType][i]) >= units["Bft"].ranges[11]) {
+        if (dataWUnits[dataType][i]) dataWUnits[dataType][i] = "12"
+      }
+    }
+
+  })
 
 }

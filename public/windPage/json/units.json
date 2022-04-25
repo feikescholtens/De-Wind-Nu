@@ -1,26 +1,23 @@
-[{
+{
+  "kn": {
     "naam": "Knopen",
-    "afkorting": "kn",
     "factor": 1
   },
-  {
+  "m/s": {
     "naam": "Meter per seconde",
-    "afkorting": "m/s",
     "factor": 0.514444444
   },
-  {
+  "km/h": {
     "naam": "Kilometer per uur",
-    "afkorting": "km/h",
     "factor": 1.85200
   },
-  {
+  "mph": {
     "naam": "Mijl per uur",
-    "afkorting": "mph",
     "factor": 1.15077945
   },
-  {
+  "Bft": {
     "naam": "Beaufort",
-    "afkorting": "Bft",
+    "factor": 1,
     "ranges": [1, 4, 7, 11, 17, 22, 28, 34, 41, 48, 56, 64]
   }
-]
+}

@@ -1,5 +1,3 @@
-globalThis.units = await fetch("./wind/json/units.json").then(response => response.json())
-
 export function fitMap(map, markersLats, markersLons) {
   map.fitBounds([
     [markersLons.at(-1), markersLats[0]], // southwestern corner of the bounds
@@ -58,21 +56,22 @@ export function setOverviewData(data) {
 }
 
 function convertValueToBft(value) {
+  const ranges = [1, 4, 7, 11, 17, 22, 28, 34, 41, 48, 56, 64]
 
   //Check first extreme: windforce 0
-  if (value < units[4].ranges[0]) {
+  if (value < ranges[0]) {
     return "0"
   }
 
   //Loop through every windforce and check if the value falls into that category
-  for (let j = 0; j < (units[4].ranges.length - 2); j++) {
-    if ((value >= units[4].ranges[j]) && (value < units[4].ranges[j + 1])) {
+  for (let j = 0; j < (ranges.length - 2); j++) {
+    if ((value >= ranges[j]) && (value < ranges[j + 1])) {
       return (j + 1).toString()
     }
   }
 
   //Check second extreme: windforce 12
-  if (value >= units[4].ranges[11]) {
+  if (value >= ranges[11]) {
     return "12"
   }
 

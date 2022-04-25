@@ -1,5 +1,6 @@
 import { format, parseISO } from "date-fns"
-import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
+import module from "date-fns-tz"
+const { utcToZonedTime } = module
 import fetch from "node-fetch"
 import { readFileSync } from "fs"
 import { catchError, theoreticalMeasurements, processAllNegativeArrays } from "../fetchUtilFunctions.js"

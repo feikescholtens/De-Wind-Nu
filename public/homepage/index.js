@@ -1,18 +1,19 @@
 import { fitMap, windPage, changeTiles, setOverviewData } from "./functions.js"
 import { displayPopUpWithName } from "../jsPopUps/functions.js"
 import { displayPopUpFeedback } from "../jsPopUps/feedback.js"
-import { redirect } from "../redirect.js"
+import { redirect, updateLocalVariables } from "../globalFunctions.js"
 redirect()
+updateLocalVariables()
 const tilesObjects = await fetch("./OSMTiles.json").then(response => response.json())
 
 const tilesSelector = document.querySelector("[data-tiles]"),
   seaMapCheckbox = document.querySelector("[data-seaMap]")
 
-if (!localStorage.getItem("firstVisit")) {
+if (!localStorage.getItem("hadFirstVisit")) {
   displayPopUpWithName("welkom")
-  localStorage.setItem("firstVisit", "1")
+  localStorage.setItem("hadFirstVisit", "1")
 }
-if (!localStorage.getItem("tiles")) localStorage.setItem("tiles", "0")
+if (!localStorage.getItem("tiles")) localStorage.setItem("tiles", "OpenStreetMap")
 if (!localStorage.getItem("seaMap")) localStorage.setItem("seaMap", "1")
 
 tilesSelector.value = localStorage.getItem("tiles")
@@ -27,15 +28,15 @@ const zoom = urlParams.get("z") || 6
 const excludeZoomFitMarkers = ["3318", "4806", "0727", "1843", "9057", "8609", "6823"]
 let markersLats = [],
   markersLons = []
-mapboxgl.accessToken = "pk.eyJ1IjoiZmVpa2VzY2hvbHRlbnMiLCJhIjoiY2t1aDlpZWEwMGhkYTJwbm02Zmt0Y21sOCJ9.PA3iy-3LQhjCkfxhxL2zUw";
+mapboxgl.accessToken = "pk.eyJ1IjoiZmVpa2VzY2hvbHRlbnMiLCJhIjoiY2t1aDlpZWEwMGhkYTJwbm02Zmt0Y21sOCJ9.PA3iy-3LQhjCkfxhxL2zUw"
 
 const mapOptions = {
   container: "map",
   center: center,
   zoom: zoom
 }
-if (parseInt(tilesSelector.value) == 0) mapOptions.style = tilesObjects.OpenStreetMap
-if (parseInt(tilesSelector.value) == 1) mapOptions.style = "mapbox://styles/feikescholtens/ckuhc8nha9jft18s0muhoy0zf"
+if (tilesSelector.value == "OpenStreetMap") mapOptions.style = tilesObjects.OpenStreetMap
+if (tilesSelector.value == "Mapbox") mapOptions.style = "mapbox://styles/feikescholtens/ckuhc8nha9jft18s0muhoy0zf"
 const map = new mapboxgl.Map(mapOptions)
 map.touchZoomRotate.disableRotation()
 map.on("load", () => {

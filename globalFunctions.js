@@ -1,5 +1,6 @@
 import { format } from "date-fns"
-import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
+import module from "date-fns-tz"
+const { utcToZonedTime } = module
 const timeZone = "Europe/Amsterdam"
 
 export function log(message, type = "debug", addLocalDate) {

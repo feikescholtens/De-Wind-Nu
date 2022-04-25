@@ -15,7 +15,7 @@ export function directionToLetters(currentDirection) {
   else if ((currentDirection > 213.75) && (currentDirection < 236.25)) letters = "ZW"
   else if ((currentDirection > 236.25) && (currentDirection < 258.75)) letters = "ZWW"
   else if ((currentDirection > 258.75) && (currentDirection < 281.25)) letters = "W"
-  else if ((currentDirection > 281.25) && (currentDirection < 303.75)) letters = "NNW";
+  else if ((currentDirection > 281.25) && (currentDirection < 303.75)) letters = "NNW"
   else if ((currentDirection > 303.75) && (currentDirection < 326.25)) letters = "NW"
   else if ((currentDirection > 326.25) && (currentDirection < 348.75)) letters = "NNW"
 

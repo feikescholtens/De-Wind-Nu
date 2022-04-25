@@ -1,9 +1,9 @@
 import { newChartOptions, checkInterpolated } from "./functions.js"
 
 const graphNodeElements = [document.querySelector("[data-headingchartwindspeed]"),
-  document.querySelector("[data-chartwindspeed]"),
+  document.querySelector("[data-chartwindSpeed]"),
   document.querySelector("[data-headingchartwinddirection]"),
-  document.querySelector("[data-chartwinddirection]")
+  document.querySelector("[data-chartwindDirection]")
 ]
 const tableNodeElements = [document.querySelector("[data-headingTabel]"),
   document.querySelector("[data-dataTable]")
@@ -15,71 +15,69 @@ export function updateGraphs() {
   tableNodeElements.forEach(element => element.classList.add("hidden"))
 
   //Initialize datasets
-  let datasets = new Array(datasetInfo.length).fill(datasetObject).copy()
+  let datasets = datasetInfo.copy()
 
-  const maxWind = Math.max(...data_unit[2].filter((value) => {
-    return (value !== "NaN" && value !== undefined)
+  const maxWindSpeed = Math.max(...dataWUnits.windSpeed.filter((value) => {
+    return (!isNaN(value) && value !== undefined)
   }))
-  const maxGusts = Math.max(...data_unit[3].filter((value) => {
-    return (value !== "NaN" && value !== undefined)
+  const maxGusts = Math.max(...dataWUnits.windGusts.filter((value) => {
+    return (!isNaN(value) && value !== undefined)
   }))
 
-  for (let i = 0; i < datasets.length; i++) {
-    datasets[i].backgroundColor = datasetInfo[i].bgColor
-    datasets[i].borderColor = datasetInfo[i].color
-    if (i == 0) datasets[0].label = datasetInfo[0].label + ` | max: ${maxWind.toFixed(decimals).replace(".", ",")} ${units[unit].afkorting}`
-    else if (i == 1) datasets[1].label = datasetInfo[1].label + ` | max: ${maxGusts.toFixed(decimals).replace(".", ",")} ${units[unit].afkorting}`
-    else datasets[i].label = datasetInfo[i].label
-    if (data_unit[i + 2]) datasets[i].data = data_unit[i + 2]
-
-    if (i <= 2) datasets[i].segment = { borderColor: ctx => checkInterpolated(ctx, i, datasetInfo[i].bgColor) }
+  datasets.windSpeed.label += ` | max: ${maxWindSpeed.toFixed(decimals).replace(".", ",")} ${unit}`
+  datasets.windGusts.label += ` | max: ${maxGusts.toFixed(decimals).replace(".", ",")} ${unit}`
+  const dataTypeArray = ["windSpeed", "windGusts", "windDirection", "windSpeedForecast", "windGustsForecast", "windDirectionForecast"]
+  dataTypeArray.forEach(dataType => {
+    datasets[dataType] = { ...datasets[dataType], ...datasetObject }
+    if (dataWUnits[dataType]) datasets[dataType].data = dataWUnits[dataType]
+  })
+  if (interpolation == 1) {
+    datasets.windSpeed.segment = { borderColor: ctx => checkInterpolated(ctx, "windSpeed", datasetInfo.windSpeed.backgroundColor) }
+    datasets.windGusts.segment = { borderColor: ctx => checkInterpolated(ctx, "windGusts", datasetInfo.windGusts.backgroundColor) }
+    datasets.windDirection.segment = { borderColor: ctx => checkInterpolated(ctx, "windDirection", datasetInfo.windDirection.backgroundColor) }
   }
 
   // Chart windspeed
-  const canvasWindspeed = document.querySelector("[data-chartWindspeed]").getContext("2d")
-  let chartWindspeed, datasetsChartWindspeed = []
+  const canvasWindSpeed = document.querySelector("[data-chartWindSpeed]").getContext("2d")
+  let chartWindSpeed, datasetsChartWindSpeed = []
 
-  if (data_unit[2].length !== 0) datasetsChartWindspeed.push(datasets[0])
-  if (data_unit[3].length !== 0) datasetsChartWindspeed.push(datasets[1])
-  if (data_unit[5])
-    if (data_unit[5].length !== 0) datasetsChartWindspeed.push(datasets[3])
-  if (data_unit[7])
-    if (data_unit[7].length !== 0) datasetsChartWindspeed.push(datasets[5])
+  const dataTypesChartWindSpeed = ["windSpeed", "windGusts", "windSpeedForecast", "windGustsForecast"]
+  dataTypesChartWindSpeed.forEach(dataType => {
+    if (dataWUnits[dataType] && dataWUnits[dataType].length !== 0) datasetsChartWindSpeed.push(datasets[dataType])
+  })
 
-  optionsWindspeedChart.scales.y.title.text = "Windsnelheid [" + units[unit].afkorting + "]"
+  optionsWindSpeedChart.scales.y.title.text = "Windsnelheid [" + unit + "]"
 
-  if (!Chart.instances[0]) chartWindspeed = new Chart(canvasWindspeed, newChartOptions(datasetsChartWindspeed, optionsWindspeedChart))
+  if (!Chart.instances[0]) chartWindSpeed = new Chart(canvasWindSpeed, newChartOptions(datasetsChartWindSpeed, optionsWindSpeedChart))
   else {
-    chartWindspeed = Chart.instances[0]
+    chartWindSpeed = Chart.instances[0]
 
-    chartWindspeed.data.datasets = datasetsChartWindspeed
-    chartWindspeed.options = optionsWindspeedChart
-    chartWindspeed.update()
+    chartWindSpeed.data.datasets = datasetsChartWindSpeed
+    chartWindSpeed.options = optionsWindSpeedChart
+    chartWindSpeed.update()
   }
 
   //Chart winddirection
-  if (data_unit[4].length == 0 && !data_unit[6]) {
+  if (dataWUnits.windDirection.length == 0 && !dataWUnits.windDirectionForecast) {
     document.querySelector("[data-headingchartwinddirection]").classList.add("hidden")
-    document.querySelector("[data-chartwinddirection]").classList.add("hidden")
+    document.querySelector("[data-chartwindDirection]").classList.add("hidden")
     return
   }
 
-  document.querySelector("[data-headingchartwinddirection]").classList.remove("hidden")
-  document.querySelector("[data-chartwinddirection]").classList.remove("hidden")
-  const canvasWinddirection = document.querySelector("[data-chartWinddirection]").getContext("2d")
-  let chartWinddirection, datasetsChartWinddirection = []
+  const canvasWindDirection = document.querySelector("[data-chartWindDirection]").getContext("2d")
+  let chartWindDirection, datasetsChartWindDirection = []
 
-  if (data_unit[4].length !== 0) datasetsChartWinddirection.push(datasets[2])
-  if (data_unit[6])
-    if (data_unit[6].length !== 0) datasetsChartWinddirection.push(datasets[4])
+  if (dataWUnits.windDirection.length !== 0) datasetsChartWindDirection.push(datasets.windDirection)
+  if (dataWUnits.windDirectionForecast)
+    if (dataWUnits.windDirectionForecast.length !== 0) datasetsChartWindDirection.push(datasets.windDirectionForecast)
 
-  if (!Chart.instances[1]) chartWinddirection = new Chart(canvasWinddirection, newChartOptions(datasetsChartWinddirection, optionsWinddirectionChart))
+  if (!Chart.instances[1]) chartWindDirection = new Chart(canvasWindDirection, newChartOptions(datasetsChartWindDirection, optionsWindDirectionChart))
   else {
-    chartWinddirection = Chart.instances[1]
+    chartWindDirection = Chart.instances[1]
 
-    chartWinddirection.data.datasets = datasetsChartWinddirection
-    chartWinddirection.options = optionsWinddirectionChart
-    chartWinddirection.update()
+    chartWindDirection.data.datasets = datasetsChartWindDirection
+    chartWindDirection.options = optionsWindDirectionChart
+    chartWindDirection.update()
   }
 
 }
@@ -92,75 +90,42 @@ export function updateTable() {
   const tableHeaderRow = document.querySelector("[data-tableHeaderRow]")
   const table = document.querySelector("[data-dataTable]")
 
-  const NoMeasurementTypesAvailable = [data_unit[2].length !== 0, data_unit[3].length !== 0, data_unit[4].length !== 0].filter(array => array !== false).length;
+  const NoMeasurementTypesAvailable = [dataWUnits.windSpeed.length !== 0, dataWUnits.windGusts.length !== 0, dataWUnits.windDirection.length !== 0].filter(array => array !== false).length
   document.querySelector("[data-dataTable] th:nth-child(2)").setAttribute("colspan", NoMeasurementTypesAvailable)
   if (NoMeasurementTypesAvailable == 0 && document.querySelector("[data-dataTable] th:nth-child(2)").innerText == "Metingen") document.querySelector("[data-dataTable] th:nth-child(2)").remove()
-  if (!data_unit[5] && document.querySelector("[data-dataTable] th:nth-child(3)")) document.querySelector("[data-dataTable] th:nth-child(3)").remove()
+  if (!dataWUnits.windSpeedForecast && document.querySelector("[data-dataTable] th:nth-child(3)")) document.querySelector("[data-dataTable] th:nth-child(3)").remove()
 
   //Clearing table
   for (let i = 2; i < table.rows.length;) table.deleteRow(i)
   tableHeaderRow.innerHTML = ""
 
-  //Setting table values (first rows, then cells)
-  if (data_unit[2].length !== 0) tableHeaderRow.innerHTML += `<th>sterkte [${units[unit].afkorting}]</th>`
-  if (data_unit[3].length !== 0) tableHeaderRow.innerHTML += `<th>vlagen [${units[unit].afkorting}]</th>`
-  if (data_unit[4].length !== 0) tableHeaderRow.innerHTML += `<th>richting [°]</th>`
-  if (data_unit[5])
-    if (data_unit[5].length !== 0) tableHeaderRow.innerHTML += `<th>sterkte [${units[unit].afkorting}]</th>`
-  if (data_unit[7])
-    if (data_unit[7].length !== 0) tableHeaderRow.innerHTML += `<th>vlagen [${units[unit].afkorting}]</th>`
-  if (data_unit[6])
-    if (data_unit[6].length !== 0) tableHeaderRow.innerHTML += `<th>richting [°]</th>`
+  // Setting table values (first rows, then cells)
+  const dataTypeArray = ["windSpeed", "windGusts", "windDirection", "windSpeedForecast", "windGustsForecast", "windDirectionForecast"]
+  const headerTexts = { windSpeed: `sterkte [${unit}]`, windGusts: `vlagen [${unit}]`, windDirection: `richting [°]`, windSpeedForecast: `sterkte [${unit}]`, windGustsForecast: `vlagen [${unit}]`, windDirectionForecast: `richting [°]` }
+  dataTypeArray.forEach(dataType => {
+    if (dataWUnits[dataType] && dataWUnits[dataType].length !== 0) tableHeaderRow.innerHTML += `<th>${headerTexts[dataType]}</th>`
+  })
 
-  let lengthLongestArray = Math.max(...[data_unit[2].length, data_unit[3].length, data_unit[4].length])
-  if (lengthLongestArray == 0) lengthLongestArray = data_unit[5].length
+  let lengthLongestArray = Math.max(...[dataWUnits.windSpeed.length, dataWUnits.windGusts.length, dataWUnits.windDirection.length])
+  if (lengthLongestArray == 0) lengthLongestArray = dataWUnits.windSpeedForecast.length
 
   for (let i = 0; i < lengthLongestArray; i++) {
     const row = document.createElement("tr")
 
     const cellTime = document.createElement("td")
-    cellTime.innerText = data_unit[1][i]
+    cellTime.innerText = times[i]
     row.append(cellTime)
 
-    if (data_unit[2].length !== 0 && data_unit[2][i]) {
-      const cellWind = document.createElement("td")
-      if (data_unit[2][i]) cellWind.innerText = data_unit[2][i].replace(".", ",")
-      row.append(cellWind)
-    }
-    if (data_unit[3].length !== 0 && data_unit[3][i]) {
-      const cellGusts = document.createElement("td")
-      cellGusts.innerText = data_unit[3][i].replace(".", ",")
-      row.append(cellGusts)
-    }
-    if (data_unit[4].length !== 0 && data_unit[4][i]) {
-      const cellDirection = document.createElement("td")
-      cellDirection.innerText = data_unit[4][i]
-      row.append(cellDirection)
-    }
-    if (data_unit[5]) {
-      if (data_unit[5].length !== 0 && data_unit[5][i]) {
-        const cellForecast = document.createElement("td")
-        cellForecast.innerText = data_unit[5][i].replace(".", ",")
-        row.append(cellForecast)
+    dataTypeArray.forEach(dataType => {
+      const cell = document.createElement("td")
+      if (dataWUnits[dataType] && dataWUnits[dataType][i]) {
+        cell.innerText = dataWUnits[dataType][i].replace(".", ",")
+        row.append(cell)
       }
-    }
-    if (data_unit[7]) {
-      if (data_unit[7].length !== 0 && data_unit[7][i]) {
-        const cellForecastGusts = document.createElement("td")
-        cellForecastGusts.innerText = data_unit[7][i].replace(".", ",")
-        row.append(cellForecastGusts)
-      }
-    }
-    if (data_unit[6]) {
-      if (data_unit[6].length !== 0 && data_unit[6][i]) {
-        const cellForecastDirection = document.createElement("td")
-        cellForecastDirection.innerText = data_unit[6][i]
-        row.append(cellForecastDirection)
-      }
-    }
+    })
 
-    if (localStorage.getItem("tableSort") == "1") tableHeaderRow.after(row)
-    else if (localStorage.getItem("tableSort") == "0") table.append(row)
+    if (localStorage.getItem("tableSort") == "descending") tableHeaderRow.after(row)
+    else if (localStorage.getItem("tableSort") == "ascending") table.append(row)
 
   }
 }

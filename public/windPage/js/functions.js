@@ -18,11 +18,11 @@ export function changeDataForm(dataFormSelector, e) {
   if (e) clickedOption = e.path[0].innerText
 
   //Check if the dataForm is changed at all
-  if (clickedOption == "Grafieken" && localStorage.getItem("dataForm") == "0") return
-  if (clickedOption == "Tabel" && localStorage.getItem("dataForm") == "1") return
+  if (clickedOption == "Grafieken" && localStorage.getItem("dataForm") == "graphs") return
+  if (clickedOption == "Tabel" && localStorage.getItem("dataForm") == "table") return
 
-  if (clickedOption == "Grafieken") dataFormSelector.value = "0"
-  if (clickedOption == "Tabel") dataFormSelector.value = "1"
+  if (clickedOption == "Grafieken") dataFormSelector.value = "graphs"
+  if (clickedOption == "Tabel") dataFormSelector.value = "table"
 
   document.querySelector("[data-graphs]").classList.toggle("deselected")
   document.querySelector("[data-tabel]").classList.toggle("deselected")
@@ -49,13 +49,13 @@ export function changeDecimals(decimalsSelector) {
 export function changeInterpolation(interpolationSelector) {
   localStorage.setItem("interpolation", interpolationSelector.value)
 
-  //Same as in index.js
   if (interpolation == "1") {
-    for (let h = 2; h < 5; h++) {
-      interpolatedData[h - 2].forEach((element) => {
-        data_unit[h][element.index] = element.value
+    const dataTypeArray = ["windSpeed", "windGusts", "windDirection"]
+    dataTypeArray.forEach(dataType => {
+      interpolatedData[dataType].forEach((element) => {
+        dataWUnits[dataType][element.index] = element.value
       })
-    }
+    })
   }
   contentUpdate()
 }
@@ -71,41 +71,40 @@ export function unHideElements() {
 
 export function calcInterpolation() {
 
-  let interpolatedData = JSON.parse(JSON.stringify(new Array(3).fill([]))),
-    interpolatedIndices = JSON.parse(JSON.stringify(new Array(3).fill([])))
+  let interpolatedData = { windSpeed: [], windGusts: [], windDirection: [] },
+    interpolatedIndices = { windSpeed: [], windGusts: [], windDirection: [] }
 
-  for (let h = 2; h < 5; h++) {
-
-    for (let i = 0; i < data[h].length; i++) {
+  const arraysToInterpolate = ["windSpeed", "windGusts", "windDirection"]
+  arraysToInterpolate.forEach(dataType => {
+    for (let i = 0; i < data[dataType].length; i++) {
       let j
 
-      if (data[h][i] < 0) {
-        for (j = i + 1; j < data[h].length; j++) {
-          if (data[h][j] >= 0) break
+      if (data[dataType][i] < 0) {
+        for (j = i + 1; j < data[dataType].length; j++) {
+          if (data[dataType][j] >= 0) break
         }
 
         const startIndex = i - 1,
           stopIndex = j
 
         for (let k = startIndex; k < stopIndex - 1; k++) {
-          const startValue = parseFloat(data[h][startIndex]),
-            stopValue = parseFloat(data[h][stopIndex])
+          const startValue = parseFloat(data[dataType][startIndex]),
+            stopValue = parseFloat(data[dataType][stopIndex])
           const value = startValue + ((stopValue - startValue) / (stopIndex - startIndex)) * (k + 1 - startIndex)
 
-          interpolatedData[h - 2].push({ time: times[k + 1], index: k + 1, value: value })
-          interpolatedIndices[h - 2].push((k + 1))
+          interpolatedData[dataType].push({ time: times[k + 1], index: k + 1, value: value })
+          interpolatedIndices[dataType].push((k + 1))
         }
         i = j
       }
     }
-  }
+  })
 
-  return [interpolatedData, interpolatedIndices]
+  return { interpolatedData: interpolatedData, interpolatedIndices: interpolatedIndices }
 }
 
-export function checkInterpolated(ctx, i, value) {
-  if (interpolatedIndices[i].includes(ctx.p0DataIndex) && interpolatedIndices[i].includes(ctx.p0DataIndex + 1)) return value
-  else return undefined
+export function checkInterpolated(ctx, dataType, value) {
+  if (interpolatedIndices[dataType].includes(ctx.p0DataIndex) && interpolatedIndices[dataType].includes(ctx.p0DataIndex + 1)) return value
 }
 
 export function newChartOptions(datasets, options) {
@@ -128,11 +127,11 @@ export function setLabelPostitions(labels, percentages) {
 
 export function changeTableSort(tableSort) {
 
-  if (localStorage.getItem("tableSort") == "0") {
-    localStorage.setItem("tableSort", "1")
+  if (localStorage.getItem("tableSort") == "ascending") {
+    localStorage.setItem("tableSort", "descending")
     tableSort.innerHTML = `Tijd <span id="sortArrow">▲</span>`
-  } else if (localStorage.getItem("tableSort") == "1") {
-    localStorage.setItem("tableSort", "0")
+  } else if (localStorage.getItem("tableSort") == "descending") {
+    localStorage.setItem("tableSort", "ascending")
     tableSort.innerHTML = `Tijd <span id="sortArrow">▼</span>`
   }
 

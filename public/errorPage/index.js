@@ -1,5 +1,6 @@
-import { redirect } from "../redirect.js"
+import { redirect, updateLocalVariables } from "../globalFunctions.js"
 redirect()
+updateLocalVariables()
 
 window.onload = async function() {
   document.querySelector("[data-goBack]").addEventListener("click", () => {

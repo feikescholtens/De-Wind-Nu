@@ -33,7 +33,7 @@ app.use("/fout", express.static(path.resolve(__dirname, "public/errorPage")))
 app.use("/jsPopUps", express.static(path.resolve(__dirname, "public/jsPopUps")))
 app.use("/images", cors(), express.static(path.resolve(__dirname, "public/images")))
 app.use("/generalStyles.css", express.static(path.resolve(__dirname, "public/generalStyles.css")))
-app.use("/redirect.js", express.static(path.resolve(__dirname, "public/redirect.js")))
+app.use("/globalFunctions.js", express.static(path.resolve(__dirname, "public/globalFunctions.js")))
 
 app.set("view-engine", "ejs")
 

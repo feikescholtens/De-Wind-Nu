@@ -97,10 +97,10 @@
             </table>
 
             <h2 data-headingChartWindspeed class="sectionHeader">Windsterkte</h2>
-            <canvas data-chartWindspeed class="charts" height="300px"></canvas>
+            <canvas data-chartWindSpeed class="charts" height="300px"></canvas>
 
             <h2 data-headingchartwinddirection class="sectionHeader hidden">Windrichting</h2>
-            <canvas data-chartWinddirection class="charts hidden" height="300px"></canvas>
+            <canvas data-chartWindDirection class="charts hidden" height="300px"></canvas>
 
             <h3 data-dataInfo id="dataInfo">Metingen: <span data-measurementSource></span> | 
               Voorspellingen: <span data-forecastSource>HARMONIE model van het KNMI, run van <span data-forecastRun></span> uur, volgende update ± <span data-nextForecastRun></span> uur</span> </h3>
@@ -114,18 +114,18 @@
                 <tr>
                   <td><label for="dataForm">Weergave vorm</label></td>
                   <td><select data-dataFormUnderSettings id="dataForm">
-                          <option value="0">Grafieken</option>
-                          <option value="1">Tabel</option>
+                          <option value="graphs">Grafieken</option>
+                          <option value="table">Tabel</option>
                       </select></td>
                 </tr>
                 <tr>
                     <td><label for="unit">Eenheid</label></td>
                     <td><select data-unit id="unit">
-                            <option value="0">Knopen [kn]</option>
-                            <option value="1">Meter per seconde [m/s]</option>
-                            <option value="2">Kilometer per uur [km/h]</option>
-                            <option value="3">Mijl per uur [mph]</option>
-                            <option value="4">Beaufort [Bft]</option>
+                            <option value="kn">Knopen [kn]</option>
+                            <option value="m/s">Meter per seconde [m/s]</option>
+                            <option value="km/h">Kilometer per uur [km/h]</option>
+                            <option value="mph">Mijl per uur [mph]</option>
+                            <option value="Bft">Beaufort [Bft]</option>
                         </select></td>
                 </tr>
                 <tr>

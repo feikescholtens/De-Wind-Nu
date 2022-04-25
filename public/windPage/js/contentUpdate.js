@@ -1,6 +1,5 @@
 import { updateCurrentWind } from "./updateDisplayCurrentWind.js"
 import { convertToBft } from "./convertToBft.js"
-
 import { updateGraphs, updateTable } from "./graphOrTableUpdate.js"
 
 export async function contentUpdate() {
@@ -11,100 +10,64 @@ export async function contentUpdate() {
   else globalThis.decimals = localStorage.getItem("decimals")
   globalThis.interpolation = localStorage.getItem("interpolation")
 
-  //Windspeeds
-  const data_before_interpolation = data.copy()
   //(This 'backup' is restored to the original 'data' variable so interpolation setting can change on the fly)
+  const dataBeforeInterpolation = data.copy()
 
-  for (let j = 2; j < 6 + 1; j++) {
-    if (data[j] || data[j] == 0) {
-      for (let k = 0; k < times.length; k++) {
-        if (data[j][k] < 0) {
+  //Put interolated data into the arrays if requested
+  const dataTypeArray = ["windSpeed", "windGusts", "windDirection"]
+  dataTypeArray.forEach(dataType => {
+    if (data[dataType] || data[dataType] == 0) {
+      for (let k = 0; k < data[dataType].length; k++) {
+        if (data[dataType][k] < 0) {
           if (interpolation == "1") {
-
-            if (j == 2 || j == 3 || j == 4) {
-              const interpolatedValue = interpolatedData[j - 2].filter(element => element.index == k)[0].value
-
-              if (j == 2 || j == 3) data[j][k] = interpolatedValue
-              if (j == 4) data[j][k] = interpolatedValue
-
-            } else data[j][k] = undefined
-
-          } else data[j][k] = undefined
+            data[dataType][k] = interpolatedData[dataType].filter(element => element.index == k)[0].value
+          } else data[dataType][k] = undefined
         }
       }
     }
-  }
+  })
 
-  if (parseInt(unit) !== 4) {
+  //Converting arrays to have correct units
+  const arrays = ["windSpeed", "windGusts", "windDirection", "windSpeedForecast", "windGustsForecast", "windDirectionForecast"]
+  const arraysUnitChange = ["windSpeed", "windGusts", "windSpeedForecast", "windGustsForecast"]
+  const arraysNoUnitChange = ["windDirection", "windDirectionForecast"]
+  const arraysAlways0Decimal = ["windDirection", "windDirectionForecast"]
+  //Upper arrays and approach below is more general and allows for easily adding more dataTypes in the future :-)
 
-    for (let i = 0; i < data_unit[2].length; i++) {
-      if (data_unit[2][i] || data_unit[2][i] == 0) data_unit[2][i] = (units[unit].factor * data[2][i]).toFixed(decimals)
-    }
+  arrays.forEach(dataType => {
+    if (dataWUnits[dataType] && dataWUnits[dataType].length !== 0) {
+      for (let i = 0; i < dataWUnits[dataType].length; i++) {
 
-    if (data_unit[3].length !== 0) {
-      for (let i = 0; i < data_unit[3].length; i++) {
-        if (data_unit[3][i] || data_unit[3][i] == 0) data_unit[3][i] = (units[unit].factor * data[3][i]).toFixed(decimals)
+        if (dataWUnits[dataType][i] || dataWUnits[dataType][i] == 0) {
+
+          //Unit needs to be changed
+          if (arraysUnitChange.includes(dataType)) {
+            if (arraysAlways0Decimal.includes(dataType))
+              dataWUnits[dataType][i] = (units[unit].factor * data[dataType][i]).toFixed(0)
+            else
+              dataWUnits[dataType][i] = (units[unit].factor * data[dataType][i]).toFixed(decimals)
+          }
+
+          //Unit does't need to be changed (the * 1 needs to happen to let undefined become NaN)
+          if (arraysNoUnitChange.includes(dataType)) {
+            if (arraysAlways0Decimal.includes(dataType))
+              dataWUnits[dataType][i] = (1 * data[dataType][i]).toFixed(0)
+            else
+              dataWUnits[dataType][i] = (1 * data[dataType][i]).toFixed(decimals)
+          }
+        }
       }
     }
+  })
 
-    if (data_unit[5]) {
-      for (let i = 0; i < data_unit[5].length; i++) {
-        if (data_unit[5][i] || data_unit[5][i] == 0) data_unit[5][i] = (units[unit].factor * data[5][i]).toFixed(decimals)
-      }
-    }
+  if (unit == "Bft") convertToBft(data, dataWUnits)
 
-    if (data_unit[7]) {
-      for (let i = 0; i < data_unit[7].length; i++) {
-        if (data_unit[7][i] || data_unit[7][i] == 0) data_unit[7][i] = (units[unit].factor * data[7][i]).toFixed(decimals)
-      }
-    }
+  //
+  if (dataWUnits.windSpeed.length !== 0 || dataWUnits.windGusts.length !== 0 || dataWUnits.windDirection.length !== 0) updateCurrentWind()
 
-  } else if (parseInt(unit) == 4) {
+  if (localStorage.getItem("dataForm") == "graphs") updateGraphs()
+  if (localStorage.getItem("dataForm") == "table") updateTable()
 
-    //The 1 * is to convert undefined to NaN to prevent raising an error message
-
-    for (let i = 0; i < data_unit[2].length; i++) {
-      if (data_unit[2][i] || data_unit[2][i] == 0) data_unit[2][i] = (1 * data[2][i]).toFixed(decimals)
-    }
-
-    if (data_unit[3].length !== 0) {
-      for (let i = 0; i < data_unit[3].length; i++) {
-        if (data_unit[3][i] || data_unit[3][i] == 0) data_unit[3][i] = (1 * data[3][i]).toFixed(decimals)
-      }
-    }
-
-    if (data_unit[5]) {
-      for (let i = 0; i < data_unit[5].length; i++) {
-        if (data_unit[5][i] || data_unit[5][i] == 0) data_unit[5][i] = (1 * data[5][i]).toFixed(decimals)
-      }
-    }
-
-    if (data_unit[7]) {
-      for (let i = 0; i < data_unit[7].length; i++) {
-        if (data_unit[7][i] || data_unit[7][i] == 0) data_unit[7][i] = (1 * data[7][i]).toFixed(decimals)
-      }
-    }
-
-    convertToBft(data, data_unit)
-  }
-
-  //Directions
-  if (data_unit[4].length !== 0) {
-    for (let i = 0; i < data_unit[4].length; i++) {
-      if (data_unit[4][i] || data_unit[4][i] == 0) data_unit[4][i] = (1 * data[4][i]).toFixed(0)
-    }
-  }
-  if (data_unit[6]) {
-    for (let i = 0; i < data_unit[6].length; i++) {
-      if (data_unit[6][i] || data_unit[4][i] == 0) data_unit[6][i] = (1 * data[6][i]).toFixed(0)
-    }
-  }
-
-  if (data_unit[2].length !== 0 || data_unit[3].length !== 0 || data_unit[4].length !== 0) updateCurrentWind()
-
-  if (localStorage.getItem("dataForm") == "0") updateGraphs()
-  if (localStorage.getItem("dataForm") == "1") updateTable()
-
-  data = data_before_interpolation.copy()
+  data = dataBeforeInterpolation.copy()
 
 }

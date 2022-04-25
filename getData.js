@@ -6,7 +6,8 @@ import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
 import { fetchMVB } from "./fetchScripts/getData/MVB.js"
 import { getTimeChangeDates, generateTimes, calcInterpolation, restartHerokuDynos } from "./getScriptUtilFunctions.js"
 import { format, add, parseISO } from "date-fns"
-import utcToZonedTime from "date-fns-tz/utcToZonedTime/index.js"
+import module from "date-fns-tz"
+const { utcToZonedTime } = module
 
 const timeZone = "Europe/Amsterdam"
 
@@ -26,7 +27,7 @@ export async function getData(request, response, locations, forecastData) {
 
   const location = locations.find(location => location.id == request.params.id)
   const dataset = Object.keys(location.datasets)[0]
-  let values = []
+  let values = {}
 
   //Date and times 
   let NoMeasurementsXHour
@@ -44,8 +45,7 @@ export async function getData(request, response, locations, forecastData) {
   const dateUTC = new Date()
   const dateZoned = utcToZonedTime(dateUTC, timeZone)
   const dateToday = format(dateZoned, "dd-MM-yyyy")
-  values.push(new Array(times.length).fill(dateToday))
-  values.push(times)
+  values["times"] = times
 
   //Measurements
   const dataFetched = await new Promise(async (resolve) => {
@@ -69,9 +69,12 @@ export async function getData(request, response, locations, forecastData) {
 
   if (dataFetched.data.error) {
     logFetchErrors(dataFetched, response)
-    for (let i = 0; i < 3; i++) values.push([])
-  } else
-    for (let i = 0; i < 3; i++) values.push(dataFetched.data[dataset][i])
+    values["windSpeed"] = values["windGusts"] = values["windDirection"] = []
+  } else {
+    values["windSpeed"] = dataFetched.data[dataset][0]
+    values["windGusts"] = dataFetched.data[dataset][1]
+    values["windDirection"] = dataFetched.data[dataset][2]
+  }
 
   //Forecast
   if (forecastData[location.id]) {
@@ -91,9 +94,9 @@ export async function getData(request, response, locations, forecastData) {
       wind_forecastDirection[startForecastTimeIndexInTimeSeries + i * NoMeasurementsXHour] = forecastData[location.id][i + startForecastTimeIndex].d
       wind_forecastGust[startForecastTimeIndexInTimeSeries + i * NoMeasurementsXHour] = forecastData[location.id][i + startForecastTimeIndex].g
     }
-    values.push(calcInterpolation(wind_forecast, times, startForecastTimeIndexInTimeSeries))
-    values.push(calcInterpolation(wind_forecastDirection, times, startForecastTimeIndexInTimeSeries))
-    values.push(calcInterpolation(wind_forecastGust, times, startForecastTimeIndexInTimeSeries))
+    values["windSpeedForecast"] = calcInterpolation(wind_forecast, times, startForecastTimeIndexInTimeSeries)
+    values["windGustsForecast"] = calcInterpolation(wind_forecastGust, times, startForecastTimeIndexInTimeSeries)
+    values["windDirectionForecast"] = calcInterpolation(wind_forecastDirection, times, startForecastTimeIndexInTimeSeries)
   }
 
   let timeStampRun,
@@ -105,10 +108,10 @@ export async function getData(request, response, locations, forecastData) {
     timeNextRun = format(add(timeStampRun, { hours: (2 + 6), minutes: 58 }), "HH:mm")
   }
 
-  if (values[2].length == 0 && values[3].length == 0 && values[4].length == 0 && values[5]) {
+  if (values.windSpeed.length == 0 && values.windGusts.length == 0 && values.windDirection.length == 0 && values.windSpeedForecast) {
     log(`Location "${location.name}" doesn't have any measurements!`, "fetchError", true)
   }
-  if (values[2].length == 0 && values[3].length == 0 && values[4].length == 0 && !values[5]) {
+  if (values.windSpeed.length == 0 && values.windGusts.length == 0 && values.windDirection.length == 0 && !values.windSpeedForecast) {
     log(`Location "${location.name}" doesn't have any data (neither measurements nor forecast)!`, "fetchError", true)
     response.json({ errorCode: 204 })
   }
@@ -122,6 +125,7 @@ export async function getData(request, response, locations, forecastData) {
   if (!response.headersSent)
     // AKA if a timeout hasn't occured
     response.json({
+      date: dateToday,
       values: values,
       spotName: location.name,
       dataset: dataset,
