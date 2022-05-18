@@ -48,29 +48,29 @@ fetch("getOverviewData/Rijkswaterstaat").then(response => response.json()).then(
 fetch("getOverviewData/KNMI").then(response => response.json()).then(data => setOverviewData(data))
 fetch("getOverviewData/MVB").then(response => response.json()).then(data => setOverviewData(data))
 
-data.forEach(item => {
-  if (!excludeZoomFitMarkers.includes(item.id)) {
-    markersLats.push(item.lat)
-    markersLons.push(item.lon)
+for (const id in data) {
+  if (!excludeZoomFitMarkers.includes(id)) {
+    markersLats.push(data[id].lat)
+    markersLons.push(data[id].lon)
   }
 
   let popupId, marker = document.createElement("div")
   marker.className = "markerContainer"
-  marker.innerHTML = `<div class="marker" title="${item.name}"></div>`
+  marker.innerHTML = `<div class="marker" title="${data[id].name}"></div>`
 
-  if (item.datasets.VLINDER) {
+  if (data[id].datasets.VLINDER) {
     Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("VLINDER") })
     popupId = "popupVLINDER"
     marker.style.zIndex = 1
-  } else if (item.datasets.Rijkswaterstaat) {
+  } else if (data[id].datasets.Rijkswaterstaat) {
     Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("RWS") })
     popupId = "popupRWS"
     marker.style.zIndex = 2
-  } else if (item.datasets.KNMI) {
+  } else if (data[id].datasets.KNMI) {
     Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("KNMI") })
     popupId = "popupKNMI"
     marker.style.zIndex = 3
-  } else if (item.datasets.MVB) {
+  } else if (data[id].datasets.MVB) {
     Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("MVB") })
     popupId = "popupMVB"
     marker.style.zIndex = 4
@@ -79,19 +79,19 @@ data.forEach(item => {
     popupId = "popupOther"
     marker.style.zIndex = 5
   }
-  Array.from(marker.getElementsByTagName("div")).forEach(element => { element.id = item.id })
+  Array.from(marker.getElementsByTagName("div")).forEach(element => { element.id = id })
 
   const button = document.createElement("button")
   button.className = `windPageButton ${popupId}`
-  button.innerText = item.name
-  button.addEventListener("click", () => windPage(item.id, map))
+  button.innerText = data[id].name
+  button.addEventListener("click", () => windPage(id, map))
 
-  new mapboxgl.Marker(marker).setLngLat([item.lon, item.lat]).setPopup(
+  new mapboxgl.Marker(marker).setLngLat([data[id].lon, data[id].lat]).setPopup(
     new mapboxgl.Popup({
       offset: 13
     }).setDOMContent(button)
   ).addTo(map)
-})
+}
 
 markersLats.sort()
 markersLons.sort()

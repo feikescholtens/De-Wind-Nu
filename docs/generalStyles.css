@@ -23,10 +23,6 @@ footer {
     margin: 0 auto;
 }
 
-.hidden {
-    display: none !important;
-}
-
 header {
     height: 100px;
 }
@@ -67,12 +63,6 @@ h1#title {
 @media screen and (max-width: 350px) {
     h1#title {
         display: none;
-    }
-
-    h1#subtitle {
-        position: absolute;
-        top: 0;
-        right: 0;
     }
 }
 
@@ -378,7 +368,7 @@ textarea.fillIn::placeholder {
 }
 
 p.success,
-p.fail {
+p.error {
     font-weight: 600;
     font-size: 1.2em;
     margin: 0 30px 10px 30px;
@@ -388,7 +378,7 @@ p.success {
     color: #10ac84;
 }
 
-p.fail {
+p.error {
     color: #ee5253;
 }
 

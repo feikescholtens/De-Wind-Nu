@@ -5,20 +5,21 @@ export async function overviewFetchRWS(locations, resolve) {
 
   let locationsArray = [],
     IDMatches = []
-  locations.forEach(location => {
-    if (Object.keys(location.datasets)[0] !== "Rijkswaterstaat") return
 
-    locationsArray.push({
-      X: location.x,
-      Y: location.y,
-      Code: location.datasets["Rijkswaterstaat"].location_id
-    })
+  for (const id in locations) {
+    if (Object.keys(locations[id].datasets)[0] == "Rijkswaterstaat") {
+      locationsArray.push({
+        X: locations[id].x,
+        Y: locations[id].y,
+        Code: locations[id].datasets["Rijkswaterstaat"].location_id
+      })
 
-    IDMatches.push({
-      applicationID: location.id,
-      Rijkswaterstaat: location.datasets.Rijkswaterstaat.location_id,
-    })
-  })
+      IDMatches.push({
+        applicationID: id,
+        Rijkswaterstaat: locations[id].datasets.Rijkswaterstaat.location_id,
+      })
+    }
+  }
 
   const rawDataString = await fetch("https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenLaatsteWaarnemingen", giveRWSOverviewFetchOptions(locationsArray))
     .then(response => response.text()).catch((error) => catchError(resolve, {}, error, "RWS"))

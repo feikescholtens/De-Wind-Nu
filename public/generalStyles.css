@@ -17,6 +17,7 @@ body {
 }
 
 header,
+nav,
 main,
 footer {
     max-width: 800px;
@@ -24,11 +25,11 @@ footer {
 }
 
 .hidden {
-    display: none !important;
+    visibility: hidden !important;
 }
 
-header {
-    height: 100px;
+.noDisplay {
+    display: none !important;
 }
 
 header {
@@ -67,12 +68,6 @@ h1#title {
 @media screen and (max-width: 350px) {
     h1#title {
         display: none;
-    }
-
-    h1#subtitle {
-        position: absolute;
-        top: 0;
-        right: 0;
     }
 }
 
@@ -378,7 +373,7 @@ textarea.fillIn::placeholder {
 }
 
 p.success,
-p.fail {
+p.error {
     font-weight: 600;
     font-size: 1.2em;
     margin: 0 30px 10px 30px;
@@ -388,7 +383,7 @@ p.success {
     color: #10ac84;
 }
 
-p.fail {
+p.error {
     color: #ee5253;
 }
 

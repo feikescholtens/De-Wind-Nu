@@ -60,13 +60,58 @@ export function changeInterpolation(interpolationSelector) {
   contentUpdate()
 }
 
-export function unHideElements() {
-  document.getElementsByTagName("header")[0].style.visibility = "visible"
-  document.getElementsByTagName("main")[0].style.visibility = "visible"
-  document.getElementsByTagName("footer")[0].style.visibility = "visible"
+export async function formulateErrorMessage(dataFetched) {
+  let message
+  const errorMessages = await fetch("json/errorMessages.json").then(response => response.json())
+  const errorID = JSON.stringify(dataFetched.errorCode)
 
+  if (Object.keys(errorMessages).includes(errorID)) {
+    message = `Er is een fout opgetreden (error ${errorID}): ${errorMessages[errorID]}`
+  } else if (errorID[0] == 5)
+    message = `Er is een fout opgetreden (error ${errorID}): Server fout`
+  else {
+    message = `Er is een onbekende fout opgetreden!`
+  }
+  return message
+}
+
+export function showErrorMessage() {
+  document.querySelector("[data-errorFetching]").classList.remove("noDisplay")
+}
+
+export function hideErrorMessage() {
+  document.querySelector("[data-errorFetching]").classList.add("noDisplay")
+}
+
+
+export function hideMain() {
+  document.getElementsByTagName("main")[0].classList.add("hidden")
+}
+
+export function showMain() {
+  document.getElementsByTagName("main")[0].classList.remove("hidden")
+}
+
+export function showLoader() {
+  document.querySelector("[data-markerContainer]").style.display = "block"
+  document.querySelector("[data-loaderText]").style.display = "block"
+}
+
+export function hideLoader() {
   document.querySelector("[data-markerContainer]").style.display = "none"
   document.querySelector("[data-loaderText]").style.display = "none"
+}
+
+export function showCurrentWindBox() {
+  document.querySelector("[data-headingcurrentwind]").classList.remove("noDisplay")
+  document.querySelector("[data-currentwindbox]").classList.remove("noDisplay")
+  document.querySelector("[data-compass]").classList.remove("noDisplay")
+}
+
+export function hideCurrentWindBox() {
+  document.querySelector("[data-headingcurrentwind]").classList.add("noDisplay")
+  document.querySelector("[data-currentwindbox]").classList.add("noDisplay")
+  document.querySelector("[data-compass]").classList.add("noDisplay")
 }
 
 export function calcInterpolation() {

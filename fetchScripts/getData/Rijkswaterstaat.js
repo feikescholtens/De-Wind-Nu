@@ -9,14 +9,14 @@ Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 
 const timeZone = "Europe/Amsterdam"
 
-export async function fetchRWS(databaseData, resolve, times, DSTDates) {
+export async function fetchRWS(dateParsed, databaseData, resolve, times, DSTDates) {
 
   let data = []
 
   const dateUTC = new Date()
   const dateZoned = utcToZonedTime(dateUTC, timeZone)
 
-  const rawDataString = await fetch("https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenWaarnemingen", giveRWSFetchOptions(databaseData, dateZoned, DSTDates))
+  const rawDataString = await fetch("https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenWaarnemingen", giveRWSFetchOptions(dateParsed, databaseData, dateZoned, DSTDates))
     .then(response => response.text()).catch((error) => catchError(resolve, data, error, "RWS"))
 
   let rawData
@@ -38,6 +38,9 @@ export async function fetchRWS(databaseData, resolve, times, DSTDates) {
         tempArray = []
 
       measurementType.MetingenLijst.forEach(measurement => {
+        if (measurementType.AquoMetadata.Grootheid.Code == "WINDSHD") {
+          // console.log(measurement.Tijdstip)
+        }
         let time = format(utcToZonedTime(parseISO(measurement.Tijdstip), timeZone), "HH:mm")
         measurementTimes.push(time)
       })

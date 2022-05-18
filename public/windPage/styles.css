@@ -1,8 +1,11 @@
-header,
 main,
 footer {
     width: 100%;
-    visibility: hidden;
+}
+
+main {
+    min-height: 100vh;
+    overflow: hidden;
 }
 
 div#loaderText {
@@ -12,17 +15,79 @@ div#loaderText {
     transform: translate(-50%, calc(-50% + 50px));
 }
 
-h1#location {
-    color: grey;
-    float: right;
-    font-size: 1.5em;
-
-    text-align: right;
-    top: 80px;
-    position: absolute;
-    margin-right: 10px;
-    width: 400px;
+nav {
+    margin: 0 10px;
+    box-sizing: border-box;
+    padding: 0 10px;
 }
+
+/* Styling bar with location and date options / inputs */
+#locationDate {
+    display: grid;
+    grid-gap: 10px;
+    align-items: center;
+    grid-template-columns: minmax(0, 1fr) 200px;
+    cursor: pointer;
+}
+
+#dateControls {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 24px auto 24px calc(24px + 5px);
+    text-align: center;
+}
+
+#datePicker {
+    width: 40;
+    height: 10;
+    visibility: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.noSelect {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.noSelect:focus {
+    outline: none !important;
+}
+
+.material-symbols-rounded {
+    cursor: pointer;
+    margin: auto 0;
+    font-size: 24px;
+    font-variation-settings:
+        "FILL"0,
+        "wght"800,
+        "GRAD"0,
+        "opsz"48
+}
+
+.material-symbols-rounded:nth-last-of-type(-n+1) {
+    margin-left: 5px;
+}
+
+.fullWidthGrid {
+    grid-column: 1 / -1;
+}
+
+p#currentDate {
+    margin: auto 0;
+}
+
+h4#location {
+    color: grey;
+}
+
+/*  */
 
 h3#dataInfo {
     font-weight: 400;
@@ -38,11 +103,12 @@ h3#dataInfo {
     width: 150px;
     height: 150px;
     transform: translate(-50%, -50%);
-    margin-bottom: 20px;
+    margin: calc(-350px / 2) 0 20px 0;
 }
 
 canvas#compass {
-    max-width: 350px;
+    width: min(calc(100vw - 2 * 10px), 350px);
+    height: min(calc(100vw - 2 * 10px), 350px);
     left: 50%;
     position: relative;
     transform: translateX(-50%);

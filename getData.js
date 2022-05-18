@@ -5,13 +5,13 @@ import { fetchRWS } from "./fetchScripts/getData/Rijkswaterstaat.js"
 import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
 import { fetchMVB } from "./fetchScripts/getData/MVB.js"
 import { getTimeChangeDates, generateTimes, calcInterpolation, restartHerokuDynos } from "./getScriptUtilFunctions.js"
-import { format, add, parseISO } from "date-fns"
+import { format, add, parseISO, parse } from "date-fns"
 import module from "date-fns-tz"
 const { utcToZonedTime } = module
 
 const timeZone = "Europe/Amsterdam"
 
-export async function getData(request, response, locations, forecastData) {
+export async function getData(request, response, date, locations, forecastData) {
 
   if (!validID(request.params.id, locations, response)) return
 
@@ -25,7 +25,9 @@ export async function getData(request, response, locations, forecastData) {
   }, 29.5 * 1000)
   //Triggering timeout 1/2 a second before Heroku does
 
-  const location = locations.find(location => location.id == request.params.id)
+  const dateParsed = parse(date, "dd-MM-yyyy", new Date())
+  const locationID = request.params.id
+  const location = locations[locationID]
   const dataset = Object.keys(location.datasets)[0]
   let values = {}
 
@@ -34,18 +36,21 @@ export async function getData(request, response, locations, forecastData) {
   if (["Rijkswaterstaat", "KNMI", "MVB"].includes(dataset)) NoMeasurementsXHour = 6
   if (["VLINDER"].includes(dataset)) NoMeasurementsXHour = 12
   let times
-  const DSTDates = getTimeChangeDates()
+  const DSTDates = getTimeChangeDates(dateParsed)
   const dateToDST = format(utcToZonedTime(DSTDates[0], timeZone), "dd-MM")
   const dateFromDST = format(utcToZonedTime(DSTDates[1], timeZone), "dd-MM")
-  const dateNow = format(utcToZonedTime(new Date(), timeZone), "dd-MM")
-  if (dateNow == dateToDST) times = generateTimes(60 / NoMeasurementsXHour, "toDST")
-  else if (dateNow == dateFromDST) times = generateTimes(60 / NoMeasurementsXHour, "fromDST")
+  const dateRequest = format(utcToZonedTime(dateParsed, timeZone), "dd-MM")
+  if (dateRequest == dateToDST) {
+    console.log("todst")
+    times = generateTimes(60 / NoMeasurementsXHour, "toDST")
+    console.log(times)
+  } else if (dateRequest == dateFromDST) times = generateTimes(60 / NoMeasurementsXHour, "fromDST")
   else times = generateTimes(60 / NoMeasurementsXHour)
 
-  const dateUTC = new Date()
-  const dateZoned = utcToZonedTime(dateUTC, timeZone)
-  const dateToday = format(dateZoned, "dd-MM-yyyy")
+  // times = generateTimes(60 / NoMeasurementsXHour)
+
   values["times"] = times
+  console.log(times)
 
   //Measurements
   const dataFetched = await new Promise(async (resolve) => {
@@ -55,7 +60,7 @@ export async function getData(request, response, locations, forecastData) {
     }
     // Rijkswaterstaat
     if (location.datasets.Rijkswaterstaat) {
-      return fetchRWS(location, resolve, times, DSTDates)
+      return fetchRWS(dateParsed, location, resolve, times, DSTDates)
     }
     //KNMI
     if (location.datasets.KNMI) {
@@ -77,32 +82,32 @@ export async function getData(request, response, locations, forecastData) {
   }
 
   //Forecast
-  if (forecastData[location.id]) {
-    const startForecastTimeIndex = forecastData[location.id].findIndex(location => location.date == dateToday)
-    const startForecastTime = forecastData[location.id][startForecastTimeIndex].time
-    const startForecastTimeIndexInTimeSeries = times.indexOf(startForecastTime)
+  // if (forecastData[locationID]) {
+  //   const startForecastTimeIndex = forecastData[locationID].findIndex(location => location.date == date)
+  //   const startForecastTime = forecastData[locationID][startForecastTimeIndex].time
+  //   const startForecastTimeIndexInTimeSeries = times.indexOf(startForecastTime)
 
-    let wind_forecast = new Array(times.length),
-      wind_forecastGust = new Array(times.length),
-      wind_forecastDirection = new Array(times.length)
+  //   let wind_forecast = new Array(times.length),
+  //     wind_forecastGust = new Array(times.length),
+  //     wind_forecastDirection = new Array(times.length)
 
-    const indexFirstForecastTimeToday = forecastData[location.id].findIndex(location => location.date == dateToday)
-    const amountHourValues = forecastData[location.id].length - indexFirstForecastTimeToday
+  //   const indexFirstForecastTimeToday = forecastData[locationID].findIndex(location => location.date == dateToday)
+  //   const amountHourValues = forecastData[locationID].length - indexFirstForecastTimeToday
 
-    for (let i = 0; i < amountHourValues; i++) {
-      wind_forecast[startForecastTimeIndexInTimeSeries + i * NoMeasurementsXHour] = forecastData[location.id][i + startForecastTimeIndex].s
-      wind_forecastDirection[startForecastTimeIndexInTimeSeries + i * NoMeasurementsXHour] = forecastData[location.id][i + startForecastTimeIndex].d
-      wind_forecastGust[startForecastTimeIndexInTimeSeries + i * NoMeasurementsXHour] = forecastData[location.id][i + startForecastTimeIndex].g
-    }
-    values["windSpeedForecast"] = calcInterpolation(wind_forecast, times, startForecastTimeIndexInTimeSeries)
-    values["windGustsForecast"] = calcInterpolation(wind_forecastGust, times, startForecastTimeIndexInTimeSeries)
-    values["windDirectionForecast"] = calcInterpolation(wind_forecastDirection, times, startForecastTimeIndexInTimeSeries)
-  }
+  //   for (let i = 0; i < amountHourValues; i++) {
+  //     wind_forecast[startForecastTimeIndexInTimeSeries + i * NoMeasurementsXHour] = forecastData[locationID][i + startForecastTimeIndex].s
+  //     wind_forecastDirection[startForecastTimeIndexInTimeSeries + i * NoMeasurementsXHour] = forecastData[locationID][i + startForecastTimeIndex].d
+  //     wind_forecastGust[startForecastTimeIndexInTimeSeries + i * NoMeasurementsXHour] = forecastData[locationID][i + startForecastTimeIndex].g
+  //   }
+  //   values["windSpeedForecast"] = calcInterpolation(wind_forecast, times, startForecastTimeIndexInTimeSeries)
+  //   values["windGustsForecast"] = calcInterpolation(wind_forecastGust, times, startForecastTimeIndexInTimeSeries)
+  //   values["windDirectionForecast"] = calcInterpolation(wind_forecastDirection, times, startForecastTimeIndexInTimeSeries)
+  // }
 
   let timeStampRun,
     timeRun = "N.A.",
     timeNextRun
-  if (forecastData.timeRun && forecastData[location.id]) {
+  if (forecastData.timeRun && forecastData[locationID]) {
     timeStampRun = utcToZonedTime(parseISO(`${forecastData.timeRun}Z`), timeZone)
     timeRun = format(timeStampRun, "HH:mm")
     timeNextRun = format(add(timeStampRun, { hours: (2 + 6), minutes: 58 }), "HH:mm")
@@ -125,9 +130,8 @@ export async function getData(request, response, locations, forecastData) {
   if (!response.headersSent)
     // AKA if a timeout hasn't occured
     response.json({
-      date: dateToday,
+      date: date,
       values: values,
-      spotName: location.name,
       dataset: dataset,
       forecastRun: timeRun,
       nextForecastRun: timeNextRun

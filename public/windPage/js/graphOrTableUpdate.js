@@ -11,8 +11,8 @@ const tableNodeElements = [document.querySelector("[data-headingTabel]"),
 
 export function updateGraphs() {
 
-  graphNodeElements.forEach(element => element.classList.remove("hidden"))
-  tableNodeElements.forEach(element => element.classList.add("hidden"))
+  graphNodeElements.forEach(element => element.classList.remove("noDisplay"))
+  tableNodeElements.forEach(element => element.classList.add("noDisplay"))
 
   //Initialize datasets
   let datasets = datasetInfo.copy()
@@ -52,6 +52,7 @@ export function updateGraphs() {
   else {
     chartWindSpeed = Chart.instances[0]
 
+    chartWindSpeed.data.labels = times
     chartWindSpeed.data.datasets = datasetsChartWindSpeed
     chartWindSpeed.options = optionsWindSpeedChart
     chartWindSpeed.update()
@@ -59,8 +60,8 @@ export function updateGraphs() {
 
   //Chart winddirection
   if (dataWUnits.windDirection.length == 0 && !dataWUnits.windDirectionForecast) {
-    document.querySelector("[data-headingchartwinddirection]").classList.add("hidden")
-    document.querySelector("[data-chartwindDirection]").classList.add("hidden")
+    document.querySelector("[data-headingchartwinddirection]").classList.add("noDisplay")
+    document.querySelector("[data-chartwindDirection]").classList.add("noDisplay")
     return
   }
 
@@ -75,6 +76,7 @@ export function updateGraphs() {
   else {
     chartWindDirection = Chart.instances[1]
 
+    chartWindDirection.data.labels = times
     chartWindDirection.data.datasets = datasetsChartWindDirection
     chartWindDirection.options = optionsWindDirectionChart
     chartWindDirection.update()
@@ -84,8 +86,8 @@ export function updateGraphs() {
 
 export function updateTable() {
 
-  graphNodeElements.forEach(element => element.classList.add("hidden"))
-  tableNodeElements.forEach(element => element.classList.remove("hidden"))
+  graphNodeElements.forEach(element => element.classList.add("noDisplay"))
+  tableNodeElements.forEach(element => element.classList.remove("noDisplay"))
 
   const tableHeaderRow = document.querySelector("[data-tableHeaderRow]")
   const table = document.querySelector("[data-dataTable]")

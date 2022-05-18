@@ -12,15 +12,15 @@ export async function overviewFetchVLINDER(locations, resolve) {
   rawData.forEach(locationData => {
 
     //Match reveived location with one from own list to get application ID for each location
-    for (let i = 0; i < locations.length; i++) {
-      if (locations[i].datasets.VLINDER) {
+    for (const id in locations) {
+      if (locations[id].datasets.VLINDER) {
 
-        if (locations[i].datasets.VLINDER.location_id == locationData.id) {
+        if (locations[id].datasets.VLINDER.location_id == locationData.id) {
 
           const wind_speed = locationData.windSpeed * 0.539956803,
             wind_direction = locationData.windDirection
 
-          data[locations[i].id] = {
+          data[id] = {
             wind_speed: wind_speed,
             wind_direction: wind_direction
           }

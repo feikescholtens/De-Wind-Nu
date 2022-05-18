@@ -23,7 +23,7 @@ export async function displayPopUpFeedback() {
         document.querySelector("[data-send]").remove()
 
         //Add the loader to the messageBox
-        document.getElementsByClassName("markerContainer center hidden")[0].classList.remove("hidden")
+        document.getElementsByClassName("markerContainer center hidden")[0].classList.remove("noDisplay")
 
         //Data for making the fetch command
         const dataBody = {
@@ -53,7 +53,7 @@ export async function displayPopUpFeedback() {
           responseMessage.classList.add("success")
         } else {
           responseMessage.innerHTML = "Verzenden mislukt. Contacteer <a href='mailto:dewindnu@gmail.com'>dewindnu@gmail.com</a>"
-          responseMessage.classList.add("fail")
+          responseMessage.classList.add("error")
         }
         popUpBox.appendChild(responseMessage)
 

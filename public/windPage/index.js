@@ -1,26 +1,55 @@
+import { addDays, subDays, differenceInCalendarDays, isYesterday, isToday, isTomorrow, parse, format } from "https://esm.run/date-fns"
+import nl from "https://esm.run/date-fns/locale/nl"
 import { displayPopUpWithName } from "../jsPopUps/functions.js"
 import { displayPopUpFeedback } from "../jsPopUps/feedback.js"
 import { contentUpdate } from "./js/contentUpdate.js"
-import { changeShowBar, changeDataForm, changeUnit, changeDecimals, unHideElements, changeInterpolation, calcInterpolation, changeTableSort } from "./js/functions.js"
+import { changeShowBar, changeDataForm, changeUnit, changeDecimals, formulateErrorMessage, showErrorMessage, hideErrorMessage, hideMain, showLoader, hideLoader, showMain, showCurrentWindBox, hideCurrentWindBox, changeInterpolation, calcInterpolation, changeTableSort } from "./js/functions.js"
 import { redirect, updateLocalVariables } from "../globalFunctions.js"
 redirect()
 updateLocalVariables()
 
 Object.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
-const changeNumbersLoadingSymbolInterval = setInterval(() => setNewNumber(), 80)
 
 //Immediately start retrieving the data
 const locationID = location.pathname.substring(6, 10)
-fetch(`/getData/${locationID}`)
-  .then(async response => {
-    if (response.status !== 200) {
-      window.location.replace(`${location.origin}/fout/${response.status}`)
-      return
-    }
-    processRetrievedData(await response.json())
-    clearInterval(changeNumbersLoadingSymbolInterval)
 
-  })
+const dateURLString = new URLSearchParams(window.location.search).get("datum")
+let absoluteDate, relativeDate
+try {
+  const dateURL = parse(dateURLString, "dd-MM-yyyy", new Date())
+  relativeDate = getRelativeDate(dateURL)
+  absoluteDate = dateURLString
+} catch {
+  relativeDate = "Vandaag"
+  absoluteDate = format(getAbsoluteDate(relativeDate), "dd-MM-yyyy")
+
+  history.replaceState(null, null, `${window.location.origin + window.location.pathname}`)
+}
+document.querySelector("[data-currentDay]").innerText = relativeDate
+console.log("Date to fetch initially: ", absoluteDate)
+
+fetchData(absoluteDate)
+
+function fetchData(date) {
+
+  const changeNumbersLoadingSymbolInterval = setInterval(() => setNewNumber(), 80)
+  showLoader()
+  hideErrorMessage()
+  hideMain()
+
+  fetch(`/getData/${locationID}?date=${date}`)
+    .then(async response => {
+      clearInterval(changeNumbersLoadingSymbolInterval)
+      hideLoader()
+
+      if (response.status !== 200) {
+
+        document.querySelector("[data-errorFetching]").innerText = `Data ophalen van server mislukt met status code ${response.status}!`
+        showErrorMessage()
+
+      } else processRetrievedData(await response.json())
+    })
+}
 
 //These need to be global because of other .js files!
 globalThis.data = {},
@@ -94,27 +123,26 @@ document.querySelectorAll("[data-goBackHome]").forEach(element => element.addEve
 //Adding "dynamic" styles
 locationLabelNode.style.right = (document.body.clientWidth - document.getElementsByTagName("main")[0].clientWidth) / 2 + "px"
 window.addEventListener("resize", () => locationLabelNode.style.right = (document.body.clientWidth - document.getElementsByTagName("main")[0].clientWidth) / 2 + "px")
-//Canvas (1: initially, 2: onwindowchange)
-//(1)
-compassCanvas.style.width = "100%"
-compassCanvas.style.height = compassCanvas.clientWidth
-//(2)
+//Canvas
 window.onresize = () => {
   compassCanvas.style.height = compassCanvas.clientWidth
   currentWindBox.style.width = currentWindBox.style.height = (compassCanvas.clientWidth * (200 / currentWindBoxSize)) / Math.sqrt(2) + "px"
   currentWindBox.style.marginTop = -(175 / currentWindBoxSize) * compassCanvas.clientWidth + "px"
 }
-compassCanvas.style.height = compassCanvas.clientWidth
-currentWindBox.style.width = currentWindBox.style.height = (compassCanvas.clientWidth * (200 / currentWindBoxSize)) / Math.sqrt(2) + "px"
-currentWindBox.style.marginTop = -(175 / currentWindBoxSize) * compassCanvas.clientWidth + "px"
 
 //Processing the data that comes in
 async function processRetrievedData(dataFetched) {
-  if (dataFetched.errorCode) window.location.replace(`${window.location.origin}/fout/${dataFetched.errorCode}`)
+  if (dataFetched.errorCode) {
+    const errorMessage = await formulateErrorMessage(dataFetched)
+    document.querySelector("[data-errorFetching]").innerText = errorMessage
+    document.querySelector("[data-errorFetching]").classList.remove("noDisplay")
+    return
+  }
 
-  const dataset = dataFetched.dataset,
-    spotName = dataFetched.spotName
+  showMain()
 
+  const dataset = dataFetched.dataset
+  const dateData = parse(dataFetched.date, "dd-MM-yyyy", new Date())
   globalThis.times = dataFetched.values.times
   globalThis.interpolatedData = {}, globalThis.interpolatedIndices = {}
 
@@ -122,33 +150,95 @@ async function processRetrievedData(dataFetched) {
   dataWUnits = data.copy();
   ({ interpolatedData, interpolatedIndices } = calcInterpolation())
 
-  document.title = "De Wind Nu: " + spotName
-  locationLabelNode.innerText = spotName
-
   measurementSourceLabelNode.innerText = dataset
   if (dataset == "MVB") measurementSourceLabelNode.innerText = "Meetnet Vlaamse Banken"
   if (dataset == "VLINDER") measurementSourceLabelNode.innerText = "UGent VLINDER project"
   if (dataset == "KNMI" || dataset == "VLINDER")
-    document.querySelector("[data-decimals]").getElementsByTagName("option")[2].innerText = "2 (metingen slechts geleverd in één decimaal)"
+    document.querySelector("[data-decimals]").getElementsByTagName("option")[2].innerHTML = "2 (needs fixing...)"
 
   if (dataFetched.forecastRun == "N.A.") forecastSourceLabelNode.innerText = "niet beschikbaar"
   forecastRunLabelNode.innerText = dataFetched.forecastRun
   nextForecastRunLabelNode.innerText = dataFetched.nextForecastRun
 
-  //Remove current wind box if no mearurements are available and set headings
-  if (dataWUnits.windSpeed.length == 0 && dataWUnits.windGusts.length == 0 && dataWUnits.windDirection.length == 0) {
-    document.querySelector("[data-headingcurrentwind]").classList.add("hidden")
-    document.querySelector("[data-currentwindbox]").classList.add("hidden")
-    document.querySelector("[data-compass]").classList.add("hidden")
-  }
+  //Remove current wind box if no mearurements are available OR date is not of the current day and set headings
+  if ((dataWUnits.windSpeed.length == 0 && dataWUnits.windGusts.length == 0 && dataWUnits.windDirection.length == 0) || !isToday(dateData)) hideCurrentWindBox()
+  else showCurrentWindBox()
   const NoMeasurementTypesAvailable = [dataWUnits.windSpeed.length !== 0, dataWUnits.windGusts.length !== 0, dataWUnits.windDirection.length !== 0].filter(array => array !== false).length;
   if (dataWUnits.windGusts.length !== 0 || dataWUnits.windSpeedForecast) headingChartWindspeed.innerText = "Windsterkte en -vlagen"
   if (NoMeasurementTypesAvailable == 3 || dataWUnits.windSpeedForecast) headingTable.innerText = "Windsterkte, -vlagen en -richting"
   else if (NoMeasurementTypesAvailable !== 3 && !dataWUnits.windSpeedForecast) headingTable.innerText = "Windsterkte, en -richting"
 
   //For both graphs and table
-  unHideElements()
   contentUpdate()
+}
+
+//Add listeners for changing dates
+document.querySelector("[data-previousDay]").addEventListener("click", () => {
+  const currentDate = document.querySelector("[data-currentDay]").innerText
+  const absoluteDate = getAbsoluteDate(currentDate)
+
+  const previousDay = subDays(absoluteDate, 1)
+  const relativePreviousDay = getRelativeDate(previousDay)
+
+  document.querySelector("[data-currentDay]").innerText = relativePreviousDay
+  setDateInUrl(previousDay)
+})
+
+document.querySelector("[data-nextDay]").addEventListener("click", () => {
+  const currentDate = document.querySelector("[data-currentDay]").innerText
+  const absoluteDate = getAbsoluteDate(currentDate)
+
+  const nextDay = addDays(absoluteDate, 1)
+  const relativeNextDay = getRelativeDate(nextDay)
+
+  document.querySelector("[data-currentDay]").innerText = relativeNextDay
+  setDateInUrl(nextDay)
+})
+
+document.querySelector("[data-currentDay]").addEventListener("click", () =>
+  document.querySelector("[data-datePicker]").showPicker()
+)
+document.querySelector("[data-datePicker]").addEventListener("change", (e) => {
+  const dateSelected = parse(e.target.value, "yyyy-MM-dd", new Date())
+  const relativeDate = getRelativeDate(dateSelected)
+
+  document.querySelector("[data-currentDay]").innerText = relativeDate
+  setDateInUrl(dateSelected)
+})
+document.querySelector("[data-getData]").addEventListener("click", () => {
+  const dateFetchString = document.querySelector("[data-currentDay]").innerText
+  const dateFetch = getAbsoluteDate(dateFetchString)
+  const dateFetchAbsolute = format(dateFetch, "dd-MM-yyyy")
+
+  fetchData(dateFetchAbsolute)
+})
+
+function getAbsoluteDate(date) {
+  if (date == "Eergisteren") return subDays(new Date(), 2)
+  else if (date == "Gisteren") return subDays(new Date(), 1)
+  else if (date == "Vandaag") return new Date()
+  else if (date == "Morgen") return addDays(new Date(), 1)
+  else if (date == "Overmorgen") return addDays(new Date(), 2)
+  else return parse(date.substring(4), "d MMM yyyy", new Date(), { locale: nl })
+}
+
+function getRelativeDate(date) {
+  if (differenceInCalendarDays(date, new Date()) == -2) return "Eergisteren"
+  else if (isYesterday(date)) return "Gisteren"
+  else if (isToday(date)) return "Vandaag"
+  else if (isTomorrow(date)) return "Morgen"
+  else if (differenceInCalendarDays(date, new Date()) == 2) return "Overmorgen"
+  else return format(date, "eeeeee. d MMM yyyy", { locale: nl })
+}
+
+function setDateInUrl(date) {
+  if (isToday(date)) {
+    history.replaceState(null, null, `${window.location.origin + window.location.pathname}`)
+    return
+  }
+
+  const dateString = format(date, "dd-MM-yyyy")
+  history.replaceState(null, null, `?datum=${dateString}`)
 }
 
 //(1)Change the data in local storage when other options are selected and (2) refresh the graphs

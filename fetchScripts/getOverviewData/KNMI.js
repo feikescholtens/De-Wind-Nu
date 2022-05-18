@@ -3,14 +3,14 @@ import fetch from "node-fetch"
 export async function overviewFetchKNMI(locations, resolve) {
 
   let IDMatches = []
-  locations.forEach(location => {
-    if (Object.keys(location.datasets)[0] !== "KNMI") return
-
-    IDMatches.push({
-      applicationID: location.id,
-      KNMI: location.datasets.KNMI.location_id,
-    })
-  })
+  for (const id in locations) {
+    if (Object.keys(locations[id].datasets)[0] == "KNMI") {
+      IDMatches.push({
+        applicationID: id,
+        KNMI: locations[id].datasets.KNMI.location_id,
+      })
+    }
+  }
 
   const rawDataString = await fetch("https://data.buienradar.nl/2.0/feed/json")
     .then(response => response.text())

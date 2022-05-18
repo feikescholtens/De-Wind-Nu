@@ -1,23 +1,24 @@
 import { sub } from "date-fns"
 import fetch from "node-fetch"
 
-export function getTimeChangeDates() {
+export function getTimeChangeDates(date) {
 
-  const currentYear = new Date().getFullYear()
+  const year = date.getFullYear()
 
-  let DSTStart = new Date(currentYear, 3 - 1, 31)
+  let DSTStart = new Date(year, 3 - 1, 31)
   for (let i = 0; i <= 7; i++) {
     if (DSTStart.getDay() == 0) break
     DSTStart = sub(DSTStart, { days: 1 })
   }
 
-  let DSTEnd = new Date(currentYear, 10 - 1, 31)
+  let DSTEnd = new Date(year, 10 - 1, 31)
 
   for (let i = 0; i <= 7; i++) {
     if (DSTEnd.getDay() == 0) break
     DSTEnd = sub(DSTEnd, { days: 1 })
   }
 
+  console.log([DSTStart, DSTEnd])
   return [DSTStart, DSTEnd]
 
 }

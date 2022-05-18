@@ -1,4 +1,6 @@
-import { format, add, sub } from "date-fns"
+import { format, add, sub, parse, formatISO, isSameDay } from "date-fns"
+import pkg from 'date-fns-tz';
+const { utcToZonedTime } = pkg;
 
 export function catchError(resolve, data, error, dataset) {
   data = { error: error, dataset: dataset }
@@ -18,22 +20,42 @@ export function processAllNegativeArrays(wind_speed, wind_gusts, wind_direction)
 }
 
 //Rijkswaterstaat specific
-export function giveRWSFetchOptions(databaseData, dateZoned, DSTDates) {
+export function giveRWSFetchOptions(dateParsed, databaseData, dateZoned, DSTDates) {
 
-  let time, dateStartFetch
-  if (new Date() >= add(DSTDates[0], { days: 1 }) && new Date() < add(DSTDates[1], { days: 1 })) {
-    time = "22:00:00"
-    dateStartFetch = format(sub(dateZoned, { days: 1 }), "yyyy-MM-dd")
+  const date = new Date(dateParsed)
+  const timeZone = '+01:00'
+  const zonedDate = utcToZonedTime(date, timeZone)
+
+
+  let startTime, endTime, dateStartFetch, dateEndFetch
+  console.log(dateParsed, DSTDates[0], isSameDay(dateParsed, DSTDates[0]))
+  if (dateParsed > DSTDates[0] && dateParsed < DSTDates[1]) {
+    // Summertime
+    startTime = endTime = "22:00:00"
+    dateStartFetch = format(sub(dateParsed, { days: 1 }), "yyyy-MM-dd")
+    dateEndFetch = format(dateParsed, "yyyy-MM-dd")
+    console.log("he tis zomertijd")
+  } else if (isSameDay(dateParsed, DSTDates[0])) {
+    //Day of going to summertime
+    startTime = "23:00:00"
+    endTime = "22:00:00"
+    dateStartFetch = format(sub(dateParsed, { days: 1 }), "yyyy-MM-dd")
+    dateEndFetch = format(dateParsed, "yyyy-MM-dd")
+    console.log("naar zomertijd")
   } else {
-    time = "00:00:00"
-    dateStartFetch = format(dateZoned, "yyyy-MM-dd")
+    //Wintertime
+    startTime = endTime = "00:00:00"
+    dateStartFetch = format(dateParsed, "yyyy-MM-dd")
+    dateEndFetch = format(add(dateParsed, { days: 1 }), "yyyy-MM-dd")
   }
+
 
   const locationID = databaseData.datasets.Rijkswaterstaat.location_id
   const locationX = databaseData.x
   const locationY = databaseData.y
 
-  const dateTomorrowFetch = format(add(dateZoned, { days: 1 }), "yyyy-MM-dd")
+  // const dateEndFetch = format(dateParsed, "yyyy-MM-dd")
+
 
   return {
     "headers": {
@@ -48,8 +70,8 @@ export function giveRWSFetchOptions(databaseData, dateZoned, DSTDates) {
       },
       "Locatie": { "X": locationX, "Y": locationY, "Code": `${locationID}` },
       "Periode": {
-        "Begindatumtijd": `${dateStartFetch}T${time}.000+01:00`,
-        "Einddatumtijd": `${dateTomorrowFetch}T${time}.000+01:00`
+        "Begindatumtijd": `${dateStartFetch}T${startTime}.000+01:00`,
+        "Einddatumtijd": `${dateEndFetch}T${endTime}.000+01:00`
       }
     }),
     "method": "POST"
@@ -184,11 +206,9 @@ export function MessageError(rawData, data, resolve) {
 
 export function theoreticalMeasurements(measurementTimes, times) {
   if (measurementTimes.length == 0) return
-
   const lastMeasurementHH = measurementTimes[measurementTimes.length - 1].substring(0, 2)
   const lastMeasurementmm = measurementTimes[measurementTimes.length - 1].substring(3, 5)
 
-  const theoreticalMeasurementCount = times.indexOf(`${lastMeasurementHH}:${lastMeasurementmm}`)
-
+  const theoreticalMeasurementCount = times.lastIndexOf(`${lastMeasurementHH}:${lastMeasurementmm}`)
   return theoreticalMeasurementCount + 1
 }

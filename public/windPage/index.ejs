@@ -2,7 +2,7 @@
 <html lang="nl">
 
 <head>
-    <title>laden...</title>
+    <title><%= spotName %></title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,7 +41,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="/generalStyles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"> </script>
@@ -63,6 +63,7 @@
 </head>
 
 <body>
+
     <div data-markerContainer class="markerContainer centerAndMiddle">
     <div class="arrowArm loader spin">
     </div><div class="marker loader">5</div></div>
@@ -71,9 +72,23 @@
     <header>
         <img data-goBackHome id="logo" src="../images/logo.svg" alt="Logo - navigeer home">
             <h1 data-goBackHome id="title">De Wind Nu</h1>
-            <h1 data-location id="location"></h1>
     </header>
-    <main>
+    
+    <nav id="locationDate" class="noSelect">
+      <h4 data-location id="location"><%= spotName %></h4>
+      
+      <div id="dateControls">
+        <span data-previousDay title="Vorige dag" class="material-symbols-rounded">navigate_before</span>
+        <p data-currentDay id="currentDate"></p><input data-datePicker id="datePicker" type="date">
+        <span data-nextDay title="Volgende dag" class="material-symbols-rounded">navigate_next</span>
+        <span data-getData title="Bekijken data voor deze dag" class="material-symbols-rounded">query_stats</span>
+      </div>
+
+      <p data-errorFetching class="error fullWidthGrid noDisplay" style="margin-top: 10px;"></p>
+    </nav>
+
+    <main class="hidden">
+
         <h2 data-headingCurrentWind class="sectionHeader"></h2>
             <canvas data-compass id="compass" width="350px" height="350px"></canvas>
 
@@ -87,7 +102,7 @@
 
             <section data-dataForm><label data-graphs>Grafieken</label> <label class="deselected" data-tabel>Tabel</label></section>
 
-            <h2 data-headingTabel class="sectionHeader hidden">Windsterkte</h2>
+            <h2 data-headingTabel class="sectionHeader noDisplay">Windsterkte</h2>
             <table data-dataTable id="data">
               <tr id="tableFirstHeaderRow">
                 <th data-timeHeading rowspan="2" style="cursor: pointer">Tijd <span id="sortArrow">▲</span></th>
@@ -99,8 +114,8 @@
             <h2 data-headingChartWindspeed class="sectionHeader">Windsterkte</h2>
             <canvas data-chartWindSpeed class="charts" height="300px"></canvas>
 
-            <h2 data-headingchartwinddirection class="sectionHeader hidden">Windrichting</h2>
-            <canvas data-chartWindDirection class="charts hidden" height="300px"></canvas>
+            <h2 data-headingchartwinddirection class="sectionHeader noDisplay">Windrichting</h2>
+            <canvas data-chartWindDirection class="charts noDisplay" height="300px"></canvas>
 
             <h3 data-dataInfo id="dataInfo">Metingen: <span data-measurementSource></span> | 
               Voorspellingen: <span data-forecastSource>HARMONIE model van het KNMI, run van <span data-forecastRun></span> uur, volgende update ± <span data-nextForecastRun></span> uur</span> </h3>

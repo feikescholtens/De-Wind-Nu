@@ -39,20 +39,19 @@ export async function overviewFetchMVB(locations, resolve) {
     let locationsArray = [],
       IDMatches = []
 
-    locations.forEach(location => {
-      if (Object.keys(location.datasets)[0] !== "MVB") return
+    for (const id in locations) {
+      if (Object.keys(locations[id].datasets)[0] == "MVB") {
+        locations[id].datasets.MVB.location_id.forEach(measurementType => {
+          if (measurementType.includes("WC3")) return
+          locationsArray.push(measurementType)
 
-      location.datasets.MVB.location_id.forEach(measurementType => {
-        if (measurementType.includes("WC3")) return
-        locationsArray.push(measurementType)
-
-        IDMatches.push({
-          applicationID: location.id,
-          MVB: measurementType
+          IDMatches.push({
+            applicationID: id,
+            MVB: measurementType
+          })
         })
-      })
-
-    })
+      }
+    }
 
     const rawDataString = await fetch("https://api.meetnetvlaamsebanken.be/V2/CurrentData", giveMVBOverviewFetchOptions(locationsArray, newToken))
       .then(response => response.text())
