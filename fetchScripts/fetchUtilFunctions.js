@@ -20,28 +20,25 @@ export function processAllNegativeArrays(wind_speed, wind_gusts, wind_direction)
 }
 
 //Rijkswaterstaat specific
-export function giveRWSFetchOptions(dateParsed, databaseData, dateZoned, DSTDates) {
-
-  const date = new Date(dateParsed)
-  const timeZone = '+01:00'
-  const zonedDate = utcToZonedTime(date, timeZone)
-
+export function giveRWSFetchOptions(dateParsed, databaseData, DSTDates) {
 
   let startTime, endTime, dateStartFetch, dateEndFetch
-  console.log(dateParsed, DSTDates[0], isSameDay(dateParsed, DSTDates[0]))
   if (dateParsed > DSTDates[0] && dateParsed < DSTDates[1]) {
     // Summertime
     startTime = endTime = "22:00:00"
     dateStartFetch = format(sub(dateParsed, { days: 1 }), "yyyy-MM-dd")
     dateEndFetch = format(dateParsed, "yyyy-MM-dd")
-    console.log("he tis zomertijd")
   } else if (isSameDay(dateParsed, DSTDates[0])) {
     //Day of going to summertime
-    startTime = "23:00:00"
+    startTime = "00:00:00"
     endTime = "22:00:00"
+    dateStartFetch = dateEndFetch = format(dateParsed, "yyyy-MM-dd")
+  } else if (isSameDay(dateParsed, DSTDates[1])) {
+    //Day of going to wintertime
+    startTime = "22:00:00"
+    endTime = "00:00:00"
     dateStartFetch = format(sub(dateParsed, { days: 1 }), "yyyy-MM-dd")
     dateEndFetch = format(dateParsed, "yyyy-MM-dd")
-    console.log("naar zomertijd")
   } else {
     //Wintertime
     startTime = endTime = "00:00:00"
@@ -49,13 +46,11 @@ export function giveRWSFetchOptions(dateParsed, databaseData, dateZoned, DSTDate
     dateEndFetch = format(add(dateParsed, { days: 1 }), "yyyy-MM-dd")
   }
 
+  console.log(dateStartFetch, dateEndFetch)
 
   const locationID = databaseData.datasets.Rijkswaterstaat.location_id
   const locationX = databaseData.x
   const locationY = databaseData.y
-
-  // const dateEndFetch = format(dateParsed, "yyyy-MM-dd")
-
 
   return {
     "headers": {
@@ -209,6 +204,8 @@ export function theoreticalMeasurements(measurementTimes, times) {
   const lastMeasurementHH = measurementTimes[measurementTimes.length - 1].substring(0, 2)
   const lastMeasurementmm = measurementTimes[measurementTimes.length - 1].substring(3, 5)
 
-  const theoreticalMeasurementCount = times.lastIndexOf(`${lastMeasurementHH}:${lastMeasurementmm}`)
+  let theoreticalMeasurementCount = times.lastIndexOf(`${lastMeasurementHH}:${lastMeasurementmm}`)
+  if (lastMeasurementHH == "00" && lastMeasurementmm == "00") theoreticalMeasurementCount = times.length
+
   return theoreticalMeasurementCount + 1
 }

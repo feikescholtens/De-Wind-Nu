@@ -165,7 +165,7 @@ function setLabels(context) {
 function setTitle(context) {
   let title = context[0].label
   if (title !== null) {
-    title = "Vandaag om " + title
+    title = `${date} om ${title}`
   }
   return title
 }

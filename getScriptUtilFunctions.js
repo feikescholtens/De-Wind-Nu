@@ -18,7 +18,6 @@ export function getTimeChangeDates(date) {
     DSTEnd = sub(DSTEnd, { days: 1 })
   }
 
-  console.log([DSTStart, DSTEnd])
   return [DSTStart, DSTEnd]
 
 }

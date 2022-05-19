@@ -13,10 +13,7 @@ export async function fetchRWS(dateParsed, databaseData, resolve, times, DSTDate
 
   let data = []
 
-  const dateUTC = new Date()
-  const dateZoned = utcToZonedTime(dateUTC, timeZone)
-
-  const rawDataString = await fetch("https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenWaarnemingen", giveRWSFetchOptions(dateParsed, databaseData, dateZoned, DSTDates))
+  const rawDataString = await fetch("https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenWaarnemingen", giveRWSFetchOptions(dateParsed, databaseData, DSTDates))
     .then(response => response.text()).catch((error) => catchError(resolve, data, error, "RWS"))
 
   let rawData
@@ -38,9 +35,6 @@ export async function fetchRWS(dateParsed, databaseData, resolve, times, DSTDate
         tempArray = []
 
       measurementType.MetingenLijst.forEach(measurement => {
-        if (measurementType.AquoMetadata.Grootheid.Code == "WINDSHD") {
-          // console.log(measurement.Tijdstip)
-        }
         let time = format(utcToZonedTime(parseISO(measurement.Tijdstip), timeZone), "HH:mm")
         measurementTimes.push(time)
       })
@@ -51,7 +45,8 @@ export async function fetchRWS(dateParsed, databaseData, resolve, times, DSTDate
           return
         }
 
-        const indexTime = measurementTimes.indexOf(timeStamp)
+        let indexTime = measurementTimes.indexOf(timeStamp)
+        if (timeStamp == "00:00" && tempArray.length !== 0) indexTime = times.length - 1
 
         if (measurementType.MetingenLijst[indexTime]) {
           if (measurementType.MetingenLijst[indexTime].Meetwaarde) {

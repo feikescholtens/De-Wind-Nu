@@ -40,11 +40,8 @@ export async function getData(request, response, date, locations, forecastData) 
   const dateToDST = format(utcToZonedTime(DSTDates[0], timeZone), "dd-MM")
   const dateFromDST = format(utcToZonedTime(DSTDates[1], timeZone), "dd-MM")
   const dateRequest = format(utcToZonedTime(dateParsed, timeZone), "dd-MM")
-  if (dateRequest == dateToDST) {
-    console.log("todst")
-    times = generateTimes(60 / NoMeasurementsXHour, "toDST")
-    console.log(times)
-  } else if (dateRequest == dateFromDST) times = generateTimes(60 / NoMeasurementsXHour, "fromDST")
+  if (dateRequest == dateToDST) times = generateTimes(60 / NoMeasurementsXHour, "toDST")
+  else if (dateRequest == dateFromDST) times = generateTimes(60 / NoMeasurementsXHour, "fromDST")
   else times = generateTimes(60 / NoMeasurementsXHour)
 
   // times = generateTimes(60 / NoMeasurementsXHour)

@@ -26,7 +26,6 @@ try {
   history.replaceState(null, null, `${window.location.origin + window.location.pathname}`)
 }
 document.querySelector("[data-currentDay]").innerText = relativeDate
-console.log("Date to fetch initially: ", absoluteDate)
 
 fetchData(absoluteDate)
 
@@ -54,6 +53,7 @@ function fetchData(date) {
 //These need to be global because of other .js files!
 globalThis.data = {},
   globalThis.dataWUnits = {},
+  globalThis.date,
   globalThis.unit, globalThis.decimals, globalThis.interpolation,
   globalThis.times, globalThis.currentWindBoxSize = 350,
   globalThis.units = await fetch("json/units.json").then(response => response.json())
@@ -144,6 +144,7 @@ async function processRetrievedData(dataFetched) {
   const dataset = dataFetched.dataset
   const dateData = parse(dataFetched.date, "dd-MM-yyyy", new Date())
   globalThis.times = dataFetched.values.times
+  globalThis.date = getRelativeDate(parse(dataFetched.date, "dd-MM-yyyy", new Date()))
   globalThis.interpolatedData = {}, globalThis.interpolatedIndices = {}
 
   data = dataFetched.values
@@ -204,6 +205,8 @@ document.querySelector("[data-datePicker]").addEventListener("change", (e) => {
 
   document.querySelector("[data-currentDay]").innerText = relativeDate
   setDateInUrl(dateSelected)
+
+  fetchData(format(dateSelected, "dd-MM-yyyy"))
 })
 document.querySelector("[data-getData]").addEventListener("click", () => {
   const dateFetchString = document.querySelector("[data-currentDay]").innerText

@@ -384,7 +384,7 @@ p.success {
 }
 
 p.error {
-    color: #ee5253;
+    color: rgba(235, 77, 75, 1);
 }
 
 a#source {
