@@ -1,6 +1,6 @@
 # Change log
 
-## v2.0.0
+## v3.0.0
 - Added support for retrieving measurements from the past, forecast from the past, which is archived in Cloud Firestore, and the forecast of the next day(s)
 
 - Added explanation for getting the right forecast for the requested date
