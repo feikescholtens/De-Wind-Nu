@@ -1,5 +1,12 @@
 # Change log
 
+## v3.0.1
+
+Bugfixes:
+- Fixed crashing site when date not specified in request query params
+
+---
+
 ## v3.0.0
 - Added support for retrieving measurements from the past, forecast from the past, which is archived in Cloud Firestore, and the forecast of the next day(s)
 

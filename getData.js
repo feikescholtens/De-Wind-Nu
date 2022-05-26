@@ -5,7 +5,7 @@ import { fetchRWS } from "./fetchScripts/getData/Rijkswaterstaat.js"
 import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
 import { fetchMVB } from "./fetchScripts/getData/MVB.js"
 import { getTimeChangeDates, generateTimes, calcInterpolation, restartHerokuDynos, getArchivedForecast } from "./getScriptUtilFunctions.js"
-import { format, add, parseISO, parse, startOfDay, isBefore } from "date-fns"
+import { format, add, parseISO, parse, startOfDay, isBefore, isValid } from "date-fns"
 import module from "date-fns-tz"
 const { utcToZonedTime } = module
 
@@ -25,7 +25,8 @@ export async function getData(request, response, date, locations, forecastData) 
   }, 29.5 * 1000)
   //Triggering timeout 1/2 a second before Heroku does
 
-  const dateParsed = parse(date, "dd-MM-yyyy", new Date())
+  let dateParsed = parse(date, "dd-MM-yyyy", new Date())
+  if (!isValid(dateParsed)) dateParsed = new Date()
   const locationID = request.params.id
   const location = locations[locationID]
   const dataset = Object.keys(location.datasets)[0]
