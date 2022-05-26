@@ -233,14 +233,14 @@ div.footerItem p {
     }
 }
 
-
-table#settings {
-    width: calc(100% - 20px);
-    margin: 0 10px;
-}
-
-table#settings tr {
-    height: 30px;
+/* Styling grid with settings for both pages */
+div#settings {
+    display: grid;
+    grid-template-columns: clamp(50px, 60%, 400px) clamp(80px, calc(40% - 10px), 200px);
+    margin: 5px 10px;
+    column-gap: 10px;
+    row-gap: 20px;
+    align-items: center;
 }
 
 /* Popup styling */

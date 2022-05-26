@@ -1,6 +1,4 @@
-import { format, add, sub, parse, formatISO, isSameDay } from "date-fns"
-import pkg from 'date-fns-tz';
-const { utcToZonedTime } = pkg;
+import { format, addDays, sub, isSameDay } from "date-fns"
 
 export function catchError(resolve, data, error, dataset) {
   data = { error: error, dataset: dataset }
@@ -8,13 +6,11 @@ export function catchError(resolve, data, error, dataset) {
 }
 
 export function processAllNegativeArrays(wind_speed, wind_gusts, wind_direction) {
-  if (!wind_speed.some(value => value > 0) && !wind_gusts.some(value => value > 0) && !wind_direction.some(value => value > 0)) {
-    return [
-      [],
-      [],
-      []
-    ] //This error is not handled here, just return empty arrays
-  }
+  if (!wind_speed.some(value => value > 0)) wind_speed = []
+  if (!wind_gusts.some(value => value > 0)) wind_gusts = []
+  if (!wind_direction.some(value => value > 0)) wind_direction = []
+
+  //This error is not handled here, just return empty array(s)
 
   return [wind_speed, wind_gusts, wind_direction]
 }
@@ -43,10 +39,9 @@ export function giveRWSFetchOptions(dateParsed, databaseData, DSTDates) {
     //Wintertime
     startTime = endTime = "00:00:00"
     dateStartFetch = format(dateParsed, "yyyy-MM-dd")
-    dateEndFetch = format(add(dateParsed, { days: 1 }), "yyyy-MM-dd")
+    dateEndFetch = format(addDays(dateParsed, 1), "yyyy-MM-dd")
   }
-
-  console.log(dateStartFetch, dateEndFetch)
+  //All above is needed due to *** RWS API
 
   const locationID = databaseData.datasets.Rijkswaterstaat.location_id
   const locationX = databaseData.x
@@ -125,28 +120,19 @@ export function SuccesvolFalseError(rawData, resolve) {
 }
 
 //MVB specific
-export function giveMVBFetchOptions(databaseData, dateZoned, newToken, DSTDates) {
+export function giveMVBFetchOptions(dateParsed, databaseData, newToken) {
 
   const keyFetch = newToken || MVBAPIKey.APIKey
   const locationID = JSON.stringify(databaseData.datasets.MVB.location_id)
-  const dateYesterdayFetch = format(sub(dateZoned, {
-    days: 1
-  }), "yyyy-MM-dd")
-  const dateTodayFetch = format(dateZoned, "yyyy-MM-dd")
-
-  let time
-  if (new Date() >= add(DSTDates[0], { days: 1 }) && new Date() < add(DSTDates[1], { days: 1 })) {
-    time = "22:00:00"
-  } else {
-    time = "23:00:00"
-  }
+  const dateStartFetch = dateParsed.toISOString()
+  const dateEndFetch = addDays(dateParsed, 1).toISOString()
 
   return {
     "headers": {
       "authorization": `Bearer ${keyFetch}`,
       "content-type": "application/json; charset=UTF-8"
     },
-    "body": `{\"StartTime\":\"${dateYesterdayFetch}T${time}.000Z\",\"EndTime\":\"${dateTodayFetch}T${time}.000Z\",\"IDs\":${locationID}}`,
+    "body": `{\"StartTime\":\"${dateStartFetch}\",\"EndTime\":\"${dateEndFetch}\",\"IDs\":${locationID}}`,
     "method": "POST"
   }
 }
@@ -201,11 +187,9 @@ export function MessageError(rawData, data, resolve) {
 
 export function theoreticalMeasurements(measurementTimes, times) {
   if (measurementTimes.length == 0) return
-  const lastMeasurementHH = measurementTimes[measurementTimes.length - 1].substring(0, 2)
-  const lastMeasurementmm = measurementTimes[measurementTimes.length - 1].substring(3, 5)
 
-  let theoreticalMeasurementCount = times.lastIndexOf(`${lastMeasurementHH}:${lastMeasurementmm}`)
-  if (lastMeasurementHH == "00" && lastMeasurementmm == "00") theoreticalMeasurementCount = times.length
+  const lastMeasurementTime = measurementTimes[measurementTimes.length - 1]
+  const theoreticalMeasurementCount = times.indexOf(lastMeasurementTime)
 
   return theoreticalMeasurementCount + 1
 }

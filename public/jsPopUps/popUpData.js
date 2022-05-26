@@ -2,7 +2,8 @@ export const popUpData = {
   welkom: { html: `
     <h3 style="font-size: 24px;" class="popUpTitle">De Wind Nu | Welkom!</h3>
     <p class='messageBoxP'>
-    De Wind Nu verzamelt actuele weerdata van meetstations door heel Nederland. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.
+    De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met voorspellingen in grafieken. 
+    Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.
     <br><br>
     Zodra je deze boodschap wegklikt zie je een kaart met alle beschikbare locaties. 
     In dit overzicht zijn ook de wind- krachten en richtingen weergegeven.</p>
@@ -26,7 +27,7 @@ export const popUpData = {
   over: { html: `
     <h3 class="popUpTitle">Over</h3>
     <p class='messageBoxP'>
-    De Wind Nu verzamelt actuele weerdata van meetstations door heel Nederland. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.
+    De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met voorspellingen in grafieken. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.
     <br><br>
     Bij het openen van de website is een overzicht weergegeven met de wind- krachten en richtingen.
     Opties zoals als de kaart tegels, met keuze tussen de standaardtegels van OpenStreetMap en tegels van hogere resolutie van Mapbox, 
@@ -40,11 +41,13 @@ export const popUpData = {
         en kunnen daarom lagere waardes aangeven)</div>
     </div><br>
     <p class='messageBoxP'>
-    Na het klikken op een van de locaties wordt de data van vandaag getoond voor deze locatie. Deze data is standaard weergegeven als twee grafieken,
+    Na het klikken op een van de locaties wordt de data van vandaag getoond voor deze locatie. De datum kan bovenaan gewijzigd worden met de pijltjes 
+    (hierbij moet wel op het icoon rechts gedrukt worden om de data op te halen) of door op de datum zelf te klikken. De data is standaard weergegeven als 
+    twee grafieken,
     maar er kan boven het tweede kopje ook gekozen worden voor een tabel (dit kan overigens ook onderaan de pagina gekozen worden). 
     Alle tijden op de website zijn in de Midden-Europese (zomer)tijd.
     <br><br>
-    Bovenaan is de naam van de locatie weergegeven. Onder het eerste kopje zijn de gegevens van de recentste metingen en de voorspellingen voor dit tijdstip weergegeven. 
+    Bovenaan is de naam van de locatie weergegeven met daarnaast de datum van de data. Onder het eerste kopje zijn de gegevens van de recentste metingen en de voorspellingen voor dit tijdstip weergegeven. 
     Daaronder is een grafiek te zien met de gemeten windsnelheden (gemiddelde snelheid over de afgelopen 10 minuten) en de windvlagen (maximale, 3 seconde durende, 
       windstoot in de afgelopen 10 minuten). 
       
@@ -67,7 +70,9 @@ export const popUpData = {
       waarin Nederland centraal ligt. Dit wordt gedaan op supercomputers,
       elke dag om 00:00, 06:00, 12:00 en 18:00 (UTC), wat ongeveer drie uur duurt per run. Als dit klaar is worden de 
       voorspellingen zo snel mogelijk geupdate op de site. Onderaan de pagina is te zien van welke run je de voorspellingen bekijkt. Voorspellingen 
-      van vóór de tijd van de meest recente run, zijn van de vorige run, aangezien het model alleen in de toekomst de wind berekent.
+      van vóór de tijd van de meest recente run, zijn van de vorige run, aangezien het model alleen in de toekomst de wind berekent. Voorspellingen 
+      van dagen na 23 mei 2022 worden opgeslagen en zijn ter inzage te bekijken.
+
       </p>
     <h4 class="popUpHeading">Fouten / bugs</h4>
     <p class='messageBoxP'>
@@ -75,6 +80,9 @@ export const popUpData = {
     Indien dit het geval is, is dit een probleem buiten het bereik van De Wind Nu. Andere problemen, zoals het niet laden van de website na 10 seconden, 
     waarden van <i>undefined</i>, <i>NaN</i> of negatieve getallen die getoond worden, of het ontbreken van elementen op de website, 
     zijn bugs en deze kunnen gerapporteerd worden met het formulier onderaan de website.
+
+    <br><br>&nbsp;&nbsp;&nbsp;&nbsp;
+      Bij het gebruik van dewindnu.nl ga ja akkoord met de disclaimer welke onderaan te bekijken is.
     </p>
     ` },
   disclaimer: { html: `

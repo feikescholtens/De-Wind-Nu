@@ -11,7 +11,7 @@
 
     
 
-    <meta name="description" content="De Wind Nu verzamelt actuele weerdata van meetstations door heel Nederland. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
+    <meta name="description" content="De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met voorspellingen in grafieken. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
     <meta name="keywords" content="actuele wind in knopen,
     windmetingen Brouwersdam,
     metingen meetstations KNMI Rijkswaterstaat,
@@ -30,13 +30,13 @@
     <meta property="og:url" content="https://dewindnu.nl">
     <meta property="og:image" content="https://dewindnu.nl/images/logoEncircled.png">
     <meta property="og:site_name" content="De Wind Nu">
-    <meta property="og:description" content="De Wind Nu verzamelt actuele weerdata van meetstations door heel Nederland. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
+    <meta property="og:description" content="De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met voorspellingen in grafieken. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
     
     <meta property="twitter:card" content="summary">
     <meta property="twitter:title" content="De Wind Nu">
     <meta property="twitter:url" content="https://dewindnu.nl">
     <meta property="twitter:image" content="https://dewindnu.nl/images/logoEncircled.png">
-    <meta property="twitter:description" content="De Wind Nu verzamelt actuele weerdata van meetstations door heel Nederland. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
+    <meta property="twitter:description" content="De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met voorspellingen in grafieken. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -118,48 +118,41 @@
             <canvas data-chartWindDirection class="charts noDisplay" height="300px"></canvas>
 
             <h3 data-dataInfo id="dataInfo">Metingen: <span data-measurementSource></span> | 
-              Voorspellingen: <span data-forecastSource>HARMONIE model van het KNMI, run van <span data-forecastRun></span> uur, volgende update ± <span data-nextForecastRun></span> uur</span> </h3>
+              Voorspellingen: <span data-forecastSource></span> </h3>
+            
             <h2 class="sectionHeader">Instellingen</h2>
-            <table id="settings" role="presentation">
-              <tr>
-                <td><label for="showBar">Toon balk met snel wisselen tussen grafieken en tabel</label></td>
-                    <td><input type="checkbox" data-showBar id="showBar">
-                    </input></td>
-                </tr>
-                <tr>
-                  <td><label for="dataForm">Weergave vorm</label></td>
-                  <td><select data-dataFormUnderSettings id="dataForm">
-                          <option value="graphs">Grafieken</option>
-                          <option value="table">Tabel</option>
-                      </select></td>
-                </tr>
-                <tr>
-                    <td><label for="unit">Eenheid</label></td>
-                    <td><select data-unit id="unit">
-                            <option value="kn">Knopen [kn]</option>
-                            <option value="m/s">Meter per seconde [m/s]</option>
-                            <option value="km/h">Kilometer per uur [km/h]</option>
-                            <option value="mph">Mijl per uur [mph]</option>
-                            <option value="Bft">Beaufort [Bft]</option>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td><label for="decimals">Aantal decimalen</label></td>
-                    <td><select data-decimals id="decimals">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                        </select></td>
-                </tr>
-                <tr>
-                  <td><label for="interpolation">Interpoleer data</label></td>
-                  <td><select data-interpolation id="interpolation">
-                          <option value="1">Ja</option>
-                          <option value="0" selected="selected">Nee</option>
-                      </select></td>
-              </tr>
+              <div id="settings">
 
-            </table>
+                <label for="showBar">Toon balk met snel wisselen tussen grafieken en tabel</label>
+                <input type="checkbox" data-showBar id="showBar"></input>
+
+                <label for="dataForm">Weergave vorm</label>
+                <select data-dataFormUnderSettings id="dataForm">
+                  <option value="graphs">Grafieken</option>
+                  <option value="table">Tabel</option>
+                </select>
+
+                <label for="unit">Eenheid</label>
+                <select data-unit id="unit">
+                  <option value="kn">Knopen [kn]</option>
+                  <option value="m/s">Meter per seconde [m/s]</option>
+                  <option value="km/h">Kilometer per uur [km/h]</option>
+                  <option value="mph">Mijl per uur [mph]</option>
+                  <option value="Bft">Beaufort [Bft]</option>
+                </select>
+
+                <label for="decimals">Aantal decimalen</label>
+                <select data-decimals id="decimals">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
+
+                <label for="interpolation">Interpoleer ontbrekende meetwaarden</label>
+                <input type="checkbox" data-interpolation id="interpolation">
+
+              </div>
+
     </main>
     <footer>
 

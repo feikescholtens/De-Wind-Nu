@@ -1,4 +1,19 @@
 import { contentUpdate } from "./contentUpdate.js"
+import {
+  isValid,
+  addHours,
+  parseISO,
+  differenceInCalendarDays,
+  isYesterday,
+  isTomorrow,
+  isToday,
+  addDays,
+  format,
+  subDays,
+  parse,
+  startOfDay
+} from "https://esm.run/date-fns"
+import nl from "https://esm.run/date-fns/locale/nl"
 
 export function changeShowBar(showBarSelector) {
   let value
@@ -47,9 +62,15 @@ export function changeDecimals(decimalsSelector) {
 }
 
 export function changeInterpolation(interpolationSelector) {
-  localStorage.setItem("interpolation", interpolationSelector.value)
+  let value
+  if (interpolationSelector.checked == false) {
+    value = "0"
+  } else {
+    value = "1"
+  }
+  localStorage.setItem("interpolation", value)
 
-  if (interpolation == "1") {
+  if (value == "1") {
     const dataTypeArray = ["windSpeed", "windGusts", "windDirection"]
     dataTypeArray.forEach(dataType => {
       interpolatedData[dataType].forEach((element) => {
@@ -149,7 +170,7 @@ export function calcInterpolation() {
 }
 
 export function checkInterpolated(ctx, dataType, value) {
-  if (interpolatedIndices[dataType].includes(ctx.p0DataIndex) && interpolatedIndices[dataType].includes(ctx.p0DataIndex + 1)) return value
+  if (interpolatedIndices[dataType].includes(ctx.p0DataIndex + 1) || interpolatedIndices[dataType].includes(ctx.p0DataIndex)) return value
 }
 
 export function newChartOptions(datasets, options) {
@@ -181,5 +202,74 @@ export function changeTableSort(tableSort) {
   }
 
   contentUpdate()
+
+}
+
+export function getAbsoluteDate(date) {
+  if (date == "Eergisteren") return subDays(new Date(), 2)
+  else if (date == "Gisteren") return subDays(new Date(), 1)
+  else if (date == "Vandaag") return new Date()
+  else if (date == "Morgen") return addDays(new Date(), 1)
+  else if (date == "Overmorgen") return addDays(new Date(), 2)
+  else return parse(date.substring(4), "d MMM yyyy", new Date(), { locale: nl })
+}
+
+export function getRelativeDate(date) {
+  if (differenceInCalendarDays(date, new Date()) == -2) return "Eergisteren"
+  else if (isYesterday(date)) return "Gisteren"
+  else if (isToday(date)) return "Vandaag"
+  else if (isTomorrow(date)) return "Morgen"
+  else if (differenceInCalendarDays(date, new Date()) == 2) return "Overmorgen"
+  else return format(date, "eeeeee. d MMM yyyy", { locale: nl })
+}
+
+export function switchPreviousDay() {
+  const currentDate = document.querySelector("[data-currentDay]").innerText
+  const absoluteDate = getAbsoluteDate(currentDate)
+
+  const previousDay = subDays(absoluteDate, 1)
+  const relativePreviousDay = getRelativeDate(previousDay)
+
+  document.querySelector("[data-currentDay]").innerText = relativePreviousDay
+  setDateInUrl(previousDay)
+  document.querySelector("[data-datePicker]").value = format(previousDay, "yyyy-MM-dd")
+}
+
+export function switchNextDay() {
+  const currentDate = document.querySelector("[data-currentDay]").innerText
+  const absoluteDate = getAbsoluteDate(currentDate)
+
+  const nextDay = addDays(absoluteDate, 1)
+  if (startOfDay(nextDay) > startOfDay(globalThis.datePickerMax)) return
+
+  const relativeNextDay = getRelativeDate(nextDay)
+
+  document.querySelector("[data-currentDay]").innerText = relativeNextDay
+  setDateInUrl(nextDay)
+  document.querySelector("[data-datePicker]").value = format(nextDay, "yyyy-MM-dd")
+}
+
+export function setDateInUrl(date) {
+  if (isToday(date)) {
+    history.replaceState(null, null, `${window.location.origin + window.location.pathname}`)
+    return
+  }
+
+  const dateString = format(date, "dd-MM-yyyy")
+  history.replaceState(null, null, `?datum=${dateString}`)
+}
+
+export function getDatePickerMax() {
+
+  const date = new Date()
+  if (new Date().getTimezoneOffset() == -60) date.setHours(9)
+  else date.setHours(10)
+  date.setMinutes(58)
+
+
+  if (new Date() > date) return addHours(new Date(), 48)
+  else {
+    return addHours(new Date(), 24)
+  }
 
 }

@@ -9,7 +9,7 @@
 
 
 
-  <meta name="description" content="De Wind Nu verzamelt actuele weerdata van meetstations door heel Nederland. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
+  <meta name="description" content="De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met voorspellingen in grafieken. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
     <meta name="keywords" content="actuele wind in knopen,
     windmetingen Brouwersdam,
     metingen meetstations KNMI Rijkswaterstaat,
@@ -28,13 +28,13 @@
     <meta property="og:url" content="https://dewindnu.nl">
     <meta property="og:image" content="https://dewindnu.nl/images/logoEncircled.png">
     <meta property="og:site_name" content="De Wind Nu">
-    <meta property="og:description" content="De Wind Nu verzamelt actuele weerdata van meetstations door heel Nederland. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
+    <meta property="og:description" content="De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met voorspellingen in grafieken. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
     
     <meta property="twitter:card" content="summary">
     <meta property="twitter:title" content="De Wind Nu">
     <meta property="twitter:url" content="https://dewindnu.nl">
     <meta property="twitter:image" content="https://dewindnu.nl/images/logoEncircled.png">
-    <meta property="twitter:description" content="De Wind Nu verzamelt actuele weerdata van meetstations door heel Nederland. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
+    <meta property="twitter:description" content="De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met voorspellingen in grafieken. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
 
 
   
@@ -89,23 +89,19 @@
   </header>
   <div id="mapWrapper"><div id="map"></div></div>
   <main>
+
     <h2 class="sectionHeader">Instellingen</h2>
 
-    <table id="settings" role="presentation">
-      <tr>
-          <td><label for="tiles">Standaard kaart</label></td>
-          <td><select data-tiles id="tiles">
-                  <option value="OpenStreetMap">OpenStreetMap (sneller)</option>
-                  <option value="Mapbox">Mapbox (mooier)</option>
-              </select></td>
-      </tr>
-      <tr>
-        <td><label for="seaMap">Toon zeekaart</label></td>
-        <td><input type="checkbox" data-seaMap id="seaMap">
-            </input></td>
-    </tr>
-  </table>
-
+    <div id="settings">
+        <label for="tiles">Standaard kaart</label>
+        <select data-tiles id="tiles">
+          <option value="OpenStreetMap">OpenStreetMap (sneller)</option>
+          <option value="Mapbox">Mapbox (mooier)</option>
+        </select>
+        
+        <label for="seaMap">Toon zeekaart</label>
+        <input type="checkbox" data-seaMap id="seaMap"></input>
+    </div>
 
   </main>
   <footer>
@@ -116,12 +112,13 @@
       <div class="footerItem" data-credit><p>Credit / bronvermelding</p></div>
       <div class="footerItem" data-disclaimer><p>Disclaimer</p></div>
       <div class="footerItem" data-contact><p>Contact</p></div>
-      <div class="footerItem" data-about><a id="source" href="https://github.com/feikescholtens/De-Wind-Nu" target="_blank">
-        <p>Broncode op Github</p>
-      </a></div>
-  </div>
+      <div class="footerItem" data-about>
+        <a id="source" href="https://github.com/feikescholtens/De-Wind-Nu" target="_blank">
+          <p>Broncode op Github</p>
+        </a></div>
+      </div>
   
-</footer>
+  </footer>
 </body>
 
 </html>

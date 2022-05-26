@@ -1,4 +1,4 @@
-import { format, parseISO, getUnixTime, add, parse } from "date-fns"
+import { format, parseISO, getUnixTime, addHours, parse } from "date-fns"
 import module from "date-fns-tz"
 const { utcToZonedTime } = module
 import fetch from "node-fetch"
@@ -7,7 +7,7 @@ import { catchError, MessageError, theoreticalMeasurements, giveMVBFetchOptions 
 
 Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 
-export async function fetchMVB(databaseData, resolve, times, DSTDates) {
+export async function fetchMVB(dateParsed, databaseData, resolve, times) {
 
   let data = []
 
@@ -28,8 +28,8 @@ export async function fetchMVB(databaseData, resolve, times, DSTDates) {
 
     fetchDataMVB(rawData["access_token"])
 
-    const expiresString = add(parse(rawData[".expires"], "EEE, dd MMM yyyy HH:mm:ss 'GMT'", new Date()), { hours: 1 })
-    const issuedString = add(parse(rawData[".issued"], "EEE, dd MMM yyyy HH:mm:ss 'GMT'", new Date()), { hours: 1 })
+    const expiresString = addHours(parse(rawData[".expires"], "EEE, dd MMM yyyy HH:mm:ss 'GMT'", new Date()), 1)
+    const issuedString = addHours(parse(rawData[".issued"], "EEE, dd MMM yyyy HH:mm:ss 'GMT'", new Date()), 1)
     MVBAPIKey = {
       "expirationDate": getUnixTime(expiresString),
       "issuedDate": getUnixTime(issuedString),
@@ -43,10 +43,8 @@ export async function fetchMVB(databaseData, resolve, times, DSTDates) {
   async function fetchDataMVB(newToken) {
 
     const timeZone = "Europe/Amsterdam"
-    const dateUTC = new Date()
-    const dateZoned = utcToZonedTime(dateUTC, timeZone)
 
-    const rawDataString = await fetch("https://api.meetnetvlaamsebanken.be/V2/getData", giveMVBFetchOptions(databaseData, dateZoned, newToken, DSTDates))
+    const rawDataString = await fetch("https://api.meetnetvlaamsebanken.be/V2/getData", giveMVBFetchOptions(dateParsed, databaseData, newToken))
       .then(response => response.text()).catch((error) => catchError(resolve, data, error, "MVB"))
 
     let rawData
@@ -68,6 +66,7 @@ export async function fetchMVB(databaseData, resolve, times, DSTDates) {
 
       measurementType.Values.forEach(measurement => {
         let time = format(utcToZonedTime(parseISO(measurement.Timestamp), timeZone), "HH:mm")
+        if (time == "00:00" && measurementTimes.length > 0) time = "00:00_nextDay"
         measurementTimes.push(time)
       })
 
@@ -77,7 +76,7 @@ export async function fetchMVB(databaseData, resolve, times, DSTDates) {
           return
         }
 
-        const indexTime = measurementTimes.indexOf(timeStamp)
+        let indexTime = measurementTimes.indexOf(timeStamp)
 
         if (measurementType.Values[indexTime]) {
           if (measurementType.Values[indexTime].Value) {

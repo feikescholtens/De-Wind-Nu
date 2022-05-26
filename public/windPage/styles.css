@@ -39,8 +39,6 @@ nav {
 }
 
 #datePicker {
-    width: 40;
-    height: 10;
     visibility: hidden;
     position: absolute;
     z-index: -1;
@@ -85,6 +83,7 @@ p#currentDate {
 
 h4#location {
     color: grey;
+    font-size: clamp(12px, 18px, 20px)
 }
 
 /*  */

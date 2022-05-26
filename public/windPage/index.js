@@ -1,9 +1,31 @@
-import { addDays, subDays, differenceInCalendarDays, isYesterday, isToday, isTomorrow, parse, format } from "https://esm.run/date-fns"
-import nl from "https://esm.run/date-fns/locale/nl"
+import { addDays, isToday, parse, format } from "https://esm.run/date-fns"
 import { displayPopUpWithName } from "../jsPopUps/functions.js"
 import { displayPopUpFeedback } from "../jsPopUps/feedback.js"
 import { contentUpdate } from "./js/contentUpdate.js"
-import { changeShowBar, changeDataForm, changeUnit, changeDecimals, formulateErrorMessage, showErrorMessage, hideErrorMessage, hideMain, showLoader, hideLoader, showMain, showCurrentWindBox, hideCurrentWindBox, changeInterpolation, calcInterpolation, changeTableSort } from "./js/functions.js"
+import {
+  changeShowBar,
+  changeDataForm,
+  changeUnit,
+  changeDecimals,
+  formulateErrorMessage,
+  showErrorMessage,
+  hideErrorMessage,
+  hideMain,
+  showLoader,
+  hideLoader,
+  showMain,
+  showCurrentWindBox,
+  hideCurrentWindBox,
+  changeInterpolation,
+  calcInterpolation,
+  changeTableSort,
+  getAbsoluteDate,
+  getRelativeDate,
+  getDatePickerMax,
+  switchPreviousDay,
+  switchNextDay,
+  setDateInUrl
+} from "./js/functions.js"
 import { redirect, updateLocalVariables } from "../globalFunctions.js"
 redirect()
 updateLocalVariables()
@@ -14,18 +36,20 @@ Object.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 const locationID = location.pathname.substring(6, 10)
 
 const dateURLString = new URLSearchParams(window.location.search).get("datum")
-let absoluteDate, relativeDate
+let dateURL, absoluteDate, relativeDate
 try {
-  const dateURL = parse(dateURLString, "dd-MM-yyyy", new Date())
+  dateURL = parse(dateURLString, "dd-MM-yyyy", new Date())
   relativeDate = getRelativeDate(dateURL)
   absoluteDate = dateURLString
 } catch {
+  dateURL = null
   relativeDate = "Vandaag"
   absoluteDate = format(getAbsoluteDate(relativeDate), "dd-MM-yyyy")
 
   history.replaceState(null, null, `${window.location.origin + window.location.pathname}`)
 }
 document.querySelector("[data-currentDay]").innerText = relativeDate
+if (dateURL !== null) document.querySelector("[data-datePicker]").value = format(dateURL, "yyyy-MM-dd")
 
 fetchData(absoluteDate)
 
@@ -77,9 +101,7 @@ const showBarSelector = document.querySelector("[data-showBar]"),
 
 const locationLabelNode = document.querySelector("[data-location]"),
   measurementSourceLabelNode = document.querySelector("[data-measurementSource]"),
-  forecastSourceLabelNode = document.querySelector("[data-forecastSource]"),
-  forecastRunLabelNode = document.querySelector("[data-forecastRun]"),
-  nextForecastRunLabelNode = document.querySelector("[data-nextForecastRun]")
+  forecastSourceLabelNode = document.querySelector("[data-forecastSource]")
 
 const compassCanvas = document.querySelector("[data-compass]"),
   currentWindBox = document.querySelector("[data-currentWindBox]"),
@@ -108,7 +130,7 @@ if (localStorage.getItem("dataForm") == "table") {
 unitSelector.value = localStorage.getItem("unit")
 if (unitSelector.value == 4) decimalsSelector.setAttribute("disabled", "disabled")
 decimalsSelector.value = localStorage.getItem("decimals")
-interpolationSelector.value = localStorage.getItem("interpolation")
+if (localStorage.getItem("interpolation") == "1") interpolationSelector.checked = true
 if (localStorage.getItem("tableSort") == "ascending") tableSort.innerHTML = `Tijd <span id="sortArrow">▼</span>`
 
 //Links for going back to homepage
@@ -144,8 +166,9 @@ async function processRetrievedData(dataFetched) {
   const dataset = dataFetched.dataset
   const dateData = parse(dataFetched.date, "dd-MM-yyyy", new Date())
   globalThis.times = dataFetched.values.times
-  globalThis.date = getRelativeDate(parse(dataFetched.date, "dd-MM-yyyy", new Date()))
-  globalThis.interpolatedData = {}, globalThis.interpolatedIndices = {}
+  globalThis.date = getRelativeDate(parse(dataFetched.date, "dd-MM-yyyy", new Date())),
+    globalThis.dateTomorrow = getRelativeDate(addDays(parse(dataFetched.date, "dd-MM-yyyy", new Date()), 1)),
+    globalThis.interpolatedData = {}, globalThis.interpolatedIndices = {}
 
   data = dataFetched.values
   dataWUnits = data.copy();
@@ -154,12 +177,10 @@ async function processRetrievedData(dataFetched) {
   measurementSourceLabelNode.innerText = dataset
   if (dataset == "MVB") measurementSourceLabelNode.innerText = "Meetnet Vlaamse Banken"
   if (dataset == "VLINDER") measurementSourceLabelNode.innerText = "UGent VLINDER project"
-  if (dataset == "KNMI" || dataset == "VLINDER")
-    document.querySelector("[data-decimals]").getElementsByTagName("option")[2].innerHTML = "2 (needs fixing...)"
 
-  if (dataFetched.forecastRun == "N.A.") forecastSourceLabelNode.innerText = "niet beschikbaar"
-  forecastRunLabelNode.innerText = dataFetched.forecastRun
-  nextForecastRunLabelNode.innerText = dataFetched.nextForecastRun
+  forecastSourceLabelNode.innerText = dataFetched.forecastInfoString
+  globalThis.datePickerMax = getDatePickerMax()
+  document.querySelector("[data-datePicker]").setAttribute("max", format(globalThis.datePickerMax, "yyyy-MM-dd"))
 
   //Remove current wind box if no mearurements are available OR date is not of the current day and set headings
   if ((dataWUnits.windSpeed.length == 0 && dataWUnits.windGusts.length == 0 && dataWUnits.windDirection.length == 0) || !isToday(dateData)) hideCurrentWindBox()
@@ -174,31 +195,9 @@ async function processRetrievedData(dataFetched) {
 }
 
 //Add listeners for changing dates
-document.querySelector("[data-previousDay]").addEventListener("click", () => {
-  const currentDate = document.querySelector("[data-currentDay]").innerText
-  const absoluteDate = getAbsoluteDate(currentDate)
-
-  const previousDay = subDays(absoluteDate, 1)
-  const relativePreviousDay = getRelativeDate(previousDay)
-
-  document.querySelector("[data-currentDay]").innerText = relativePreviousDay
-  setDateInUrl(previousDay)
-})
-
-document.querySelector("[data-nextDay]").addEventListener("click", () => {
-  const currentDate = document.querySelector("[data-currentDay]").innerText
-  const absoluteDate = getAbsoluteDate(currentDate)
-
-  const nextDay = addDays(absoluteDate, 1)
-  const relativeNextDay = getRelativeDate(nextDay)
-
-  document.querySelector("[data-currentDay]").innerText = relativeNextDay
-  setDateInUrl(nextDay)
-})
-
-document.querySelector("[data-currentDay]").addEventListener("click", () =>
-  document.querySelector("[data-datePicker]").showPicker()
-)
+document.querySelector("[data-previousDay]").addEventListener("click", switchPreviousDay)
+document.querySelector("[data-nextDay]").addEventListener("click", switchNextDay)
+document.querySelector("[data-currentDay]").addEventListener("click", () => document.querySelector("[data-datePicker]").showPicker())
 document.querySelector("[data-datePicker]").addEventListener("change", (e) => {
   const dateSelected = parse(e.target.value, "yyyy-MM-dd", new Date())
   const relativeDate = getRelativeDate(dateSelected)
@@ -208,6 +207,7 @@ document.querySelector("[data-datePicker]").addEventListener("change", (e) => {
 
   fetchData(format(dateSelected, "dd-MM-yyyy"))
 })
+
 document.querySelector("[data-getData]").addEventListener("click", () => {
   const dateFetchString = document.querySelector("[data-currentDay]").innerText
   const dateFetch = getAbsoluteDate(dateFetchString)
@@ -215,34 +215,6 @@ document.querySelector("[data-getData]").addEventListener("click", () => {
 
   fetchData(dateFetchAbsolute)
 })
-
-function getAbsoluteDate(date) {
-  if (date == "Eergisteren") return subDays(new Date(), 2)
-  else if (date == "Gisteren") return subDays(new Date(), 1)
-  else if (date == "Vandaag") return new Date()
-  else if (date == "Morgen") return addDays(new Date(), 1)
-  else if (date == "Overmorgen") return addDays(new Date(), 2)
-  else return parse(date.substring(4), "d MMM yyyy", new Date(), { locale: nl })
-}
-
-function getRelativeDate(date) {
-  if (differenceInCalendarDays(date, new Date()) == -2) return "Eergisteren"
-  else if (isYesterday(date)) return "Gisteren"
-  else if (isToday(date)) return "Vandaag"
-  else if (isTomorrow(date)) return "Morgen"
-  else if (differenceInCalendarDays(date, new Date()) == 2) return "Overmorgen"
-  else return format(date, "eeeeee. d MMM yyyy", { locale: nl })
-}
-
-function setDateInUrl(date) {
-  if (isToday(date)) {
-    history.replaceState(null, null, `${window.location.origin + window.location.pathname}`)
-    return
-  }
-
-  const dateString = format(date, "dd-MM-yyyy")
-  history.replaceState(null, null, `?datum=${dateString}`)
-}
 
 //(1)Change the data in local storage when other options are selected and (2) refresh the graphs
 showBarSelector.onchange = () => changeShowBar(showBarSelector)

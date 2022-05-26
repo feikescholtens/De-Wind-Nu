@@ -6,8 +6,10 @@ export async function contentUpdate() {
 
   const unitSelector = document.querySelector("[data-unit]")
   globalThis.unit = localStorage.getItem("unit")
-  if (unitSelector.value == 4) globalThis.decimals = 0
-  else globalThis.decimals = localStorage.getItem("decimals")
+  if (unitSelector.value == "Bft") {
+    globalThis.decimals = 0
+    document.querySelector("[data-decimals]").disabled = true
+  } else globalThis.decimals = localStorage.getItem("decimals")
   globalThis.interpolation = localStorage.getItem("interpolation")
 
   //(This 'backup' is restored to the original 'data' variable so interpolation setting can change on the fly)

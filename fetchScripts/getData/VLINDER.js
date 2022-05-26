@@ -1,4 +1,4 @@
-import { format, parse, startOfToday } from "date-fns"
+import { format, parse, subSeconds, add } from "date-fns"
 import module from "date-fns-tz"
 const { utcToZonedTime } = module
 import fetch from "node-fetch"
@@ -8,13 +8,15 @@ const timeZone = "Europe/Amsterdam"
 
 Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 
-export async function fetchVLINDER(databaseData, resolve, times) {
+export async function fetchVLINDER(dateParsed, databaseData, resolve, times) {
 
   let data = []
 
   const locationID = databaseData.datasets.VLINDER.location_id
+  const dateStartFetch = subSeconds(dateParsed, 1).toISOString()
+  const dateEndFetch = add(dateParsed, { days: 1, seconds: 1 }).toISOString()
 
-  const rawDataString = await fetch(`https://mooncake.ugent.be/api/measurements/${locationID}`)
+  const rawDataString = await fetch(`https://mooncake.ugent.be/api/measurements/${locationID}?start=${dateStartFetch}&end=${dateEndFetch}`)
     .then(response => response.text()).catch((error) => catchError(resolve, data, error, "VLINDER"))
 
   let rawData
@@ -28,16 +30,9 @@ export async function fetchVLINDER(databaseData, resolve, times) {
     wind_direction = []
   let measurementTimes = []
 
-  //Remove measurements from yesterday
-  let indexToday
-  for (indexToday = 0; indexToday < rawData.length; indexToday++) {
-    let time = parse(rawData[indexToday].time.substring(5, rawData[indexToday].time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date())
-    if (utcToZonedTime(time, timeZone).getTime() == startOfToday(utcToZonedTime(new Date(), timeZone)).getTime()) break
-  }
-  rawData.splice(0, indexToday)
-
   rawData.forEach(measurement => {
     let time = format(utcToZonedTime(parse(measurement.time.substring(5, measurement.time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()), timeZone), "HH:mm")
+    if (time == "00:00" && measurementTimes.length > 0) time = "00:00_nextDay"
     measurementTimes.push(time)
   })
 

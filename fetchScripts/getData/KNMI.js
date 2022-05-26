@@ -6,16 +6,13 @@ import { readFileSync } from "fs"
 import { catchError, theoreticalMeasurements, processAllNegativeArrays } from "../fetchUtilFunctions.js"
 const timeZone = "Europe/Amsterdam"
 
-export async function fetchKNMI(databaseData, resolve, times) {
+export async function fetchKNMI(dateParsed, databaseData, resolve, times) {
 
   let data = []
 
   const locationID = databaseData.datasets.KNMI.location_id
-  const dateUTC = new Date()
-  const dateZoned = utcToZonedTime(dateUTC, timeZone)
-  const dateTodayFetch = format(dateZoned, "yyyy-M-d")
-
-  const rawDataString = await fetch(`https://graphdata.buienradar.nl/1.0/actualarchive/weatherstation/${locationID}/?startDate=${dateTodayFetch}`)
+  const dateStartFetch = format(dateParsed, "yyyy-M-d")
+  const rawDataString = await fetch(`https://graphdata.buienradar.nl/1.0/actualarchive/weatherstation/${locationID}/?startDate=${dateStartFetch}`)
     .then(response => response.text()).catch((error) => catchError(resolve, data, error, "KNMI"))
 
   let rawData
@@ -31,8 +28,12 @@ export async function fetchKNMI(databaseData, resolve, times) {
 
   rawData.observations.forEach(measurement => {
     let time = format(utcToZonedTime(parseISO(measurement.datetime + "+0" + UTCOffset + ":00"), timeZone), "HH:mm")
+    if (time == "00:00" && measurementTimes.length > 0) time = "00:00_nextDay"
     measurementTimes.push(time)
   })
+
+  //Needed to remove measurements from the next day (only needed on the day of switching to DST)
+  if (measurementTimes.indexOf("00:00_nextDay") !== -1) measurementTimes = measurementTimes.slice(0, measurementTimes.indexOf("00:00_nextDay") + 1)
 
   times.forEach(timeStamp => {
     if (!measurementTimes.includes(timeStamp)) {
@@ -42,7 +43,7 @@ export async function fetchKNMI(databaseData, resolve, times) {
       return
     }
 
-    const indexTime = measurementTimes.indexOf(timeStamp)
+    let indexTime = measurementTimes.indexOf(timeStamp)
 
     if (rawData.observations[indexTime].values.ff && rawData.observations[indexTime].values.ff >= 0) {
       wind_speed.push(rawData.observations[indexTime].values.ff * 0.53995726994149)

@@ -1,5 +1,6 @@
 import { sub } from "date-fns"
 import fetch from "node-fetch"
+import { Firestore } from "@google-cloud/firestore"
 
 export function getTimeChangeDates(date) {
 
@@ -56,11 +57,11 @@ export function generateTimes(measurementEveryXMinutes, timeZoneChange) {
   return times
 }
 
-export function calcInterpolation(array, times, startInterpolationIndex) {
+export function calcInterpolation(array, times, startTimeIndexInTimes, stopTimeIndexInTimes) {
 
   let interpolatedData = []
 
-  for (let i = startInterpolationIndex; i < array.length; i++) {
+  for (let i = startTimeIndexInTimes; i < array.length; i++) {
     let j
 
     if (!array[i] && array[i] !== 0) {
@@ -81,14 +82,12 @@ export function calcInterpolation(array, times, startInterpolationIndex) {
     }
   }
 
-  for (let k = startInterpolationIndex; k < times.length; k++) {
+  for (let k = startTimeIndexInTimes; k < stopTimeIndexInTimes; k++) {
     if (!array[k] && array[k] !== 0) {
       const interpolatedValue = interpolatedData.filter(element => element.index == k)[0].value
       array[k] = interpolatedValue
     }
   }
-
-  array = array.slice(0, times.length)
 
   return array
 }
@@ -106,4 +105,19 @@ export function restartHerokuDynos() {
       log(`An error in the Heroku API request occured while restarting dynos, status code ${response.status}!`, "fetchError", true)
     }
   })
+}
+
+export async function getArchivedForecast(date, locationID) {
+  const firestore = new Firestore({
+    projectId: process.env.GCP_PROJECT_ID,
+    credentials: {
+      client_email: process.env.GCP_CLIENT_EMAIL,
+      private_key: process.env.GCP_PRIVATE_KEY
+    }
+  })
+
+  const document = await firestore.doc(`Harmonie forecast archive/${date}`).get()
+
+  if (!document.exists) return null
+  return document.get(locationID)
 }

@@ -24,8 +24,8 @@ export function updateGraphs() {
     return (!isNaN(value) && value !== undefined)
   }))
 
-  datasets.windSpeed.label += ` | max: ${maxWindSpeed.toFixed(decimals).replace(".", ",")} ${unit}`
-  datasets.windGusts.label += ` | max: ${maxGusts.toFixed(decimals).replace(".", ",")} ${unit}`
+  datasets.windSpeed.label += ` | max: ${JSON.stringify(maxWindSpeed).replace(".", ",")} ${unit}`
+  datasets.windGusts.label += ` | max: ${JSON.stringify(maxGusts).replace(".", ",")} ${unit}`
   const dataTypeArray = ["windSpeed", "windGusts", "windDirection", "windSpeedForecast", "windGustsForecast", "windDirectionForecast"]
   dataTypeArray.forEach(dataType => {
     datasets[dataType] = { ...datasets[dataType], ...datasetObject }

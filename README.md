@@ -1,5 +1,6 @@
 # De Wind Nu
-De Wind Nu verzamelt actuele weerdata van meetstations door heel Nederland. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.
+De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met voorspellingen in grafieken. 
+Deze kunnen gebruikt worden voor het informeren van surfers of zeilers. Het [changelog](CHANGELOG.md) is hier te bekijken.
 
 ## Homepagina
 Bij het openen van de website is het volgende overzicht weergegeven met de wind- snelheden en richtingen in Beaufort. 

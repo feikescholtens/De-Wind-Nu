@@ -4,8 +4,8 @@ import { fetchVLINDER } from "./fetchScripts/getData/VLINDER.js"
 import { fetchRWS } from "./fetchScripts/getData/Rijkswaterstaat.js"
 import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
 import { fetchMVB } from "./fetchScripts/getData/MVB.js"
-import { getTimeChangeDates, generateTimes, calcInterpolation, restartHerokuDynos } from "./getScriptUtilFunctions.js"
-import { format, add, parseISO, parse } from "date-fns"
+import { getTimeChangeDates, generateTimes, calcInterpolation, restartHerokuDynos, getArchivedForecast } from "./getScriptUtilFunctions.js"
+import { format, add, parseISO, parse, startOfDay, isBefore } from "date-fns"
 import module from "date-fns-tz"
 const { utcToZonedTime } = module
 
@@ -31,7 +31,7 @@ export async function getData(request, response, date, locations, forecastData) 
   const dataset = Object.keys(location.datasets)[0]
   let values = {}
 
-  //Date and times 
+  //Times 
   let NoMeasurementsXHour
   if (["Rijkswaterstaat", "KNMI", "MVB"].includes(dataset)) NoMeasurementsXHour = 6
   if (["VLINDER"].includes(dataset)) NoMeasurementsXHour = 12
@@ -43,17 +43,14 @@ export async function getData(request, response, date, locations, forecastData) 
   if (dateRequest == dateToDST) times = generateTimes(60 / NoMeasurementsXHour, "toDST")
   else if (dateRequest == dateFromDST) times = generateTimes(60 / NoMeasurementsXHour, "fromDST")
   else times = generateTimes(60 / NoMeasurementsXHour)
-
-  // times = generateTimes(60 / NoMeasurementsXHour)
-
-  values["times"] = times
-  console.log(times)
+  values["times"] = times.copy()
+  times[times.length - 1] = "00:00_nextDay"
 
   //Measurements
   const dataFetched = await new Promise(async (resolve) => {
     // VLINDER
     if (location.datasets.VLINDER) {
-      return fetchVLINDER(location, resolve, times)
+      return fetchVLINDER(dateParsed, location, resolve, times)
     }
     // Rijkswaterstaat
     if (location.datasets.Rijkswaterstaat) {
@@ -61,11 +58,11 @@ export async function getData(request, response, date, locations, forecastData) 
     }
     //KNMI
     if (location.datasets.KNMI) {
-      return fetchKNMI(location, resolve, times)
+      return fetchKNMI(dateParsed, location, resolve, times)
     }
     //Meetnet Vlaamse Banken
     if (location.datasets.MVB) {
-      return fetchMVB(location, resolve, times, DSTDates)
+      return fetchMVB(dateParsed, location, resolve, times, DSTDates)
     }
   })
 
@@ -79,35 +76,73 @@ export async function getData(request, response, date, locations, forecastData) 
   }
 
   //Forecast
-  // if (forecastData[locationID]) {
-  //   const startForecastTimeIndex = forecastData[locationID].findIndex(location => location.date == date)
-  //   const startForecastTime = forecastData[locationID][startForecastTimeIndex].time
-  //   const startForecastTimeIndexInTimeSeries = times.indexOf(startForecastTime)
+  let forecastObj, forecastInfoString = "niet beschikbaar"
 
-  //   let wind_forecast = new Array(times.length),
-  //     wind_forecastGust = new Array(times.length),
-  //     wind_forecastDirection = new Array(times.length)
+  //Check if requested forecast is in the past or not, set the forecast for that location for that day to forecastObj and set the forecast information string accordingly 
+  if (!isBefore(dateParsed, startOfDay(new Date()))) {
+    if (forecastData[locationID]) {
+      forecastObj = forecastData[locationID]
 
-  //   const indexFirstForecastTimeToday = forecastData[locationID].findIndex(location => location.date == dateToday)
-  //   const amountHourValues = forecastData[locationID].length - indexFirstForecastTimeToday
+      const forecastRun = parseISO(forecastData.timeRun + "Z")
+      const forecastRunLocal = utcToZonedTime(forecastRun, "Europe/Amsterdam")
+      const forecastRunString = format(forecastRunLocal, "HH:mm")
 
-  //   for (let i = 0; i < amountHourValues; i++) {
-  //     wind_forecast[startForecastTimeIndexInTimeSeries + i * NoMeasurementsXHour] = forecastData[locationID][i + startForecastTimeIndex].s
-  //     wind_forecastDirection[startForecastTimeIndexInTimeSeries + i * NoMeasurementsXHour] = forecastData[locationID][i + startForecastTimeIndex].d
-  //     wind_forecastGust[startForecastTimeIndexInTimeSeries + i * NoMeasurementsXHour] = forecastData[locationID][i + startForecastTimeIndex].g
-  //   }
-  //   values["windSpeedForecast"] = calcInterpolation(wind_forecast, times, startForecastTimeIndexInTimeSeries)
-  //   values["windGustsForecast"] = calcInterpolation(wind_forecastGust, times, startForecastTimeIndexInTimeSeries)
-  //   values["windDirectionForecast"] = calcInterpolation(wind_forecastDirection, times, startForecastTimeIndexInTimeSeries)
-  // }
+      const timeNextRun = add(forecastRunLocal, { hours: (2 + 6), minutes: 58 })
+      const timeNextRunString = format(timeNextRun, "HH:mm")
+      forecastInfoString = `HARMONIE model van het KNMI, run van ${forecastRunString}, volgende update ± ${timeNextRunString}`
+    }
+  } else {
+    const archivedForecast = await getArchivedForecast(date, locationID)
+    if (archivedForecast) {
+      forecastObj = archivedForecast
+      forecastInfoString = "HARMONIE model van het KNMI, uit archief"
+    }
+  }
 
-  let timeStampRun,
-    timeRun = "N.A.",
-    timeNextRun
-  if (forecastData.timeRun && forecastData[locationID]) {
-    timeStampRun = utcToZonedTime(parseISO(`${forecastData.timeRun}Z`), timeZone)
-    timeRun = format(timeStampRun, "HH:mm")
-    timeNextRun = format(add(timeStampRun, { hours: (2 + 6), minutes: 58 }), "HH:mm")
+  //This object might become undefined when there is no forecast available, so only proceed when not so
+  if (forecastObj) {
+
+    //Where in the forecastObj (the index) the forecast for the requested date starts
+    const startIndex = forecastObj.findIndex(location => location.date == date)
+
+    //Where in the forecastObj (the index) the forecast for the requested date stops
+    let stopIndex
+    const tempIndex = forecastObj.slice(startIndex).findIndex(location => location.date !== date)
+    if (tempIndex !== -1) stopIndex = startIndex + tempIndex
+    else stopIndex = forecastObj.length - 1
+
+    //Only proceed if forecast for that day exists AND that not only the forecast for 0:00 is available
+    if (startIndex !== -1 && startIndex !== forecastObj.length - 1) {
+
+      //Time of first forecast value (for requested day) and the index of that time in the times array
+      const startTime = forecastObj[startIndex].time
+      const startTimeIndexInTimes = times.indexOf(startTime)
+
+      //Time of last forecast value (for requested day) and the index of that time in the times array
+      const stopTime = forecastObj[stopIndex].time
+      let stopTimeIndexInTimes = times.indexOf(stopTime)
+      //If there is a full day of forecast available (so stopTime is at midnight of next day), set the index in the times array to it's last value.
+      //This prevents the indexOf function from the codeline above to take the first 0:00 in the series 
+      if (stopTime == "00:00") stopTimeIndexInTimes = times.length - 1
+
+      let windSpeedForecast = new Array(times.length),
+        windGustsForecast = new Array(times.length),
+        windDirectionForecast = new Array(times.length)
+
+      const amountHourValues = stopIndex - startIndex + 1
+
+      for (let i = 0; i < amountHourValues; i++) {
+        windSpeedForecast[startTimeIndexInTimes + i * NoMeasurementsXHour] = forecastObj[i + startIndex].s
+        windGustsForecast[startTimeIndexInTimes + i * NoMeasurementsXHour] = forecastObj[i + startIndex].g
+        windDirectionForecast[startTimeIndexInTimes + i * NoMeasurementsXHour] = forecastObj[i + startIndex].d
+      }
+
+      //Here the 3 arrays above have the forecasted values in the right places. The gaps inbeween are filled in with the interpolation function below
+      values["windSpeedForecast"] = calcInterpolation(windSpeedForecast, times, startTimeIndexInTimes, stopTimeIndexInTimes)
+      values["windGustsForecast"] = calcInterpolation(windGustsForecast, times, startTimeIndexInTimes, stopTimeIndexInTimes)
+      values["windDirectionForecast"] = calcInterpolation(windDirectionForecast, times, startTimeIndexInTimes, stopTimeIndexInTimes)
+
+    }
   }
 
   if (values.windSpeed.length == 0 && values.windGusts.length == 0 && values.windDirection.length == 0 && values.windSpeedForecast) {
@@ -130,7 +165,6 @@ export async function getData(request, response, date, locations, forecastData) 
       date: date,
       values: values,
       dataset: dataset,
-      forecastRun: timeRun,
-      nextForecastRun: timeNextRun
+      forecastInfoString: forecastInfoString
     })
 }

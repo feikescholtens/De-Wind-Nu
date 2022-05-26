@@ -36,6 +36,7 @@ export async function fetchRWS(dateParsed, databaseData, resolve, times, DSTDate
 
       measurementType.MetingenLijst.forEach(measurement => {
         let time = format(utcToZonedTime(parseISO(measurement.Tijdstip), timeZone), "HH:mm")
+        if (time == "00:00" && measurementTimes.length > 0) time = "00:00_nextDay"
         measurementTimes.push(time)
       })
 
@@ -46,7 +47,6 @@ export async function fetchRWS(dateParsed, databaseData, resolve, times, DSTDate
         }
 
         let indexTime = measurementTimes.indexOf(timeStamp)
-        if (timeStamp == "00:00" && tempArray.length !== 0) indexTime = times.length - 1
 
         if (measurementType.MetingenLijst[indexTime]) {
           if (measurementType.MetingenLijst[indexTime].Meetwaarde) {

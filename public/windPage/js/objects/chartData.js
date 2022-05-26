@@ -163,9 +163,6 @@ function setLabels(context) {
 }
 
 function setTitle(context) {
-  let title = context[0].label
-  if (title !== null) {
-    title = `${date} om ${title}`
-  }
-  return title
+  if (context[0].dataIndex == times.length - 1) return `${dateTomorrow} om ${context[0].label}`
+  else return `${date} om ${context[0].label}`
 }

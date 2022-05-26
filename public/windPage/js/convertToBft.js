@@ -2,6 +2,7 @@ export function convertToBft(data, dataWUnits) {
 
   const arraysToConvert = ["windSpeed", "windGusts", "windSpeedForecast", "windGustsForecast"]
   arraysToConvert.forEach(dataType => {
+    if (!data[dataType]) return
 
     for (let i = 0; i < data[dataType].length; i++) {
 
