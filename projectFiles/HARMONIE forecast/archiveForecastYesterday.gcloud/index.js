@@ -1,6 +1,6 @@
 import { Storage } from "@google-cloud/storage"
 import { Firestore } from "@google-cloud/firestore"
-import { format, subDays } from "date-fns"
+import { format, subDays, differenceInCalendarDays, parse, parseISO } from "date-fns"
 import datefnsTZ from "date-fns-tz"
 const { utcToZonedTime } = datefnsTZ
 import fetch from "node-fetch"
@@ -46,17 +46,53 @@ export async function runFunc() {
 
     })
   }
-  const forecastData = await downloadData().catch(console.error)
+  let forecastData = await downloadData().catch(console.error)
 
-  const dateToday = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy")
-  const dateYesterday = format(utcToZonedTime(subDays(new Date(), 1), timeZone), "dd-MM-yyyy")
+  let firstDates = []
+  for (const [key, value] of Object.entries(forecastData)) {
+    if (key !== "timeRun") firstDates.push(parse(value[0].date, "dd-MM-yyyy", new Date()).toISOString())
+  }
 
-  const [futureForecastData, pastForecastData] = splitForecastData(forecastData)
+  firstDates.sort()
+  let NoDaysToArchive = differenceInCalendarDays(utcToZonedTime(new Date(), timeZone), utcToZonedTime(parseISO(firstDates[0]), timeZone))
+  let postSplit, preSplit
 
-  function splitForecastData(forecastData) {
+  while (NoDaysToArchive > 0) {
+    const dateArchive = format(utcToZonedTime(subDays(new Date(), NoDaysToArchive), timeZone), "dd-MM-yyyy")
+    const dateAfterArchive = format(utcToZonedTime(subDays(new Date(), NoDaysToArchive - 1), timeZone), "dd-MM-yyyy")
 
-    let futureForecastData = {},
-      pastForecastData = {}
+    forecastData = postSplit || forecastData;
+    [postSplit, preSplit] = splitForecastData(forecastData, dateAfterArchive)
+
+    //Saving archived forecast
+    if (Object.keys(preSplit).length > 1) {
+      const firestore = new Firestore({
+        projectId: process.env.GCP_PROJECT_ID,
+      })
+      firestore.doc(`Harmonie forecast archive/${dateArchive}`).set(preSplit)
+      logNodeApp(`Archived forecast data from ${dateArchive}!`, "info", true)
+    }
+
+    NoDaysToArchive--
+  }
+
+  //Saving forecast for today and future
+  const fileExists = await storage.bucket("de-wind-nu").file("forecastData.json").exists()
+  if (fileExists[0]) storage.bucket("de-wind-nu").file("forecastData.json").rename("forecastData.old.json")
+
+  const uploadBuffer = Buffer.from(JSON.stringify(postSplit))
+
+  storage.bucket("de-wind-nu").file("forecastData.new.json").save(uploadBuffer)
+    .then(() => {
+      logNodeApp("Removed forecast data from (before) yesterday from JSON (errors while saving might still have occured)!", "info", true)
+      storage.bucket("de-wind-nu").file("forecastData.new.json").rename("forecastData.json")
+    })
+
+  //Function for splitting the forecast data
+  function splitForecastData(forecastData, dateAfterArchive) {
+
+    let postSplit = {},
+      preSplit = {}
 
     if (Object.keys(forecastData).length <= 1) return forecastData
 
@@ -64,40 +100,22 @@ export async function runFunc() {
     for (let i = 0; i < Object.keys(forecastData).length; i++) {
       if (Object.keys(forecastData)[i] !== "timeRun") {
 
-        const indexFirstForecastTimeToday = forecastData[Object.keys(forecastData)[i]].findIndex(location => location.time == "00:00" && location.date == dateToday) //Equals the No. hours to delete
-        if (indexFirstForecastTimeToday !== -1) {
-          futureForecastData[Object.keys(forecastData)[i]] = forecastData[Object.keys(forecastData)[i]].slice(indexFirstForecastTimeToday)
-          if (forecastData[Object.keys(forecastData)[i]].slice(0, indexFirstForecastTimeToday + 1).length > 1) {
-            pastForecastData[Object.keys(forecastData)[i]] = forecastData[Object.keys(forecastData)[i]].slice(0, indexFirstForecastTimeToday + 1)
-          }
-        }
+        const splitIndex = forecastData[Object.keys(forecastData)[i]].findIndex(location => location.time == "00:00" && location.date == dateAfterArchive) //Equals the No. hours to take away
+        if (splitIndex !== -1) {
 
+          postSplit[Object.keys(forecastData)[i]] = forecastData[Object.keys(forecastData)[i]].slice(splitIndex)
+
+          if (forecastData[Object.keys(forecastData)[i]].slice(0, splitIndex + 1).length > 1) {
+            preSplit[Object.keys(forecastData)[i]] = forecastData[Object.keys(forecastData)[i]].slice(0, splitIndex + 1)
+          }
+
+        }
       }
     }
 
-    futureForecastData.timeRun = pastForecastData.timeRun = forecastData.timeRun
+    postSplit.timeRun = preSplit.timeRun = forecastData.timeRun
 
-    return [futureForecastData, pastForecastData]
-  }
-
-  //Saving forecast for today and future
-  const fileExists = await storage.bucket("de-wind-nu").file("forecastData.json").exists()
-  if (fileExists[0]) storage.bucket("de-wind-nu").file("forecastData.json").rename("forecastData.old.json")
-
-  const uploadBuffer = Buffer.from(JSON.stringify(futureForecastData))
-
-  storage.bucket("de-wind-nu").file("forecastData.new.json").save(uploadBuffer, () => {
-    logNodeApp("Removed forecast data from yesterday from JSON (errors while saving might still have occured)!", "info", true)
-    storage.bucket("de-wind-nu").file("forecastData.new.json").rename("forecastData.json")
-  })
-
-  //Saving archived forecast
-  if (Object.keys(pastForecastData).length > 1) {
-    const firestore = new Firestore({
-      projectId: process.env.GCP_PROJECT_ID,
-    })
-    firestore.doc(`Harmonie forecast archive/${dateYesterday}`).set(pastForecastData)
-    logNodeApp("Archived forecast data from yesterday!", "info", true)
+    return [postSplit, preSplit]
   }
 
 }
