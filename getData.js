@@ -25,7 +25,7 @@ export async function getData(request, response, date, locations, forecastData) 
   }, 29.5 * 1000)
   //Triggering timeout 1/2 a second before Heroku does
 
-  let dateParsed = parse(date, "dd-MM-yyyy", new Date())
+  let dateParsed = parse(date, "dd-MM-yyyy", utcToZonedTime(new Date(), timeZone))
   if (!isValid(dateParsed)) dateParsed = new Date()
   const locationID = request.params.id
   const location = locations[locationID]
