@@ -1,4 +1,4 @@
-import { format, parse, subSeconds, add, formatISO } from "date-fns"
+import { format, parse, subSeconds, add, formatISO, startOfDay } from "date-fns"
 import module from "date-fns-tz"
 const { utcToZonedTime } = module
 import fetch from "node-fetch"
@@ -12,6 +12,7 @@ export async function fetchVLINDER(dateParsed, databaseData, resolve, times) {
 
   let data = []
   console.log(dateParsed)
+  console.log(startOfDay(dateParsed))
 
   const locationID = databaseData.datasets.VLINDER.location_id
   const dateStartFetch = subSeconds(dateParsed, 1).toISOString()

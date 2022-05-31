@@ -7,7 +7,7 @@ import { fetchMVB } from "./fetchScripts/getData/MVB.js"
 import { getTimeChangeDates, generateTimes, calcInterpolation, restartHerokuDynos, getArchivedForecast } from "./getScriptUtilFunctions.js"
 import { format, add, parseISO, parse, startOfDay, isBefore, isValid } from "date-fns"
 import module from "date-fns-tz"
-const { utcToZonedTime } = module
+const { utcToZonedTime, toDate } = module
 
 const timeZone = "Europe/Amsterdam"
 
@@ -25,7 +25,8 @@ export async function getData(request, response, date, locations, forecastData) 
   }, 29.5 * 1000)
   //Triggering timeout 1/2 a second before Heroku does
 
-  let dateParsed = parse(date, "dd-MM-yyyy", utcToZonedTime(new Date(), timeZone))
+  let dateParsed = parse(date, "dd-MM-yyyy", new Date())
+  console.log("dermate", toDate(dateParsed, { timeZone: timeZone }))
   if (!isValid(dateParsed)) dateParsed = new Date()
   const locationID = request.params.id
   const location = locations[locationID]
