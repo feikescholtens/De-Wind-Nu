@@ -5,9 +5,9 @@ import { fetchRWS } from "./fetchScripts/getData/Rijkswaterstaat.js"
 import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
 import { fetchMVB } from "./fetchScripts/getData/MVB.js"
 import { getTimeChangeDates, generateTimes, calcInterpolation, restartHerokuDynos, getArchivedForecast } from "./getScriptUtilFunctions.js"
-import { format, add, parseISO, parse, startOfDay, isBefore, isValid } from "date-fns"
+import { format, add, parseISO, startOfDay, isBefore, isValid, isToday } from "date-fns"
 import module from "date-fns-tz"
-const { utcToZonedTime, toDate } = module
+const { utcToZonedTime } = module
 
 const timeZone = "Europe/Amsterdam"
 
@@ -25,9 +25,14 @@ export async function getData(request, response, date, locations, forecastData) 
   }, 29.5 * 1000)
   //Triggering timeout 1/2 a second before Heroku does
 
-  let dateParsed = parse(date, "dd-MM-yyyy", new Date())
-  console.log("dermate", toDate(dateParsed, { timeZone: timeZone }))
-  if (!isValid(dateParsed)) dateParsed = new Date()
+  let dateParsed = startOfDay(parseISO(date)),
+    dateFormatted
+
+  if (!isValid(dateParsed)) {
+    dateParsed = startOfDay(new Date())
+    dateFormatted = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy")
+  } else dateFormatted = format(utcToZonedTime(dateParsed, timeZone), "dd-MM-yyyy")
+
   const locationID = request.params.id
   const location = locations[locationID]
   const dataset = Object.keys(location.datasets)[0]
@@ -94,7 +99,7 @@ export async function getData(request, response, date, locations, forecastData) 
       forecastInfoString = `HARMONIE model van het KNMI, run van ${forecastRunString}, volgende update ± ${timeNextRunString}`
     }
   } else {
-    const archivedForecast = await getArchivedForecast(date, locationID)
+    const archivedForecast = await getArchivedForecast(dateFormatted, locationID)
     if (archivedForecast) {
       forecastObj = archivedForecast
       forecastInfoString = "HARMONIE model van het KNMI, uit archief"
@@ -105,11 +110,11 @@ export async function getData(request, response, date, locations, forecastData) 
   if (forecastObj) {
 
     //Where in the forecastObj (the index) the forecast for the requested date starts
-    const startIndex = forecastObj.findIndex(location => location.date == date)
+    const startIndex = forecastObj.findIndex(location => location.date == dateFormatted)
 
     //Where in the forecastObj (the index) the forecast for the requested date stops
     let stopIndex
-    const tempIndex = forecastObj.slice(startIndex).findIndex(location => location.date !== date)
+    const tempIndex = forecastObj.slice(startIndex).findIndex(location => location.date !== dateFormatted)
     if (tempIndex !== -1) stopIndex = startIndex + tempIndex
     else stopIndex = forecastObj.length - 1
 
@@ -147,7 +152,7 @@ export async function getData(request, response, date, locations, forecastData) 
     }
   }
 
-  if (values.windSpeed.length == 0 && values.windGusts.length == 0 && values.windDirection.length == 0 && values.windSpeedForecast) {
+  if (values.windSpeed.length == 0 && values.windGusts.length == 0 && values.windDirection.length == 0 && values.windSpeedForecast && isToday(dateParsed)) {
     log(`Location "${location.name}" doesn't have any measurements!`, "fetchError", true)
   }
   if (values.windSpeed.length == 0 && values.windGusts.length == 0 && values.windDirection.length == 0 && !values.windSpeedForecast) {
@@ -164,7 +169,7 @@ export async function getData(request, response, date, locations, forecastData) 
   if (!response.headersSent)
     // AKA if a timeout hasn't occured
     response.json({
-      date: date,
+      date: dateParsed.toISOString(),
       values: values,
       dataset: dataset,
       forecastInfoString: forecastInfoString

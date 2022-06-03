@@ -1,8 +1,6 @@
 import { contentUpdate } from "./contentUpdate.js"
 import {
-  isValid,
   addHours,
-  parseISO,
   differenceInCalendarDays,
   isYesterday,
   isTomorrow,
@@ -83,7 +81,11 @@ export function changeInterpolation(interpolationSelector) {
 
 export async function formulateErrorMessage(dataFetched) {
   let message
-  const errorMessages = await fetch("json/errorMessages.json").then(response => response.json())
+  const errorMessages = {
+    "400": "Geen of foute ID in de URL gevonden, of er bestaat geen locatie bij de gegeven ID!",
+    "204": "Er zijn geen gegevens beschikbaar voor deze locatie en deze datum!",
+    "504": "De API heeft geen reactie verzonden (Gateway Timeout server)! Probeer het opnieuw."
+  }
   const errorID = JSON.stringify(dataFetched.errorCode)
 
   if (Object.keys(errorMessages).includes(errorID)) {
@@ -272,4 +274,28 @@ export function getDatePickerMax() {
     return addHours(new Date(), 24)
   }
 
+}
+
+export const units = {
+  "kn": {
+    "naam": "Knopen",
+    "factor": 1
+  },
+  "m/s": {
+    "naam": "Meter per seconde",
+    "factor": 0.514444444
+  },
+  "km/h": {
+    "naam": "Kilometer per uur",
+    "factor": 1.85200
+  },
+  "mph": {
+    "naam": "Mijl per uur",
+    "factor": 1.15077945
+  },
+  "Bft": {
+    "naam": "Beaufort",
+    "factor": 1,
+    "ranges": [1, 4, 7, 11, 17, 22, 28, 34, 41, 48, 56, 64]
+  }
 }

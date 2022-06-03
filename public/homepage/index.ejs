@@ -83,8 +83,20 @@
 </head>
 
 <body>
+  <script> 
+    //Execute here to prevent white flash
+    if (!localStorage.getItem("theme")) localStorage.setItem("theme", "auto")
+
+    if (localStorage.getItem("theme") == "auto") {
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.body.classList.add("dark")
+      }
+    } else if (localStorage.getItem("theme") == "dark") document.body.classList.add("dark")
+    else if (localStorage.getItem("theme") == "light") document.body.classList.remove("dark")
+  </script>
+
   <header>
-    <img data-mapfit id="logo" src="images/logo.svg" alt="Logo - navigeer home">
+    <svg data-mapfit id="logo" alt="Logo - navigeer home" width="80px" height="80px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 566.929 566.929" color-interpolation-filters="sRGB" fill="none" fill-rule="evenodd" overflow="visible" stroke-linecap="square" stroke-miterlimit="3" xmlns:v="https://vecta.io/nano"><circle cx="58.415" cy="51.328" r="51.328" fill="#000"/><g stroke="#000"><g stroke-linecap="round" stroke-linejoin="round"><path d="M60.092 88.582v457.09" stroke-width="40"/><path d="M28.347 143.192h89.57m-89.57 191.132h89.57" stroke-width="30"/></g><path d="M353.055 235.324v-82.73a11.34 11.34 0 0 1 12.26-11.3l69.83 5.66a11.34 11.34 0 0 1 10.43 11.3v77.07 86.74a11.34 11.34 0 0 1-10.33 11.3l-69.84 6.27a11.34 11.34 0 0 1-12.35-11.29v-93.02zm-154.19 0v-101.8a11.34 11.34 0 0 1 12.44-11.29l69.84 6.81a11.34 11.34 0 0 1 10.23 11.29v94.99 104.66a11.34 11.34 0 0 1-10.14 11.28l-69.83 7.43a11.34 11.34 0 0 1-12.54-11.28v-112.09zm343.07 89.03v-171.19a11.34 11.34 0 0 0-9.89-11.25l-401.34-51.68a11.34 11.34 0 0 0-12.79 11.24v274.57a11.34 11.34 0 0 0 12.79 11.24l401.34-51.69a11.34 11.34 0 0 0 9.89-11.24z" fill="#000" stroke-linejoin="round" stroke-width="15"/></g></svg>
     <h1 data-mapfit id="title">De Wind Nu</h1>
   </header>
   <div id="mapWrapper"><div id="map"></div></div>
@@ -93,10 +105,22 @@
     <h2 class="sectionHeader">Instellingen</h2>
 
     <div id="settings">
+      <label for="theme">Thema</label>
+        <select data-theme>
+          <option value="auto">Zelfde als browser / systeem</option>
+          <option value="light">Licht</option>
+          <option value="dark">Donker</option>
+        </select>
+      
         <label for="tiles">Standaard kaart</label>
         <select data-tiles id="tiles">
           <option value="OpenStreetMap">OpenStreetMap (sneller)</option>
-          <option value="Mapbox">Mapbox (mooier)</option>
+          <option value="Mapbox custom">Mapbox custom</option>
+          <option value="Mapbox licht">Mapbox licht</option>
+          <option value="Mapbox donker">Mapbox donker</option>
+          <option value="Satelliet">Satelliet</option>
+          <option value="Satelliet met plaatsnamen en wegen">Satelliet met plaatsnamen en wegen</option>
+
         </select>
         
         <label for="seaMap">Toon zeekaart</label>

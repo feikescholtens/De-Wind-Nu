@@ -11,21 +11,42 @@ export async function addFeedback(request, response) {
       pass: process.env.GMAIL_APP_KEY
     }
   });
-  let mailOptions = {
-    from: '"Website" <dewindnu@gmail.com>',
-    to: 'dewindnu@gmail.com',
-    subject: 'Nieuwe feedback'
-  };
-
-  //Send email to my email address
   const regex = /\\n|\\r\\n|\\n\\r|\\r/g
 
-  mailOptions.html = `<h1>Nieuwe feedback</h1><table border="1px"><tr><td>Naam:</td><td>${data.name.slice(1,-1)}</td></tr><tr><td>E-mail:</td><td>${data.email.slice(1,-1)}</td></tr><tr><td>Bericht:</td><td>${data.message.replace(regex, '<br>').slice(1,-1)}</td></tr></table>`;
+  const name = data.name.slice(1, -1)
+  const email = data.email.slice(1, -1)
+  const message = data.message.replace(regex, '<br>').slice(1, -1)
+
+  let subject = "Nieuwe feedback"
+  if (name !== "") subject += ` van ${name}`
+
+  let mailOptions = {
+    from: '"Website" <dewindnu@gmail.com>',
+    to: "dewindnu@gmail.com",
+    subject: subject
+  }
+
+  //Send email to my email address
+  mailOptions.html = `<h1>Nieuwe feedback</h1>
+                      <table border="1px">
+                        <tr>
+                          <td>Naam:</td>
+                          <td>${name}</td>
+                        </tr>
+                        <tr>
+                          <td>E-mail:</td>
+                          <td>${email}</td>
+                        </tr>
+                        <tr>
+                          <td>Bericht:</td>
+                          <td>${message}</td>
+                        </tr>
+                      </table>`
   transporter.sendMail(mailOptions, function(error, info) {
     if (error) {
       log(error, "error")
     } else {
       response.send(info.response.substring(0, 12));
     }
-  });
+  })
 }

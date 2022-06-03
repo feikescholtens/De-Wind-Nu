@@ -1,4 +1,5 @@
 import { displayPopUpWithName } from "./jsPopUps/functions.js"
+import { updateGraphs } from "./wind/js/graphOrTableUpdate.js"
 
 export function redirect() {
   if (window.location.host == "dewindnu.herokuapp.com") window.location.replace(`https://dewindnu.nl${window.location.pathname}`)
@@ -25,4 +26,30 @@ export function updateLocalVariables() {
   if (localStorage.getItem("firstVisit") == "0") localStorage.setItem("hadFirstVisit", "0")
   if (localStorage.getItem("firstVisit") == "1") localStorage.setItem("hadFirstVisit", "1")
   localStorage.removeItem("firstVisit")
+
+  if (localStorage.getItem("tiles") == "Mapbox") localStorage.setItem("tiles", "Mapbox custom")
+}
+
+export function setThemeSelector() {
+  document.querySelector("[data-theme]").value = localStorage.getItem("theme")
+}
+
+export function changeTheme(newValue) {
+  localStorage.setItem("theme", newValue)
+
+  if (localStorage.getItem("theme") == "auto") {
+    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      document.body.classList.add("dark")
+      localStorage.setItem("tiles", "Mapbox donker")
+    }
+  } else if (localStorage.getItem("theme") == "dark") {
+    document.body.classList.add("dark")
+    localStorage.setItem("tiles", "Mapbox donker")
+  } else if (localStorage.getItem("theme") == "light") {
+    document.body.classList.remove("dark")
+    if (localStorage.getItem("tiles") == "Mapbox donker") localStorage.setItem("tiles", "OpenStreetMap")
+  }
+
+  if (location.pathname == "/") location.reload()
+  if (location.pathname.substring(1, 5) == "wind") updateGraphs()
 }

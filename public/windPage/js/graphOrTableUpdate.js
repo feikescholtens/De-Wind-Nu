@@ -11,6 +11,17 @@ const tableNodeElements = [document.querySelector("[data-headingTabel]"),
 
 export function updateGraphs() {
 
+  //Setting light/dark mode colours, see also below for colours of the grid (these need to be changed after the chart is initialized)
+  optionsWindSpeedChart.plugins.legend.labels.color =
+    optionsWindSpeedChart.scales.y.title.color =
+    optionsWindSpeedChart.scales.x.ticks.color =
+    optionsWindSpeedChart.scales.y.ticks.color =
+    optionsWindDirectionChart.plugins.legend.labels.color =
+    optionsWindDirectionChart.scales.y.title.color =
+    optionsWindDirectionChart.scales.x.ticks.color =
+    optionsWindDirectionChart.scales.y.ticks.color =
+    getComputedStyle(document.body).getPropertyValue("--textColour2")
+
   graphNodeElements.forEach(element => element.classList.remove("noDisplay"))
   tableNodeElements.forEach(element => element.classList.add("noDisplay"))
 
@@ -24,13 +35,15 @@ export function updateGraphs() {
     return (!isNaN(value) && value !== undefined)
   }))
 
-  datasets.windSpeed.label += ` | max: ${JSON.stringify(maxWindSpeed).replace(".", ",")} ${unit}`
-  datasets.windGusts.label += ` | max: ${JSON.stringify(maxGusts).replace(".", ",")} ${unit}`
   const dataTypeArray = ["windSpeed", "windGusts", "windDirection", "windSpeedForecast", "windGustsForecast", "windDirectionForecast"]
   dataTypeArray.forEach(dataType => {
     datasets[dataType] = { ...datasets[dataType], ...datasetObject }
     if (dataWUnits[dataType]) datasets[dataType].data = dataWUnits[dataType]
+
+    if (JSON.parse(localStorage.getItem("hiddenDatasets"))[datasets[dataType].label]) datasets[dataType].hidden = true
   })
+  datasets.windSpeed.label += ` | max: ${JSON.stringify(maxWindSpeed).replace(".", ",")} ${unit}`
+  datasets.windGusts.label += ` | max: ${JSON.stringify(maxGusts).replace(".", ",")} ${unit}`
   if (interpolation == 1) {
     datasets.windSpeed.segment = { borderColor: ctx => checkInterpolated(ctx, "windSpeed", datasetInfo.windSpeed.backgroundColor) }
     datasets.windGusts.segment = { borderColor: ctx => checkInterpolated(ctx, "windGusts", datasetInfo.windGusts.backgroundColor) }
@@ -81,6 +94,13 @@ export function updateGraphs() {
     chartWindDirection.options = optionsWindDirectionChart
     chartWindDirection.update()
   }
+
+  //Setting light/dark mode colours
+  chartWindSpeed.config.options.scales.x.grid.color =
+    chartWindSpeed.config.options.scales.y.grid.color =
+    chartWindDirection.config.options.scales.x.grid.color =
+    chartWindDirection.config.options.scales.y.grid.color =
+    getComputedStyle(document.body).getPropertyValue("--lineColour")
 
 }
 

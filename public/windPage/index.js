@@ -1,4 +1,4 @@
-import { addDays, isToday, parse, format } from "https://esm.run/date-fns"
+import { addDays, isToday, parse, format, parseISO } from "https://esm.run/date-fns"
 import { displayPopUpWithName } from "../jsPopUps/functions.js"
 import { displayPopUpFeedback } from "../jsPopUps/feedback.js"
 import { contentUpdate } from "./js/contentUpdate.js"
@@ -24,9 +24,10 @@ import {
   getDatePickerMax,
   switchPreviousDay,
   switchNextDay,
-  setDateInUrl
+  setDateInUrl,
+  units
 } from "./js/functions.js"
-import { redirect, updateLocalVariables } from "../globalFunctions.js"
+import { redirect, updateLocalVariables, setThemeSelector, changeTheme } from "../globalFunctions.js"
 redirect()
 updateLocalVariables()
 
@@ -36,22 +37,21 @@ Object.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 const locationID = location.pathname.substring(6, 10)
 
 const dateURLString = new URLSearchParams(window.location.search).get("datum")
-let dateURL, absoluteDate, relativeDate
+let dateURL, relativeDate, dateISO
 try {
   dateURL = parse(dateURLString, "dd-MM-yyyy", new Date())
   relativeDate = getRelativeDate(dateURL)
-  absoluteDate = dateURLString
+  dateISO = dateURL.toISOString()
 } catch {
   dateURL = null
   relativeDate = "Vandaag"
-  absoluteDate = format(getAbsoluteDate(relativeDate), "dd-MM-yyyy")
-
+  dateISO = getAbsoluteDate(relativeDate).toISOString()
   history.replaceState(null, null, `${window.location.origin + window.location.pathname}`)
 }
 document.querySelector("[data-currentDay]").innerText = relativeDate
 if (dateURL !== null) document.querySelector("[data-datePicker]").value = format(dateURL, "yyyy-MM-dd")
 
-fetchData(absoluteDate)
+fetchData(dateISO)
 
 function fetchData(date) {
 
@@ -80,7 +80,7 @@ globalThis.data = {},
   globalThis.date,
   globalThis.unit, globalThis.decimals, globalThis.interpolation,
   globalThis.times, globalThis.currentWindBoxSize = 350,
-  globalThis.units = await fetch("json/units.json").then(response => response.json())
+  globalThis.units = units
 
 function setNewNumber() {
   const latestNumber = document.getElementsByClassName("marker")[0].innerText
@@ -116,6 +116,14 @@ if (!localStorage.getItem("unit")) localStorage.setItem("unit", "kn")
 if (!localStorage.getItem("decimals")) localStorage.setItem("decimals", 1)
 if (!localStorage.getItem("interpolation")) localStorage.setItem("interpolation", 0)
 if (!localStorage.getItem("tableSort")) localStorage.setItem("tableSort", "descending")
+if (!localStorage.getItem("hiddenDatasets")) localStorage.setItem("hiddenDatasets", JSON.stringify({
+  "Windsterkte": false,
+  "Windvlagen": false,
+  "Windrichting": false,
+  "Windsterkte voorspelling": false,
+  "Windvlagen voorspelling": false,
+  "Windrichting voorspelling": false
+}))
 
 //Sets the options in the settingstable for the ones in local storage
 if (localStorage.getItem("showBar") == "1") showBarSelector.checked = true
@@ -132,6 +140,8 @@ if (unitSelector.value == 4) decimalsSelector.setAttribute("disabled", "disabled
 decimalsSelector.value = localStorage.getItem("decimals")
 if (localStorage.getItem("interpolation") == "1") interpolationSelector.checked = true
 if (localStorage.getItem("tableSort") == "ascending") tableSort.innerHTML = `Tijd <span id="sortArrow">▼</span>`
+
+setThemeSelector()
 
 //Links for going back to homepage
 document.querySelectorAll("[data-goBackHome]").forEach(element => element.addEventListener("click", () => {
@@ -164,10 +174,10 @@ async function processRetrievedData(dataFetched) {
   showMain()
 
   const dataset = dataFetched.dataset
-  const dateData = parse(dataFetched.date, "dd-MM-yyyy", new Date())
+  const dateData = parseISO(dataFetched.date)
   globalThis.times = dataFetched.values.times
-  globalThis.date = getRelativeDate(parse(dataFetched.date, "dd-MM-yyyy", new Date())),
-    globalThis.dateTomorrow = getRelativeDate(addDays(parse(dataFetched.date, "dd-MM-yyyy", new Date()), 1)),
+  globalThis.date = getRelativeDate(dateData),
+    globalThis.dateTomorrow = getRelativeDate(addDays(dateData, 1)),
     globalThis.interpolatedData = {}, globalThis.interpolatedIndices = {}
 
   data = dataFetched.values
@@ -205,15 +215,14 @@ document.querySelector("[data-datePicker]").addEventListener("change", (e) => {
   document.querySelector("[data-currentDay]").innerText = relativeDate
   setDateInUrl(dateSelected)
 
-  fetchData(format(dateSelected, "dd-MM-yyyy"))
+  fetchData(dateSelected.toISOString())
 })
 
 document.querySelector("[data-getData]").addEventListener("click", () => {
   const dateFetchString = document.querySelector("[data-currentDay]").innerText
   const dateFetch = getAbsoluteDate(dateFetchString)
-  const dateFetchAbsolute = format(dateFetch, "dd-MM-yyyy")
 
-  fetchData(dateFetchAbsolute)
+  fetchData(dateFetch.toISOString())
 })
 
 //(1)Change the data in local storage when other options are selected and (2) refresh the graphs
@@ -225,6 +234,7 @@ unitSelector.onchange = () => changeUnit(unitSelector, decimalsSelector)
 decimalsSelector.onchange = () => changeDecimals(decimalsSelector)
 interpolationSelector.onchange = () => changeInterpolation(interpolationSelector)
 tableSort.addEventListener("click", () => changeTableSort(tableSort))
+document.querySelector("[data-theme]").onchange = () => changeTheme(document.querySelector("[data-theme]").value)
 
 //Footer links
 document.querySelector("[data-about]").addEventListener("click", () => displayPopUpWithName("over"))

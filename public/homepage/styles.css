@@ -12,7 +12,6 @@ div#mapWrapper,
 div#map {
     width: 100%;
     height: calc(100vh - 100px);
-    background-color: rgb(170, 211, 223);
 }
 
 div.VLINDER {

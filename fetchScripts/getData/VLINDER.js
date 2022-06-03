@@ -1,4 +1,4 @@
-import { format, parse, subSeconds, add, formatISO, startOfDay } from "date-fns"
+import { format, parse, subSeconds, add, startOfDay } from "date-fns"
 import module from "date-fns-tz"
 const { utcToZonedTime } = module
 import fetch from "node-fetch"
@@ -11,23 +11,17 @@ Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 export async function fetchVLINDER(dateParsed, databaseData, resolve, times) {
 
   let data = []
-  console.log(dateParsed)
-  console.log(startOfDay(dateParsed))
 
   const locationID = databaseData.datasets.VLINDER.location_id
   const dateStartFetch = subSeconds(dateParsed, 1).toISOString()
   const dateEndFetch = add(dateParsed, { days: 1, seconds: 1 }).toISOString()
-  console.log(dateStartFetch, dateEndFetch)
-  console.log(formatISO(subSeconds(dateParsed, 1)), formatISO(add(dateParsed, { days: 1, seconds: 1 })))
   const rawDataString = await fetch(`https://mooncake.ugent.be/api/measurements/${locationID}?start=${dateStartFetch}&end=${dateEndFetch}`)
     .then(response => response.text()).catch((error) => catchError(resolve, data, error, "VLINDER"))
-  console.log(`https://mooncake.ugent.be/api/measurements/${locationID}?start=${dateStartFetch}&end=${dateEndFetch}`)
   let rawData
   try { rawData = JSON.parse(rawDataString) } catch { return }
   // rawData = JSON.parse(readFileSync("projectFiles/test files DST/from CET to CEST/VLINDER.json"))
 
   if (JSONError(rawData)) rawData = [] //Prevent errors by saying there are 0 measurements
-  console.log(rawData[0])
   let wind_speed = [],
     wind_gusts = [],
     wind_direction = []
@@ -38,8 +32,6 @@ export async function fetchVLINDER(dateParsed, databaseData, resolve, times) {
     if (time == "00:00" && measurementTimes.length > 0) time = "00:00_nextDay"
     measurementTimes.push(time)
   })
-
-  console.log(measurementTimes)
 
   times.forEach(timeStamp => {
     if (!measurementTimes.includes(timeStamp)) {
@@ -84,7 +76,7 @@ export async function fetchVLINDER(dateParsed, databaseData, resolve, times) {
     wind_gusts.pop()
     wind_direction.pop()
   }
-  console.log(wind_speed)
+
   data["VLINDER"] = [wind_speed, wind_gusts, wind_direction]
   resolve({ data })
 }

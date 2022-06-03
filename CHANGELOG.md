@@ -1,5 +1,19 @@
 # Change log
 
+## v3.1.0
+- Darkmode!
+
+- Made a satellite map available
+
+- Made site faster by reducing HTTP requests for .json files and 'compressing' .svg logo
+
+- Hiding datasets in graphs are now 'remembered'
+
+Bugfixes:
+- Fixed VLINDER requesting wrong times
+
+---
+
 ## v3.0.1
 
 Bugfixes:

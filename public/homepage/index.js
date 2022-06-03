@@ -1,7 +1,7 @@
 import { fitMap, windPage, changeTiles, setOverviewData } from "./functions.js"
 import { displayPopUpWithName } from "../jsPopUps/functions.js"
 import { displayPopUpFeedback } from "../jsPopUps/feedback.js"
-import { redirect, updateLocalVariables } from "../globalFunctions.js"
+import { redirect, updateLocalVariables, setThemeSelector, changeTheme } from "../globalFunctions.js"
 redirect()
 updateLocalVariables()
 const tilesObjects = await fetch("./OSMTiles.json").then(response => response.json())
@@ -13,14 +13,19 @@ if (!localStorage.getItem("hadFirstVisit")) {
   displayPopUpWithName("welkom")
   localStorage.setItem("hadFirstVisit", "1")
 }
-if (!localStorage.getItem("tiles")) localStorage.setItem("tiles", "OpenStreetMap")
+if (!localStorage.getItem("tiles")) {
+  if (document.body.classList.contains("dark")) localStorage.setItem("tiles", "Mapbox donker")
+  else localStorage.setItem("tiles", "OpenStreetMap")
+}
 if (!localStorage.getItem("seaMap")) localStorage.setItem("seaMap", "1")
 
 tilesSelector.value = localStorage.getItem("tiles")
 if (localStorage.getItem("seaMap") == "1") seaMapCheckbox.checked = true
+setThemeSelector()
 
 tilesSelector.onchange = () => changeTiles(map, tilesSelector, seaMapCheckbox)
 seaMapCheckbox.onchange = () => changeTiles(map, tilesSelector, seaMapCheckbox)
+document.querySelector("[data-theme]").onchange = () => changeTheme(document.querySelector("[data-theme]").value)
 
 const urlParams = new URLSearchParams(window.location.search)
 const center = [urlParams.get("x") || 5.160544, urlParams.get("y") || 52.182725]
@@ -36,7 +41,12 @@ const mapOptions = {
   zoom: zoom
 }
 if (tilesSelector.value == "OpenStreetMap") mapOptions.style = tilesObjects.OpenStreetMap
-if (tilesSelector.value == "Mapbox") mapOptions.style = "mapbox://styles/feikescholtens/ckuhc8nha9jft18s0muhoy0zf"
+if (tilesSelector.value == "Mapbox custom") mapOptions.style = "mapbox://styles/feikescholtens/ckuhc8nha9jft18s0muhoy0zf"
+if (tilesSelector.value == "Mapbox licht") mapOptions.style = "mapbox://styles/mapbox/light-v10"
+if (tilesSelector.value == "Mapbox donker") mapOptions.style = "mapbox://styles/mapbox/dark-v10"
+if (tilesSelector.value == "Satelliet") mapOptions.style = "mapbox://styles/mapbox/satellite-v9"
+if (tilesSelector.value == "Satelliet met plaatsnamen en wegen") mapOptions.style = "mapbox://styles/mapbox/satellite-streets-v11"
+
 const map = new mapboxgl.Map(mapOptions)
 map.touchZoomRotate.disableRotation()
 map.on("load", () => {

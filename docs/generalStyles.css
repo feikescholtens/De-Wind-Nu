@@ -14,28 +14,50 @@ html {
 
 body {
     height: 100%;
+    --v_background-color: white;
+    --v_color: black;
+
+    background-color: var(--v_background-color);
+    color: var(--v_color);
+}
+
+
+body.dark {
+    --v_background-color: #202124;
+    --v_color: #E8EAED;
 }
 
 header,
+nav,
 main,
 footer {
     max-width: 800px;
     margin: 0 auto;
 }
 
-header {
-    height: 100px;
+.hidden {
+    visibility: hidden !important;
+}
+
+.noDisplay {
+    display: none !important;
 }
 
 header {
     height: 100px;
 }
 
-img#logo {
+svg#logo {
     margin: 10px 0 10px 10px;
     height: 80px;
     float: left;
     cursor: pointer;
+}
+
+svg#logo path,
+svg#logo circle {
+    fill: var(--v_color);
+    stroke: var(--v_color)
 }
 
 h1#title {
@@ -50,7 +72,6 @@ h1#title {
     text-transform: none;
     font-style: normal;
     cursor: pointer;
-    color: black;
 }
 
 @media screen and (max-width: 500px) {
@@ -228,14 +249,14 @@ div.footerItem p {
     }
 }
 
-
-table#settings {
-    width: calc(100% - 20px);
-    margin: 0 10px;
-}
-
-table#settings tr {
-    height: 30px;
+/* Styling grid with settings for both pages */
+div#settings {
+    display: grid;
+    grid-template-columns: clamp(50px, 60%, 400px) clamp(80px, calc(40% - 10px), 200px);
+    margin: 5px 10px;
+    column-gap: 10px;
+    row-gap: 20px;
+    align-items: center;
 }
 
 /* Popup styling */
@@ -248,7 +269,6 @@ div.messageBox {
     left: 50%;
     transform: translateX(-50%);
     border-radius: 30px;
-    background-color: white;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     z-index: 999;
     max-width: 800px;
@@ -303,6 +323,14 @@ div.messageBox table {
 
 div.messageBox table td {
     padding: 5px;
+}
+
+input {
+    background-color: black;
+    color: white;
+    border: 2px black solid;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 input#name,
@@ -379,10 +407,10 @@ p.success {
 }
 
 p.error {
-    color: #ee5253;
+    color: rgba(235, 77, 75, 1);
 }
 
 a#source {
-    color: black;
+    color: var(--v_color);
     text-decoration: none;
 }

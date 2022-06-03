@@ -6,7 +6,7 @@ export async function displayPopUpFeedback() {
 
     displayPopUp("feedback")
 
-    const popUpBox = document.getElementsByClassName("messageBox")[0]
+    const popUpBox = document.getElementsByClassName("scrollWrapper")[0]
 
     document.querySelector("[data-send]").addEventListener("click", async () => {
 
@@ -23,7 +23,7 @@ export async function displayPopUpFeedback() {
         document.querySelector("[data-send]").remove()
 
         //Add the loader to the messageBox
-        document.getElementsByClassName("markerContainer center hidden")[0].classList.remove("noDisplay")
+        document.getElementsByClassName("markerContainer center noDisplay")[0].classList.remove("noDisplay")
 
         //Data for making the fetch command
         const dataBody = {

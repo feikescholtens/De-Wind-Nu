@@ -28,31 +28,37 @@ const datasetObject = {
 const datasetInfo = {
   windSpeed: {
     label: "Windsterkte",
+    labelCode: "windSpeed",
     borderColor: "rgba(106, 176, 76, 1)",
     backgroundColor: "rgba(106, 176, 76, 0.4)"
   },
   windGusts: {
     label: "Windvlagen",
+    labelCode: "windGusts",
     borderColor: "rgba(235, 77, 75, 1)",
     backgroundColor: "rgba(235, 77, 75, 0.4)"
   },
   windDirection: {
     label: "Windrichting",
+    labelCode: "windDirection",
     borderColor: "rgba(95, 39, 205, 1)",
     backgroundColor: "rgba(95, 39, 205, 0.4)"
   },
   windSpeedForecast: {
     label: "Windsterkte voorspelling",
+    labelCode: "windSpeedForecast",
     borderColor: "rgba(46, 134, 222, 1)",
     backgroundColor: "rgba(46, 134, 222, 0.4)"
   },
   windGustsForecast: {
     label: "Windvlagen voorspelling",
+    labelCode: "windGustsForecast",
     borderColor: "rgba(255, 159, 243, 1)",
     backgroundColor: "rgba(255, 159, 243, 0.4)"
   },
   windDirectionForecast: {
     label: "Windrichting voorspelling",
+    labelCode: "windDirectionForecast",
     borderColor: "rgba(255, 159, 67, 1)",
     backgroundColor: "rgba(255, 159, 67, 0.4)"
   }
@@ -101,7 +107,27 @@ const optionsWindSpeedChart = {
           family: "Lato",
           weight: 500
         },
-        color: "rgb(50, 50, 50)"
+        // color: "red"
+      },
+      onClick: (event, element) => {
+        const datasetIndex = element.datasetIndex
+        let datasetName = element.text.split("|")[0]
+        if (datasetName[datasetName.length - 1] == " ") datasetName = datasetName.slice(0, -1)
+
+        const hiddenDatasets = JSON.parse(localStorage.getItem("hiddenDatasets"))
+
+        if (event.chart.data.datasets[datasetIndex].hidden) {
+          event.chart.data.datasets[datasetIndex].hidden = false
+
+          hiddenDatasets[datasetName] = false
+        } else {
+          event.chart.data.datasets[datasetIndex].hidden = true
+
+          hiddenDatasets[datasetName] = true
+        }
+
+        localStorage.setItem("hiddenDatasets", JSON.stringify(hiddenDatasets))
+        event.chart.update()
       }
     },
     tooltip: {

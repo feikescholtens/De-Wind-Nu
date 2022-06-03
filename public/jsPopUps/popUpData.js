@@ -133,7 +133,7 @@ export const popUpData = {
        </tr>
      </table>
      <button data-send id="send">Verzenden</button>
-      <div data-markerContainer class="markerContainer center hidden">
+      <div data-markerContainer class="markerContainer center noDisplay">
         <div class="arrowArm loader spin"></div>
         <div class="marker loader"></div>
       </div>` },

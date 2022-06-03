@@ -11,7 +11,7 @@ export function displayPopUp(content) {
 
   let messageBox = document.createElement("div")
   messageBox.classList.add("messageBox")
-  messageBox.innerHTML = popUpData[content].html
+  messageBox.innerHTML = `<div class="scrollWrapper">${popUpData[content].html}</div>`
 
   //Make close button
   let close = document.createElement("div")

@@ -5,7 +5,7 @@ footer {
 
 main {
     min-height: 100vh;
-    overflow: hidden;
+    overflow-x: auto;
 }
 
 div#loaderText {
@@ -82,7 +82,7 @@ p#currentDate {
 }
 
 h4#location {
-    color: grey;
+    color: var(--textColour2);
     font-size: clamp(12px, 18px, 20px)
 }
 
@@ -93,7 +93,7 @@ h3#dataInfo {
     font-size: 16px;
     padding: 0 10px;
     margin-bottom: 20px;
-    color: grey;
+    color: var(--textColour2);
 }
 
 #currentWindBox {
@@ -165,24 +165,25 @@ canvas#compass {
     font-weight: 600;
 }
 
+label.measurementTypeIndicator {
+    white-space: nowrap;
+    color: var(--textColour1);
+    font-weight: 400;
+}
+
 label.labelSmall {
     font-size: 16px;
-    white-space: nowrap;
-    color: black;
-    font-weight: 400;
 }
 
 label.labelBig {
     font-size: 20px;
-    white-space: nowrap;
-    color: black;
-    font-weight: 400;
 }
 
 /* Other styles */
 
 canvas.charts {
     margin-bottom: 10px;
+    padding-right: 10px;
 }
 
 section {
@@ -194,10 +195,11 @@ section {
 
 section label {
     cursor: pointer;
+    color: var(--textColour1);
 }
 
 section label.deselected {
-    color: #bbb;
+    color: var(--textColour3);
 }
 
 table#data {
