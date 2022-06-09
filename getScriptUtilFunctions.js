@@ -1,6 +1,7 @@
 import { sub } from "date-fns"
 import fetch from "node-fetch"
 import { Firestore } from "@google-cloud/firestore"
+import { firestoreAuth } from "./forecastFunctions.js"
 
 export function getTimeChangeDates(date) {
 
@@ -108,13 +109,7 @@ export function restartHerokuDynos() {
 }
 
 export async function getArchivedForecast(date, locationID) {
-  const firestore = new Firestore({
-    projectId: process.env.GCP_PROJECT_ID,
-    credentials: {
-      client_email: process.env.GCP_CLIENT_EMAIL,
-      private_key: process.env.GCP_PRIVATE_KEY
-    }
-  })
+  const firestore = new Firestore(firestoreAuth())
 
   const document = await firestore.doc(`Harmonie forecast archive/${date}`).get()
 

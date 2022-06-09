@@ -1,6 +1,7 @@
 from requests import get, post
 import os
 from google.cloud import storage
+from google.cloud import firestore
 import json
 from datetime import datetime
 from datetime import timedelta
@@ -42,10 +43,10 @@ def runFunc (event, context):
   else:
     forceFetchandSave = False
 
-  client = storage.Client(project=projectIdAndBucket)
-  blob = client.get_bucket(projectIdAndBucket).blob("forecastData.json")
-  oldForecast = json.loads(blob.download_as_string(client=None))
+  db = firestore.Client(project=projectIdAndBucket)
+  document = db.collection("Harmonie forecast today & future").document("document")
 
+  oldForecast = document.get().to_dict()
   now = datetime.now()
 
   if ("timeRun" in oldForecast.keys()):
@@ -78,7 +79,7 @@ def runFunc (event, context):
   latPoints = []
   lonPoints = []
 
-  # #Loop through messages to extract data
+  #Loop through messages to extract data
   for i, msg in enumerate(pupygrib.read(stream), 1):
     values.append(msg.get_values())
 
@@ -181,16 +182,6 @@ def runFunc (event, context):
 
       saveForecast[locationID] = oldForecast[locationID] + newForecast[locationID]
 
-  #Saving new forecast file
-  client = storage.Client(project=projectIdAndBucket)
-  bucket = client.get_bucket(projectIdAndBucket)
-  blob = bucket.blob("forecastData.json")
-  bucket.rename_blob(blob, "forecastData.old.json")
-
-  blob = bucket.blob("forecastData.new.json")
-  blob.upload_from_string(json.dumps(saveForecast))   
-
-  blob = bucket.blob("forecastData.new.json")
-  bucket.rename_blob(blob, "forecastData.json")
+  document.set(saveForecast)
 
   logNodeApp("Saved new forecast!", "info", True)

@@ -1,4 +1,3 @@
-import { Storage } from "@google-cloud/storage"
 import { Firestore } from "@google-cloud/firestore"
 import { format, subDays, differenceInCalendarDays, parse, parseISO } from "date-fns"
 import datefnsTZ from "date-fns-tz"
@@ -6,9 +5,6 @@ const { utcToZonedTime } = datefnsTZ
 import fetch from "node-fetch"
 
 const timeZone = "Europe/Amsterdam"
-const storage = new Storage({
-  projectId: process.env.GCP_PROJECT_ID,
-})
 
 function logNodeApp(message, type, addTimeStamp) {
   console.log(message)
@@ -30,23 +26,11 @@ function logNodeApp(message, type, addTimeStamp) {
 
 export async function runFunc() {
 
-  async function downloadData() {
+  const firestore = new Firestore({
+    projectId: process.env.GCP_PROJECT_ID
+  })
 
-    const fileExists = await storage.bucket("de-wind-nu").file("forecastData.json").exists()
-    if (!fileExists[0]) return {}
-    return new Promise(async resolve => {
-      const stream = await storage.bucket("de-wind-nu").file("forecastData.json").createReadStream()
-
-      let buffer = ""
-      stream.on("data", (data) => {
-        buffer += data
-      }).on('end', () => {
-        resolve(JSON.parse(buffer))
-      })
-
-    })
-  }
-  let forecastData = await downloadData().catch(console.error)
+  let forecastData = await (await firestore.doc("Harmonie forecast today & future/document").get()).data()
 
   let firstDates = []
   for (const [key, value] of Object.entries(forecastData)) {
@@ -66,9 +50,6 @@ export async function runFunc() {
 
     //Saving archived forecast
     if (Object.keys(preSplit).length > 1) {
-      const firestore = new Firestore({
-        projectId: process.env.GCP_PROJECT_ID,
-      })
       firestore.doc(`Harmonie forecast archive/${dateArchive}`).set(preSplit)
       logNodeApp(`Archived forecast data from ${dateArchive}!`, "info", true)
     }
@@ -77,16 +58,7 @@ export async function runFunc() {
   }
 
   //Saving forecast for today and future
-  const fileExists = await storage.bucket("de-wind-nu").file("forecastData.json").exists()
-  if (fileExists[0]) storage.bucket("de-wind-nu").file("forecastData.json").rename("forecastData.old.json")
-
-  const uploadBuffer = Buffer.from(JSON.stringify(postSplit))
-
-  storage.bucket("de-wind-nu").file("forecastData.new.json").save(uploadBuffer)
-    .then(() => {
-      logNodeApp("Removed forecast data from (before) yesterday from JSON (errors while saving might still have occured)!", "info", true)
-      storage.bucket("de-wind-nu").file("forecastData.new.json").rename("forecastData.json")
-    })
+  firestore.doc("Harmonie forecast today & future/document").set(postSplit)
 
   //Function for splitting the forecast data
   function splitForecastData(forecastData, dateAfterArchive) {

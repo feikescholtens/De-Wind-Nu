@@ -4,6 +4,7 @@ pupygrib
 requests
 pytz
 google-cloud-storage
+google-cloud-firestore
 python-dateutil
 lxml
 cssselect

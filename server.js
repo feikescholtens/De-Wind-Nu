@@ -9,7 +9,8 @@ import { addLocation } from "./addLocation.js"
 import { addFeedback } from "./addFeedback.js"
 import { log } from "./globalFunctions.js"
 import schedule from "node-schedule"
-import { createRecurrenceRule, fetchForecast, scheduledGetForecast } from "./forecastFunctions.js"
+import { createRecurrenceRule, scheduledGetForecast, firestoreAuth } from "./forecastFunctions.js"
+import { Firestore } from "@google-cloud/firestore"
 global.log = log
 global.MVBAPIKey = {}
 global.port = process.env.PORT || 3000
@@ -92,8 +93,9 @@ app.get("/testTimeout", (request, response) => {})
 app.use("/*", (request, response) => response.redirect("/"))
 
 //Load forecast and schedule updates
+const firestore = new Firestore(firestoreAuth())
 global.forecastData = {};
-(async () => forecastData = await fetchForecast())()
+(async () => forecastData = await (await firestore.doc("Harmonie forecast today & future/document").get()).data())()
 
 const ruleUpdatedForecast = createRecurrenceRule([2, 8, 14, 20], [55], [30])
 schedule.scheduleJob(ruleUpdatedForecast, async () => { scheduledGetForecast(16) })

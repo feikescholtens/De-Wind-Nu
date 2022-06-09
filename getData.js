@@ -28,10 +28,20 @@ export async function getData(request, response, date, locations, forecastData) 
   let dateParsed = startOfDay(parseISO(date)),
     dateFormatted
 
+  console.log(date)
+  console.log(dateParsed)
+  console.log(dateFormatted)
+
   if (!isValid(dateParsed)) {
     dateParsed = startOfDay(new Date())
     dateFormatted = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy")
   } else dateFormatted = format(utcToZonedTime(dateParsed, timeZone), "dd-MM-yyyy")
+
+  console.log(date)
+  console.log(dateParsed)
+  console.log(dateFormatted)
+
+  console.log("fix, zelfde als 2de?", startOfDay(utcToZonedTime(parseISO(date), timeZone)))
 
   const locationID = request.params.id
   const location = locations[locationID]
