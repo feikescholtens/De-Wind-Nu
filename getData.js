@@ -38,8 +38,10 @@ export async function getData(request, response, date, locations, forecastData) 
     dateFormatted = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy")
   } else dateFormatted = format(utcToZonedTime(dateParsed, timeZone), "dd-MM-yyyy")
 
-  if (dateParsed.getHours() == 0) {
-    subHours(dateParsed, getTimezoneOffset(timeZone, new Date()) / 1000 / 3600)
+  console.log(dateParsed.getUTCHours())
+  if (dateParsed.getUTCHours() == 0) {
+    console.log("need to sub hours")
+    dateParsed = subHours(dateParsed, getTimezoneOffset(timeZone, new Date()) / 1000 / 3600)
   }
   console.log(getHours(dateParsed))
   console.log(getTimezoneOffset(timeZone, new Date()) / 1000 / 3600)
