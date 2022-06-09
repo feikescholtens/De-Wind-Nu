@@ -5,7 +5,7 @@ import { fetchRWS } from "./fetchScripts/getData/Rijkswaterstaat.js"
 import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
 import { fetchMVB } from "./fetchScripts/getData/MVB.js"
 import { getTimeChangeDates, generateTimes, calcInterpolation, restartHerokuDynos, getArchivedForecast } from "./getScriptUtilFunctions.js"
-import { format, add, parseISO, startOfDay, isBefore, isValid, isToday, subHours } from "date-fns"
+import { format, add, parseISO, startOfDay, isBefore, isValid, isToday, subHours, getHours } from "date-fns"
 import module from "date-fns-tz"
 const { utcToZonedTime, getTimezoneOffset } = module
 
@@ -38,9 +38,10 @@ export async function getData(request, response, date, locations, forecastData) 
     dateFormatted = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy")
   } else dateFormatted = format(utcToZonedTime(dateParsed, timeZone), "dd-MM-yyyy")
 
-  if (dateParsed.getHours() !== 0) {
-    dateParsed = subHours(dateParsed, getTimezoneOffset(timeZone, new Date()) / 1000 / 3600)
+  if (dateParsed.getHours() == 0) {
+    subHours(dateParsed, getTimezoneOffset(timeZone, new Date()) / 1000 / 3600)
   }
+  console.log(getHours(dateParsed))
   console.log(getTimezoneOffset(timeZone, new Date()) / 1000 / 3600)
 
   console.log(dateParsed)
