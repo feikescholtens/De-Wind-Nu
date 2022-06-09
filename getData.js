@@ -39,8 +39,9 @@ export async function getData(request, response, date, locations, forecastData) 
   } else dateFormatted = format(utcToZonedTime(dateParsed, timeZone), "dd-MM-yyyy")
 
   if (dateParsed.getHours() !== 0) {
-    dateParsed = subHours(dateParsed, getTimezoneOffset(timeZone, new Date() / 1000 / 3600))
+    dateParsed = subHours(dateParsed, getTimezoneOffset(timeZone, new Date()) / 1000 / 3600)
   }
+  console.log(getTimezoneOffset(timeZone, new Date()) / 1000 / 3600)
 
   console.log(dateParsed)
 
