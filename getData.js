@@ -29,6 +29,7 @@ export async function getData(request, response, date, locations, forecastData) 
     dateFormatted
 
   console.log(date)
+  console.log(parseISO(date))
   console.log(dateParsed)
   console.log(dateFormatted)
 
@@ -37,7 +38,10 @@ export async function getData(request, response, date, locations, forecastData) 
     dateFormatted = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy")
   } else dateFormatted = format(utcToZonedTime(dateParsed, timeZone), "dd-MM-yyyy")
 
+  console.log("==============")
+
   console.log(date)
+  console.log(parseISO(date))
   console.log(dateParsed)
   console.log(dateFormatted)
 
