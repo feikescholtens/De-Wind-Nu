@@ -25,17 +25,13 @@ export async function getData(request, response, date, locations, forecastData) 
     restartHerokuDynos()
   }, 29.5 * 1000)
 
-  let dateParsed = startOfDay(parseISO(date), timeZone),
-    dateParsedUTC = startOfDay(parseISO(date)),
+  let dateParsed = parseISO(date),
     dateFormatted
 
   if (!isValid(dateParsed)) {
     dateParsed = startOfDayTimeZone(new Date(), timeZone)
     dateFormatted = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy")
   } else dateFormatted = format(utcToZonedTime(dateParsed, timeZone), "dd-MM-yyyy")
-  if (!isValid(dateParsedUTC)) {
-    dateParsedUTC = startOfDay(new Date(), timeZone)
-  }
 
   const locationID = request.params.id
   const location = locations[locationID]
@@ -92,7 +88,7 @@ export async function getData(request, response, date, locations, forecastData) 
   let forecastObj, forecastInfoString = "niet beschikbaar"
 
   //Check if requested forecast is in the past or not, set the forecast for that location for that day to forecastObj and set the forecast information string accordingly 
-  if (!isBefore(dateParsedUTC, startOfDay(new Date()))) {
+  if (!isBefore(dateParsed, startOfDay(new Date()))) {
     if (forecastData[locationID]) {
       forecastObj = forecastData[locationID]
 
