@@ -24,7 +24,7 @@ export async function getData(request, response, date, locations, forecastData) 
     restartHerokuDynos()
   }, 29.5 * 1000)
 
-  let dateParsed = startOfDayTimeZone(parseISO(date), timeZone),
+  let dateParsed = startOfDay(parseISO(date), timeZone),
     dateParsedUTC = startOfDay(parseISO(date)),
     dateFormatted
 
@@ -33,7 +33,7 @@ export async function getData(request, response, date, locations, forecastData) 
     dateFormatted = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy")
   } else dateFormatted = format(utcToZonedTime(dateParsed, timeZone), "dd-MM-yyyy")
   if (!isValid(dateParsedUTC)) {
-    dateParsed = startOfDay(new Date(), timeZone)
+    dateParsedUTC = startOfDay(new Date(), timeZone)
   }
 
   const locationID = request.params.id
