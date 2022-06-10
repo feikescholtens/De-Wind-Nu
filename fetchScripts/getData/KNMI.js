@@ -12,6 +12,10 @@ export async function fetchKNMI(dateParsed, databaseData, resolve, times) {
 
   const locationID = databaseData.datasets.KNMI.location_id
   const dateStartFetch = format(dateParsed, "yyyy-M-d")
+  console.log(dateStartFetch)
+
+  console.log(utcToZonedTime(dateParsed, timeZone))
+  console.log(format(utcToZonedTime(dateParsed, timeZone), "yyyy-M-d"))
   const rawDataString = await fetch(`https://graphdata.buienradar.nl/1.0/actualarchive/weatherstation/${locationID}/?startDate=${dateStartFetch}`)
     .then(response => response.text()).catch((error) => catchError(resolve, data, error, "KNMI"))
 
