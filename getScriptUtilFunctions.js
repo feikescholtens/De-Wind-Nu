@@ -1,4 +1,6 @@
-import { sub } from "date-fns"
+import { addHours, startOfDay, sub, subHours } from "date-fns"
+import module from "date-fns-tz"
+const { getTimezoneOffset } = module
 import fetch from "node-fetch"
 import { Firestore } from "@google-cloud/firestore"
 import { firestoreAuth } from "./forecastFunctions.js"
@@ -115,4 +117,16 @@ export async function getArchivedForecast(date, locationID) {
 
   if (!document.exists) return null
   return document.get(locationID)
+}
+
+export function startOfDayTimeZone(date, timeZone) {
+
+  date = startOfDay(date)
+
+  if (date.getUTCHours() == 0) {
+    console.log("need to sub hours")
+    date = subHours(date, getTimezoneOffset(timeZone, new Date()) / 1000 / 3600)
+  }
+
+  return date
 }
