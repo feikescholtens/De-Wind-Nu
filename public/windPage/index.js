@@ -1,4 +1,4 @@
-import { addDays, isToday, parse, format, parseISO } from "https://esm.run/date-fns"
+import { addDays, isToday, parse, format, parseISO, startOfDay } from "https://esm.run/date-fns"
 import { displayPopUpWithName } from "../jsPopUps/functions.js"
 import { displayPopUpFeedback } from "../jsPopUps/feedback.js"
 import { contentUpdate } from "./js/contentUpdate.js"
@@ -41,11 +41,11 @@ let dateURL, relativeDate, dateISO
 try {
   dateURL = parse(dateURLString, "dd-MM-yyyy", new Date())
   relativeDate = getRelativeDate(dateURL)
-  dateISO = dateURL.toISOString()
+  dateISO = startOfDay(dateURL).toISOString()
 } catch {
   dateURL = null
   relativeDate = "Vandaag"
-  dateISO = getAbsoluteDate(relativeDate).toISOString()
+  dateISO = startOfDay(getAbsoluteDate(relativeDate)).toISOString()
   history.replaceState(null, null, `${window.location.origin + window.location.pathname}`)
 }
 document.querySelector("[data-currentDay]").innerText = relativeDate
@@ -215,14 +215,14 @@ document.querySelector("[data-datePicker]").addEventListener("change", (e) => {
   document.querySelector("[data-currentDay]").innerText = relativeDate
   setDateInUrl(dateSelected)
 
-  fetchData(dateSelected.toISOString())
+  fetchData(startOfDay(dateSelected).toISOString())
 })
 
 document.querySelector("[data-getData]").addEventListener("click", () => {
   const dateFetchString = document.querySelector("[data-currentDay]").innerText
   const dateFetch = getAbsoluteDate(dateFetchString)
 
-  fetchData(dateFetch.toISOString())
+  fetchData(startOfDay(dateFetch).toISOString())
 })
 
 //(1)Change the data in local storage when other options are selected and (2) refresh the graphs
