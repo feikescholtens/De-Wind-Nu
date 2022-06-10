@@ -130,7 +130,10 @@ export function startOfDayTimeZone(date, timeZone) {
 
   if (date.getUTCHours() == 0) {
     console.log("sub hours")
-    date = subHours(date, getTimezoneOffset(timeZone, new Date()) / 1000 / 3600)
+    console.log(getTimezoneOffset(timeZone, date) / 1000 / 3600)
+    console.log(getTimezoneOffset(timeZone, new Date()) / 1000 / 3600)
+
+    date = subHours(date, getTimezoneOffset(timeZone, date) / 1000 / 3600)
   }
 
   console.log(date)
