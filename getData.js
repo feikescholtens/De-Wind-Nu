@@ -5,9 +5,9 @@ import { fetchRWS } from "./fetchScripts/getData/Rijkswaterstaat.js"
 import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
 import { fetchMVB } from "./fetchScripts/getData/MVB.js"
 import { getTimeChangeDates, generateTimes, calcInterpolation, restartHerokuDynos, getArchivedForecast, startOfDayTimeZone } from "./getScriptUtilFunctions.js"
-import { format, add, parseISO, startOfDay, isBefore, isValid, isToday, subHours, getHours } from "date-fns"
+import { format, add, parseISO, isBefore, isValid, isToday } from "date-fns"
 import module from "date-fns-tz"
-const { utcToZonedTime, getTimezoneOffset } = module
+const { utcToZonedTime } = module
 
 const timeZone = "Europe/Amsterdam"
 
@@ -23,34 +23,14 @@ export async function getData(request, response, date, locations, forecastData) 
     log("Restarting server due to timed out request!", "info", true)
     restartHerokuDynos()
   }, 29.5 * 1000)
-  //Triggering timeout 1/2 a second before Heroku does
-
-  // let dateParsed = startOfDay(parseISO(date)),
-  //   dateFormatted
 
   let dateParsed = startOfDayTimeZone(parseISO(date), timeZone),
     dateFormatted
-
-  // console.log(date)
-  // console.log(parseISO(date))
-  // console.log(dateParsed)
-  // console.log(dateFormatted)
 
   if (!isValid(dateParsed)) {
     dateParsed = startOfDayTimeZone(new Date(), timeZone)
     dateFormatted = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy")
   } else dateFormatted = format(utcToZonedTime(dateParsed, timeZone), "dd-MM-yyyy")
-
-  // console.log(dateParsed.getUTCHours())
-  // if (dateParsed.getUTCHours() == 0) {
-  //   console.log("need to sub hours")
-  //   dateParsed = subHours(dateParsed, getTimezoneOffset(timeZone, new Date()) / 1000 / 3600)
-  // }
-  // console.log(getHours(dateParsed))
-  // console.log(getTimezoneOffset(timeZone, new Date()) / 1000 / 3600)
-
-  console.log(dateParsed)
-  console.log(dateFormatted)
 
   const locationID = request.params.id
   const location = locations[locationID]
@@ -105,7 +85,7 @@ export async function getData(request, response, date, locations, forecastData) 
   let forecastObj, forecastInfoString = "niet beschikbaar"
 
   //Check if requested forecast is in the past or not, set the forecast for that location for that day to forecastObj and set the forecast information string accordingly 
-  if (!isBefore(dateParsed, startOfDay(new Date()))) {
+  if (!isBefore(dateParsed, startOfDayTimeZone(new Date()))) {
     if (forecastData[locationID]) {
       forecastObj = forecastData[locationID]
 

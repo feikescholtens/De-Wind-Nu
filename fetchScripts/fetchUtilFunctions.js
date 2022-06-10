@@ -1,4 +1,8 @@
 import { format, addDays, sub, isSameDay } from "date-fns"
+import module from "date-fns-tz"
+const { utcToZonedTime } = module
+
+const timeZone = "Europe/Amsterdam"
 
 export function catchError(resolve, data, error, dataset) {
   data = { error: error, dataset: dataset }
@@ -22,24 +26,24 @@ export function giveRWSFetchOptions(dateParsed, databaseData, DSTDates) {
   if (dateParsed > DSTDates[0] && dateParsed < DSTDates[1]) {
     // Summertime
     startTime = endTime = "22:00:00"
-    dateStartFetch = format(sub(dateParsed, { days: 1 }), "yyyy-MM-dd")
-    dateEndFetch = format(dateParsed, "yyyy-MM-dd")
+    dateStartFetch = format(utcToZonedTime(sub(dateParsed, { days: 1 }), timeZone), "yyyy-MM-dd")
+    dateEndFetch = format(utcToZonedTime(dateParsed, timeZone), "yyyy-MM-dd")
   } else if (isSameDay(dateParsed, DSTDates[0])) {
     //Day of going to summertime
     startTime = "00:00:00"
     endTime = "22:00:00"
-    dateStartFetch = dateEndFetch = format(dateParsed, "yyyy-MM-dd")
+    dateStartFetch = dateEndFetch = format(utcToZonedTime(dateParsed, timeZone), "yyyy-MM-dd")
   } else if (isSameDay(dateParsed, DSTDates[1])) {
     //Day of going to wintertime
     startTime = "22:00:00"
     endTime = "00:00:00"
-    dateStartFetch = format(sub(dateParsed, { days: 1 }), "yyyy-MM-dd")
+    dateStartFetch = format(utcToZonedTime(sub(dateParsed, { days: 1 }), timeZone), "yyyy-MM-dd")
     dateEndFetch = format(dateParsed, "yyyy-MM-dd")
   } else {
     //Wintertime
     startTime = endTime = "00:00:00"
-    dateStartFetch = format(dateParsed, "yyyy-MM-dd")
-    dateEndFetch = format(addDays(dateParsed, 1), "yyyy-MM-dd")
+    dateStartFetch = format(utcToZonedTime(dateParsed, timeZone), "yyyy-MM-dd")
+    dateEndFetch = format(utcToZonedTime(addDays(dateParsed, 1), timeZone), "yyyy-MM-dd")
   }
   //All above is needed due to *** RWS API
 

@@ -1,4 +1,4 @@
-import { addHours, startOfDay, sub, subHours } from "date-fns"
+import { startOfDay, sub, subHours } from "date-fns"
 import module from "date-fns-tz"
 const { getTimezoneOffset } = module
 import fetch from "node-fetch"
@@ -124,7 +124,6 @@ export function startOfDayTimeZone(date, timeZone) {
   date = startOfDay(date)
 
   if (date.getUTCHours() == 0) {
-    console.log("need to sub hours")
     date = subHours(date, getTimezoneOffset(timeZone, new Date()) / 1000 / 3600)
   }
 

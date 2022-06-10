@@ -1,5 +1,12 @@
 # Change log
 
+## v3.1.1
+
+Bugfixes:
+- Fixed ALL API's requesting wrong data
+
+---
+
 ## v3.1.0
 - Darkmode!
 
