@@ -49,7 +49,8 @@ export async function getData(request, response, date, locations, forecastData) 
   // console.log(getHours(dateParsed))
   // console.log(getTimezoneOffset(timeZone, new Date()) / 1000 / 3600)
 
-  // console.log(dateParsed)
+  console.log(dateParsed)
+  console.log(dateFormatted)
 
   const locationID = request.params.id
   const location = locations[locationID]
