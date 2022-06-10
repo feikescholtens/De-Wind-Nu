@@ -37,7 +37,7 @@ export async function getData(request, response, date, locations, forecastData) 
   // console.log(dateFormatted)
 
   if (!isValid(dateParsed)) {
-    dateParsed = startOfDay(new Date())
+    dateParsed = startOfDayTimeZone(new Date(), timeZone)
     dateFormatted = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy")
   } else dateFormatted = format(utcToZonedTime(dateParsed, timeZone), "dd-MM-yyyy")
 
