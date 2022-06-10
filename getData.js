@@ -85,8 +85,8 @@ export async function getData(request, response, date, locations, forecastData) 
   let forecastObj, forecastInfoString = "niet beschikbaar"
 
   //Check if requested forecast is in the past or not, set the forecast for that location for that day to forecastObj and set the forecast information string accordingly 
-  console.log(dateParsed, startOfDayTimeZone(new Date()))
-  if (!isBefore(dateParsed, startOfDayTimeZone(new Date()))) {
+  console.log(dateParsed, startOfDayTimeZone(utcToZonedTime(new Date(), timeZone)))
+  if (!isBefore(dateParsed, startOfDayTimeZone(utcToZonedTime(new Date(), timeZone)))) {
     console.log("actual")
     if (forecastData[locationID]) {
       forecastObj = forecastData[locationID]
