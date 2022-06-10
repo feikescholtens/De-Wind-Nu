@@ -5,7 +5,7 @@ import { fetchRWS } from "./fetchScripts/getData/Rijkswaterstaat.js"
 import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
 import { fetchMVB } from "./fetchScripts/getData/MVB.js"
 import { getTimeChangeDates, generateTimes, calcInterpolation, restartHerokuDynos, getArchivedForecast, startOfDayTimeZone } from "./getScriptUtilFunctions.js"
-import { format, add, parseISO, isBefore, isValid, isToday } from "date-fns"
+import { format, add, parseISO, isBefore, isValid, isToday, startOfDay } from "date-fns"
 import module from "date-fns-tz"
 const { utcToZonedTime } = module
 
@@ -25,12 +25,17 @@ export async function getData(request, response, date, locations, forecastData) 
   }, 29.5 * 1000)
 
   let dateParsed = startOfDayTimeZone(parseISO(date), timeZone),
+    dateParsedUTC = startOfDay(parseISO(date)),
     dateFormatted
 
   if (!isValid(dateParsed)) {
     dateParsed = startOfDayTimeZone(new Date(), timeZone)
     dateFormatted = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy")
   } else dateFormatted = format(utcToZonedTime(dateParsed, timeZone), "dd-MM-yyyy")
+
+  if (!isValid(dateParsedUTC)) {
+    dateParsed = startOfDay(new Date(), timeZone)
+  }
 
   const locationID = request.params.id
   const location = locations[locationID]
@@ -86,9 +91,10 @@ export async function getData(request, response, date, locations, forecastData) 
 
   //Check if requested forecast is in the past or not, set the forecast for that location for that day to forecastObj and set the forecast information string accordingly 
   console.log("forecasted")
-  console.log("d", dateParsed, startOfDayTimeZone(new Date()))
+  console.log(DSTDates)
+  console.log("d", dateParsed, startOfDayTimeZone(new Date(), DSTDates))
 
-  if (!isBefore(dateParsed, startOfDayTimeZone(utcToZonedTime(new Date(), timeZone)))) {
+  if (!isBefore(dateParsedUTC, startOfDayTimeZone(utcToZonedTime(new Date(), timeZone)))) {
     console.log("actual")
     if (forecastData[locationID]) {
       forecastObj = forecastData[locationID]

@@ -119,7 +119,7 @@ export async function getArchivedForecast(date, locationID) {
   return document.get(locationID)
 }
 
-export function startOfDayTimeZone(date, timeZone) {
+export function startOfDayTimeZone(date, timeZone, DSTDates) {
 
   console.log("start")
   console.log(date)
