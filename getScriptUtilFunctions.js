@@ -119,27 +119,13 @@ export async function getArchivedForecast(date, locationID) {
   return document.get(locationID)
 }
 
-export function startOfDayTimeZone(date, timeZone, DSTDates) {
-
-  console.log("start")
-  console.log(date)
-
+export function startOfDayTimeZone(date, timeZone) {
 
   date = startOfDay(date)
-  console.log(date)
 
   if (date.getUTCHours() == 0) {
-    console.log("sub hours")
-    console.log(getTimezoneOffset(timeZone))
-    console.log(getTimezoneOffset(timeZone, date) / 1000 / 3600)
-    console.log(getTimezoneOffset(timeZone, new Date()) / 1000 / 3600)
-
     date = subHours(date, getTimezoneOffset(timeZone, date) / 1000 / 3600)
   }
-
-  console.log(date)
-
-  console.log("stop")
 
   return date
 }

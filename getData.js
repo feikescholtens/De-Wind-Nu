@@ -32,7 +32,6 @@ export async function getData(request, response, date, locations, forecastData) 
     dateParsed = startOfDayTimeZone(new Date(), timeZone)
     dateFormatted = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy")
   } else dateFormatted = format(utcToZonedTime(dateParsed, timeZone), "dd-MM-yyyy")
-
   if (!isValid(dateParsedUTC)) {
     dateParsed = startOfDay(new Date(), timeZone)
   }
@@ -90,12 +89,7 @@ export async function getData(request, response, date, locations, forecastData) 
   let forecastObj, forecastInfoString = "niet beschikbaar"
 
   //Check if requested forecast is in the past or not, set the forecast for that location for that day to forecastObj and set the forecast information string accordingly 
-  console.log("forecasted")
-  console.log(DSTDates)
-  console.log("d", dateParsed, startOfDayTimeZone(new Date(), DSTDates))
-
-  if (!isBefore(dateParsedUTC, startOfDayTimeZone(utcToZonedTime(new Date(), timeZone)))) {
-    console.log("actual")
+  if (!isBefore(dateParsedUTC, startOfDay(new Date()))) {
     if (forecastData[locationID]) {
       forecastObj = forecastData[locationID]
 
@@ -114,7 +108,7 @@ export async function getData(request, response, date, locations, forecastData) 
       forecastInfoString = "HARMONIE model van het KNMI, uit archief"
     }
   }
-  console.log(dateParsed, dateFormatted)
+
   //This object might become undefined when there is no forecast available, so only proceed when not so
   if (forecastObj) {
 
