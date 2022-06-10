@@ -1,4 +1,6 @@
 export function logFetchErrors(dataFetched, response) {
+  if (!dataFetched) return
+
   const errorCode = dataFetched.data.error.code
 
   if (errorCode == "ENOTFOUND")

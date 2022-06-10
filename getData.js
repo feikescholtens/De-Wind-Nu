@@ -5,7 +5,7 @@ import { fetchRWS } from "./fetchScripts/getData/Rijkswaterstaat.js"
 import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
 import { fetchMVB } from "./fetchScripts/getData/MVB.js"
 import { getTimeChangeDates, generateTimes, calcInterpolation, restartHerokuDynos, getArchivedForecast, startOfDayTimeZone } from "./getScriptUtilFunctions.js"
-import { format, add, parseISO, isBefore, isValid, isToday, startOfDay } from "date-fns"
+import { format, add, parseISO, isBefore, isValid, isToday, startOfDay, isFuture } from "date-fns"
 import module from "date-fns-tz"
 const { utcToZonedTime } = module
 
@@ -58,6 +58,8 @@ export async function getData(request, response, date, locations, forecastData) 
 
   //Measurements
   const dataFetched = await new Promise(async (resolve) => {
+    if (isFuture(dateParsed)) { resolve(null); return }
+
     // VLINDER
     if (location.datasets.VLINDER) {
       return fetchVLINDER(dateParsed, location, resolve, times)
@@ -76,7 +78,7 @@ export async function getData(request, response, date, locations, forecastData) 
     }
   })
 
-  if (dataFetched.data.error) {
+  if (!dataFetched || dataFetched.data.error) {
     logFetchErrors(dataFetched, response)
     values["windSpeed"] = values["windGusts"] = values["windDirection"] = []
   } else {
