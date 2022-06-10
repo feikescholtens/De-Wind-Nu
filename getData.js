@@ -85,6 +85,7 @@ export async function getData(request, response, date, locations, forecastData) 
   let forecastObj, forecastInfoString = "niet beschikbaar"
 
   //Check if requested forecast is in the past or not, set the forecast for that location for that day to forecastObj and set the forecast information string accordingly 
+  console.log(startOfDayTimeZone(new Date()))
   if (!isBefore(dateParsed, startOfDayTimeZone(new Date()))) {
     if (forecastData[locationID]) {
       forecastObj = forecastData[locationID]
@@ -104,7 +105,7 @@ export async function getData(request, response, date, locations, forecastData) 
       forecastInfoString = "HARMONIE model van het KNMI, uit archief"
     }
   }
-
+  console.log(dateParsed, dateFormatted)
   //This object might become undefined when there is no forecast available, so only proceed when not so
   if (forecastObj) {
 
