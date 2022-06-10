@@ -12,7 +12,6 @@ const { utcToZonedTime } = module
 const timeZone = "Europe/Amsterdam"
 
 export async function getData(request, response, date, locations, forecastData) {
-  console.log(date)
 
   if (!validID(request.params.id, locations, response)) return
 
