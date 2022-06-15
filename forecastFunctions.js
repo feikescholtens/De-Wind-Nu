@@ -25,7 +25,7 @@ export async function scheduledGetForecast(NoTries) {
 
   async function getNewForecast() {
     tryCount++
-
+    console.log("Fetching new forecast")
     const newForecast = await fetchForecast()
     if (newForecast.timeRun == forecastData.timeRun) {
       if (tryCount < NoTries) {
