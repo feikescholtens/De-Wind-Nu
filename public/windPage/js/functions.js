@@ -28,7 +28,7 @@ export function changeShowBar(showBarSelector) {
 
 export function changeDataForm(dataFormSelector, e) {
   let clickedOption
-  if (e) clickedOption = e.path[0].innerText
+  if (e) clickedOption = e.target.innerText
 
   //Check if the dataForm is changed at all
   if (clickedOption == "Grafieken" && localStorage.getItem("dataForm") == "graphs") return
@@ -298,4 +298,9 @@ export const units = {
     "factor": 1,
     "ranges": [1, 4, 7, 11, 17, 22, 28, 34, 41, 48, 56, 64]
   }
+}
+
+export function isIOS() {
+  return ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'].includes(navigator.platform) ||
+    (navigator.userAgent.includes("Mac") && "ontouchend" in document)
 }

@@ -114,7 +114,8 @@ export function updateTable() {
 
   const NoMeasurementTypesAvailable = [dataWUnits.windSpeed.length !== 0, dataWUnits.windGusts.length !== 0, dataWUnits.windDirection.length !== 0].filter(array => array !== false).length
   document.querySelector("[data-dataTable] th:nth-child(2)").setAttribute("colspan", NoMeasurementTypesAvailable)
-  if (NoMeasurementTypesAvailable == 0 && document.querySelector("[data-dataTable] th:nth-child(2)").innerText == "Metingen") document.querySelector("[data-dataTable] th:nth-child(2)").remove()
+  if (NoMeasurementTypesAvailable == 0 && document.querySelector("[data-dataTable] th:nth-child(2)").innerText == "Metingen") document.querySelector("[data-dataTable] th:nth-child(2)").classList.add("noDisplay")
+  else document.querySelector("[data-dataTable] th:nth-child(2)").classList.remove("noDisplay")
   if (!dataWUnits.windSpeedForecast && document.querySelector("[data-dataTable] th:nth-child(3)")) document.querySelector("[data-dataTable] th:nth-child(3)").remove()
 
   //Clearing table

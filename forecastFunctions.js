@@ -1,4 +1,5 @@
 import schedule from "node-schedule"
+import { Firestore } from "@google-cloud/firestore"
 
 export function firestoreAuth() {
   return {
@@ -20,13 +21,14 @@ export function createRecurrenceRule(hours, minutes, seconds) {
 }
 
 export async function scheduledGetForecast(NoTries) {
+  const firestore = new Firestore(firestoreAuth())
+
   let tryCount = 0
   await getNewForecast()
 
   async function getNewForecast() {
     tryCount++
-    console.log("Fetching new forecast")
-    const newForecast = await fetchForecast()
+    const newForecast = await (await firestore.doc("Harmonie forecast today & future/document").get()).data()
     if (newForecast.timeRun == forecastData.timeRun) {
       if (tryCount < NoTries) {
         setTimeout(() => { getNewForecast() }, 60 * 1000)

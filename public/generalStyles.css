@@ -24,6 +24,7 @@ body {
 
     background-color: var(--BGColour);
     color: var(--textColour1);
+    -webkit-font-smoothing: antialiased !important;
 }
 
 body.dark {
@@ -97,6 +98,7 @@ h1#title {
 }
 
 h2.sectionHeader {
+    font-weight: 700;
     width: calc(100% - 20px);
     padding: 10px 10px 0 10px;
 }

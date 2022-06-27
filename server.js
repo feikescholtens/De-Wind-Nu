@@ -97,5 +97,5 @@ const firestore = new Firestore(firestoreAuth())
 global.forecastData = {};
 (async () => forecastData = await (await firestore.doc("Harmonie forecast today & future/document").get()).data())()
 
-const ruleUpdatedForecast = createRecurrenceRule([2, 8, 14, 20], [55], [30])
+const ruleUpdatedForecast = createRecurrenceRule([2, 8, 14, 20, 19], [55, 21], [30])
 schedule.scheduleJob(ruleUpdatedForecast, async () => { scheduledGetForecast(16) })

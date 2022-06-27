@@ -25,11 +25,13 @@ import {
   switchPreviousDay,
   switchNextDay,
   setDateInUrl,
-  units
+  units,
+  isIOS
 } from "./js/functions.js"
 import { redirect, updateLocalVariables, setThemeSelector, changeTheme } from "../globalFunctions.js"
 redirect()
 updateLocalVariables()
+if (isIOS()) document.getElementById("settings").style.width = document.body.clientWidth - 40 + "px"
 
 Object.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 

@@ -1,5 +1,15 @@
 # Change log
 
+## v3.1.2
+
+Bugfixes:
+- Fixed text displaying not correct on IOS devices
+- Fixed table headings not being updated
+- Fixed dispaymode error on Safari
+- Fixed error where forecast would not get updated on scedule
+
+---
+
 ## v3.1.1
 
 Bugfixes:
