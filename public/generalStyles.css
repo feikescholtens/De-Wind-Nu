@@ -53,6 +53,8 @@ footer {
     display: none !important;
 }
 
+/* Header and headings styling */
+
 header {
     height: 100px;
 }
@@ -101,6 +103,35 @@ h2.sectionHeader {
     font-weight: 700;
     width: calc(100% - 20px);
     padding: 10px 10px 0 10px;
+}
+
+/* Text selector styling */
+
+.text-selector {
+    letter-spacing: 1px;
+    word-spacing: 10px;
+    text-align: center;
+    height: 25px;
+}
+
+.text-selector label {
+    cursor: pointer;
+    color: var(--textColour1);
+}
+
+.text-selector label.deselected {
+    color: var(--textColour3);
+}
+
+.inHeader {
+    position: absolute;
+    top: calc(100px - 25px);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.inPageFlow {
+    padding-top: 10px;
 }
 
 /* Marker & loader styling */
@@ -204,7 +235,7 @@ button.popupKNMI {
     background-color: rgb(101, 124, 201);
 }
 
-button.popupRWS {
+button.popupRijkswaterstaat {
     background-color: rgb(46, 179, 99);
 }
 
@@ -267,7 +298,16 @@ div#settings {
     margin: 5px 10px;
     column-gap: 10px;
     row-gap: 20px;
-    align-items: center;
+}
+
+div#settings input {
+    justify-self: baseline;
+}
+
+.spanRow {
+    grid-column: 1 / 3;
+    border: 1px var(--lineColour) solid;
+    background-color: var(--lineColour)
 }
 
 /* Popup styling */
@@ -327,7 +367,9 @@ div.close {
     right: 0;
     cursor: pointer;
     padding: 30px;
-    color: red;
+    color: #ff0001 !important;
+    -webkit-text-fill-color: red;
+    -webkit-opacity: 1;
     font-size: 25px;
     width: 21px;
     height: 21px;

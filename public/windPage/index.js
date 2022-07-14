@@ -1,37 +1,10 @@
 import { addDays, isToday, parse, format, parseISO, startOfDay } from "https://esm.run/date-fns"
-import { displayPopUpWithName } from "../jsPopUps/functions.js"
-import { displayPopUpFeedback } from "../jsPopUps/feedback.js"
 import { contentUpdate } from "./js/contentUpdate.js"
-import {
-  changeShowBar,
-  changeDataForm,
-  changeUnit,
-  changeDecimals,
-  formulateErrorMessage,
-  showErrorMessage,
-  hideErrorMessage,
-  hideMain,
-  showLoader,
-  hideLoader,
-  showMain,
-  showCurrentWindBox,
-  hideCurrentWindBox,
-  changeInterpolation,
-  calcInterpolation,
-  changeTableSort,
-  getAbsoluteDate,
-  getRelativeDate,
-  getDatePickerMax,
-  switchPreviousDay,
-  switchNextDay,
-  setDateInUrl,
-  units,
-  isIOS
-} from "./js/functions.js"
-import { redirect, updateLocalVariables, setThemeSelector, changeTheme } from "../globalFunctions.js"
+import { changeDataForm, formulateErrorMessage, showErrorMessage, hideErrorMessage, hideMain, showLoader, hideLoader, setNewNumber, showMain, showCurrentWindBox, hideCurrentWindBox, changeInterpolation, calcInterpolation, changeTableSort, getAbsoluteDate, getRelativeDate, getDatePickerMax, switchPreviousDay, switchNextDay, setDateInUrl, isIOS } from "./js/functions.js"
+import { redirect, updateLocalVariables, changeTheme, changeShowBar, changeUnit, units, setGeneralSettings, addUIListeners, changeDecimals } from "../globalFunctions.js"
 redirect()
 updateLocalVariables()
-if (isIOS()) document.getElementById("settings").style.width = document.body.clientWidth - 40 + "px"
+// if (isIOS()) document.getElementById("settings").style.width = document.body.clientWidth - 40 + "px"
 
 Object.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 
@@ -52,11 +25,9 @@ try {
 }
 document.querySelector("[data-currentDay]").innerText = relativeDate
 if (dateURL !== null) document.querySelector("[data-datePicker]").value = format(dateURL, "yyyy-MM-dd")
-
 fetchData(dateISO)
 
 function fetchData(date) {
-
   const changeNumbersLoadingSymbolInterval = setInterval(() => setNewNumber(), 80)
   showLoader()
   hideErrorMessage()
@@ -68,10 +39,8 @@ function fetchData(date) {
       hideLoader()
 
       if (response.status !== 200) {
-
         document.querySelector("[data-errorFetching]").innerText = `Data ophalen van server mislukt met status code ${response.status}!`
         showErrorMessage()
-
       } else processRetrievedData(await response.json())
     })
 }
@@ -80,79 +49,46 @@ function fetchData(date) {
 globalThis.data = {},
   globalThis.dataWUnits = {},
   globalThis.date,
-  globalThis.unit, globalThis.decimals, globalThis.interpolation,
-  globalThis.times, globalThis.currentWindBoxSize = 350,
+  globalThis.unit = localStorage.getItem("unit"),
+  globalThis.decimals, //Is set in setGeneralSettings function
+  globalThis.interpolation = localStorage.getItem("interpolation"),
+  globalThis.times,
+  globalThis.currentWindBoxSize = 350,
   globalThis.units = units
 
-function setNewNumber() {
-  const latestNumber = document.getElementsByClassName("marker")[0].innerText
-  const newNumber = parseInt(String(Math.random())[2])
-
-  if (latestNumber !== newNumber) {
-    document.getElementsByClassName("marker")[0].innerText = parseInt(String(Math.random())[2])
-  } else {
-    setNewNumber()
-  }
-}
-
-const showBarSelector = document.querySelector("[data-showBar]"),
-  dataFormSelector = document.querySelector("[data-dataFormUnderSettings]"),
+//Selectors for general settings
+const themeSelector = document.querySelector("[data-theme]"),
+  showBarSelector = document.querySelector("[data-showBar]"),
   unitSelector = document.querySelector("[data-unit]"),
-  decimalsSelector = document.querySelector("[data-decimals]"),
+  decimalsSelector = document.querySelector("[data-decimals]")
+
+//Selectors for windpage specific settings
+const dataFormSelector = document.querySelector("[data-dataFormUnderSettings]"),
   interpolationSelector = document.querySelector("[data-interpolation]")
 
+//Elements for settings the measurement location, measurement source, and forecast info
 const locationLabelNode = document.querySelector("[data-location]"),
   measurementSourceLabelNode = document.querySelector("[data-measurementSource]"),
   forecastSourceLabelNode = document.querySelector("[data-forecastSource]")
 
+//Other elemements
 const compassCanvas = document.querySelector("[data-compass]"),
   currentWindBox = document.querySelector("[data-currentWindBox]"),
   headingChartWindspeed = document.querySelector("[data-headingChartWindspeed]"),
   headingTable = document.querySelector("[data-headingtabel]"),
   tableSort = document.querySelector("[data-timeHeading]")
 
-//Setting local storage variables if never set before
-if (!localStorage.getItem("showBar")) localStorage.setItem("showBar", 1)
-if (!localStorage.getItem("dataForm")) localStorage.setItem("dataForm", "graphs")
-if (!localStorage.getItem("unit")) localStorage.setItem("unit", "kn")
-if (!localStorage.getItem("decimals")) localStorage.setItem("decimals", 1)
-if (!localStorage.getItem("interpolation")) localStorage.setItem("interpolation", 0)
-if (!localStorage.getItem("tableSort")) localStorage.setItem("tableSort", "descending")
-if (!localStorage.getItem("hiddenDatasets")) localStorage.setItem("hiddenDatasets", JSON.stringify({
-  "Windsterkte": false,
-  "Windvlagen": false,
-  "Windrichting": false,
-  "Windsterkte voorspelling": false,
-  "Windvlagen voorspelling": false,
-  "Windrichting voorspelling": false
-}))
-
-//Sets the options in the settingstable for the ones in local storage
-if (localStorage.getItem("showBar") == "1") showBarSelector.checked = true
-else document.querySelector("[data-dataForm]").style.display = "none"
-
+//Sets the options in the settingstable and table with the data (sorting arrow) for the ones in local storage
+//General settings
+setGeneralSettings()
+//Windpage specific settings
 dataFormSelector.value = localStorage.getItem("dataForm")
-if (localStorage.getItem("dataForm") == "table") {
+if (localStorage.getItem("dataForm") == "table") { //This is done here (instead of in the index.ejs of the homepage) since it isn't displayed after all the data is processed
   document.querySelector("[data-graphs]").classList.add("deselected")
   document.querySelector("[data-tabel]").classList.remove("deselected")
 }
-
-unitSelector.value = localStorage.getItem("unit")
-if (unitSelector.value == 4) decimalsSelector.setAttribute("disabled", "disabled")
-decimalsSelector.value = localStorage.getItem("decimals")
 if (localStorage.getItem("interpolation") == "1") interpolationSelector.checked = true
 if (localStorage.getItem("tableSort") == "ascending") tableSort.innerHTML = `Tijd <span id="sortArrow">▼</span>`
-
-setThemeSelector()
-
-//Links for going back to homepage
-document.querySelectorAll("[data-goBackHome]").forEach(element => element.addEventListener("click", () => {
-  if (document.referrer !== "") {
-    window.location.replace(document.referrer)
-  } else {
-    window.location.replace("/")
-  }
-}))
 
 //Adding "dynamic" styles
 locationLabelNode.style.right = (document.body.clientWidth - document.getElementsByTagName("main")[0].clientWidth) / 2 + "px"
@@ -164,7 +100,62 @@ window.onresize = () => {
   currentWindBox.style.marginTop = -(175 / currentWindBoxSize) * compassCanvas.clientWidth + "px"
 }
 
-//Processing the data that comes in
+//Add listeners for changing dates / requesting data
+document.querySelector("[data-previousDay]").addEventListener("click", switchPreviousDay)
+document.querySelector("[data-nextDay]").addEventListener("click", switchNextDay)
+document.querySelector("[data-currentDay]").addEventListener("click", () => document.querySelector("[data-datePicker]").showPicker())
+document.querySelector("[data-datePicker]").addEventListener("change", (e) => {
+  const dateSelected = parse(e.target.value, "yyyy-MM-dd", new Date())
+  const relativeDate = getRelativeDate(dateSelected)
+
+  document.querySelector("[data-currentDay]").innerText = relativeDate
+  setDateInUrl(dateSelected)
+
+  fetchData(startOfDay(dateSelected).toISOString())
+})
+document.querySelector("[data-getData]").addEventListener("click", () => {
+  const dateFetchString = document.querySelector("[data-currentDay]").innerText
+  const dateFetch = getAbsoluteDate(dateFetchString)
+
+  fetchData(startOfDay(dateFetch).toISOString())
+})
+
+//Listener functions for when settings are changed
+//General settings
+themeSelector.onchange = () => changeTheme(document.querySelector("[data-theme]").value)
+showBarSelector.onchange = () => changeShowBar(showBarSelector)
+unitSelector.onchange = () => {
+  changeUnit(unitSelector, decimalsSelector)
+  contentUpdate()
+}
+decimalsSelector.onchange = () => {
+  changeDecimals(decimalsSelector)
+  contentUpdate()
+}
+//Windpage specific settings
+dataFormSelector.onchange = () => changeDataForm(dataFormSelector)
+document.querySelector("[data-graphs]").addEventListener("click", (e) => changeDataForm(dataFormSelector, e)) //in the select bar
+document.querySelector("[data-tabel]").addEventListener("click", (e) => changeDataForm(dataFormSelector, e)) //in the select bar
+interpolationSelector.onchange = () => changeInterpolation(interpolationSelector)
+tableSort.addEventListener("click", () => changeTableSort(tableSort))
+
+addUIListeners()
+
+//Listener for logo and title
+document.querySelectorAll("[data-gobackhome]").forEach(element => element.addEventListener("click", () => { //Somehow the camelcased "data-goBackHome" won't work on Safari
+  if (document.referrer !== "") window.location.replace(document.referrer)
+  else window.location.replace("/")
+}))
+
+
+
+
+
+
+
+
+
+//Processing the data that comes in, scope / place in which file cannot be changed
 async function processRetrievedData(dataFetched) {
   if (dataFetched.errorCode) {
     const errorMessage = await formulateErrorMessage(dataFetched)
@@ -186,9 +177,9 @@ async function processRetrievedData(dataFetched) {
   dataWUnits = data.copy();
   ({ interpolatedData, interpolatedIndices } = calcInterpolation())
 
-  measurementSourceLabelNode.innerText = dataset
   if (dataset == "MVB") measurementSourceLabelNode.innerText = "Meetnet Vlaamse Banken"
-  if (dataset == "VLINDER") measurementSourceLabelNode.innerText = "UGent VLINDER project"
+  else if (dataset == "VLINDER") measurementSourceLabelNode.innerText = "UGent VLINDER project"
+  else measurementSourceLabelNode.innerText = dataset
 
   forecastSourceLabelNode.innerText = dataFetched.forecastInfoString
   globalThis.datePickerMax = getDatePickerMax()
@@ -205,42 +196,3 @@ async function processRetrievedData(dataFetched) {
   //For both graphs and table
   contentUpdate()
 }
-
-//Add listeners for changing dates
-document.querySelector("[data-previousDay]").addEventListener("click", switchPreviousDay)
-document.querySelector("[data-nextDay]").addEventListener("click", switchNextDay)
-document.querySelector("[data-currentDay]").addEventListener("click", () => document.querySelector("[data-datePicker]").showPicker())
-document.querySelector("[data-datePicker]").addEventListener("change", (e) => {
-  const dateSelected = parse(e.target.value, "yyyy-MM-dd", new Date())
-  const relativeDate = getRelativeDate(dateSelected)
-
-  document.querySelector("[data-currentDay]").innerText = relativeDate
-  setDateInUrl(dateSelected)
-
-  fetchData(startOfDay(dateSelected).toISOString())
-})
-
-document.querySelector("[data-getData]").addEventListener("click", () => {
-  const dateFetchString = document.querySelector("[data-currentDay]").innerText
-  const dateFetch = getAbsoluteDate(dateFetchString)
-
-  fetchData(startOfDay(dateFetch).toISOString())
-})
-
-//(1)Change the data in local storage when other options are selected and (2) refresh the graphs
-showBarSelector.onchange = () => changeShowBar(showBarSelector)
-dataFormSelector.onchange = () => changeDataForm(dataFormSelector)
-document.querySelector("[data-graphs]").addEventListener("click", (e) => changeDataForm(dataFormSelector, e))
-document.querySelector("[data-tabel]").addEventListener("click", (e) => changeDataForm(dataFormSelector, e))
-unitSelector.onchange = () => changeUnit(unitSelector, decimalsSelector)
-decimalsSelector.onchange = () => changeDecimals(decimalsSelector)
-interpolationSelector.onchange = () => changeInterpolation(interpolationSelector)
-tableSort.addEventListener("click", () => changeTableSort(tableSort))
-document.querySelector("[data-theme]").onchange = () => changeTheme(document.querySelector("[data-theme]").value)
-
-//Footer links
-document.querySelector("[data-about]").addEventListener("click", () => displayPopUpWithName("over"))
-document.querySelector("[data-disclaimer]").addEventListener("click", () => displayPopUpWithName("disclaimer"))
-document.querySelector("[data-feedback]").addEventListener("click", () => displayPopUpFeedback())
-document.querySelector("[data-credit]").addEventListener("click", () => displayPopUpWithName("credit"))
-document.querySelector("[data-contact]").addEventListener("click", () => displayPopUpWithName("contact"))

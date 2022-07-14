@@ -9,7 +9,7 @@ export const popUpData = {
     In dit overzicht zijn ook de wind- krachten en richtingen weergegeven.</p>
     <br>
     <div id="gridWrapper">
-      <div><button class="windPageButton popupRWS">Groene</button></div><div>locaties zijn van Rijkswaterstaat</div>
+      <div><button class="windPageButton popupRijkswaterstaat">Groene</button></div><div>locaties zijn van Rijkswaterstaat</div>
       <div><button class="windPageButton popupKNMI">Blauwe</button></div><div>locaties zijn van het KNMI</div>
       <div><button class="windPageButton popupMVB">Rode</button></div><div>locaties zijn van het Meetnet Vlaamse Banken</div>
       <div><button class="windPageButton popupVLINDER">Gele</button></div><div>locaties zijn van het VLINDER project van de UGent (deze voldoen niet aan de officiële eisen voor meetstations 
@@ -34,7 +34,7 @@ export const popUpData = {
     kunnen onderaan veranderd worden (scroll op de witte balk bovenaan). Ook kan er een zeekaart toegevoegd worden.</p>
     <br>
     <div id="gridWrapper">
-      <div><button class="windPageButton popupRWS">Groene</button></div><div>locaties zijn van Rijkswaterstaat</div>
+      <div><button class="windPageButton popupRijkswaterstaat">Groene</button></div><div>locaties zijn van Rijkswaterstaat</div>
       <div><button class="windPageButton popupKNMI">Blauwe</button></div><div>locaties zijn van het KNMI</div>
       <div><button class="windPageButton popupMVB">Rode</button></div><div>locaties zijn van het Meetnet Vlaamse Banken</div>
       <div><button class="windPageButton popupVLINDER">Gele</button></div><div>locaties zijn van het VLINDER project van de UGent (deze voldoen niet aan de officiële eisen voor meetstations 

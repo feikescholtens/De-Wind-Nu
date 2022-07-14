@@ -83,6 +83,13 @@ export function giveRWSOverviewFetchOptions(locationsArray) {
     }, {
       "AquoMetadata": {
         "Grootheid": {
+          "Code": "WINDSTOOT"
+        }
+      }
+
+    }, {
+      "AquoMetadata": {
+        "Grootheid": {
           "Code": "WINDRTG"
         }
       }
@@ -167,7 +174,7 @@ export function JSONError(rawData) {
   return false
 }
 
-export function MessageError(rawData, data, resolve) {
+export function MessageError(rawData, resolve) {
   //All fetcherrors are handled in logFetchErrors.js
 
   if (rawData.Message) {
@@ -196,4 +203,26 @@ export function theoreticalMeasurements(measurementTimes, times) {
   const theoreticalMeasurementCount = times.indexOf(lastMeasurementTime)
 
   return theoreticalMeasurementCount + 1
+}
+
+//VLINDER specific
+
+export function VLINDERerror(rawData, resolve) {
+  if (rawData.error) {
+    log(`VLINDER API error: \"${rawData.error}\"`, "error", true)
+
+    resolve({
+      data: {
+        "VLINDER": [
+          [],
+          [],
+          []
+        ]
+      }
+    })
+
+    return true
+  }
+
+  return false
 }

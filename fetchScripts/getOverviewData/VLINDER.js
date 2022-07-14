@@ -1,4 +1,6 @@
 import fetch from "node-fetch"
+import { VLINDERerror } from "../fetchUtilFunctions.js"
+import { parse } from "date-fns"
 
 export async function overviewFetchVLINDER(locations, resolve) {
 
@@ -6,6 +8,7 @@ export async function overviewFetchVLINDER(locations, resolve) {
 
   let rawData
   try { rawData = JSON.parse(rawDataString) } catch { return }
+  if (VLINDERerror(rawData, resolve)) return
 
   let data = {}
 
@@ -17,12 +20,16 @@ export async function overviewFetchVLINDER(locations, resolve) {
 
         if (locations[id].datasets.VLINDER.location_id == locationData.id) {
 
-          const wind_speed = locationData.windSpeed * 0.539956803,
-            wind_direction = locationData.windDirection
+          const windSpeed = locationData.windSpeed * 0.539956803,
+            windGusts = locationData.windGust * 0.539956803,
+            windDirection = locationData.windDirection,
+            timeStamp = parse(locationData.time.substring(5, locationData.time.length - 4) + " Z", "dd MMM yyyy HH:mm:ss X", new Date()).toISOString()
 
           data[id] = {
-            wind_speed: wind_speed,
-            wind_direction: wind_direction
+            windSpeed: windSpeed,
+            windGusts: windGusts,
+            windDirection: windDirection,
+            timeStamp: timeStamp
           }
 
           break

@@ -11,6 +11,8 @@ const tableNodeElements = [document.querySelector("[data-headingTabel]"),
 
 export function updateGraphs() {
 
+  document.querySelector("main").style.overflow = "hidden" //Only needed for Safari browser
+
   //Setting light/dark mode colours, see also below for colours of the grid (these need to be changed after the chart is initialized)
   optionsWindSpeedChart.plugins.legend.labels.color =
     optionsWindSpeedChart.scales.y.title.color =
@@ -105,6 +107,8 @@ export function updateGraphs() {
 }
 
 export function updateTable() {
+
+  document.querySelector("main").style.overflow = "auto" //Only needed for Safari browser
 
   graphNodeElements.forEach(element => element.classList.add("noDisplay"))
   tableNodeElements.forEach(element => element.classList.remove("noDisplay"))

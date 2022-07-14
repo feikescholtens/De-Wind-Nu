@@ -109,7 +109,7 @@
                 <div data-forecastedDirection id="forecastedDirection"></div>
             </div>
 
-            <section data-dataForm><label data-graphs>Grafieken</label> <label class="deselected" data-tabel>Tabel</label></section>
+            <section class="text-selector inPageFlow" data-dataForm><label data-graphs>Grafieken</label> <label class="deselected" data-tabel>Tabel</label></section>
 
             <h2 data-headingTabel class="sectionHeader noDisplay">Windsterkte</h2>
             <table data-dataTable id="data">
@@ -139,14 +139,8 @@
                   <option value="dark">Donker</option>
                 </select>
 
-                <label for="showBar">Toon balk met snel wisselen tussen grafieken en tabel</label>
+                <label for="showBar">Toon balk met snel wisselen tussen weergavevormen</label>
                 <input type="checkbox" data-showBar id="showBar"></input>
-
-                <label for="dataForm">Weergave vorm</label>
-                <select data-dataFormUnderSettings id="dataForm">
-                  <option value="graphs">Grafieken</option>
-                  <option value="table">Tabel</option>
-                </select>
 
                 <label for="unit">Eenheid</label>
                 <select data-unit id="unit">
@@ -162,6 +156,14 @@
                   <option value="0">0</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
+                </select>
+
+                <hr class="spanRow">
+
+                <label for="dataForm">Weergave vorm</label>
+                <select data-dataFormUnderSettings id="dataForm">
+                  <option value="graphs">Grafieken</option>
+                  <option value="table">Tabel</option>
                 </select>
 
                 <label for="interpolation">Interpoleer ontbrekende meetwaarden</label>

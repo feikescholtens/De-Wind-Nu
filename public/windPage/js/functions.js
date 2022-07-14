@@ -13,20 +13,7 @@ import {
 } from "https://esm.run/date-fns"
 import nl from "https://esm.run/date-fns/locale/nl"
 
-export function changeShowBar(showBarSelector) {
-  let value
-  if (showBarSelector.checked == false) {
-    value = "0"
-    document.querySelector("[data-dataForm]").style.display = "none"
-  } else {
-    value = "1"
-    document.querySelector("[data-dataForm]").style.display = "block"
-  }
-
-  localStorage.setItem("showBar", value)
-}
-
-export function changeDataForm(dataFormSelector, e) {
+export function changeDataForm(selector, e) {
   let clickedOption
   if (e) clickedOption = e.target.innerText
 
@@ -34,28 +21,13 @@ export function changeDataForm(dataFormSelector, e) {
   if (clickedOption == "Grafieken" && localStorage.getItem("dataForm") == "graphs") return
   if (clickedOption == "Tabel" && localStorage.getItem("dataForm") == "table") return
 
-  if (clickedOption == "Grafieken") dataFormSelector.value = "graphs"
-  if (clickedOption == "Tabel") dataFormSelector.value = "table"
+  if (clickedOption == "Grafieken") selector.value = "graphs"
+  if (clickedOption == "Tabel") selector.value = "table"
 
   document.querySelector("[data-graphs]").classList.toggle("deselected")
   document.querySelector("[data-tabel]").classList.toggle("deselected")
-  localStorage.setItem("dataForm", dataFormSelector.value)
+  localStorage.setItem("dataForm", selector.value)
 
-  contentUpdate()
-}
-
-export function changeUnit(unitSelector, decimalsSelector) {
-  localStorage.setItem("unit", unitSelector.value)
-  globalThis.unit = unitSelector.value
-  if (unitSelector.value == 4) {
-    decimalsSelector.setAttribute("disabled", "disabled")
-    globalThis.decimals = 0
-  } else decimalsSelector.removeAttribute("disabled")
-  contentUpdate()
-}
-
-export function changeDecimals(decimalsSelector) {
-  localStorage.setItem("decimals", decimalsSelector.value)
   contentUpdate()
 }
 
@@ -123,6 +95,17 @@ export function showLoader() {
 export function hideLoader() {
   document.querySelector("[data-markerContainer]").style.display = "none"
   document.querySelector("[data-loaderText]").style.display = "none"
+}
+
+export function setNewNumber() {
+  const latestNumber = document.getElementsByClassName("marker")[0].innerText
+  const newNumber = parseInt(String(Math.random())[2])
+
+  if (latestNumber !== newNumber) {
+    document.getElementsByClassName("marker")[0].innerText = parseInt(String(Math.random())[2])
+  } else {
+    setNewNumber()
+  }
 }
 
 export function showCurrentWindBox() {
@@ -274,30 +257,6 @@ export function getDatePickerMax() {
     return addHours(new Date(), 24)
   }
 
-}
-
-export const units = {
-  "kn": {
-    "naam": "Knopen",
-    "factor": 1
-  },
-  "m/s": {
-    "naam": "Meter per seconde",
-    "factor": 0.514444444
-  },
-  "km/h": {
-    "naam": "Kilometer per uur",
-    "factor": 1.85200
-  },
-  "mph": {
-    "naam": "Mijl per uur",
-    "factor": 1.15077945
-  },
-  "Bft": {
-    "naam": "Beaufort",
-    "factor": 1,
-    "ranges": [1, 4, 7, 11, 17, 22, 28, 34, 41, 48, 56, 64]
-  }
 }
 
 export function isIOS() {

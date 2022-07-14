@@ -1,5 +1,6 @@
 import fetch from "node-fetch"
 import { catchError, giveRWSOverviewFetchOptions, SuccesvolFalseError } from "../fetchUtilFunctions.js"
+import { parseISO } from "date-fns"
 
 export async function overviewFetchRWS(locations, resolve) {
 
@@ -49,16 +50,25 @@ export async function overviewFetchRWS(locations, resolve) {
           else correctIndex = 1
           //
 
-          const wind_speed = locationData.MetingenLijst[correctIndex].Meetwaarde.Waarde_Numeriek * 1.94384449,
-            wind_direction = locationData.MetingenLijst[correctIndex].Meetwaarde.Waarde_Numeriek
-
           if (locationData.AquoMetadata.Grootheid.Code == "WINDSHD") {
-            if (!data[IDMatches[i].applicationID]) data[IDMatches[i].applicationID] = { wind_speed: wind_speed }
-            else data[IDMatches[i].applicationID].wind_speed = wind_speed
+            const windSpeed = locationData.MetingenLijst[correctIndex].Meetwaarde.Waarde_Numeriek * 1.94384449
+
+            if (!data[IDMatches[i].applicationID]) data[IDMatches[i].applicationID] = { windSpeed: windSpeed }
+            else data[IDMatches[i].applicationID].windSpeed = windSpeed
+
+            data[IDMatches[i].applicationID].timeStamp = parseISO(locationData.MetingenLijst[correctIndex].Tijdstip).toISOString()
+          }
+          if (locationData.AquoMetadata.Grootheid.Code == "WINDSTOOT") {
+            const windGusts = locationData.MetingenLijst[correctIndex].Meetwaarde.Waarde_Numeriek * 1.94384449
+
+            if (!data[IDMatches[i].applicationID]) data[IDMatches[i].applicationID] = { windGusts: windGusts }
+            else data[IDMatches[i].applicationID].windGusts = windGusts
           }
           if (locationData.AquoMetadata.Grootheid.Code == "WINDRTG") {
-            if (!data[IDMatches[i].applicationID]) data[IDMatches[i].applicationID] = { wind_direction: wind_direction }
-            else data[IDMatches[i].applicationID].wind_direction = wind_direction
+            const windDirection = locationData.MetingenLijst[correctIndex].Meetwaarde.Waarde_Numeriek
+
+            if (!data[IDMatches[i].applicationID]) data[IDMatches[i].applicationID] = { windDirection: windDirection }
+            else data[IDMatches[i].applicationID].windDirection = windDirection
           }
 
         })

@@ -1,5 +1,5 @@
 import fetch from "node-fetch"
-import { getUnixTime, add, parse } from "date-fns"
+import { getUnixTime, add, parse, parseISO } from "date-fns"
 import { readFileSync } from "fs"
 import { MessageError, giveMVBOverviewFetchOptions } from "../fetchUtilFunctions.js"
 
@@ -18,7 +18,7 @@ export async function overviewFetchMVB(locations, resolve) {
 
     let rawData
     try { rawData = JSON.parse(rawDataString) } catch { return }
-    if (MessageError(rawData, [], resolve)) return
+    if (MessageError(rawData, resolve)) return
 
     fetchDataMVB(rawData["access_token"])
 
@@ -42,7 +42,6 @@ export async function overviewFetchMVB(locations, resolve) {
     for (const id in locations) {
       if (Object.keys(locations[id].datasets)[0] == "MVB") {
         locations[id].datasets.MVB.location_id.forEach(measurementType => {
-          if (measurementType.includes("WC3")) return
           locationsArray.push(measurementType)
 
           IDMatches.push({
@@ -58,7 +57,7 @@ export async function overviewFetchMVB(locations, resolve) {
 
     let rawData
     try { rawData = JSON.parse(rawDataString) } catch { return }
-    if (MessageError(rawData, [], resolve)) return
+    if (MessageError(rawData, resolve)) return
 
     let data = {}
 
@@ -69,16 +68,24 @@ export async function overviewFetchMVB(locations, resolve) {
         if (IDMatches[i].MVB == locationData.ID) {
 
           if (locationData.ID.includes("WVC")) {
-            const wind_speed = locationData.Value * 1.94384449
+            const windSpeed = locationData.Value * 1.94384449
 
-            if (!data[IDMatches[i].applicationID]) data[IDMatches[i].applicationID] = { wind_speed: wind_speed }
-            else data[IDMatches[i].applicationID].wind_speed = wind_speed
+            if (!data[IDMatches[i].applicationID]) data[IDMatches[i].applicationID] = { windSpeed: windSpeed }
+            else data[IDMatches[i].applicationID].windSpeed = windSpeed
+
+            data[IDMatches[i].applicationID].timeStamp = parseISO(locationData.Timestamp).toISOString()
+          }
+          if (locationData.ID.includes("WC3")) {
+            const windGusts = locationData.Value * 1.94384449
+
+            if (!data[IDMatches[i].applicationID]) data[IDMatches[i].applicationID] = { windGusts: windGusts }
+            else data[IDMatches[i].applicationID].windGusts = windGusts
           }
           if (locationData.ID.includes("WRS")) {
-            const wind_direction = locationData.Value
+            const windDirection = locationData.Value
 
-            if (!data[IDMatches[i].applicationID]) data[IDMatches[i].applicationID] = { wind_direction: wind_direction }
-            else data[IDMatches[i].applicationID].wind_direction = wind_direction
+            if (!data[IDMatches[i].applicationID]) data[IDMatches[i].applicationID] = { windDirection: windDirection }
+            else data[IDMatches[i].applicationID].windDirection = windDirection
           }
 
           break

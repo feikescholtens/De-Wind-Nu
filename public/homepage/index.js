@@ -1,117 +1,65 @@
-import { fitMap, windPage, changeTiles, setOverviewData } from "./functions.js"
-import { displayPopUpWithName } from "../jsPopUps/functions.js"
-import { displayPopUpFeedback } from "../jsPopUps/feedback.js"
-import { redirect, updateLocalVariables, setThemeSelector, changeTheme } from "../globalFunctions.js"
+import { changeTiles, changeOverviewForm, setOverviewListData, fitMap, setOverviewMapData } from "./functions.js"
+import { redirect, updateLocalVariables, changeTheme, changeShowBar, units, changeUnit, changeDecimals, setGeneralSettings, addUIListeners } from "../globalFunctions.js"
+import { initMap, initList } from "./mapOrListInit.js"
 redirect()
 updateLocalVariables()
-const tilesObjects = await fetch("./OSMTiles.json").then(response => response.json())
 
-const tilesSelector = document.querySelector("[data-tiles]"),
+globalThis.data = {},
+  globalThis.unit = localStorage.getItem("unit"),
+  globalThis.decimals, //Is set in setGeneralSettings function
+  globalThis.units = units,
+  globalThis.popUps = {},
+  globalThis.markersLats = [],
+  globalThis.markersLons = []
+
+//Selectors for general settings
+const themeSelector = document.querySelector("[data-theme]"),
+  showBarSelector = document.querySelector("[data-showBar]"),
+  unitSelector = document.querySelector("[data-unit]"),
+  decimalsSelector = document.querySelector("[data-decimals]")
+
+//Selectors for homepage specific settings
+const overviewFormSelector = document.querySelector("[data-overviewFormUnderSettings]"),
+  tilesSelector = document.querySelector("[data-tiles]"),
   seaMapCheckbox = document.querySelector("[data-seaMap]")
 
-if (!localStorage.getItem("hadFirstVisit")) {
-  displayPopUpWithName("welkom")
-  localStorage.setItem("hadFirstVisit", "1")
-}
-if (!localStorage.getItem("tiles")) {
-  if (document.body.classList.contains("dark")) localStorage.setItem("tiles", "Mapbox donker")
-  else localStorage.setItem("tiles", "OpenStreetMap")
-}
-if (!localStorage.getItem("seaMap")) localStorage.setItem("seaMap", "1")
-
+//Sets the options in the settingstable for the ones in local storage
+//General settings
+setGeneralSettings()
+//Homepage specific settings
+overviewFormSelector.value = localStorage.getItem("overviewForm")
 tilesSelector.value = localStorage.getItem("tiles")
 if (localStorage.getItem("seaMap") == "1") seaMapCheckbox.checked = true
-setThemeSelector()
+overviewFormSelector.value = localStorage.getItem("overviewForm")
 
-tilesSelector.onchange = () => changeTiles(map, tilesSelector, seaMapCheckbox)
-seaMapCheckbox.onchange = () => changeTiles(map, tilesSelector, seaMapCheckbox)
-document.querySelector("[data-theme]").onchange = () => changeTheme(document.querySelector("[data-theme]").value)
-
-const urlParams = new URLSearchParams(window.location.search)
-const center = [urlParams.get("x") || 5.160544, urlParams.get("y") || 52.182725]
-const zoom = urlParams.get("z") || 6
-const excludeZoomFitMarkers = ["3318", "4806", "0727", "1843", "9057", "8609", "6823"]
-let markersLats = [],
-  markersLons = []
-mapboxgl.accessToken = "pk.eyJ1IjoiZmVpa2VzY2hvbHRlbnMiLCJhIjoiY2t1aDlpZWEwMGhkYTJwbm02Zmt0Y21sOCJ9.PA3iy-3LQhjCkfxhxL2zUw"
-
-const mapOptions = {
-  container: "map",
-  center: center,
-  zoom: zoom
+//Listener functions for when settings are changed
+//General settings
+themeSelector.onchange = () => changeTheme(document.querySelector("[data-theme]").value)
+showBarSelector.onchange = () => changeShowBar(showBarSelector)
+unitSelector.onchange = () => {
+  changeUnit(unitSelector, decimalsSelector)
+  if (localStorage.getItem("overviewForm") == "map") setOverviewMapData(globalThis.data, map)
+  if (localStorage.getItem("overviewForm") == "list") setOverviewListData(globalThis.data)
 }
-if (tilesSelector.value == "OpenStreetMap") mapOptions.style = tilesObjects.OpenStreetMap
-if (tilesSelector.value == "Mapbox custom") mapOptions.style = "mapbox://styles/feikescholtens/ckuhc8nha9jft18s0muhoy0zf"
-if (tilesSelector.value == "Mapbox licht") mapOptions.style = "mapbox://styles/mapbox/light-v10"
-if (tilesSelector.value == "Mapbox donker") mapOptions.style = "mapbox://styles/mapbox/dark-v10"
-if (tilesSelector.value == "Satelliet") mapOptions.style = "mapbox://styles/mapbox/satellite-v9"
-if (tilesSelector.value == "Satelliet met plaatsnamen en wegen") mapOptions.style = "mapbox://styles/mapbox/satellite-streets-v11"
-
-const map = new mapboxgl.Map(mapOptions)
-map.touchZoomRotate.disableRotation()
-map.on("load", () => {
-  if (localStorage.getItem("seaMap") == "1") map.addLayer(tilesObjects.OpenSeaMap)
-})
-
-fetch("getOverviewData/VLINDER").then(response => response.json()).then(data => setOverviewData(data))
-fetch("getOverviewData/Rijkswaterstaat").then(response => response.json()).then(data => setOverviewData(data))
-fetch("getOverviewData/KNMI").then(response => response.json()).then(data => setOverviewData(data))
-fetch("getOverviewData/MVB").then(response => response.json()).then(data => setOverviewData(data))
-
-for (const id in data) {
-  if (!excludeZoomFitMarkers.includes(id)) {
-    markersLats.push(data[id].lat)
-    markersLons.push(data[id].lon)
-  }
-
-  let popupId, marker = document.createElement("div")
-  marker.className = "markerContainer"
-  marker.innerHTML = `<div class="marker" title="${data[id].name}"></div>`
-
-  if (data[id].datasets.VLINDER) {
-    Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("VLINDER") })
-    popupId = "popupVLINDER"
-    marker.style.zIndex = 1
-  } else if (data[id].datasets.Rijkswaterstaat) {
-    Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("RWS") })
-    popupId = "popupRWS"
-    marker.style.zIndex = 2
-  } else if (data[id].datasets.KNMI) {
-    Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("KNMI") })
-    popupId = "popupKNMI"
-    marker.style.zIndex = 3
-  } else if (data[id].datasets.MVB) {
-    Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("MVB") })
-    popupId = "popupMVB"
-    marker.style.zIndex = 4
-  } else {
-    Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("Other") })
-    popupId = "popupOther"
-    marker.style.zIndex = 5
-  }
-  Array.from(marker.getElementsByTagName("div")).forEach(element => { element.id = id })
-
-  const button = document.createElement("button")
-  button.className = `windPageButton ${popupId}`
-  button.innerText = data[id].name
-  button.addEventListener("click", () => windPage(id, map))
-
-  new mapboxgl.Marker(marker).setLngLat([data[id].lon, data[id].lat]).setPopup(
-    new mapboxgl.Popup({
-      offset: 13
-    }).setDOMContent(button)
-  ).addTo(map)
+decimalsSelector.onchange = () => {
+  changeDecimals(decimalsSelector)
+  if (localStorage.getItem("overviewForm") == "map") setOverviewMapData(globalThis.data, map)
+  if (localStorage.getItem("overviewForm") == "list") setOverviewListData(globalThis.data)
 }
+//Homepage specific settings
+overviewFormSelector.onchange = () => changeOverviewForm(overviewFormSelector)
+document.querySelector("[data-map]").addEventListener("click", (e) => changeOverviewForm(overviewFormSelector, e)) //in the select bar
+document.querySelector("[data-list]").addEventListener("click", (e) => changeOverviewForm(overviewFormSelector, e)) //in the select bar
+tilesSelector.onchange = () => changeTiles(globalThis.map, tilesSelector, seaMapCheckbox);
+seaMapCheckbox.onchange = () => changeTiles(globalThis.map, tilesSelector, seaMapCheckbox)
 
-markersLats.sort()
-markersLons.sort()
+if (localStorage.getItem("overviewForm") == "map") initMap(false)
+if (localStorage.getItem("overviewForm") == "list") initList(false)
 
-if (window.location.search == "") fitMap(map, markersLats, markersLons)
-history.replaceState({}, "De Wind Nu", "/")
-document.querySelectorAll("[data-mapfit]").forEach(element => element.addEventListener("click", () => fitMap(map, markersLats, markersLons)))
+addUIListeners()
 
-document.querySelector("[data-about]").addEventListener("click", () => displayPopUpWithName("over"))
-document.querySelector("[data-disclaimer]").addEventListener("click", () => displayPopUpWithName("disclaimer"))
-document.querySelector("[data-feedback]").addEventListener("click", () => displayPopUpFeedback())
-document.querySelector("[data-credit]").addEventListener("click", () => displayPopUpWithName("credit"))
-document.querySelector("[data-contact]").addEventListener("click", () => displayPopUpWithName("contact"))
+//Listener for logo and title
+document.querySelectorAll("[data-mapfit]").forEach(element => element.addEventListener("click", () => {
+  if (localStorage.getItem("overviewForm") == "map") fitMap(map, markersLats, markersLons)
+  if (localStorage.getItem("overviewForm") == "list") location.reload()
+}))

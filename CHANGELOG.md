@@ -1,5 +1,19 @@
 # Change log
 
+## v3.2.0
+- Added a list overview for the locations, sorted by distance
+
+- Added more info about the latest measurement in the map view form
+
+Bugfixes:
+- Red closing cross is now red on Safari mobile
+- Proper error handling when MVB and VLINDER API's fail
+- Scrollable body on Safari which is annoying scrolling through graphs
+- Logo click to go home now works on Safari
+- Some other small UI issues
+
+---
+
 ## v3.1.2
 
 Bugfixes:

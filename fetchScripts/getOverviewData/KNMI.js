@@ -1,4 +1,5 @@
 import fetch from "node-fetch"
+import { parseISO } from "date-fns"
 
 export async function overviewFetchKNMI(locations, resolve) {
 
@@ -26,10 +27,12 @@ export async function overviewFetchKNMI(locations, resolve) {
     for (let i = 0; i < IDMatches.length; i++) {
       if (IDMatches[i].KNMI == locationData.stationid) {
 
-        const wind_speed = locationData.windspeed * 1.94384449,
-          wind_direction = locationData.winddirectiondegrees
+        const windSpeed = locationData.windspeed * 1.94384449,
+          windGusts = locationData.windgusts * 1.94384449,
+          windDirection = locationData.winddirectiondegrees,
+          timeStamp = parseISO(locationData.timestamp).toISOString()
 
-        data[IDMatches[i].applicationID] = { wind_speed: wind_speed, wind_direction: wind_direction }
+        data[IDMatches[i].applicationID] = { windSpeed: windSpeed, windGusts: windGusts, windDirection: windDirection, timeStamp: timeStamp }
 
         break
       }

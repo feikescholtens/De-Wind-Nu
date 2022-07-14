@@ -24,7 +24,7 @@ export async function fetchMVB(dateParsed, databaseData, resolve, times) {
 
     let rawData
     try { rawData = JSON.parse(rawDataString) } catch { return }
-    if (MessageError(rawData, data, resolve)) return
+    if (MessageError(rawData, resolve)) return
 
     fetchDataMVB(rawData["access_token"])
 
@@ -51,7 +51,7 @@ export async function fetchMVB(dateParsed, databaseData, resolve, times) {
     try { rawData = JSON.parse(rawDataString) } catch { return }
     // rawData = JSON.parse(readFileSync("projectFiles/discontinuous test data MVB.json"))
     // rawData = JSON.parse(readFileSync("projectFiles/test files DST/from CET to CEST/MVB.json"))
-    if (MessageError(rawData, data, resolve)) return
+    if (MessageError(rawData, resolve)) return
 
     //Declare variables
     let wind_speed = [],

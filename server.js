@@ -64,6 +64,7 @@ app.get("/wind/:id", (request, response) => {
   const spotName = locations[request.params.id].name
   response.render(path.join(__dirname, "/public/windPage/index.ejs"), { spotName })
 })
+app.get("/1984", (request, response) => response.redirect("/wind/8700"))
 
 //Data API's
 app.get("/getData/:id", (request, response) => getData(request, response, request.query.date, locations, forecastData))

@@ -19,6 +19,8 @@ nav {
     margin: 0 10px;
     box-sizing: border-box;
     padding: 0 10px;
+    overflow: hidden;
+    /* Above only needed for Safari browser */
 }
 
 /* Styling bar with location and date options / inputs */
@@ -184,22 +186,6 @@ label.labelBig {
 canvas.charts {
     margin-bottom: 10px;
     padding-right: 10px;
-}
-
-section {
-    letter-spacing: 1px;
-    word-spacing: 10px;
-    text-align: center;
-    padding-top: 10px;
-}
-
-section label {
-    cursor: pointer;
-    color: var(--textColour1);
-}
-
-section label.deselected {
-    color: var(--textColour3);
 }
 
 table#data {

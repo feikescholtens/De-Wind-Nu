@@ -51,6 +51,7 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="/generalStyles.css">
   <link rel="stylesheet" href="https://use.typekit.net/xus5meu.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
   <!-- This style must be here and not in the stylesheet -->
   <style>
@@ -82,7 +83,8 @@
 
 <body>
   <script> 
-    //Execute here to prevent white flash
+    //Execute here to prevent flashing before loading the other JS (see bottom of document as well)
+    //Setting theme
     if (!localStorage.getItem("theme")) localStorage.setItem("theme", "auto")
 
     if (localStorage.getItem("theme") == "auto") {
@@ -96,9 +98,29 @@
   <header>
     <svg data-mapfit id="logo" alt="Logo - navigeer home" width="80px" height="80px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 566.929 566.929" color-interpolation-filters="sRGB" fill="none" fill-rule="evenodd" overflow="visible" stroke-linecap="square" stroke-miterlimit="3" xmlns:v="https://vecta.io/nano"><circle cx="58.415" cy="51.328" r="51.328" fill="#000"/><g stroke="#000"><g stroke-linecap="round" stroke-linejoin="round"><path d="M60.092 88.582v457.09" stroke-width="40"/><path d="M28.347 143.192h89.57m-89.57 191.132h89.57" stroke-width="30"/></g><path d="M353.055 235.324v-82.73a11.34 11.34 0 0 1 12.26-11.3l69.83 5.66a11.34 11.34 0 0 1 10.43 11.3v77.07 86.74a11.34 11.34 0 0 1-10.33 11.3l-69.84 6.27a11.34 11.34 0 0 1-12.35-11.29v-93.02zm-154.19 0v-101.8a11.34 11.34 0 0 1 12.44-11.29l69.84 6.81a11.34 11.34 0 0 1 10.23 11.29v94.99 104.66a11.34 11.34 0 0 1-10.14 11.28l-69.83 7.43a11.34 11.34 0 0 1-12.54-11.28v-112.09zm343.07 89.03v-171.19a11.34 11.34 0 0 0-9.89-11.25l-401.34-51.68a11.34 11.34 0 0 0-12.79 11.24v274.57a11.34 11.34 0 0 0 12.79 11.24l401.34-51.69a11.34 11.34 0 0 0 9.89-11.24z" fill="#000" stroke-linejoin="round" stroke-width="15"/></g></svg>
     <h1 data-mapfit id="title">De Wind Nu</h1>
+    <section class="text-selector inHeader" data-overviewForm><label data-map>Kaart</label> <label class="deselected" data-list>Lijst</label></section>
   </header>
-  <div id="mapWrapper"><div id="map"></div></div>
+
   <main>
+
+    <template data-templateMapPopup>
+      <div class="popUp alwaysBlackText">
+        <button title="Bekijk metingen van deze locatie"></button>
+        <p class="windSpeedGusts" title="Windsnelheid en windvlagen">- / -</p>
+        <p class="windDirection" title="Windrichting">-</p>
+        <p class="relativeTime" title="Tijd sinds deze meting">-</p>
+      </button>
+    </template>
+
+    <template data-templateListItem>
+      <div class="listElement">
+        <div class="buttonWrapper"><button title="Bekijk metingen van deze locatie"></button></div>
+        <p class="distance" title="Afstand tot deze meetlocatie"></p>
+        <p class="windSpeedGusts" title="Windsnelheid en windvlagen">- / -</p>
+        <p class="windDirection" title="Windrichting">-</p>
+        <p class="relativeTime" title="Tijd sinds deze meting">-</p>
+      </button>
+    </template>
 
     <h2 class="sectionHeader">Instellingen</h2>
 
@@ -109,7 +131,34 @@
           <option value="light">Licht</option>
           <option value="dark">Donker</option>
         </select>
+
+        <label for="showBar">Toon balk met snel wisselen tussen weergavevormen</label>
+        <input type="checkbox" data-showBar id="showBar"></input>
+
+        <label for="unit">Eenheid</label>
+        <select data-unit id="unit">
+          <option value="kn">Knopen [kn]</option>
+          <option value="m/s">Meter per seconde [m/s]</option>
+          <option value="km/h">Kilometer per uur [km/h]</option>
+          <option value="mph">Mijl per uur [mph]</option>
+          <option value="Bft">Beaufort [Bft]</option>
+        </select>
+
+        <label for="decimals">Aantal decimalen</label>
+        <select data-decimals id="decimals">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+        </select>
+
+        <hr class="spanRow">
       
+        <label for="overviewForm">Weergave vorm</label>
+        <select data-overviewFormUnderSettings id="dataForm">
+          <option value="map">Kaart</option>
+          <option value="list">Lijst</option>
+        </select>
+
         <label for="tiles">Standaard kaart</label>
         <select data-tiles id="tiles">
           <option value="OpenStreetMap">OpenStreetMap (sneller)</option>
@@ -141,6 +190,25 @@
       </div>
   
   </footer>
+
+  <script> 
+    //Execute here to prevent flashing before loading the other JS
+    //Hiding selector or displaying it's correct value
+    if (localStorage.getItem("showBar") == "0" && localStorage.getItem("showBar"))  document.querySelector("[data-overviewForm]").style.display = "none"
+    if (localStorage.getItem("overviewForm") == "list") {
+      document.querySelector("[data-map]").classList.add("deselected")
+      document.querySelector("[data-list]").classList.remove("deselected")
+    }
+
+    //Setting DOM for map or list
+    const main = document.getElementsByTagName("main")[0]
+    if (localStorage.getItem("overviewForm") == "map" || !localStorage.getItem("overviewForm")) {
+      main.innerHTML = `<div id="mapWrapper"><div id="map"></div></div>${main.innerHTML}`
+    }
+    if (localStorage.getItem("overviewForm") == "list") {
+      main.innerHTML = `<div id="list"></div>${main.innerHTML}`
+    }
+  </script>
 </body>
 
 </html>

@@ -3,7 +3,7 @@ import module from "date-fns-tz"
 const { utcToZonedTime } = module
 import fetch from "node-fetch"
 import { readFileSync } from "fs"
-import { catchError, JSONError, theoreticalMeasurements } from "../fetchUtilFunctions.js"
+import { catchError, JSONError, theoreticalMeasurements, VLINDERerror } from "../fetchUtilFunctions.js"
 const timeZone = "Europe/Amsterdam"
 
 Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
@@ -20,6 +20,7 @@ export async function fetchVLINDER(dateParsed, databaseData, resolve, times) {
   let rawData
   try { rawData = JSON.parse(rawDataString) } catch { return }
   // rawData = JSON.parse(readFileSync("projectFiles/test files DST/from CET to CEST/VLINDER.json"))
+  if (VLINDERerror(rawData, resolve)) return
 
   if (JSONError(rawData)) rawData = [] //Prevent errors by saying there are 0 measurements
   let wind_speed = [],

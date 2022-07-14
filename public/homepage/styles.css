@@ -1,5 +1,6 @@
 body {
     margin: 0 auto;
+    overflow-x: hidden;
 }
 
 header {
@@ -9,29 +10,64 @@ header {
 }
 
 div#mapWrapper,
-div#map {
+div#map,
+div#list {
     width: 100%;
-    height: calc(100vh - 100px);
+    min-height: calc(100vh - 100px);
+}
+
+div#mapWrapper {
+    width: 100vw;
+    margin-left: calc((100vw - 100%) / -2);
+}
+
+.alwaysBlackText {
+    color: black;
 }
 
 div.VLINDER {
     background-color: rgb(254, 202, 87);
     border-top-color: rgb(254, 202, 87);
+    z-index: 1;
 }
 
-div.RWS {
+div.Rijkswaterstaat {
     background-color: rgb(46, 179, 99);
     border-top-color: rgb(46, 179, 99);
+    z-index: 2;
 }
 
 div.KNMI {
     background-color: rgb(101, 124, 201);
     border-top-color: rgb(101, 124, 201);
+    z-index: 3;
 }
 
 div.MVB {
     background-color: rgb(201, 62, 28);
     border-top-color: rgb(201, 62, 28);
+    z-index: 4;
+}
+
+div.markerContaineVLINDER {
+    z-index: 1;
+}
+
+div.markerContainerRijkswaterstaat {
+    z-index: 2;
+}
+
+div.markerContainerKNMI {
+    z-index: 3;
+}
+
+div.markerContainerKNMI {
+    z-index: 4;
+}
+
+div.popUp {
+    display: grid;
+    grid-template-columns: 1fr;
 }
 
 div.mapboxgl-popup {
@@ -50,4 +86,39 @@ button.mapboxgl-popup-close-button {
 
 button:focus {
     outline: none;
+}
+
+/* Styling grid of list elements */
+div.listElement {
+    display: grid;
+    grid-template-columns: 1fr 0.7fr 1fr;
+    margin: 5px 15px;
+    column-gap: 10px;
+    align-items: center;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px var(--lineColour) solid;
+    border-radius: 15px;
+    font-size: 14px;
+}
+
+div.buttonWrapper {
+    grid-column: 1 / 3;
+}
+
+div.buttonWrapper button {
+    font-size: 1em !important;
+    margin: 0 !important;
+}
+
+p.favorite {
+    cursor: pointer;
+}
+
+span.listElementStar {
+    vertical-align: bottom;
+}
+
+span.listElementArrow {
+    vertical-align: middle;
 }

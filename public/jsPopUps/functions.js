@@ -16,7 +16,7 @@ export function displayPopUp(content) {
   //Make close button
   let close = document.createElement("div")
   close.classList.add("close")
-  close.textContent = "✖"
+  close.innerHTML = `<span class="material-symbols-rounded">close</span>`
   close.addEventListener("click", function() {
     messageBox.remove()
     document.removeEventListener("click", checkClickFunc)
