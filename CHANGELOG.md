@@ -1,5 +1,12 @@
 # Change log
 
+## v3.2.1
+
+Bugfixes:
+- Fixed negative relative time overview data KNMI
+
+---
+
 ## v3.2.0
 - Added a list overview for the locations, sorted by distance
 

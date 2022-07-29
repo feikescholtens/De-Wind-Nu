@@ -5,7 +5,7 @@ import { fetchRWS } from "./fetchScripts/getData/Rijkswaterstaat.js"
 import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
 import { fetchMVB } from "./fetchScripts/getData/MVB.js"
 import { getTimeChangeDates, generateTimes, calcInterpolation, restartHerokuDynos, getArchivedForecast, startOfDayTimeZone } from "./getScriptUtilFunctions.js"
-import { format, add, parseISO, isBefore, isValid, isToday, startOfDay, isFuture } from "date-fns"
+import { format, add, parseISO, isBefore, isValid, isToday, isFuture } from "date-fns"
 import module from "date-fns-tz"
 const { utcToZonedTime } = module
 
