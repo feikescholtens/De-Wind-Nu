@@ -5,7 +5,6 @@ import cors from "cors"
 import { readFileSync } from "fs"
 import { getData } from "./getData.js"
 import { getOverviewData } from "./getOverviewData.js"
-import { addLocation } from "./addLocation.js"
 import { addFeedback } from "./addFeedback.js"
 import { log } from "./globalFunctions.js"
 import schedule from "node-schedule"
@@ -35,12 +34,11 @@ app.use("/globalFunctions.js", express.static(path.resolve(__dirname, "public/gl
 
 app.set("view-engine", "ejs")
 
-//Add location API and DOTENV, only on localhost
+//DOTENV and devTools routes, only on localhost
 if (port == 3000) {
   const dotenv = await import("dotenv")
   dotenv.config()
 
-  app.post("/addLocation", (request) => addLocation(request, locations))
   app.get("/devTools/giveLocationsGCP", (request, response) => {
     let locationsGCP = []
     for (let i = 0; i < locations.length; i++) {
@@ -53,7 +51,6 @@ if (port == 3000) {
     response.json(locationsGCP)
   })
 
-  app.use("/devTools/addLocation", express.static(path.resolve(__dirname, "public/devTools/addLocation")))
   app.use("/devTools/stations", express.static(path.resolve(__dirname, "public/devTools/stations")))
   app.use("/devTools/compareKNMI&RWS", express.static(path.resolve(__dirname, "public/devTools/compareKNMI&RWS")))
 }
@@ -96,7 +93,7 @@ app.use("/*", (request, response) => response.redirect("/"))
 //Load forecast and schedule updates
 const firestore = new Firestore(firestoreAuth())
 global.forecastData = {};
-(async () => forecastData = await (await firestore.doc("Harmonie forecast today & future/document").get()).data())()
+(async () => forecastData = await (await firestore.doc("Harmonie forecast today & future/document").get()).data() || {})()
 
 const ruleUpdatedForecast = createRecurrenceRule([2, 8, 14, 20, 19], [55, 21], [30])
 schedule.scheduleJob(ruleUpdatedForecast, async () => { scheduledGetForecast(16) })

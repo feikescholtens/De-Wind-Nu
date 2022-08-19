@@ -1,5 +1,14 @@
 # Change log
 
+## v3.2.2
+
+Bugfixes:
+- Fixed MVB API unreachable & lack of forecast crashing site
+- Small UI bug fixed
+- Removed addLocation dev route
+
+---
+
 ## v3.2.1
 
 Bugfixes:

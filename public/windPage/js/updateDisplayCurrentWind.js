@@ -49,7 +49,7 @@ export function updateCurrentWind() {
     if (dataWUnits.windSpeedForecast.length !== 0 && dataWUnits.windSpeedForecast[dataWUnits.windDirection.length - 1]) {
       forecastedWindLabel.innerHTML = `${dataWUnits.windSpeedForecast[dataWUnits.windDirection.length - 1].replace(".", ",")} ${unit} <label class='measurementTypeIndicator labelSmall'> voorspeld</label>`
     }
-  }
+  } else forecastedWindLabel.innerHTML = ""
 
   //Setting positions
 

@@ -2401,9 +2401,9 @@ for (let i = 0; i < dataRWS.length; i++) {
   marker.bindPopup(txt);
 }
 
-document.getElementById("fetch").addEventListener("click", function () {
+document.getElementById("fetch").addEventListener("click", function() {
   let IDRWS = document.getElementById("RWS_ID").value;
   let IDKNMI = document.getElementById("KNMI_ID").value;
 
-  window.open(`${window.location.origin}/devTools/compareKNMI&RWS?RWS=${IDRWS}&KNMI=${IDKNMI}`, '_blank').focus();
+  window.open(`http://localhost:3000/devTools/compareKNMI&RWS?RWS=${IDRWS}&KNMI=${IDKNMI}`, '_blank').focus();
 });
