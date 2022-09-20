@@ -10,6 +10,7 @@ import { log } from "./globalFunctions.js"
 import schedule from "node-schedule"
 import { createRecurrenceRule, scheduledGetForecast, firestoreAuth } from "./forecastFunctions.js"
 import { Firestore } from "@google-cloud/firestore"
+import { SecretManagerServiceClient } from "@google-cloud/secret-manager"
 global.log = log
 global.MVBAPIKey = {}
 global.port = process.env.PORT || 3000
@@ -34,10 +35,12 @@ app.use("/globalFunctions.js", express.static(path.resolve(__dirname, "public/gl
 
 app.set("view-engine", "ejs")
 
-//DOTENV and devTools routes, only on localhost
+//DOTENV and devTools routes, only on localhost, if not on localhost, load env's from Google Secret Manager
 if (port == 3000) {
   const dotenv = await import("dotenv")
   dotenv.config()
+
+  fetchForecast()
 
   app.get("/devTools/giveLocationsGCP", (request, response) => {
     let locationsGCP = []
@@ -53,7 +56,25 @@ if (port == 3000) {
 
   app.use("/devTools/stations", express.static(path.resolve(__dirname, "public/devTools/stations")))
   app.use("/devTools/compareKNMI&RWS", express.static(path.resolve(__dirname, "public/devTools/compareKNMI&RWS")))
+} else {
+  const client = new SecretManagerServiceClient()
+
+  const promises = [] //Used to keep track of the promises, so that when all environmental variables are fetched, the forecast can be fetched
+  async function setEnvironmentVariable(identifier) {
+    const name = `projects/de-wind-nu/secrets/${identifier}/versions/latest`
+    const promiseVersion = client.accessSecretVersion({ name: name })
+    promises.push(promiseVersion)
+    const [version] = await promiseVersion
+    const payload = version.payload.data.toString()
+
+    process.env[identifier] = payload
+  }
+
+  ["APP_EMAIL", "GCP_CLIENT_EMAIL", "GCP_LOGGER_KEY", "GCP_PRIVATE_KEY", "GCP_PROJECT_ID", "GMAIL_APP_KEY", "MVB_PWD_ENCODED"].forEach((identifier) => setEnvironmentVariable(identifier))
+  Promise.all(promises).then(() => fetchForecast())
 }
+
+
 
 //Homepage & windpage
 app.get("/", (request, response) => response.render(path.join(__dirname, "/public/homepage/index.ejs"), { locationsString }))
@@ -90,10 +111,12 @@ app.get("/testTimeout", (request, response) => {})
 //If unknown url is typed in
 app.use("/*", (request, response) => response.redirect("/"))
 
-//Load forecast and schedule updates
-const firestore = new Firestore(firestoreAuth())
-global.forecastData = {};
-(async () => forecastData = await (await firestore.doc("Harmonie forecast today & future/document").get()).data() || {})()
+//Load forecast (timing dependend on local / remote runtime) and schedule updates
+global.forecastData = {}
+async function fetchForecast() {
+  const firestore = new Firestore(firestoreAuth());
+  forecastData = await (await firestore.doc("Harmonie forecast today & future/document").get()).data() || {}
+}
 
 const ruleUpdatedForecast = createRecurrenceRule([2, 8, 14, 20, 19], [55, 21], [30])
 schedule.scheduleJob(ruleUpdatedForecast, async () => { scheduledGetForecast(16) })
