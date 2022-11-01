@@ -7,27 +7,6 @@ function setLocURL(map) {
   history.replaceState({}, "De Wind Nu", `?x=${precisePosition[0]}&y=${precisePosition[1]}&z=${precisePosition[2]}`)
 }
 
-export function redirectToWindPage(id, map) {
-  if (map) setLocURL(map)
-  window.location.assign(`${window.location.protocol}//${window.location.host}/wind/${id}`)
-}
-
-export function changeTiles(map, tilesSelector, seaMapCheckbox) {
-
-  let value
-  if (seaMapCheckbox.checked == false) {
-    value = "0"
-  } else {
-    value = "1"
-  }
-
-  localStorage.setItem("tiles", tilesSelector.value)
-  localStorage.setItem("seaMap", value)
-
-  if (map) setLocURL(map)
-  location.reload()
-}
-
 export function changeOverviewForm(selector, e) {
 
   let clickedOption
@@ -93,7 +72,7 @@ export function convertValueToBft(value) {
   }
 }
 
-function setMeasurementData(container, data, dataSource, locationID, returnNode) {
+function setMeasurementData(container, dataLocation, returnNode) {
 
   //if returnNode == true, the function returns the node elements to be set in the popup, for the list this is not
   //necessary as the node elements are already in the DOM
@@ -105,27 +84,27 @@ function setMeasurementData(container, data, dataSource, locationID, returnNode)
     windDirectionElement = container.querySelector(".windDirection"),
     relativeTimeElement = container.querySelector(".relativeTime")
 
-  windSpeed = data[dataSource][locationID].windSpeed
+  windSpeed = dataLocation.windSpeed
   if (windSpeed || windSpeed == 0) {
     if (unit !== "Bft") windSpeed = (units[unit].factor * windSpeed).toFixed(decimals)
     else windSpeed = convertValueToBft(windSpeed)
   } else windSpeed = "-"
-  windGusts = data[dataSource][locationID].windGusts
+  windGusts = dataLocation.windGusts
   if (windGusts || windGusts == 0) {
     if (unit !== "Bft") windGusts = (units[unit].factor * windGusts).toFixed(decimals)
     else windGusts = convertValueToBft(windGusts)
   } else windGusts = "-"
-  windDirection = data[dataSource][locationID].windDirection
+  windDirection = dataLocation.windDirection
   if (windDirection || windDirection == 0) {
     windDirection = windDirection.toFixed(0)
     windDirectionLetters = directionToLetters(windDirection)
-    directionArrow = `<span style="transform: rotate(${windDirection}deg);" title="Windrichting" class="material-symbols-rounded listElementArrow">south</span>`
+    directionArrow = `<span style="transform: rotate(${windDirection}deg);" title="Windrichting" class="material-symbols-rounded listElementArrow">&#xf1e3;</span>`
   } else windDirection = "-"
 
   windSpeedGustsElement.innerText = `${windSpeed.replace(".", ",")} / ${windGusts.replace(".", ",")} ${unit}`
   windDirectionElement.innerHTML = `${windDirection}° / ${windDirectionLetters} ${directionArrow}`
 
-  const timeStampString = data[dataSource][locationID].timeStamp
+  const timeStampString = dataLocation.timeStamp
   const timeStamp = parseISO(timeStampString)
   if (isValid(timeStamp)) {
     const relativeMinutes = differenceInMinutes(new Date(), timeStamp)
@@ -143,9 +122,43 @@ function setMeasurementData(container, data, dataSource, locationID, returnNode)
   if (returnNode) return container
 }
 
+function checkOldMeasurement(dataLocation) {
+
+  const timeStampString = dataLocation.timeStamp
+  const timeStamp = parseISO(timeStampString)
+  if (isValid(timeStamp)) {
+    const relativeMinutes = differenceInMinutes(new Date(), timeStamp)
+    if (relativeMinutes > 24 * 60) return true
+  }
+
+}
+
 //Functions for map
+export function changeTiles(map, tilesSelector, seaMapCheckbox) {
+
+  let value
+  if (seaMapCheckbox.checked == false) {
+    value = "0"
+  } else {
+    value = "1"
+  }
+
+  localStorage.setItem("tiles", tilesSelector.value)
+  localStorage.setItem("seaMap", value)
+
+  if (map) setLocURL(map)
+  location.reload()
+}
 
 export function getMapBoxStyle(tilesObjects) {
+  if (localStorage.getItem("tiles") == "auto") {
+    if (localStorage.getItem("theme") == "auto") {
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        return "mapbox://styles/mapbox/dark-v10"
+      } else return tilesObjects.OpenStreetMap
+    } else if (localStorage.getItem("theme") == "dark") return "mapbox://styles/mapbox/dark-v10"
+    else if (localStorage.getItem("theme") == "light") return tilesObjects.OpenStreetMap
+  }
   if (localStorage.getItem("tiles") == "OpenStreetMap") return tilesObjects.OpenStreetMap
   if (localStorage.getItem("tiles") == "Mapbox custom") return "mapbox://styles/feikescholtens/ckuhc8nha9jft18s0muhoy0zf"
   if (localStorage.getItem("tiles") == "Mapbox licht") return "mapbox://styles/mapbox/light-v10"
@@ -213,6 +226,31 @@ export function createPopupIDAndMarkerElement(location, locationID) {
   return [popupId, marker]
 }
 
+export function panMap(addMarker) {
+  //Fit map (if a location is not set in the URL as parameters), based on location (if not available fit to all markers)
+
+  if (globalThis.position) {
+    const latBounds = [position.coords.latitude + 0.35, position.coords.latitude - 0.35],
+      lonBounds = [position.coords.longitude + 0.35, position.coords.longitude - 0.35]
+    fitMap(map, latBounds, lonBounds)
+
+    addCurrentLocationMarker(addMarker)
+  } else {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        globalThis.position = position
+
+        const latBounds = [position.coords.latitude + 0.35, position.coords.latitude - 0.35],
+          lonBounds = [position.coords.longitude + 0.35, position.coords.longitude - 0.35]
+        fitMap(map, latBounds, lonBounds)
+
+        addCurrentLocationMarker(addMarker)
+      }, () => fitMap(map, markersLats, markersLons), { enableHighAccuracy: true })
+    } else fitMap(map, markersLats, markersLons)
+  }
+
+}
+
 export function fitMap(map, markersLats, markersLons) {
   map.fitBounds([
     [markersLons.at(-1), markersLats[0]], // southwestern corner of the bounds
@@ -222,48 +260,74 @@ export function fitMap(map, markersLats, markersLons) {
   })
 }
 
+export function addCurrentLocationMarker(addMarker) {
+  if (!addMarker) return
+
+  if (!globalThis.position) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        globalThis.position = position
+
+        addToMap()
+      }, () => {}, { enableHighAccuracy: true })
+    }
+  } else addToMap()
+
+  function addToMap() {
+    const marker = document.createElement("div")
+    marker.classList.add("circleCurrentLocation")
+    new mapboxgl.Marker(marker).setLngLat([position.coords.longitude, position.coords.latitude]).addTo(map)
+  }
+}
+
 export function setOverviewMapData(data, map) {
 
   Object.keys(data).forEach(dataSource => {
 
     globalThis.data[dataSource] = { ...data[dataSource] }
 
-    for (const locationID in data[dataSource]) {
-      if (!map.loaded()) map.on("load", () => {
-        addMarkerArrowToMap(locationID)
-        updatePopUp(data, dataSource, locationID)
-      })
-      else {
-        addMarkerArrowToMap(locationID)
-        updatePopUp(data, dataSource, locationID)
+    if (!map._loaded) map.on("load", () => {
+      for (const locationID in data[dataSource]) {
+        if (!checkOldMeasurement(data[dataSource][locationID])) {
+          addMarkerArrowToMap(data[dataSource][locationID], dataSource, locationID)
+          updatePopUp(data[dataSource][locationID], locationID)
+        }
       }
-    }
-
-    function addMarkerArrowToMap(locationID) {
-      const arrow = document.createElement("div")
-      arrow.classList.add("arrowArm")
-      arrow.classList.add(dataSource)
-
-      if (data[dataSource][locationID]) {
-        arrow.style.transform = `translateX(calc(-0.3 * var(--markerSize))) rotate(${data[dataSource][locationID].windDirection}deg)`
-
-        if (!data[dataSource][locationID].windSpeed && data[dataSource][locationID] !== 0) return
-        const windSpeedBft = convertValueToBft(data[dataSource][locationID].windSpeed)
-        document.getElementById(locationID).innerText = windSpeedBft
+    })
+    else {
+      for (const locationID in data[dataSource]) {
+        if (!checkOldMeasurement(data[dataSource][locationID])) {
+          addMarkerArrowToMap(data[dataSource][locationID], dataSource, locationID)
+          updatePopUp(data[dataSource][locationID], locationID)
+        }
       }
-
-      document.getElementById(locationID).parentNode.prepend(arrow)
-    }
-
-    function updatePopUp(data, dataSource, locationID) {
-      const container = popUps[locationID].Node
-      const popUpWithData = setMeasurementData(container, data, dataSource, locationID, true)
-
-      popUps[locationID].Object.setDOMContent(popUpWithData)
     }
 
   })
 
+}
+
+function addMarkerArrowToMap(dataLocation, dataSource, locationID) {
+  const arrow = document.createElement("div")
+  arrow.classList.add("arrowArm")
+  arrow.classList.add(dataSource)
+
+  if (dataLocation) {
+    arrow.style.transform = `translateX(calc(-0.3 * var(--markerSize))) rotate(${dataLocation.windDirection}deg)`
+
+    if (!dataLocation.windSpeed && dataLocation !== 0) return
+    const windSpeedBft = convertValueToBft(dataLocation.windSpeed)
+    document.getElementById(locationID).innerText = windSpeedBft
+  }
+
+  document.getElementById(locationID).parentNode.prepend(arrow)
+}
+
+function updatePopUp(dataLocation, locationID) {
+  const container = popUps[locationID].Node
+  const popUpWithData = setMeasurementData(container, dataLocation, true)
+
+  popUps[locationID].Object.setDOMContent(popUpWithData)
 }
 
 //Functions for list
@@ -275,7 +339,9 @@ export function setOverviewListData(data) {
     globalThis.data[dataSource] = { ...data[dataSource] }
 
     for (const locationID in data[dataSource]) {
-      setMeasurementData(document.querySelector(`[id="${locationID}"]`), data, dataSource, locationID, false)
+      if (!checkOldMeasurement(data[dataSource][locationID])) {
+        setMeasurementData(document.querySelector(`[id="${locationID}"]`), data[dataSource][locationID], false)
+      }
     }
 
   })

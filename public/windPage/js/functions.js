@@ -38,16 +38,10 @@ export function changeInterpolation(interpolationSelector) {
   } else {
     value = "1"
   }
-  localStorage.setItem("interpolation", value)
 
-  if (value == "1") {
-    const dataTypeArray = ["windSpeed", "windGusts", "windDirection"]
-    dataTypeArray.forEach(dataType => {
-      interpolatedData[dataType].forEach((element) => {
-        dataWUnits[dataType][element.index] = element.value
-      })
-    })
-  }
+  localStorage.setItem("interpolation", value)
+  globalThis.interpolation = value
+
   contentUpdate()
 }
 

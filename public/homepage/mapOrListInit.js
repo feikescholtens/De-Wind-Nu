@@ -1,11 +1,11 @@
-import { getMapBoxStyle, createPopupIDAndMarkerElement, fitMap, redirectToWindPage, setOverviewMapData, setOverviewListData, tilesObjects } from "./functions.js"
+import { getMapBoxStyle, createPopupIDAndMarkerElement, panMap, addCurrentLocationMarker, setOverviewMapData, setOverviewListData, tilesObjects } from "./functions.js"
 
 export async function initMap(dataAlreadyFetched) {
 
   const urlParams = new URLSearchParams(window.location.search)
-  const center = [urlParams.get("x") || 5.160544, urlParams.get("y") || 52.182725]
+  const center = [parseFloat(urlParams.get("x")) || 5.160544, parseFloat(urlParams.get("y")) || 52.182725]
   const zoom = urlParams.get("z") || 6
-  const excludeZoomFitMarkers = ["3318", "4806", "0727", "1843", "9057", "8609", "6823"]
+  const excludeZoomFitMarkers = ["3318", "4806", "0727", "1843", "9057", "8609", "6823", "2214"]
   mapboxgl.accessToken = "pk.eyJ1IjoiZmVpa2VzY2hvbHRlbnMiLCJhIjoiY2t1aDlpZWEwMGhkYTJwbm02Zmt0Y21sOCJ9.PA3iy-3LQhjCkfxhxL2zUw"
 
   const mapOptions = {
@@ -39,7 +39,7 @@ export async function initMap(dataAlreadyFetched) {
     const button = popup.querySelector("button")
     button.className = `windPageButton ${popupId}`
     button.innerText = data[id].name
-    button.addEventListener("click", () => redirectToWindPage(id, map))
+    button.addEventListener("click", () => window.location.assign(`${window.location.protocol}//${window.location.host}/wind/${id}`))
 
     globalThis.popUps[id] = { Node: popup.querySelector("div") }
 
@@ -52,16 +52,22 @@ export async function initMap(dataAlreadyFetched) {
 
   [markersLats, markersLons].forEach(array => array.sort())
 
-  if (window.location.search == "") fitMap(map, markersLats, markersLons)
-  history.replaceState({}, "De Wind Nu", "/")
+  if (center[0] === 5.160544 && center[1] === 52.182725) panMap(true)
+  else {
+    history.replaceState({}, "De Wind Nu", "/")
+    addCurrentLocationMarker(true)
+  }
 }
 
 export function initList(dataAlreadyFetched) {
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((position) => makeTable(position), () => makeTable(), { enableHighAccuracy: true })
-  } else {
-    makeTable()
+  if (globalThis.position) makeTable(globalThis.position)
+  else {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => makeTable(position), () => makeTable(), { enableHighAccuracy: true })
+    } else {
+      makeTable()
+    }
   }
 
   function makeTable(position) {
@@ -83,7 +89,7 @@ export function initList(dataAlreadyFetched) {
       const button = listItem.querySelector("button")
       button.className = `windPageButton ${marker.querySelector("div").classList[1]} ${popupId}`
       button.innerText = dataSorted[i][1].name
-      button.addEventListener("click", () => redirectToWindPage(dataSorted[i][0], null))
+      button.addEventListener("click", () => window.location.assign(`${window.location.protocol}//${window.location.host}/wind/${dataSorted[i][0]}`))
 
       if (position) listItem.querySelector(".distance").innerText = dataSorted[i][1].distance + " km"
 

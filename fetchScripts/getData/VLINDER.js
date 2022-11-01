@@ -1,4 +1,4 @@
-import { format, parse, subSeconds, add } from "date-fns"
+import { format, parse, subSeconds, add, isSameDay } from "date-fns"
 import module from "date-fns-tz"
 const { utcToZonedTime } = module
 import fetch from "node-fetch"
@@ -8,13 +8,19 @@ const timeZone = "Europe/Amsterdam"
 
 Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 
-export async function fetchVLINDER(dateParsed, databaseData, resolve, times) {
+export async function fetchVLINDER(dateParsed, databaseData, resolve, times, DSTDates) {
 
   let data = []
 
   const locationID = databaseData.datasets.VLINDER.location_id
   const dateStartFetch = subSeconds(dateParsed, 1).toISOString()
-  const dateEndFetch = add(dateParsed, { days: 1, seconds: 1 }).toISOString()
+
+  let dateEndFetch = add(dateParsed, { days: 1, seconds: 1 })
+  if (isSameDay(dateParsed, DSTDates[1]) && dateEndFetch.getUTCHours() == 22) dateEndFetch = add(dateEndFetch, { hours: 1 }).toISOString()
+  //Check if the date requested is the day of switching to CET. This day contains 25 hours, and since UTC doesn't include DST, it only 
+  //adds 24 hours in the add function above. So if the day matches the DST date and the hours equals 22, add one hour.
+  else dateEndFetch = dateEndFetch.toISOString()
+
   const rawDataString = await fetch(`https://mooncake.ugent.be/api/measurements/${locationID}?start=${dateStartFetch}&end=${dateEndFetch}`)
     .then(response => response.text()).catch((error) => catchError(resolve, data, error, "VLINDER"))
   let rawData
@@ -42,12 +48,17 @@ export async function fetchVLINDER(dateParsed, databaseData, resolve, times) {
       return
     }
 
-    const indexTime = measurementTimes.indexOf(timeStamp)
+    let indexTime = measurementTimes.indexOf(timeStamp)
+    if (wind_speed[indexTime]) indexTime = measurementTimes.lastIndexOf(timeStamp) //Check if a value already exists in the wind_speed array (doesn't 
+    // matter if wind_speed array or one of the others).
+    // This only happens when the clock turns one hour back when timezones switch from CEST to CET. 02:00, 02:05, 02:10, 02:15, 02:20, 02:25, 
+    // 02:30, 02:35, 02:40, 02:45, 02:50, 20:55 will 
+    // already be in the temprary array, so look at the second value of these times in the measurementTimes array to get the right indici.
+    // !!!This code needs a big annotation, see project notes in Goole Keep under 'known bugs'
+
     if (rawData[indexTime].windSpeed || rawData[indexTime].windSpeed == 0) {
       wind_speed.push(rawData[indexTime].windSpeed * 0.53995726994149)
-    } else {
-      wind_speed.push(-999)
-    }
+    } else wind_speed.push(-999)
 
     if (rawData[indexTime].windGust || rawData[indexTime].windGust == 0) {
       wind_gusts.push(rawData[indexTime].windGust * 0.53995726994149)

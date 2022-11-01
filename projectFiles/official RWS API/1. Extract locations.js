@@ -5,10 +5,9 @@ const locations = []
 
 locationsRaw.LocatieLijst.forEach(element => {
   locations.push({
-    x: element.X,
-    y: element.Y,
-    name: element.Naam,
-    id: element.Code
+    X: element.X,
+    Y: element.Y,
+    Code: element.Code
   })
 })
 

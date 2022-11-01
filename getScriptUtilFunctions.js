@@ -14,13 +14,14 @@ export function getTimeChangeDates(date) {
     if (DSTStart.getDay() == 0) break
     DSTStart = sub(DSTStart, { days: 1 })
   }
+  if (DSTStart.getUTCHours() !== 23) DSTStart = sub(DSTStart, { hours: 1 })
 
   let DSTEnd = new Date(year, 10 - 1, 31)
-
   for (let i = 0; i <= 7; i++) {
     if (DSTEnd.getDay() == 0) break
     DSTEnd = sub(DSTEnd, { days: 1 })
   }
+  if (DSTEnd.getUTCHours() !== 22) DSTEnd = sub(DSTEnd, { hours: 2 })
 
   return [DSTStart, DSTEnd]
 
@@ -93,21 +94,6 @@ export function calcInterpolation(array, times, startTimeIndexInTimes, stopTimeI
   }
 
   return array
-}
-
-export function restartHerokuDynos() {
-  fetch("https://api.heroku.com/apps/dewindnu/dynos/", {
-    "headers": {
-      "Accept": "application/vnd.heroku+json; version=3",
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${process.env.HEROKU_API_TOKEN}`
-    },
-    "method": "DELETE"
-  }).then(response => {
-    if (response.status !== 202) {
-      log(`An error in the Heroku API request occured while restarting dynos, status code ${response.status}!`, "fetchError", true)
-    }
-  })
 }
 
 export async function getArchivedForecast(date, locationID) {

@@ -4,7 +4,7 @@ import { fetchVLINDER } from "./fetchScripts/getData/VLINDER.js"
 import { fetchRWS } from "./fetchScripts/getData/Rijkswaterstaat.js"
 import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
 import { fetchMVB } from "./fetchScripts/getData/MVB.js"
-import { getTimeChangeDates, generateTimes, calcInterpolation, restartHerokuDynos, getArchivedForecast, startOfDayTimeZone } from "./getScriptUtilFunctions.js"
+import { getTimeChangeDates, generateTimes, calcInterpolation, getArchivedForecast, startOfDayTimeZone } from "./getScriptUtilFunctions.js"
 import { format, add, parseISO, isBefore, isValid, isToday, isFuture } from "date-fns"
 import module from "date-fns-tz"
 const { utcToZonedTime } = module
@@ -20,8 +20,7 @@ export async function getData(request, response, date, locations, forecastData) 
     //Basically 504 error but this prevents CloudFlare from showing it's message
     if (port == 3000) return
 
-    log("Restarting server due to timed out request!", "info", true)
-    restartHerokuDynos()
+    log("Server should be restarted due to timed out!", "info", true)
   }, 29.5 * 1000)
 
   let dateParsed = parseISO(date),
@@ -58,7 +57,7 @@ export async function getData(request, response, date, locations, forecastData) 
 
     // VLINDER
     if (location.datasets.VLINDER) {
-      return fetchVLINDER(dateParsed, location, resolve, times)
+      return fetchVLINDER(dateParsed, location, resolve, times, DSTDates)
     }
     // Rijkswaterstaat
     if (location.datasets.Rijkswaterstaat) {

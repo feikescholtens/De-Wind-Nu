@@ -45,6 +45,10 @@ export async function fetchKNMI(dateParsed, databaseData, resolve, times) {
     }
 
     let indexTime = measurementTimes.indexOf(timeStamp)
+    if (wind_speed[indexTime]) indexTime = measurementTimes.lastIndexOf(timeStamp) //Check if a value already exists in the wind_speed array (doesn't 
+    // matter if wind_speed array or one of the others).
+    // This only happens when the clock turns one hour back when timezones switch from CEST to CET. 02:00, 02:10, 02:20, 02:30, 02:40, 02:50 will 
+    // already be in the temprary array, so look at the second value of these times in the measurementTimes array to get the right indici.
 
     if (rawData.observations[indexTime].values.ff && rawData.observations[indexTime].values.ff >= 0) {
       wind_speed.push(rawData.observations[indexTime].values.ff * 0.53995726994149)

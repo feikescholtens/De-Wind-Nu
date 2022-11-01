@@ -1,4 +1,4 @@
-import { format, addDays, sub, isSameDay } from "date-fns"
+import { format, addDays, sub, isSameDay, add } from "date-fns"
 import module from "date-fns-tz"
 const { utcToZonedTime } = module
 
@@ -38,7 +38,7 @@ export function giveRWSFetchOptions(dateParsed, databaseData, DSTDates) {
     startTime = "22:00:00"
     endTime = "00:00:00"
     dateStartFetch = format(utcToZonedTime(sub(dateParsed, { days: 1 }), timeZone), "yyyy-MM-dd")
-    dateEndFetch = format(dateParsed, "yyyy-MM-dd")
+    dateEndFetch = format(utcToZonedTime(add(dateParsed, { days: 1, hours: 2 }), timeZone), "yyyy-MM-dd")
   } else {
     //Wintertime
     startTime = endTime = "00:00:00"
@@ -50,7 +50,25 @@ export function giveRWSFetchOptions(dateParsed, databaseData, DSTDates) {
   const locationID = databaseData.datasets.Rijkswaterstaat.location_id
   const locationX = databaseData.x
   const locationY = databaseData.y
-
+  console.log({
+    "headers": {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body": JSON.stringify({
+      "AquoPlusWaarnemingMetadata": {
+        "AquoMetadata": {
+          "Compartiment": { "Code": "LT" }
+        }
+      },
+      "Locatie": { "X": locationX, "Y": locationY, "Code": `${locationID}` },
+      "Periode": {
+        "Begindatumtijd": `${dateStartFetch}T${startTime}.000+01:00`,
+        "Einddatumtijd": `${dateEndFetch}T${endTime}.000+01:00`
+      }
+    }),
+    "method": "POST"
+  })
   return {
     "headers": {
       "Accept": "application/json",
@@ -131,12 +149,17 @@ export function SuccesvolFalseError(rawData, resolve) {
 }
 
 //MVB specific
-export function giveMVBFetchOptions(dateParsed, databaseData, newToken) {
+export function giveMVBFetchOptions(dateParsed, DSTDates, databaseData, newToken) {
 
   const keyFetch = newToken || MVBAPIKey.APIKey
   const locationID = JSON.stringify(databaseData.datasets.MVB.location_id)
   const dateStartFetch = dateParsed.toISOString()
-  const dateEndFetch = addDays(dateParsed, 1).toISOString()
+  let dateEndFetch = addDays(dateParsed, 1)
+
+  if (isSameDay(dateParsed, DSTDates[1]) && dateEndFetch.getUTCHours() == 22) dateEndFetch = add(dateEndFetch, { hours: 1 }).toISOString()
+  //Check if the date requested is the day of switching to CET. This day contains 25 hours, and since UTC doesn't include DST, it only 
+  //adds 24 hours in the addDays function above. So if the day matches the DST date and the hours equals 22, add one hour.
+  else dateEndFetch = dateEndFetch.toISOString()
 
   return {
     "headers": {

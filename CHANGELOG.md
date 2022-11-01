@@ -1,5 +1,30 @@
 # Change log
 
+## v3.3.0
+- Switched to Google App Engine from Heroku, seems to load a lot faster now
+
+- Map now shows user's location and zooms to that place. This results in less panning of the map. Tapping the logo switches between an overview of the locations and a zoomed in view to the user's location of the spots nearby
+
+- By default the map tiles now change automatically based on the theme. This can be overwritten by changing the settings.
+
+- Improved navigation with the logo and title, now uses browsers 'back' feature which doesn't require a reload
+
+- Updated the locations: deleted double locations Vlissingen and Q1-A platform (Hoorn) and Marker Wadden, added Markermeer midden, Marollegat, HKZA platform 2, HKZA platform 1 and North Cormorant platform
+
+Bugfixes:
+- Finally fixed issue where Rijkswaterstaat's overview data doesn't update in the markers on the map
+- Fixed site crashing when giving invalid ID in URL
+- Fixed alt text of icons showing before loaded. Now shows the 'unknown icon' symbol
+- Fixed changing interpolation setting requires a reload
+- Fixed decimal points showing instead of commas when users browser was set to English. To be inline with the Dutch content, I fixed this
+- Fixed last timezone switch issues
+
+Backend work:
+- Started experimenting with Rijkswaterstaat's WTZ viewer to look at the opportunity of implementing currents
+- Prepared for the timezone change on October 30th
+
+---
+
 ## v3.2.2
 
 Bugfixes:

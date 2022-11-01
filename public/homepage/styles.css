@@ -65,6 +65,15 @@ div.markerContainerKNMI {
     z-index: 4;
 }
 
+div.circleCurrentLocation {
+    width: 15px;
+    height: 15px;
+    background-color: #4285f4;
+    border-radius: 50%;
+    border: 2px white solid;
+    box-shadow: 0 0 5px 3px grey;
+}
+
 div.popUp {
     display: grid;
     grid-template-columns: 1fr;

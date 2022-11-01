@@ -143,8 +143,14 @@ addUIListeners()
 
 //Listener for logo and title
 document.querySelectorAll("[data-gobackhome]").forEach(element => element.addEventListener("click", () => { //Somehow the camelcased "data-goBackHome" won't work on Safari
-  if (document.referrer !== "") window.location.replace(document.referrer)
-  else window.location.replace("/")
+  if (document.referrer) {
+    const url = new URL(document.referrer);
+    if (["localhost", "192.168.1.251", "dewindnu.nl", "www.dewindnu.nl"].includes(url.hostname)) {
+      if (url.pathname == "/") history.go(-1)
+    }
+  } else {
+    window.location.replace(window.location.origin)
+  }
 }))
 
 

@@ -7,7 +7,7 @@ import { catchError, MessageError, theoreticalMeasurements, giveMVBFetchOptions 
 
 Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 
-export async function fetchMVB(dateParsed, databaseData, resolve, times) {
+export async function fetchMVB(dateParsed, databaseData, resolve, times, DSTDates) {
 
   let data = []
 
@@ -44,7 +44,7 @@ export async function fetchMVB(dateParsed, databaseData, resolve, times) {
 
     const timeZone = "Europe/Amsterdam"
 
-    const rawDataString = await fetch("https://api.meetnetvlaamsebanken.be/V2/getData", giveMVBFetchOptions(dateParsed, databaseData, newToken))
+    const rawDataString = await fetch("https://api.meetnetvlaamsebanken.be/V2/getData", giveMVBFetchOptions(dateParsed, DSTDates, databaseData, newToken))
       .then(response => response.text()).catch((error) => catchError(resolve, data, error, "MVB"))
 
     let rawData
@@ -77,6 +77,9 @@ export async function fetchMVB(dateParsed, databaseData, resolve, times) {
         }
 
         let indexTime = measurementTimes.indexOf(timeStamp)
+        if (tempArray[indexTime]) indexTime = measurementTimes.lastIndexOf(timeStamp) //Check if a time already exists in the temporary array. 
+        // This only happens when the clock turns one hour back when timezones switch from CEST to CET. 02:00, 02:10, 02:20, 02:30, 02:40, 02:50 will 
+        // already be in the temprary array, so look at the second value of these times in the measurementTimes array to get the right indici.
 
         if (measurementType.Values[indexTime]) {
           if (measurementType.Values[indexTime].Value) {

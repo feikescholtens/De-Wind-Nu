@@ -1,4 +1,4 @@
-import { changeTiles, changeOverviewForm, setOverviewListData, fitMap, setOverviewMapData } from "./functions.js"
+import { changeTiles, changeOverviewForm, setOverviewListData, fitMap, panMap, setOverviewMapData } from "./functions.js"
 import { redirect, updateLocalVariables, changeTheme, changeShowBar, units, changeUnit, changeDecimals, setGeneralSettings, addUIListeners } from "../globalFunctions.js"
 import { initMap, initList } from "./mapOrListInit.js"
 redirect()
@@ -10,7 +10,8 @@ globalThis.data = {},
   globalThis.units = units,
   globalThis.popUps = {},
   globalThis.markersLats = [],
-  globalThis.markersLons = []
+  globalThis.markersLons = [],
+  globalThis.position
 
 //Selectors for general settings
 const themeSelector = document.querySelector("[data-theme]"),
@@ -60,6 +61,21 @@ addUIListeners()
 
 //Listener for logo and title
 document.querySelectorAll("[data-mapfit]").forEach(element => element.addEventListener("click", () => {
-  if (localStorage.getItem("overviewForm") == "map") fitMap(map, markersLats, markersLons)
+  if (localStorage.getItem("overviewForm") == "map") {
+    if (position) {
+      const coords = [globalThis.position.coords.longitude, globalThis.position.coords.latitude]
+      if (!map.getBounds().contains(coords)) {
+        panMap(false)
+        return
+      }
+    }
+
+    if (map.getZoom() > 7) {
+      fitMap(map, markersLats, markersLons)
+      return
+    }
+
+    panMap(false)
+  }
   if (localStorage.getItem("overviewForm") == "list") location.reload()
 }))

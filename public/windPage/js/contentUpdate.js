@@ -12,7 +12,7 @@ export async function contentUpdate() {
   dataTypeArray.forEach(dataType => {
     if (data[dataType] || data[dataType] == 0) {
       for (let k = 0; k < data[dataType].length; k++) {
-        if (data[dataType][k] < 0) {
+        if (data[dataType][k] < 0 || isNaN(data[dataType][k])) { //Also checking for NaN's because of data is already loaded, negative values are replaced with NaN
           if (interpolation == "1") {
             data[dataType][k] = interpolatedData[dataType].filter(element => element.index == k)[0].value
           } else data[dataType][k] = undefined

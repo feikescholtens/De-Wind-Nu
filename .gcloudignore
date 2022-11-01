@@ -15,3 +15,11 @@
 
 # Node.js dependencies:
 node_modules/
+
+# Other:
+CHANGELOG.md
+README.md
+LICENSE.md
+projectFiles/
+GitHubImages/
+docs/

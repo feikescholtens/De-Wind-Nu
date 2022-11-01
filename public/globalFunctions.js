@@ -77,7 +77,6 @@ export function directionToLetters(currentDirection) {
 }
 
 export function redirect() {
-  if (window.location.host == "dewindnu.herokuapp.com") window.location.replace(`https://dewindnu.nl${window.location.pathname}`)
   if (["over", "feedback", "credit", "contact", "disclaimer"].includes(location.hash.substring(1)))
     displayPopUpWithName(location.hash.substring(1))
 }
@@ -98,10 +97,7 @@ export function updateLocalVariables() {
 
   //Homepage specific settings
   if (!localStorage.getItem("overviewForm")) localStorage.setItem("overviewForm", "map")
-  if (!localStorage.getItem("tiles")) {
-    if (document.body.classList.contains("dark")) localStorage.setItem("tiles", "Mapbox donker")
-    else localStorage.setItem("tiles", "OpenStreetMap")
-  }
+  if (!localStorage.getItem("tiles")) localStorage.setItem("tiles", "auto")
   if (!localStorage.getItem("seaMap")) localStorage.setItem("seaMap", 1)
 
   //Windpage specific settings
@@ -119,7 +115,7 @@ export function updateLocalVariables() {
 
   //
 
-  //Updating variables that changed in the code in storage
+  //Updating variables that changed in the code in storage, version indicated if remembered
   if (localStorage.getItem("dataForm") == "0") localStorage.setItem("dataForm", "graphs")
   if (localStorage.getItem("dataForm") == "1") localStorage.setItem("dataForm", "table")
 
@@ -140,6 +136,12 @@ export function updateLocalVariables() {
   localStorage.removeItem("firstVisit")
 
   if (localStorage.getItem("tiles") == "Mapbox") localStorage.setItem("tiles", "Mapbox custom")
+
+  //v3.3.0
+  if (localStorage.getItem("updatedTiles") !== "updated") {
+    localStorage.setItem("tiles", "auto")
+    localStorage.setItem("updatedTiles", "updated")
+  }
 }
 
 //Functions to be executed when one of the global settings change
@@ -150,14 +152,11 @@ export function changeTheme(newValue) {
   if (localStorage.getItem("theme") == "auto") {
     if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
       document.body.classList.add("dark")
-      localStorage.setItem("tiles", "Mapbox donker")
     }
   } else if (localStorage.getItem("theme") == "dark") {
     document.body.classList.add("dark")
-    localStorage.setItem("tiles", "Mapbox donker")
   } else if (localStorage.getItem("theme") == "light") {
     document.body.classList.remove("dark")
-    if (localStorage.getItem("tiles") == "Mapbox donker") localStorage.setItem("tiles", "OpenStreetMap")
   }
 
   if (location.pathname == "/") location.reload()

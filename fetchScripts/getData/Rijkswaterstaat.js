@@ -47,6 +47,9 @@ export async function fetchRWS(dateParsed, databaseData, resolve, times, DSTDate
         }
 
         let indexTime = measurementTimes.indexOf(timeStamp)
+        if (tempArray[indexTime]) indexTime = measurementTimes.lastIndexOf(timeStamp) //Check if a time already exists in the temporary array. 
+        // This only happens when the clock turns one hour back when timezones switch from CEST to CET. 02:00, 02:10, 02:20, 02:30, 02:40, 02:50 will 
+        // already be in the temprary array, so look at the second value of these times in the measurementTimes array to get the right indici.
 
         if (measurementType.MetingenLijst[indexTime]) {
           if (measurementType.MetingenLijst[indexTime].Meetwaarde) {

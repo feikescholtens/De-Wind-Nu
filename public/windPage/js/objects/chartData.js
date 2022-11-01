@@ -172,17 +172,17 @@ function setLabels(context) {
 
     if (context.chart.id == 0) {
       if (context.datasetIndex == 0) {
-        label = "Windsterkte: " + context.formattedValue + " " + unit
+        label = "Windsterkte: " + context.formattedValue.replace(".", ",") + " " + unit
       } else if (context.datasetIndex == 1) {
-        label = "Windvlagen: " + context.formattedValue + " " + unit
+        label = "Windvlagen: " + context.formattedValue.replace(".", ",") + " " + unit
       } else if (context.datasetIndex == 2) {
-        label = "Windsterkte voorspelling: " + context.formattedValue + " " + unit
+        label = "Windsterkte voorspelling: " + context.formattedValue.replace(".", ",") + " " + unit
       } else if (context.datasetIndex == 3) {
-        label = "Windvlagen voorspelling: " + context.formattedValue + " " + unit
+        label = "Windvlagen voorspelling: " + context.formattedValue.replace(".", ",") + " " + unit
       }
 
     } else if (context.chart.id == 1) {
-      label += ": " + context.formattedValue + "°"
+      label += ": " + context.formattedValue.replace(".", ",") + "°"
     }
   }
   return label

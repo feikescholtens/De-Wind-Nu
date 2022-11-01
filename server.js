@@ -18,7 +18,9 @@ global.port = process.env.PORT || 3000
 //Define variables
 const __dirname = path.resolve()
 const app = express()
-const locations = JSON.parse(readFileSync("locations.json"))
+let locations = Object.fromEntries(Object.entries(JSON.parse(readFileSync("locations.json"))).filter(([key, value]) => value.active)) //Way too long line I know, but the only thing it does is read the locations that are active.
+// const locationsWTZ = JSON.parse(readFileSync("projectFiles/WTZ/3. output.json")) //Show locations WTZ viewer that have currents (parameter "SG")
+// locations = { ...locations, ...locationsWTZ }
 const locationsString = JSON.stringify(locations)
 
 //Initialize Express
@@ -44,11 +46,12 @@ if (port == 3000) {
 
   app.get("/devTools/giveLocationsGCP", (request, response) => {
     let locationsGCP = []
-    for (let i = 0; i < locations.length; i++) {
+    const locationsArray = Object.entries(locations)
+    for (let i = 0; i < locationsArray.length; i++) {
       locationsGCP.push({
-        id: locations[i].id,
-        lat: parseFloat(parseFloat(locations[i].lat).toFixed(4)),
-        lon: parseFloat(parseFloat(locations[i].lon).toFixed(4))
+        id: locationsArray[i][0],
+        lat: parseFloat(parseFloat(locationsArray[i][1].lat).toFixed(4)),
+        lon: parseFloat(parseFloat(locationsArray[i][1].lon).toFixed(4))
       })
     }
     response.json(locationsGCP)
@@ -79,6 +82,7 @@ if (port == 3000) {
 //Homepage & windpage
 app.get("/", (request, response) => response.render(path.join(__dirname, "/public/homepage/index.ejs"), { locationsString }))
 app.get("/wind/:id", (request, response) => {
+  if (!locations[request.params.id]) { response.redirect("/"); return }
   const spotName = locations[request.params.id].name
   response.render(path.join(__dirname, "/public/windPage/index.ejs"), { spotName })
 })
