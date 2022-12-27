@@ -79,3 +79,9 @@ document.querySelectorAll("[data-mapfit]").forEach(element => element.addEventLi
   }
   if (localStorage.getItem("overviewForm") == "list") location.reload()
 }))
+
+//Set variables to use in CSS with correct vh and vw units
+const vh = window.innerHeight * 0.01
+const vw = document.body.clientWidth * 0.01
+document.documentElement.style.setProperty('--vh', `${vh}px`)
+document.documentElement.style.setProperty('--vw', `${vw}px`)

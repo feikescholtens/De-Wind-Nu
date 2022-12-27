@@ -1,5 +1,17 @@
 # Change log
 
+## v3.4.0
+- Lot of UI work with bigger buttons and more icons
+
+- Fixed preloading of icons as soon as page loads
+
+- Added a settings button to make it more clear that there's a lot of customization possible
+
+Bugfixes:
+- Fixed map having wrong width and height due to using vw and vh which can vary a lot on mobile (now they won't)
+
+---
+
 ## v3.3.0
 - Switched to Google App Engine from Heroku, seems to load a lot faster now
 

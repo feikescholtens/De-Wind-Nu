@@ -1,6 +1,6 @@
 import { addDays, isToday, parse, format, parseISO, startOfDay } from "https://esm.run/date-fns"
 import { contentUpdate } from "./js/contentUpdate.js"
-import { changeDataForm, formulateErrorMessage, showErrorMessage, hideErrorMessage, hideMain, showLoader, hideLoader, setNewNumber, showMain, showCurrentWindBox, hideCurrentWindBox, changeInterpolation, calcInterpolation, changeTableSort, getAbsoluteDate, getRelativeDate, getDatePickerMax, switchPreviousDay, switchNextDay, setDateInUrl, isIOS } from "./js/functions.js"
+import { changeDataForm, formulateErrorMessage, showErrorMessage, hideErrorMessage, hideMain, showLoader, hideLoader, setNewNumber, showMain, showCurrentWindBox, hideCurrentWindBox, changeInterpolation, calcInterpolation, changeTableSort, getAbsoluteDate, getRelativeDate, getDatePickerMax, switchPreviousDay, switchNextDay, setDateInUrl, checkWrapFlexNavBar } from "./js/functions.js"
 import { redirect, updateLocalVariables, changeTheme, changeShowBar, changeUnit, units, setGeneralSettings, addUIListeners, changeDecimals } from "../globalFunctions.js"
 redirect()
 updateLocalVariables()
@@ -54,7 +54,8 @@ globalThis.data = {},
   globalThis.interpolation = localStorage.getItem("interpolation"),
   globalThis.times,
   globalThis.currentWindBoxSize = 350,
-  globalThis.units = units
+  globalThis.units = units,
+  globalThis.overflowWidth = 0
 
 //Selectors for general settings
 const themeSelector = document.querySelector("[data-theme]"),
@@ -84,8 +85,9 @@ setGeneralSettings()
 //Windpage specific settings
 dataFormSelector.value = localStorage.getItem("dataForm")
 if (localStorage.getItem("dataForm") == "table") { //This is done here (instead of in the index.ejs of the homepage) since it isn't displayed after all the data is processed
-  document.querySelector("[data-graphs]").classList.add("deselected")
-  document.querySelector("[data-tabel]").classList.remove("deselected")
+  document.querySelector("[data-graphs]").classList.remove("active")
+  document.querySelector("[data-table]").classList.add("active")
+  document.querySelector(".tabIndicator").style.left = `calc(1 * 120px + 5px)`
 }
 if (localStorage.getItem("interpolation") == "1") interpolationSelector.checked = true
 if (localStorage.getItem("tableSort") == "ascending") tableSort.innerHTML = `Tijd <span id="sortArrow">▼</span>`
@@ -135,11 +137,13 @@ decimalsSelector.onchange = () => {
 //Windpage specific settings
 dataFormSelector.onchange = () => changeDataForm(dataFormSelector)
 document.querySelector("[data-graphs]").addEventListener("click", (e) => changeDataForm(dataFormSelector, e)) //in the select bar
-document.querySelector("[data-tabel]").addEventListener("click", (e) => changeDataForm(dataFormSelector, e)) //in the select bar
+document.querySelector("[data-table]").addEventListener("click", (e) => changeDataForm(dataFormSelector, e)) //in the select bar
 interpolationSelector.onchange = () => changeInterpolation(interpolationSelector)
 tableSort.addEventListener("click", () => changeTableSort(tableSort))
 
 addUIListeners()
+checkWrapFlexNavBar(true)
+window.onresize = checkWrapFlexNavBar
 
 //Listener for logo and title
 document.querySelectorAll("[data-gobackhome]").forEach(element => element.addEventListener("click", () => { //Somehow the camelcased "data-goBackHome" won't work on Safari

@@ -2,6 +2,11 @@ import { getMapBoxStyle, createPopupIDAndMarkerElement, panMap, addCurrentLocati
 
 export async function initMap(dataAlreadyFetched) {
 
+  document.querySelector("#settingsButton").addEventListener("click", () => {
+    const scrollDiv = document.querySelector(".sectionHeader").offsetTop;
+    window.scrollTo({ top: scrollDiv, behavior: 'smooth' });
+  })
+
   const urlParams = new URLSearchParams(window.location.search)
   const center = [parseFloat(urlParams.get("x")) || 5.160544, parseFloat(urlParams.get("y")) || 52.182725]
   const zoom = urlParams.get("z") || 6
@@ -18,6 +23,7 @@ export async function initMap(dataAlreadyFetched) {
   globalThis.map = new mapboxgl.Map(mapOptions)
   map.touchZoomRotate.disableRotation()
   map.on("load", () => { if (localStorage.getItem("seaMap") == "1") map.addLayer(tilesObjects.OpenSeaMap) })
+  map.once("render", () => { document.querySelector("#settingsButton").classList.remove("noDisplay") })
 
   if (!dataAlreadyFetched) {
     fetch("getOverviewData/VLINDER").then(response => response.json()).then(dataOverview => setOverviewMapData({ VLINDER: dataOverview }, map))
@@ -43,7 +49,7 @@ export async function initMap(dataAlreadyFetched) {
 
     globalThis.popUps[id] = { Node: popup.querySelector("div") }
 
-    const popUpObject = new mapboxgl.Popup({ offset: 13 }).setDOMContent(popup)
+    const popUpObject = new mapboxgl.Popup({ offset: 13, closeButton: false }).setDOMContent(popup)
     new mapboxgl.Marker(marker).setLngLat([data[id].lon, data[id].lat]).setPopup(popUpObject).addTo(map)
 
     globalThis.popUps[id].Object = popUpObject

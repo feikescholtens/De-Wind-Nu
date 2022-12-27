@@ -85,18 +85,18 @@
             <h1 data-goBackHome id="title">De Wind Nu</h1>
     </header>
     
-    <nav id="locationDate" class="noSelect">
+    <nav id="locationDate" class="noSelect hidden">
       <h4 data-location id="location"><%= spotName %></h4>
       
       <div id="dateControls">
         <span data-previousDay title="Vorige dag" class="material-symbols-rounded">&#xe408;</span>
         <p data-currentDay id="currentDate"></p><input data-datePicker id="datePicker" type="date">
         <span data-nextDay title="Volgende dag" class="material-symbols-rounded">&#xe409;</span>
-        <span data-getData title="Bekijken data voor deze dag" class="material-symbols-rounded">&#xe4fc;</span>
+        <span data-getData id="getDataButton" title="Bekijk data voor deze dag" class="material-symbols-rounded">&#xe4fc;</span>
       </div>
-
-      <p data-errorFetching class="error fullWidthGrid noDisplay" style="margin-top: 10px;"></p>
     </nav>
+
+    <p data-errorFetching class="error noDisplay" style="margin-top: 10px;"></p>
 
     <main class="hidden">
 
@@ -111,7 +111,13 @@
                 <div data-forecastedDirection id="forecastedDirection"></div>
             </div>
 
-            <section class="text-selector inPageFlow" data-dataForm><label data-graphs>Grafieken</label> <label class="deselected" data-tabel>Tabel</label></section>
+            <div data-dataForm class="tabContainer">
+              <div class="tabHeader">
+                  <div data-graphs class="active"><span class="material-symbols-rounded tabIcon">&#xeb66;</span>Grafieken</div>
+                  <div data-table><span class="material-symbols-rounded tabIcon">&#xe265;</span>Tabel</div>
+              </div>
+              <div class="tabIndicator"></div>
+            </div>
 
             <h2 data-headingTabel class="sectionHeader noDisplay">Windsterkte</h2>
             <table data-dataTable id="data">
@@ -141,7 +147,7 @@
                   <option value="dark">Donker</option>
                 </select>
 
-                <label for="showBar">Toon balk met snel wisselen tussen weergavevormen</label>
+                <label for="showBar">Toon tabbladen met snel wisselen tussen weergavevormen</label>
                 <input type="checkbox" data-showBar id="showBar"></input>
 
                 <label for="unit">Eenheid</label>

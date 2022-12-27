@@ -25,19 +25,33 @@ nav {
 
 /* Styling bar with location and date options / inputs */
 #locationDate {
-    display: grid;
+    display: flex;
     grid-gap: 10px;
     align-items: center;
-    grid-template-columns: minmax(0, 1fr) 200px;
     cursor: pointer;
+    justify-content: space-between;
 }
 
 #dateControls {
-    width: 100%;
+    width: 270px;
     height: 100%;
     display: grid;
-    grid-template-columns: 24px auto 24px calc(24px + 5px);
+    grid-template-columns: 44px 133px 44px calc(44px + 5px);
     text-align: center;
+    margin-left: auto;
+}
+
+#dateControls span {
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+    color: var(--BGColour);
+    background-color: var(--textColour2);
+    border-radius: 12px;
+}
+
+#dateControls span#getDataButton {
+    margin-left: 5px;
 }
 
 #datePicker {
@@ -46,41 +60,15 @@ nav {
     z-index: -1;
 }
 
-.noSelect {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
 .noSelect:focus {
     outline: none !important;
 }
 
-.material-symbols-rounded {
-    cursor: pointer;
-    margin: auto 0;
-    font-size: 24px;
-    font-variation-settings:
-        "FILL"0,
-        "wght"800,
-        "GRAD"0,
-        "opsz"48
-}
-
-.material-symbols-rounded:nth-last-of-type(-n+1) {
-    margin-left: 5px;
-}
-
-.fullWidthGrid {
-    grid-column: 1 / -1;
-}
-
 p#currentDate {
     margin: auto 0;
+    height: 44px;
+    line-height: 44px;
+    padding: 0 5px;
 }
 
 h4#location {
@@ -179,6 +167,20 @@ label.labelSmall {
 
 label.labelBig {
     font-size: 20px;
+}
+
+/* Tabs styling (specific for this tab) */
+
+.tabContainer {
+    padding-top: 10px;
+}
+
+.tabContainer .tabHeader>div {
+    width: 120px;
+}
+
+.tabContainer .tabIndicator {
+    width: 120px;
 }
 
 /* Other styles */

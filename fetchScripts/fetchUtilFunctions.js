@@ -50,25 +50,7 @@ export function giveRWSFetchOptions(dateParsed, databaseData, DSTDates) {
   const locationID = databaseData.datasets.Rijkswaterstaat.location_id
   const locationX = databaseData.x
   const locationY = databaseData.y
-  console.log({
-    "headers": {
-      "Accept": "application/json",
-      "Content-Type": "application/json"
-    },
-    "body": JSON.stringify({
-      "AquoPlusWaarnemingMetadata": {
-        "AquoMetadata": {
-          "Compartiment": { "Code": "LT" }
-        }
-      },
-      "Locatie": { "X": locationX, "Y": locationY, "Code": `${locationID}` },
-      "Periode": {
-        "Begindatumtijd": `${dateStartFetch}T${startTime}.000+01:00`,
-        "Einddatumtijd": `${dateEndFetch}T${endTime}.000+01:00`
-      }
-    }),
-    "method": "POST"
-  })
+
   return {
     "headers": {
       "Accept": "application/json",

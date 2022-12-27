@@ -10,17 +10,26 @@ function setLocURL(map) {
 export function changeOverviewForm(selector, e) {
 
   let clickedOption
-  if (e) clickedOption = e.target.innerText
+  if (e) clickedOption = e.target.textContent.substring(1) //When using tabs
+  else clickedOption = selector.value //When using selector in settings
 
   //Check if the overviewForm is changed at all
-  if (clickedOption == "Kaart" && localStorage.getItem("overviewForm") == "map") return
-  if (clickedOption == "Lijst" && localStorage.getItem("overviewForm") == "list") return
+  if (["Kaart", "map"].includes(clickedOption) && localStorage.getItem("overviewForm") == "map") return
+  if (["Lijst", "list"].includes(clickedOption) && localStorage.getItem("overviewForm") == "list") return
 
-  if (clickedOption == "Kaart") selector.value = "map"
-  if (clickedOption == "Lijst") selector.value = "list"
+  if (["Kaart", "map"].includes(clickedOption)) {
+    selector.value = "map"
+    document.querySelector("[data-map]").classList.add("active")
+    document.querySelector("[data-list]").classList.remove("active")
+    document.querySelector(".tabIndicator").style.left = `calc(0 * 80px)`
+  }
+  if (["Lijst", "list"].includes(clickedOption)) {
+    selector.value = "list"
+    document.querySelector("[data-map]").classList.remove("active")
+    document.querySelector("[data-list]").classList.add("active")
+    document.querySelector(".tabIndicator").style.left = `calc(1 * 80px + 5px)`
+  }
 
-  document.querySelector("[data-map]").classList.toggle("deselected")
-  document.querySelector("[data-list]").classList.toggle("deselected")
   localStorage.setItem("overviewForm", selector.value)
 
   const main = document.getElementsByTagName("main")[0]
@@ -33,8 +42,12 @@ export function changeOverviewForm(selector, e) {
 
     const divOuter = document.createElement("div")
     divOuter.id = "mapWrapper"
-    divOuter.innerHTML = `<div id="map"></div>`
-    main.prepend(divOuter)
+    divOuter.innerHTML = `<div id="map"></div>
+    <button id="settingsButton" class="noDisplay">
+      <span title="Scroll naar de instellingen" class="material-symbols-rounded noSelect" id="iconSettings">&#xe8b8;</span>
+</button>`
+    //Above lines should make the same HTML as in index.js (homepage), bottom of markup
+    main.insertBefore(divOuter, document.querySelector(".tabContainerWrapper").nextSibling);
 
     initMap(true)
   }
@@ -45,7 +58,8 @@ export function changeOverviewForm(selector, e) {
 
     const div = document.createElement("div")
     div.id = "list"
-    main.prepend(div)
+    //Above lines should make the same HTML as in index.js (homepage), bottom of markup
+    main.insertBefore(div, document.querySelector(".tabContainerWrapper").nextSibling);
 
     initList(true)
   }

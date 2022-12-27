@@ -14,21 +14,32 @@ import {
 import nl from "https://esm.run/date-fns/locale/nl"
 
 export function changeDataForm(selector, e) {
+
   let clickedOption
-  if (e) clickedOption = e.target.innerText
+  if (e) clickedOption = e.target.textContent.substring(1) //When using tabs
+  else clickedOption = selector.value //When using selector in settings
 
   //Check if the dataForm is changed at all
-  if (clickedOption == "Grafieken" && localStorage.getItem("dataForm") == "graphs") return
-  if (clickedOption == "Tabel" && localStorage.getItem("dataForm") == "table") return
+  if (["Grafieken", "graphs"].includes(clickedOption) && localStorage.getItem("dataForm") == "graphs") return
+  if (["Tabel", "table"].includes(clickedOption) && localStorage.getItem("dataForm") == "table") return
 
-  if (clickedOption == "Grafieken") selector.value = "graphs"
-  if (clickedOption == "Tabel") selector.value = "table"
+  if (["Grafieken", "graphs"].includes(clickedOption)) {
+    selector.value = "graphs"
+    document.querySelector("[data-graphs]").classList.add("active")
+    document.querySelector("[data-table]").classList.remove("active")
+    document.querySelector(".tabIndicator").style.left = `calc(0 * 120px)`
+  }
+  if (["Tabel", "table"].includes(clickedOption)) {
+    selector.value = "table"
+    document.querySelector("[data-graphs]").classList.remove("active")
+    document.querySelector("[data-table]").classList.add("active")
+    document.querySelector(".tabIndicator").style.left = `calc(1 * 120px + 5px)`
+  }
 
-  document.querySelector("[data-graphs]").classList.toggle("deselected")
-  document.querySelector("[data-tabel]").classList.toggle("deselected")
   localStorage.setItem("dataForm", selector.value)
 
   contentUpdate()
+
 }
 
 export function changeInterpolation(interpolationSelector) {
@@ -256,4 +267,29 @@ export function getDatePickerMax() {
 export function isIOS() {
   return ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'].includes(navigator.platform) ||
     (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+}
+
+export function checkWrapFlexNavBar(unHideNavBar) {
+  const navBar = document.getElementById("locationDate")
+
+  //This is the case when the page is not resized but loaded
+  if (navBar.scrollWidth > navBar.clientWidth && globalThis.overflowWidth == 0) {
+    navBar.style.flexWrap = "wrap"
+    globalThis.overflowWidth = navBar.clientWidth
+    navBar.classList.remove("hidden")
+    return
+  }
+
+  //Check if navBar overflows and if so, update global variable overflowWidth with the largest value for which the content overflows
+  //Any width under this critical number will overflow the navBar in any case, therefore the largest number is decisive
+  //At this critical width we switch for wrapping the flexbox container or the text of the location
+  if (navBar.scrollWidth > navBar.clientWidth && navBar.clientWidth > globalThis.overflowWidth) {
+    globalThis.overflowWidth = navBar.clientWidth
+  }
+
+  //If navBar overflows, wrap flexbox container, else wrap the words of the location
+  if (navBar.clientWidth < globalThis.overflowWidth) navBar.style.flexWrap = "wrap"
+  else navBar.style.flexWrap = ""
+
+  if (unHideNavBar) navBar.classList.remove("hidden")
 }

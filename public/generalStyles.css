@@ -53,7 +53,17 @@ footer {
     display: none !important;
 }
 
-/* Header and headings styling */
+.noSelect {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Header, headings and icon styling */
 
 header {
     height: 100px;
@@ -88,7 +98,7 @@ h1#title {
 
 @media screen and (max-width: 500px) {
     h1#title {
-        top: 16px;
+        top: 11px;
         transform: none;
     }
 }
@@ -105,11 +115,20 @@ h2.sectionHeader {
     padding: 10px 10px 0 10px;
 }
 
+.material-symbols-rounded {
+    cursor: pointer;
+    margin: auto 0;
+    font-variation-settings:
+        "FILL"0,
+        "wght"800,
+        "GRAD"0,
+        "opsz"48
+}
+
 /* Text selector styling */
 
 .text-selector {
     letter-spacing: 1px;
-    word-spacing: 10px;
     text-align: center;
     height: 25px;
 }
@@ -117,6 +136,7 @@ h2.sectionHeader {
 .text-selector label {
     cursor: pointer;
     color: var(--textColour1);
+    padding: 5px;
 }
 
 .text-selector label.deselected {
@@ -130,8 +150,48 @@ h2.sectionHeader {
     transform: translateX(-50%);
 }
 
-.inPageFlow {
-    padding-top: 10px;
+/* Tabs styling (there is more CSS for the tab on the homepage (due to absolute positioning), see other stylesheet)*/
+
+.tabContainer {
+    overflow: hidden;
+    width: fit-content;
+    margin: auto;
+    white-space: nowrap;
+}
+
+.tabContainer .tabHeader>div {
+    display: inline-block;
+    text-align: center;
+    color: var(--textColour3);
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    height: 49px;
+    line-height: 44px;
+}
+
+.tabContainer .tabHeader>div>i {
+    margin: 5px;
+}
+
+.tabContainer .tabHeader>div.active {
+    color: var(--textColour2);
+}
+
+.tabContainer .tabIndicator {
+    position: relative;
+    height: 5px;
+    background: var(--textColour2);
+    left: 0px;
+    border-radius: 5px;
+    transition: all 200ms ease-in-out;
+    margin-top: -5px;
+}
+
+span.tabIcon {
+    vertical-align: middle;
+    margin-right: 5px;
+    pointer-events: none;
 }
 
 /* Marker & loader styling */
@@ -217,14 +277,15 @@ div.spin {
 
 button.windPageButton {
     margin: 5px;
-    padding: 8px;
+    padding: 8px 14px;
     border-radius: 12px;
     border: none;
     color: white;
-    font-size: 1.2em;
+    font-size: 1rem;
     cursor: pointer;
     text-shadow: 1px 1px #5c5c5c;
     font-weight: 600;
+    min-height: 44px;
 }
 
 button.popupMVB {
@@ -294,7 +355,7 @@ div.footerItem p {
 /* Styling grid with settings for both pages */
 div#settings {
     display: grid;
-    grid-template-columns: clamp(50px, 60%, 400px) clamp(80px, calc(40% - 10px), 200px);
+    grid-template-columns: clamp(50px, 40%, 400px) clamp(80px, calc(60% - 10px), 270px);
     margin: 5px 10px;
     column-gap: 10px;
     row-gap: 20px;
@@ -388,13 +449,20 @@ div.messageBox table td {
     padding: 5px;
 }
 
+input[type="checkbox"] {
+    width: 26px;
+    height: 26px;
+}
+
 select {
     background-color: var(--BGColour);
     color: var(--textColour1);
-    padding: 2px;
+    padding-left: 8px;
     border-radius: 7px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 4px;
     outline: none;
+    height: 44px;
+    font-size: 1rem;
 }
 
 input,

@@ -165,13 +165,13 @@ export function changeTheme(newValue) {
 
 export function changeShowBar(showBarSelector) {
   let value
-  const textSelector = [document.querySelector("[data-overviewForm]"), document.querySelector("[data-dataForm]")].filter(x => x !== null)[0]
+  const tabs = [document.querySelector("[data-overviewForm]"), document.querySelector("[data-dataForm]")].filter(x => x !== null)[0]
   if (showBarSelector.checked == false) {
     value = "0"
-    textSelector.style.display = "none"
+    tabs.style.display = "none"
   } else {
     value = "1"
-    textSelector.style.display = "block"
+    tabs.style.display = "block"
   }
 
   localStorage.setItem("showBar", value)
