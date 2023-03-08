@@ -44,6 +44,33 @@ div#mapWrapper {
     margin-left: calc((100 * var(--vw, 1vw) - 100%) / -2);
 }
 
+/* Settings bar with notification about location */
+
+div.barLocationNotification {
+    z-index: 998;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: var(--lineColour);
+    color: var(--textColour1);
+}
+
+div#barLocationNotificationMap {
+    position: absolute;
+    width: calc(100 * var(--vw, 1vw));
+    margin-left: calc((100 * var(--vw, 1vw) - 100%) / -2);
+}
+
+div#barLocationNotificationList {
+    width: calc(100% - 2 * 10px);
+    margin-left: 10px;
+}
+
+div.barLocationNotification span {
+    color: var(--anchorColour);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 /* Settings icon scroll styling */
 
 button#settingsButton {
@@ -150,11 +177,43 @@ div.circleCurrentLocation {
     border-radius: 50%;
     border: 2px white solid;
     box-shadow: 0 0 5px 3px grey;
+    cursor: pointer;
+}
+
+div.circleCurrentLocation:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    width: 50px;
+    height: 50px;
+    border-radius: 7px;
 }
 
 div.popUp {
     display: grid;
     grid-template-columns: 1fr;
+}
+
+p.locationPopUpTitle {
+    padding: 10px;
+    font-weight: 600;
+    font-size: 18px;
+    text-align: left;
+}
+
+button.popupLocationPrefferenceHigh {
+    background-color: #1a873c;
+}
+
+button.popupLocationPrefferenceLow {
+    background-color: #de6421;
+}
+
+button.popupLocationPrefferenceNone {
+    background-color: #c71720;
 }
 
 div.mapboxgl-popup {

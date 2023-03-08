@@ -3,7 +3,7 @@ import { Firestore } from "@google-cloud/firestore"
 
 export function firestoreAuth() {
   return {
-    projectId: process.env.GCP_PROJECT_ID,
+    projectId: "de-wind-nu",
     credentials: {
       client_email: process.env.GCP_CLIENT_EMAIL,
       private_key: process.env.GCP_PRIVATE_KEY

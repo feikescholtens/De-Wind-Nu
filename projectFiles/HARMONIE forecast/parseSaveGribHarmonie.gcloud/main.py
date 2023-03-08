@@ -30,7 +30,7 @@ timezone = pytz.timezone("Europe/Amsterdam")
 
 #Locations from 7 february 2022
 locations = json.load(open("locations.json"))
-projectIdAndBucket = os.environ.get("GCP_PROJECT_ID")
+projectIdAndBucket = "de-wind-nu"
 
 def runFunc (event, context):
 

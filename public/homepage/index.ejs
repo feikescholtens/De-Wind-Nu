@@ -9,7 +9,7 @@
 
 
 
-  <meta name="description" content="De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met voorspellingen in grafieken. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
+  <meta name="description" content="De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met verwachtingen in grafieken. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
     <meta name="keywords" content="actuele wind in knopen,
     windmetingen Brouwersdam,
     metingen meetstations KNMI Rijkswaterstaat,
@@ -28,13 +28,13 @@
     <meta property="og:url" content="https://dewindnu.nl">
     <meta property="og:image" content="https://dewindnu.nl/images/logoEncircled.png">
     <meta property="og:site_name" content="De Wind Nu">
-    <meta property="og:description" content="De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met voorspellingen in grafieken. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
+    <meta property="og:description" content="De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met verwachtingen in grafieken. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
     
     <meta property="twitter:card" content="summary">
     <meta property="twitter:title" content="De Wind Nu">
     <meta property="twitter:url" content="https://dewindnu.nl">
     <meta property="twitter:image" content="https://dewindnu.nl/images/logoEncircled.png">
-    <meta property="twitter:description" content="De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met voorspellingen in grafieken. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
+    <meta property="twitter:description" content="De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met verwachtingen in grafieken. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
 
 
   
@@ -114,6 +114,15 @@
       </button>
     </template>
 
+    <template data-templateMapLocationPreferencePopup>
+      <div class="popUp alwaysBlackText">
+        <p data-locationPopUpTitle class="locationPopUpTitle">Geschatte locatie. Kies een van de opties:</p>
+        <button data-popupLocationPrefferenceHigh title="Kies deze optie" class="colouredButton popupLocationPrefferenceHigh">Hoge nauwkeurigheid (aanbevolen)</button>
+        <button data-popupLocationPrefferenceLow title="Kies deze optie" class="colouredButton popupLocationPrefferenceLow">Blijf geschatte locatie gebruiken</button>
+        <button data-popupLocationPrefferenceNone title="Kies deze optie" class="colouredButton popupLocationPrefferenceNone">Huidige locatie niet gebruiken</button>
+      </button>
+    </template>
+
     <template data-templateListItem>
       <div class="listElement">
         <div class="buttonWrapper"><button title="Bekijk metingen van deze locatie"></button></div>
@@ -170,11 +179,17 @@
           <option value="Mapbox donker">Mapbox donker</option>
           <option value="Satelliet">Satelliet</option>
           <option value="Satelliet met plaatsnamen en wegen">Satelliet met plaatsnamen en wegen</option>
-
         </select>
         
         <label for="seaMap">Toon zeekaart</label>
         <input type="checkbox" data-seaMap id="seaMap"></input>
+
+        <label for="locationPreference">Gebruik huidige locatie</label>
+        <select data-locationPreference id="locationPreference">
+          <option value="high">Hoge nauwkeurigheid (er kan om je locatie gevraagd worden)</option>
+          <option value="low">Geschatte locatie gebruiken (gebaseerd op IP-adres)</option>
+          <option value="none">Huidige locatie niet gebruiken (niet aan te raden)</option>
+        </select>
     </div>
 
   </main>
@@ -201,14 +216,15 @@
     //Setting DOM for map or list
     const main = document.getElementsByTagName("main")[0]
     if (localStorage.getItem("overviewForm") == "map" || !localStorage.getItem("overviewForm")) {
-      main.innerHTML = `<div id="mapWrapper"><div id="map"></div>
+      main.innerHTML = `<div id="mapWrapper"><div data-barLocationNotification id="barLocationNotificationMap" class="barLocationNotification noDisplay"></div>
+      <div id="map"></div>
       <button id="settingsButton" class="noDisplay">
         <span title="Scroll naar de instellingen" class="material-symbols-rounded noSelect" id="iconSettings">&#xe8b8;</span>
       </button></div>${main.innerHTML}`
     //Above lines should make the same HTML as in functions.js (homepage) bottom of function changeOverviewForm 
     }
     if (localStorage.getItem("overviewForm") == "list") {
-      main.innerHTML = `<div id="list"></div>${main.innerHTML}`
+      main.innerHTML = `<div data-barLocationNotification id="barLocationNotificationList" class="barLocationNotification noDisplay"></div><div id="list"></div>${main.innerHTML}`
     //Above lines should make the same HTML as in functions.js (homepage) bottom of function changeOverviewForm
     }
 
@@ -220,12 +236,23 @@
         <div class="tabIndicator"></div>
     </div></div>${main.innerHTML}` 
 
-    //Hiding selector or displaying it's correct value
+    //Hiding tabs or displaying it's correct value
     if (localStorage.getItem("showBar") == "0" && localStorage.getItem("showBar"))  document.querySelector("[data-overviewForm]").style.display = "none"
     if (localStorage.getItem("overviewForm") == "list") {
       document.querySelector("[data-map]").classList.remove("active")
       document.querySelector("[data-list]").classList.add("active")
       document.querySelector(".tabIndicator").style.left = `calc(1 * 80px + 5px)`
+    }
+
+    //Set variables to use in CSS with correct vh and vw units
+    setCSSviewWidthAndHeightOnResize()
+    window.onresize = setCSSviewWidthAndHeightOnResize
+
+    function setCSSviewWidthAndHeightOnResize() {
+      const vh = window.innerHeight * 0.01
+      const vw = document.body.clientWidth * 0.01
+      document.documentElement.style.setProperty('--vh', `${vh}px`)
+      document.documentElement.style.setProperty('--vw', `${vw}px`)
     }
 
   </script>

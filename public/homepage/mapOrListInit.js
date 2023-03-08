@@ -1,15 +1,14 @@
-import { getMapBoxStyle, createPopupIDAndMarkerElement, panMap, addCurrentLocationMarker, setOverviewMapData, setOverviewListData, tilesObjects } from "./functions.js"
+import { getMapBoxStyle, createPopupIDAndMarkerElement, fitMapToMarkers, panMapToLocation, addCurrentLocationMarker, setOverviewMapData, setOverviewListData, tilesObjects, determineCenterToZoomTo } from "./functions.js"
 
-export async function initMap(dataAlreadyFetched) {
+export async function initMap(dataAlreadyFetched, locationToUse) {
 
   document.querySelector("#settingsButton").addEventListener("click", () => {
     const scrollDiv = document.querySelector(".sectionHeader").offsetTop;
     window.scrollTo({ top: scrollDiv, behavior: 'smooth' });
   })
 
-  const urlParams = new URLSearchParams(window.location.search)
-  const center = [parseFloat(urlParams.get("x")) || 5.160544, parseFloat(urlParams.get("y")) || 52.182725]
-  const zoom = urlParams.get("z") || 6
+  const center = determineCenterToZoomTo("center")
+  const zoom = determineCenterToZoomTo("zoom", true)
   const excludeZoomFitMarkers = ["3318", "4806", "0727", "1843", "9057", "8609", "6823", "2214"]
   mapboxgl.accessToken = "pk.eyJ1IjoiZmVpa2VzY2hvbHRlbnMiLCJhIjoiY2t1aDlpZWEwMGhkYTJwbm02Zmt0Y21sOCJ9.PA3iy-3LQhjCkfxhxL2zUw"
 
@@ -24,6 +23,17 @@ export async function initMap(dataAlreadyFetched) {
   map.touchZoomRotate.disableRotation()
   map.on("load", () => { if (localStorage.getItem("seaMap") == "1") map.addLayer(tilesObjects.OpenSeaMap) })
   map.once("render", () => { document.querySelector("#settingsButton").classList.remove("noDisplay") })
+  map.on("error", async (error) => {
+    if (error.error.status === 429) {
+      map.getSource('openstreetmap').tiles = tilesObjects.OpenStreetMap.sources.openstreetmap.tilesFallback
+      map.getSource('openstreetmap').attribution = tilesObjects.OpenStreetMap.sources.openstreetmap.attributionFallback
+
+      map.triggerRepaint()
+      map._controls[0]._updateAttributions()
+
+      console.log("Ignore above error message (from ajax.js:143). Switched tile URL to one with unlimited requests, bacause a) API limit reached, b) OR users exceeded the rate limit per second. In both cases we get a 429 error!")
+    }
+  })
 
   if (!dataAlreadyFetched) {
     fetch("getOverviewData/VLINDER").then(response => response.json()).then(dataOverview => setOverviewMapData({ VLINDER: dataOverview }, map))
@@ -43,9 +53,13 @@ export async function initMap(dataAlreadyFetched) {
     const popup = document.querySelector("[data-templateMapPopup]").cloneNode(true).content
     popup.querySelector("div").id = id
     const button = popup.querySelector("button")
-    button.className = `windPageButton ${popupId}`
+    button.className = `colouredButton ${popupId}`
     button.innerText = data[id].name
-    button.addEventListener("click", () => window.location.assign(`${window.location.protocol}//${window.location.host}/wind/${id}`))
+    button.addEventListener("click", () => {
+      // ?x=${map.getCenter().lng}&y=${map.getCenter().lat}?z=${map.getZoom()}
+      localStorage.setItem("edgeOperaMapLocation", JSON.stringify({ x: map.getCenter().lng, y: map.getCenter().lat, z: map.getZoom() }))
+      window.location.assign(`${window.location.protocol}//${window.location.host}/wind/${id}`)
+    })
 
     globalThis.popUps[id] = { Node: popup.querySelector("div") }
 
@@ -58,58 +72,44 @@ export async function initMap(dataAlreadyFetched) {
 
   [markersLats, markersLons].forEach(array => array.sort())
 
-  if (center[0] === 5.160544 && center[1] === 52.182725) panMap(true)
-  else {
+  if (center[0] === 5.160544 && center[1] === 52.182725) {
+    if (locationToUse) panMapToLocation(locationToUse, true)
+    else fitMapToMarkers(map, markersLats, markersLons)
+  } else {
     history.replaceState({}, "De Wind Nu", "/")
-    addCurrentLocationMarker(true)
+    addCurrentLocationMarker(true, locationToUse.lat, locationToUse.lon)
   }
 }
 
-export function initList(dataAlreadyFetched) {
+export function initList(dataAlreadyFetched, locationToUse) {
 
-  if (globalThis.position) makeTable(globalThis.position)
-  else {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => makeTable(position), () => makeTable(), { enableHighAccuracy: true })
-    } else {
-      makeTable()
-    }
+  if (locationToUse) { for (const id in data) data[id].distance = distance(locationToUse.lat, locationToUse.lon, data[id].lat, data[id].lon) }
+
+  const dataSorted = Object.entries(data)
+  if (locationToUse) dataSorted.sort((a, b) => { return a[1].distance - b[1].distance }) //If position is retrieved, sort by distance
+  else dataSorted.sort((a, b) => { return a[1].name.localeCompare(b[1].name) }) //If not, sort alphabetically
+
+  for (let i = 0; i < dataSorted.length; i++) {
+    let [popupId, marker] = createPopupIDAndMarkerElement(dataSorted[i][1], dataSorted[i][0])
+
+    const listItem = document.querySelector("[data-templateListItem]").cloneNode(true).content
+    const button = listItem.querySelector("button")
+    button.className = `colouredButton ${marker.querySelector("div").classList[1]} ${popupId}`
+    button.innerText = dataSorted[i][1].name
+    button.addEventListener("click", () => window.location.assign(`${window.location.protocol}//${window.location.host}/wind/${dataSorted[i][0]}`))
+
+    if (locationToUse) listItem.querySelector(".distance").innerText = dataSorted[i][1].distance + " km"
+
+    listItem.querySelector("div").id = dataSorted[i][0]
+    document.getElementById("list").append(listItem)
   }
 
-  function makeTable(position) {
-    for (const id in data) {
-      let distanceKM = "-"
-      if (position) distanceKM = distance(position.coords.latitude, position.coords.longitude, data[id].lat, data[id].lon)
-
-      data[id].distance = distanceKM
-    }
-
-    const dataSorted = Object.entries(data)
-    if (position) dataSorted.sort((a, b) => { return a[1].distance - b[1].distance }) //If position is retrieved, sort by distance
-    else dataSorted.sort((a, b) => { return a[1].name.localeCompare(b[1].name) }) //If not, sort alphabetically
-
-    for (let i = 0; i < dataSorted.length; i++) {
-      let [popupId, marker] = createPopupIDAndMarkerElement(dataSorted[i][1], dataSorted[i][0])
-
-      const listItem = document.querySelector("[data-templateListItem]").cloneNode(true).content
-      const button = listItem.querySelector("button")
-      button.className = `windPageButton ${marker.querySelector("div").classList[1]} ${popupId}`
-      button.innerText = dataSorted[i][1].name
-      button.addEventListener("click", () => window.location.assign(`${window.location.protocol}//${window.location.host}/wind/${dataSorted[i][0]}`))
-
-      if (position) listItem.querySelector(".distance").innerText = dataSorted[i][1].distance + " km"
-
-      listItem.querySelector("div").id = dataSorted[i][0]
-      document.getElementById("list").append(listItem)
-    }
-
-    if (!dataAlreadyFetched) {
-      fetch("getOverviewData/VLINDER").then(response => response.json()).then(dataOverview => setOverviewListData({ VLINDER: dataOverview }))
-      fetch("getOverviewData/Rijkswaterstaat").then(response => response.json()).then(dataOverview => setOverviewListData({ Rijkswaterstaat: dataOverview }))
-      fetch("getOverviewData/KNMI").then(response => response.json()).then(dataOverview => setOverviewListData({ KNMI: dataOverview }))
-      fetch("getOverviewData/MVB").then(response => response.json()).then(dataOverview => setOverviewListData({ MVB: dataOverview }))
-    } else setOverviewListData(globalThis.data)
-  }
+  if (!dataAlreadyFetched) {
+    fetch("getOverviewData/VLINDER").then(response => response.json()).then(dataOverview => setOverviewListData({ VLINDER: dataOverview }))
+    fetch("getOverviewData/Rijkswaterstaat").then(response => response.json()).then(dataOverview => setOverviewListData({ Rijkswaterstaat: dataOverview }))
+    fetch("getOverviewData/KNMI").then(response => response.json()).then(dataOverview => setOverviewListData({ KNMI: dataOverview }))
+    fetch("getOverviewData/MVB").then(response => response.json()).then(dataOverview => setOverviewListData({ MVB: dataOverview }))
+  } else setOverviewListData(globalThis.data)
 }
 
 function distance(lat1, lon1, lat2, lon2) {

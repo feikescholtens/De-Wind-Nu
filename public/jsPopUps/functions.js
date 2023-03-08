@@ -20,6 +20,8 @@ export function displayPopUp(content) {
   close.addEventListener("click", function() {
     messageBox.remove()
     document.removeEventListener("click", checkClickFunc)
+    //To show user popup about making choice about location preference: (location preference can never be already chosen when user has first visit)
+    if (document.querySelector(".circleCurrentLocation")) document.querySelector(".circleCurrentLocation").click()
   });
 
   //Add elements to the DOM

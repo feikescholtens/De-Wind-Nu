@@ -1,0 +1,9 @@
+https://www.chartjs.org/docs/latest/developers/charts.html onder new charts, over hoe je je eigen chart type moet maken en daarbijhorende eigen draw functie
+dit is tot zover gelukt maar wat voor shape tekenen tussen de punten? bezier staat er nu op, maar deze 'buigt buiten de lijn van de behorende tijd',
+wat zeker niet de bedoeling is.
+
+https://www.w3schools.com/tags/canvas_quadraticcurveto.asp
+
+source: https://stackblitz.com/edit/scatter-polar-chart-duplicate-rbk2ir
+
+run environment with live server

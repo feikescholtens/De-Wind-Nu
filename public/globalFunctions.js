@@ -99,6 +99,8 @@ export function updateLocalVariables() {
   if (!localStorage.getItem("overviewForm")) localStorage.setItem("overviewForm", "map")
   if (!localStorage.getItem("tiles")) localStorage.setItem("tiles", "auto")
   if (!localStorage.getItem("seaMap")) localStorage.setItem("seaMap", 1)
+  if (!localStorage.getItem("locationPreference")) localStorage.setItem("locationPreference", "low")
+  if (!localStorage.getItem("userChoseLocationPreference")) localStorage.setItem("userChoseLocationPreference", "0")
 
   //Windpage specific settings
   if (!localStorage.getItem("dataForm")) localStorage.setItem("dataForm", "graphs")
@@ -108,9 +110,9 @@ export function updateLocalVariables() {
     "Windsterkte": false,
     "Windvlagen": false,
     "Windrichting": false,
-    "Windsterkte voorspelling": false,
-    "Windvlagen voorspelling": false,
-    "Windrichting voorspelling": false
+    "Windsterkte verwachting": false,
+    "Windvlagen verwachting": false,
+    "Windrichting verwachting": false
   }))
 
   //
@@ -141,6 +143,20 @@ export function updateLocalVariables() {
   if (localStorage.getItem("updatedTiles") !== "updated") {
     localStorage.setItem("tiles", "auto")
     localStorage.setItem("updatedTiles", "updated")
+  }
+
+  //v3.5.0
+  const hiddenDatasets = JSON.parse(localStorage.getItem("hiddenDatasets"))
+  if (hiddenDatasets["Windsterkte voorspelling"] !== undefined) {
+    hiddenDatasets["Windsterkte verwachting"] = hiddenDatasets["Windsterkte voorspelling"]
+    hiddenDatasets["Windvlagen verwachting"] = hiddenDatasets["Windvlagen voorspelling"]
+    hiddenDatasets["Windrichting verwachting"] = hiddenDatasets["Windrichting voorspelling"]
+
+    delete hiddenDatasets["Windsterkte voorspelling"]
+    delete hiddenDatasets["Windvlagen voorspelling"]
+    delete hiddenDatasets["Windrichting voorspelling"]
+
+    localStorage.setItem("hiddenDatasets", JSON.stringify(hiddenDatasets))
   }
 }
 

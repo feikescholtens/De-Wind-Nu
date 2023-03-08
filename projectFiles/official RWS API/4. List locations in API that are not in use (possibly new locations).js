@@ -6,7 +6,7 @@ const transform = transformation("EPSG:25831", "4326")
 
 const locations = JSON.parse(readFileSync("Script outputs/1. Extract locations.json"))
 const locationsInApp = parseLocationsInApp()
-const locationsInKNMIAPI = ["WILH", "NIBE", "STVO", "MARK", "ROT1", "BERK", "HOTE", "VLIS", "DEKO"] //Locations that are in use in the app but use the KNMI API
+const locationsInBuienradarAPI = ["WILH", "NIBE", "STVO", "MARK", "ROT1", "BERK", "HOTE", "VLIS", "DEKO"] //Locations that are in use in the app but use the Buienradar API
 const locationsDouble = ["HUB1", "SCHA"] //Locations that are already in use in app but give the same data
 
 const NoWeeks = 8
@@ -29,7 +29,7 @@ const locationsWithParameters = [];
           const differenceWeeks = differenceInWeeks(new Date(), timeStamp)
 
           if (differenceWeeks < NoWeeks)
-            if (!locationsInKNMIAPI.includes(data.WaarnemingenLijst[j].Locatie.Code))
+            if (!locationsInBuienradarAPI.includes(data.WaarnemingenLijst[j].Locatie.Code))
               if (!locationsDouble.includes(data.WaarnemingenLijst[j].Locatie.Code))
                 locationsWithParameters.push(data.WaarnemingenLijst[j].Locatie.Code)
         }

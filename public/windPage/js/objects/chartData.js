@@ -45,19 +45,19 @@ const datasetInfo = {
     backgroundColor: "rgba(95, 39, 205, 0.4)"
   },
   windSpeedForecast: {
-    label: "Windsterkte voorspelling",
+    label: "Windsterkte verwachting",
     labelCode: "windSpeedForecast",
     borderColor: "rgba(46, 134, 222, 1)",
     backgroundColor: "rgba(46, 134, 222, 0.4)"
   },
   windGustsForecast: {
-    label: "Windvlagen voorspelling",
+    label: "Windvlagen verwachting",
     labelCode: "windGustsForecast",
     borderColor: "rgba(255, 159, 243, 1)",
     backgroundColor: "rgba(255, 159, 243, 0.4)"
   },
   windDirectionForecast: {
-    label: "Windrichting voorspelling",
+    label: "Windrichting verwachting",
     labelCode: "windDirectionForecast",
     borderColor: "rgba(255, 159, 67, 1)",
     backgroundColor: "rgba(255, 159, 67, 0.4)"
@@ -154,7 +154,8 @@ optionsWindDirectionChart.scales.y = {
     max: 360,
     min: 0,
     ticks: {
-      stepSize: 22.5
+      stepSize: 22.5,
+      callback: (value) => { return value.toString().replace(".", ",") }
     }
   }
 }
@@ -176,9 +177,9 @@ function setLabels(context) {
       } else if (context.datasetIndex == 1) {
         label = "Windvlagen: " + context.formattedValue.replace(".", ",") + " " + unit
       } else if (context.datasetIndex == 2) {
-        label = "Windsterkte voorspelling: " + context.formattedValue.replace(".", ",") + " " + unit
+        label = "Windsterkte verwachting: " + context.formattedValue.replace(".", ",") + " " + unit
       } else if (context.datasetIndex == 3) {
-        label = "Windvlagen voorspelling: " + context.formattedValue.replace(".", ",") + " " + unit
+        label = "Windvlagen verwachting: " + context.formattedValue.replace(".", ",") + " " + unit
       }
 
     } else if (context.chart.id == 1) {

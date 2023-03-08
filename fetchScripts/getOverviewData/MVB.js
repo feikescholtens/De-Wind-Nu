@@ -12,7 +12,7 @@ export async function overviewFetchMVB(locations, resolve) {
       "headers": {
         "content-type": "application/x-www-form-urlencoded charset=UTF-8"
       },
-      "body": `grant_type=password&username=${process.env.APP_EMAIL}&password=${process.env.MVB_PWD_ENCODED}`,
+      "body": `grant_type=password&username=dewindnu@gmail.com&password=${process.env.MVB_PWD_ENCODED}`,
       "method": "POST"
     }).then(response => response.text())
 

@@ -1,5 +1,26 @@
 # Change log
 
+## v3.5.0
+- Big update on location handling homepage. Now shows user's approximate location based on IP-address (except when user's on a VPN). Then show user popup or message in a newly added top bar to change the location preference to choose GPS based location
+
+- Implemented high resolution (Retina) map tiles. Limit 5000 API requests per day, after that limit clients automatically fall back on non-retina tiles as before
+
+- Using 'verwachting' now instead of 'voorspelling'. We don't have crystal balls unfortunately
+
+- When going back from windpage to homepage, the pan and zoom of map are now 'remembered'. This was already the case in most browsers, but some browsers (Edge and Opera) reload the page when clicking back
+
+Bugfixes:
+- Small bug on a spot (Borsele Alpha) where only wind direction measurements are available
+- Replace decimal points by decimal comma's in wind direction's chart y-ticks
+
+Backend work:
+- Cleaned up code both on the front- and backend
+- Reorganized 'Project files' folder. Stuff in 'archive' now has no future potential anymore but the code may still be useful. Deletes old code is not going to be used again
+- Added some experimentation notebooks for parsing the wind archive of the KNMI (where data goes back to 2003) and parsing NetCDF files of the KNMI measurements to these folders
+- Some small preparations for switching to official KNMI API
+
+---
+
 ## v3.4.0
 - Lot of UI work with bigger buttons and more icons
 
@@ -49,7 +70,7 @@ Bugfixes:
 ## v3.2.1
 
 Bugfixes:
-- Fixed negative relative time overview data KNMI
+- Fixed negative relative time overview data Buienradar
 
 ---
 

@@ -68,7 +68,8 @@ export function updateCurrentWind() {
   if (currentGustsLabel.innerHTML == "" && forecastedDirectionLabel.innerHTML == "" && forecastedWindLabel.innerHTML == "")
     setLabelPostitions(labels, [38, 0, 0, 69, 0])
 
-  const lastMeasurementTime = dataWUnits.times[dataWUnits.windSpeed.length - 1]
+  const lastMeasurementTimeBasedOn = dataWUnits.windSpeed.length || dataWUnits.windDirection.length
+  const lastMeasurementTime = dataWUnits.times[lastMeasurementTimeBasedOn - 1]
 
   const lastMeasurementHH = parseInt(lastMeasurementTime.split(":")[0])
   const lastMeasurementmm = parseInt(lastMeasurementTime.split(":")[1])

@@ -1,8 +1,8 @@
-import { logFetchErrors } from "./logFetchErrors.js"
+import { logFetchErrors } from "./fetchScripts/fetchUtilFunctions.js"
 import { validID } from "./serverFunctions.js"
 import { fetchVLINDER } from "./fetchScripts/getData/VLINDER.js"
 import { fetchRWS } from "./fetchScripts/getData/Rijkswaterstaat.js"
-import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
+import { fetchBuienradar } from "./fetchScripts/getData/Buienradar.js"
 import { fetchMVB } from "./fetchScripts/getData/MVB.js"
 import { getTimeChangeDates, generateTimes, calcInterpolation, getArchivedForecast, startOfDayTimeZone } from "./getScriptUtilFunctions.js"
 import { format, add, parseISO, isBefore, isValid, isToday, isFuture } from "date-fns"
@@ -63,9 +63,9 @@ export async function getData(request, response, date, locations, forecastData) 
     if (location.datasets.Rijkswaterstaat) {
       return fetchRWS(dateParsed, location, resolve, times, DSTDates)
     }
-    //KNMI
+    //KNMI (with Buienradar as a backup option)
     if (location.datasets.KNMI) {
-      return fetchKNMI(dateParsed, location, resolve, times)
+      return fetchBuienradar(dateParsed, location, resolve, times)
     }
     //Meetnet Vlaamse Banken
     if (location.datasets.MVB) {
@@ -159,10 +159,6 @@ export async function getData(request, response, date, locations, forecastData) 
     log(`Location "${location.name}" doesn't have any data (neither measurements nor forecast)!`, "fetchError", true)
     response.json({ errorCode: 204 })
   }
-
-  //Simulate a timeout
-  // const sleep = ms => new Promise(r => setTimeout(r, ms))
-  // await sleep(30000)
 
   clearTimeout(timeOutTimer)
 

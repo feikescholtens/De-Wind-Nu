@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+    <Document id="897">
+        <Placemark id="899">
+            <name>06201, D15-FA-1</name>
+            <Point id="898">
+                <coordinates>2.93575,54.325666666667,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="901">
+            <name>06203, P11-B</name>
+            <Point id="900">
+                <coordinates>3.3416666666667,52.36,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="903">
+            <name>06204, K14-FA-1C</name>
+            <Point id="902">
+                <coordinates>3.6277777777778,53.269444444444,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="905">
+            <name>06205, A12-CPP</name>
+            <Point id="904">
+                <coordinates>3.8102777777778,55.399166666667,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="907">
+            <name>06207, L9-FF-1</name>
+            <Point id="906">
+                <coordinates>4.9602777777778,53.614444444444,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="909">
+            <name>06208, AWG-1</name>
+            <Point id="908">
+                <coordinates>5.9416666666667,53.491666666667,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="911">
+            <name>06211, J6-A</name>
+            <Point id="910">
+                <coordinates>2.9452777777778,53.824130555556,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="913">
+            <name>06214, BUITENGAATS/BG-OHVS2</name>
+            <Point id="912">
+                <coordinates>6.04167,54.03694,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="915">
+            <name>06215, VOORSCHOTEN AWS</name>
+            <Point id="914">
+                <coordinates>4.436389,52.139722,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="917">
+            <name>06225, IJMUIDEN WP</name>
+            <Point id="916">
+                <coordinates>4.5549006792363,52.462242867998,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="919">
+            <name>06229, TEXELHORS WP</name>
+            <Point id="918">
+                <coordinates>4.7198757949653,52.995015806182,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="921">
+            <name>06235, DE KOOY VK</name>
+            <Point id="920">
+                <coordinates>4.7811453228565,52.926865008825,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="923">
+            <name>06239, F3-FB-1</name>
+            <Point id="922">
+                <coordinates>4.6961111111111,54.853888888889,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="925">
+            <name>06240, AMSTERDAM/SCHIPHOL AP</name>
+            <Point id="924">
+                <coordinates>4.789722,52.317222,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="927">
+            <name>06242, VLIELAND</name>
+            <Point id="926">
+                <coordinates>4.9207907082729,53.240026656696,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="929">
+            <name>06248, WIJDENES WP</name>
+            <Point id="928">
+                <coordinates>5.1734739738872,52.632430667762,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="931">
+            <name>06249, BERKHOUT AWS</name>
+            <Point id="930">
+                <coordinates>4.9787572406902,52.642696895243,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="933">
+            <name>06251, TERSCHELLING HOORN AWS</name>
+            <Point id="932">
+                <coordinates>5.3458010937365,53.391265948394,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="935">
+            <name>06252, K13 ALPHA</name>
+            <Point id="934">
+                <coordinates>3.220278,53.217778,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="937">
+            <name>06257, WIJK AAN ZEE AWS</name>
+            <Point id="936">
+                <coordinates>4.6029300588208,52.505333893732,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="939">
+            <name>06258, HOUTRIBDIJK WP</name>
+            <Point id="938">
+                <coordinates>5.4003881262577,52.648187308904,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="941">
+            <name>06260, DE BILT AWS</name>
+            <Point id="940">
+                <coordinates>5.1797058644882,52.098821802977,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="943">
+            <name>06267, STAVOREN AWS</name>
+            <Point id="942">
+                <coordinates>5.383478899702,52.896643913235,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="945">
+            <name>06269, LELYSTAD AP</name>
+            <Point id="944">
+                <coordinates>5.5196324030324,52.457270486008,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="947">
+            <name>06270, LEEUWARDEN</name>
+            <Point id="946">
+                <coordinates>5.7515738887123,53.223000488316,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="949">
+            <name>06273, MARKNESSE AWS</name>
+            <Point id="948">
+                <coordinates>5.8874461671401,52.701902388132,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="951">
+            <name>06275, DEELEN</name>
+            <Point id="950">
+                <coordinates>5.8723225499118,52.0548617826,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="953">
+            <name>06277, LAUWERSOOG AWS</name>
+            <Point id="952">
+                <coordinates>6.1990994508938,53.411581103636,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="955">
+            <name>06278, HEINO AWS</name>
+            <Point id="954">
+                <coordinates>6.2589770334531,52.434561756559,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="957">
+            <name>06279, HOOGEVEEN AWS</name>
+            <Point id="956">
+                <coordinates>6.5729701105864,52.749056395511,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="959">
+            <name>06280, GRONINGEN AP EELDE</name>
+            <Point id="958">
+                <coordinates>6.5848470019087,53.123676213651,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="961">
+            <name>06283, HUPSEL AWS</name>
+            <Point id="960">
+                <coordinates>6.6567253619722,52.067534268959,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="963">
+            <name>06286, NIEUW BEERTA AWS</name>
+            <Point id="962">
+                <coordinates>7.1493220605216,53.194409573306,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="965">
+            <name>06290, TWENTHE AWS</name>
+            <Point id="964">
+                <coordinates>6.8908745111116,52.27314817052,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="967">
+            <name>06310, VLISSINGEN AWS</name>
+            <Point id="966">
+                <coordinates>3.5958241584686,51.441334059998,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="969">
+            <name>06317, BORSSELE ALPHA</name>
+            <Point id="968">
+                <coordinates>3.056699,51.699925,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="971">
+            <name>06319, WESTDORPE AWS</name>
+            <Point id="970">
+                <coordinates>3.8609657214986,51.224757511326,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="973">
+            <name>06320, LICHTEILAND GOEREE</name>
+            <Point id="972">
+                <coordinates>3.67,51.925,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="975">
+            <name>06321, EURO PLATFORM</name>
+            <Point id="974">
+                <coordinates>3.275,51.997778,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="977">
+            <name>06323, WILHELMINADORP AWS</name>
+            <Point id="976">
+                <coordinates>3.8835337385524,51.525956506419,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="979">
+            <name>06330, HOEK VAN HOLLAND AWS</name>
+            <Point id="978">
+                <coordinates>4.121849767852,51.990941918858,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="981">
+            <name>06340, WOENSDRECHT</name>
+            <Point id="980">
+                <coordinates>4.342014,51.447744494043,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="983">
+            <name>06343, ROTTERDAM GEULHAVEN</name>
+            <Point id="982">
+                <coordinates>4.3126638323991,51.891830906739,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="985">
+            <name>06344, ROTTERDAM THE HAGUE AP</name>
+            <Point id="984">
+                <coordinates>4.4469005114756,51.960667359998,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="987">
+            <name>06348, CABAUW TOWER AWS</name>
+            <Point id="986">
+                <coordinates>4.9259216999194,51.969031121385,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="989">
+            <name>06350, GILZE RIJEN</name>
+            <Point id="988">
+                <coordinates>4.9352386335384,51.564889021961,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="991">
+            <name>06356, HERWIJNEN AWS</name>
+            <Point id="990">
+                <coordinates>5.1453989235756,51.857593837453,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="993">
+            <name>06370, EINDHOVEN AP</name>
+            <Point id="992">
+                <coordinates>5.3770039280214,51.449772459909,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="995">
+            <name>06375, VOLKEL</name>
+            <Point id="994">
+                <coordinates>5.7065946674719,51.658528382201,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="997">
+            <name>06377, ELL AWS</name>
+            <Point id="996">
+                <coordinates>5.7625447234516,51.196699902606,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="999">
+            <name>06380, MAASTRICHT AACHEN AP</name>
+            <Point id="998">
+                <coordinates>5.7617834850481,50.905256257898,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="1001">
+            <name>06391, ARCEN AWS</name>
+            <Point id="1000">
+                <coordinates>6.1961067840608,51.497306260089,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="1003">
+            <name>78871, JUANCHO E. YRAUSQUIN AIRPORT  SABA</name>
+            <Point id="1002">
+                <coordinates>-63.2208333,17.6461111,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="1005">
+            <name>78873, F.D. ROOSEVELT AIRPORT ST. EUSTATIUS</name>
+            <Point id="1004">
+                <coordinates>-62.9827778,17.4955556,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="1007">
+            <name>78990, FLAMINGO AIRPORT BONAIRE</name>
+            <Point id="1006">
+                <coordinates>-68.2758333,12.13,0.0</coordinates>
+            </Point>
+        </Placemark>
+    </Document>
+</kml>

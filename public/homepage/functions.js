@@ -2,7 +2,7 @@ import { directionToLetters } from "../globalFunctions.js"
 import { parseISO, isValid, differenceInMinutes, differenceInSeconds } from "https://esm.run/date-fns"
 import { initMap, initList } from "./mapOrListInit.js"
 
-function setLocURL(map) {
+export function setLocURL(map) {
   const precisePosition = [map.getCenter().lng, map.getCenter().lat, map.getZoom()]
   history.replaceState({}, "De Wind Nu", `?x=${precisePosition[0]}&y=${precisePosition[1]}&z=${precisePosition[2]}`)
 }
@@ -34,7 +34,7 @@ export function changeOverviewForm(selector, e) {
 
   const main = document.getElementsByTagName("main")[0]
   const mapNodeElements = [document.getElementById("mapWrapper")]
-  const listNodeElements = [document.getElementById("list")]
+  const listNodeElements = [document.getElementById("list"), document.querySelector("#barLocationNotificationList")]
 
   //Remove list elements and add map element
   if (localStorage.getItem("overviewForm") == "map") {
@@ -42,27 +42,193 @@ export function changeOverviewForm(selector, e) {
 
     const divOuter = document.createElement("div")
     divOuter.id = "mapWrapper"
-    divOuter.innerHTML = `<div id="map"></div>
+    divOuter.innerHTML = `<div data-barLocationNotification id="barLocationNotificationMap" class="barLocationNotification noDisplay"></div>
+    <div id="map"></div>
     <button id="settingsButton" class="noDisplay">
       <span title="Scroll naar de instellingen" class="material-symbols-rounded noSelect" id="iconSettings">&#xe8b8;</span>
 </button>`
     //Above lines should make the same HTML as in index.js (homepage), bottom of markup
     main.insertBefore(divOuter, document.querySelector(".tabContainerWrapper").nextSibling);
 
-    initMap(true)
+    initMap(true, getLocationToUse())
   }
 
   //Remove map element and add list elements
   if (localStorage.getItem("overviewForm") == "list") {
-    mapNodeElements.forEach(element => element.remove())
+    function htmlToElement(html) {
+      var template = document.createElement('template')
+      html = html.trim()
+      template.innerHTML = html
+      return template.content.firstChild
+    }
 
+    mapNodeElements.forEach(element => element.remove())
+    const locationNotificationBar = htmlToElement(`<div data-barLocationNotification id="barLocationNotificationList" class="barLocationNotification noDisplay"></div>`)
+    main.insertBefore(locationNotificationBar, document.querySelector(".tabContainerWrapper").nextSibling)
     const div = document.createElement("div")
     div.id = "list"
     //Above lines should make the same HTML as in index.js (homepage), bottom of markup
-    main.insertBefore(div, document.querySelector(".tabContainerWrapper").nextSibling);
+    main.insertBefore(div, document.querySelector(".sectionHeader"))
 
-    initList(true)
+    initList(true, getLocationToUse())
   }
+
+  showLocationPreferenceOptions()
+}
+
+export function acquireLocation() {
+  return new Promise(async (resolve, reject) => {
+
+    if (localStorage.getItem("locationPreference") === "none") resolve()
+    if (localStorage.getItem("locationPreference") === "low") {
+
+      const lowAccuracyLocation = await fetch(`/getClientIPLocation`)
+        .catch(error => {
+          console.log(error)
+          globalThis.lowAccuracyLocation = "failed"
+          resolve()
+        })
+        .then(response => { return response.json() })
+
+      if (lowAccuracyLocation.lowEnoughIPScore) {
+        globalThis.lowAccuracyLocation = { lat: lowAccuracyLocation.lat, lon: lowAccuracyLocation.lon }
+        resolve(globalThis.lowAccuracyLocation)
+      } else {
+        globalThis.lowAccuracyLocation = "failed"
+        resolve()
+      }
+
+    }
+    if (localStorage.getItem("locationPreference") === "high") {
+
+      if (globalThis.highAccuracyLocation) resolve(globalThis.highAccuracyLocation)
+      else {
+        if (navigator.geolocation) {
+          if (localStorage.getItem("highAccuracyLocation")) { //Location is stored to the map can instantly be panned. Then acquire a new location (which can take some time) and pan to that newly acquired location
+            globalThis.highAccuracyLocation = JSON.parse(localStorage.getItem("highAccuracyLocation")).location
+            resolve(globalThis.highAccuracyLocation)
+          }
+          navigator.geolocation.getCurrentPosition((position) => { //Renew the location saved in storage
+            globalThis.highAccuracyLocation = { lat: position.coords.latitude, lon: position.coords.longitude }
+            if (localStorage.getItem("highAccuracyLocation") && localStorage.getItem("overviewForm") === "map") {
+              if (!globalThis.blockPanningOnReload) panMapToLocation(globalThis.highAccuracyLocation, true)
+            }
+            //First check in above line might seem obsolete, but it is actually needed to check if the location is acquired for the second time (then true)
+            //If not, the map doesn't need to be panned because this is already done by the first resolve from ln 129. If done anyway, it will cause an error message
+
+            localStorage.setItem("highAccuracyLocation", JSON.stringify({ location: globalThis.highAccuracyLocation, time: new Date() }))
+            resolve(globalThis.highAccuracyLocation)
+          }, () => { //User blocked location access
+            globalThis.highAccuracyLocation = "failed"
+            resolve()
+          }, { enableHighAccuracy: true })
+        } else {
+          //Location access unavailable     
+          globalThis.highAccuracyLocation = "failed"
+          resolve()
+        }
+      }
+
+    }
+  })
+}
+
+export function showLocationPreferenceOptions() {
+  const locationPreferenceSelector = document.querySelector("[data-locationPreference]"); //Don't remove semi-colon
+
+  (() => { //Dumped in this anonymous function just to be able to return out of it. Function determines where to show the location options
+    if (globalThis.lowAccuracyLocation === "failed") { //User on VPN
+      //Always show in bar
+      showInBar("low", ["high", "none"])
+      return
+    }
+    if (globalThis.highAccuracyLocation === "failed") { //User blocked location access or location access is not available in browser
+      //Always show in bar
+      showInBar("high", ["low", "none"])
+      return
+    }
+    if (localStorage.getItem("userChoseLocationPreference") === "0") { //Prompt because user has net set his/her preference
+      //Show all options, dependend if user is in map or list mode
+      if (localStorage.getItem("overviewForm") === "map") showInMap()
+      if (localStorage.getItem("overviewForm") === "list") showInBar("none", ["high", "low", "none"])
+      return
+    }
+    if (globalThis.lowAccuracyLocation !== "failed" && globalThis.highAccuracyLocation !== "failed" && localStorage.getItem("locationPreference") !== "none") { //When is no problem and the acquirement went fine
+      //Bind the popup anyway in map, so user can change it like when they first visited the page.
+      //Only difference is that the popup won't display automatically which is handled in (SEARCH FOR setTimeout(() => document.querySelector(".circleCurrentLocation").click(), 2000)    
+      // in functions.js)
+      if (localStorage.getItem("overviewForm") === "map") showInMap()
+      return
+    }
+  })()
+
+  function showInMap() {
+    const popup = document.querySelector("[data-templateMapLocationPreferencePopup]").cloneNode(true).content
+    if (localStorage.getItem("userChoseLocationPreference") === "1") {
+      popup.querySelector("[data-locationPopUpTitle]").innerText = "Gebruik locatie wijzigen:"
+      popup.querySelector("[data-popupLocationPrefferenceLow]").innerText = "Geschatte locatie"
+    }
+
+    popup.querySelector("[data-popupLocationPrefferenceHigh]").addEventListener("click", () => changeLocationPreference(locationPreferenceSelector, "high"))
+    popup.querySelector("[data-popupLocationPrefferenceLow]").addEventListener("click", () => changeLocationPreference(locationPreferenceSelector, "low"))
+    popup.querySelector("[data-popupLocationPrefferenceNone]").addEventListener("click", () => changeLocationPreference(locationPreferenceSelector, "none"))
+    const popUpObject = new mapboxgl.Popup({ offset: 13, closeButton: false, anchor: "bottom" }).setDOMContent(popup)
+    globalThis.currentLocationMarkerObject.setPopup(popUpObject).addTo(map)
+
+    if (localStorage.getItem("userChoseLocationPreference") === "0" && !document.querySelector(".messageBox")) { //Only open popup when Welcome box has been clicked away
+      setTimeout(() => document.querySelector(".circleCurrentLocation").click(), 2000)
+    }
+  }
+
+  function showInBar(failedToDetermineLocationOfType, alternativeOptionsToDisplay) {
+
+    //Helper function and data object used in this function
+    function capitalizeFirstLetter(string) { return string[0].toUpperCase() + string.slice(1) }
+    const options = { high: "hoge nauwkeurigheid gebruiken (aanbevolen)", low: "geschatte locatie gebruiken", none: "maak geen gebruik van je huidige locatie" }
+    Object.keys(options).forEach(option => {
+      if (localStorage.getItem("locationPreference") === option) options[option] = `blijf ${options[option]}` //To indicate which location type is currently used
+    })
+
+    //Show the bar and scroll to top
+    if (document.querySelector("[data-barLocationNotification]")) document.querySelector("[data-barLocationNotification]").classList.remove("noDisplay")
+    document.body.scrollTop = 0 // For Safari
+    document.documentElement.scrollTop = 0 // For Chrome, Firefox, IE and Opera
+
+    const stringsToConcat = []
+    alternativeOptionsToDisplay.forEach(alternativeOption => stringsToConcat.push(options[alternativeOption]))
+    let finalString
+
+    if (failedToDetermineLocationOfType == "high") finalString = "Niet mogelijk locatie te bepalen (geblokkeerd of niet beschikbaar). "
+    if (failedToDetermineLocationOfType == "low") finalString = "Niet mogelijk geschatte locatie te bepalen. "
+    if (failedToDetermineLocationOfType == "none") finalString = "Afstand gebaseerd op geschatte locatie. " //Only for list
+
+    //Format the individual strings and add them together to finalString with comma's and 'en' word
+    if (stringsToConcat.length == 2)
+      finalString += `<span data-barLocationPreferenceChange>${capitalizeFirstLetter(stringsToConcat[0])}</span> of <span data-barLocationPreferenceChange>${stringsToConcat[1]}</span>.`
+    if (stringsToConcat.length == 3)
+      finalString += `<span data-barLocationPreferenceChange>${capitalizeFirstLetter(stringsToConcat[0])}</span>, <span data-barLocationPreferenceChange>${stringsToConcat[1]}</span> of <span data-barLocationPreferenceChange>${stringsToConcat[2]}</span>.`
+
+    //Set string in bar HTML
+    document.querySelector("[data-barLocationNotification]").innerHTML = finalString
+
+    //Add event listeners for when options are clicked
+    document.querySelectorAll("[data-barLocationPreferenceChange]").forEach(option => {
+      option.addEventListener("click", () => {
+        Object.keys(options).forEach(alternativeOptionInSettings => {
+          if (option.innerHTML.toLowerCase() == options[alternativeOptionInSettings]) changeLocationPreference(locationPreferenceSelector, alternativeOptionInSettings)
+        })
+      })
+    })
+
+  }
+}
+
+export function getLocationToUse() {
+  if (localStorage.getItem("locationPreference") === "none") return null
+  if (localStorage.getItem("locationPreference") === "low" && globalThis.lowAccuracyLocation !== "failed") return globalThis.lowAccuracyLocation
+  if (localStorage.getItem("locationPreference") === "high" && globalThis.highAccuracyLocation !== "failed") return globalThis.highAccuracyLocation
+
+  return null
 }
 
 export function convertValueToBft(value) {
@@ -147,7 +313,48 @@ function checkOldMeasurement(dataLocation) {
 
 }
 
+export function changeLocationPreference(selector, changeSelectorValueFirstTo) {
+  if (changeSelectorValueFirstTo) selector.value = changeSelectorValueFirstTo
+
+  localStorage.setItem("locationPreference", selector.value)
+  localStorage.setItem("userChoseLocationPreference", "1")
+  location.reload()
+}
+
 //Functions for map
+export function determineCenterToZoomTo(whatToDetermine, removeEdgeOperaLocation) {
+  let x, y, z
+
+  const urlParams = new URLSearchParams(window.location.search)
+  if (urlParams.get("x")) { //Highest priority, occurs when changing tiles
+    x = parseFloat(urlParams.get("x"))
+    y = parseFloat(urlParams.get("y"))
+    z = parseFloat(urlParams.get("z"))
+  } else if (localStorage.getItem("edgeOperaMapLocation") && (window.navigator.userAgent.indexOf("Edg") > -1 || (navigator.userAgent.match(/Opera|OPR\//) ? true : false))) {
+    //Medium priority, occurs when
+    //a user is referred from a wind-page. This is only triggered when using the Edge or Opera browser, since 
+    //window.history(-1) (in the wind page) in Edge and Opera actually RELOADS the homepage, so the map pans and zooms the normal way instead of
+    //"remembering" the previously panned to location. Chrome, Safari, Firefox actually load the page from memory, so these values 
+    //will never be read from localStorage. 
+    //To prevent from reading this everytime the page loads (localStorage is persistant of course), delete the location from localStorage after
+    //this function has ran for the second time (first time to return center, second time to return zoom level).
+    const location = JSON.parse(localStorage.getItem("edgeOperaMapLocation"))
+    x = location.x
+    y = location.y
+    z = location.z
+
+    globalThis.blockPanningOnReload = true
+    if (removeEdgeOperaLocation) localStorage.removeItem("edgeOperaMapLocation")
+  } else { //Lowest priority. When there's nothing known about the previously panned to location.
+    x = 5.160544
+    y = 52.182725
+    z = 6
+  }
+
+  if (whatToDetermine === "center") return [x, y]
+  if (whatToDetermine === "zoom") return z
+}
+
 export function changeTiles(map, tilesSelector, seaMapCheckbox) {
 
   let value
@@ -187,9 +394,11 @@ export const tilesObjects = {
     "sources": {
       "openstreetmap": {
         "type": "raster",
-        "tiles": ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
-        "tileSize": 256,
-        "attribution": "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors"
+        "tileSize": 512 / 2,
+        "tiles": ["https://retina-tiles.p.rapidapi.com/local/osm@2x/v1/{z}/{x}/{y}.png?rapidapi-key=aad550bd32msh735b5ac070fdf09p13faeejsn889accf115b2"],
+        "attribution": "Map tiles © <a target='_blank' href='https://www.maptilesapi.com/retina-tiles/'>Retina Tiles API</a> | Map data © <a target='_blank' href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors.",
+        "tilesFallback": ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], //Automatically being set as a fallback
+        "attributionFallback": "&copy; <a target='_blank' href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors" //Automatically being set as a fallback
       }
     },
     "layers": [{
@@ -240,32 +449,36 @@ export function createPopupIDAndMarkerElement(location, locationID) {
   return [popupId, marker]
 }
 
-export function panMap(addMarker) {
+export function panMapToLocation(locationToUse, addMarker) {
   //Fit map (if a location is not set in the URL as parameters), based on location (if not available fit to all markers)
+  if (!locationToUse || locationToUse == "failed") return
 
-  if (globalThis.position) {
-    const latBounds = [position.coords.latitude + 0.35, position.coords.latitude - 0.35],
-      lonBounds = [position.coords.longitude + 0.35, position.coords.longitude - 0.35]
-    fitMap(map, latBounds, lonBounds)
+  addCurrentLocationMarker(addMarker, locationToUse.lat, locationToUse.lon)
 
-    addCurrentLocationMarker(addMarker)
-  } else {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        globalThis.position = position
+  const bound = 0.2
+  let factors = [0.5, 0.5]
+  //Normally the bound to which we extend the map around the current location is the same top to bottom
+  //However when we prompt the user for location preference, we top bound needs to get bigger and the botto bound smaller
+  //Code inside if-statement calculates the factors by which we need to adjust
+  if (localStorage.getItem("userChoseLocationPreference") === "0") {
+    const estimatedHeightLocationPopup = document.querySelector(".circleCurrentLocation").clientHeight * 20
+    const remainingPixelsToSpaceOut = document.querySelector("#mapWrapper").clientHeight - estimatedHeightLocationPopup
 
-        const latBounds = [position.coords.latitude + 0.35, position.coords.latitude - 0.35],
-          lonBounds = [position.coords.longitude + 0.35, position.coords.longitude - 0.35]
-        fitMap(map, latBounds, lonBounds)
+    const pixelsMarkerToBottom = remainingPixelsToSpaceOut / 2
+    const pixelsMarkerToTop = remainingPixelsToSpaceOut / 2 + estimatedHeightLocationPopup
 
-        addCurrentLocationMarker(addMarker)
-      }, () => fitMap(map, markersLats, markersLons), { enableHighAccuracy: true })
-    } else fitMap(map, markersLats, markersLons)
+    const factorBottom = pixelsMarkerToBottom / document.querySelector("#mapWrapper").clientHeight
+    const factorTop = pixelsMarkerToTop / document.querySelector("#mapWrapper").clientHeight
+
+    factors = [factorTop, factorBottom]
   }
 
+  const latBounds = [locationToUse.lat + (2 * bound) * factors[0], locationToUse.lat - (2 * bound) * factors[1]],
+    lonBounds = [locationToUse.lon + bound, locationToUse.lon - bound]
+  fitMapToMarkers(map, latBounds, lonBounds)
 }
 
-export function fitMap(map, markersLats, markersLons) {
+export function fitMapToMarkers(map, markersLats, markersLons) {
   map.fitBounds([
     [markersLons.at(-1), markersLats[0]], // southwestern corner of the bounds
     [markersLons[0], markersLats.at(-1)] // northeastern corner of the bounds
@@ -274,24 +487,20 @@ export function fitMap(map, markersLats, markersLons) {
   })
 }
 
-export function addCurrentLocationMarker(addMarker) {
+export function addCurrentLocationMarker(addMarker, lat, lon) {
   if (!addMarker) return
 
-  if (!globalThis.position) {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        globalThis.position = position
+  // const popUpObject = new mapboxgl.Popup({ offset: 13, closeButton: false }).setDOMContent(popup)
 
-        addToMap()
-      }, () => {}, { enableHighAccuracy: true })
-    }
-  } else addToMap()
-
-  function addToMap() {
-    const marker = document.createElement("div")
-    marker.classList.add("circleCurrentLocation")
-    new mapboxgl.Marker(marker).setLngLat([position.coords.longitude, position.coords.latitude]).addTo(map)
+  if (globalThis.currentLocationMarkerObject) {
+    globalThis.currentLocationMarkerObject.setLngLat([lon, lat])
+    return
   }
+
+  const marker = document.createElement("div")
+  marker.classList.add("circleCurrentLocation")
+  globalThis.currentLocationMarkerObject = new mapboxgl.Marker(marker).setLngLat([lon, lat]).addTo(map)
+
 }
 
 export function setOverviewMapData(data, map) {

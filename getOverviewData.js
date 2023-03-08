@@ -1,7 +1,7 @@
-import { logFetchErrors } from "./logFetchErrors.js"
+import { logFetchErrors } from "./fetchScripts/fetchUtilFunctions.js"
 import { overviewFetchVLINDER } from "./fetchScripts/getOverviewData/VLINDER.js"
 import { overviewFetchRWS } from "./fetchScripts/getOverviewData/Rijkswaterstaat.js"
-import { overviewFetchKNMI } from "./fetchScripts/getOverviewData/KNMI.js"
+import { overviewFetchBuienradar } from "./fetchScripts/getOverviewData/Buienradar.js"
 import { overviewFetchMVB } from "./fetchScripts/getOverviewData/MVB.js"
 
 export async function getOverviewData(request, response, locations) {
@@ -17,7 +17,7 @@ export async function getOverviewData(request, response, locations) {
   const dataFetched = await new Promise(async (resolve) => {
     if (dataSource == "VLINDER") return overviewFetchVLINDER(locations, resolve)
     if (dataSource == "Rijkswaterstaat") return overviewFetchRWS(locations, resolve)
-    if (dataSource == "KNMI") return overviewFetchKNMI(locations, resolve)
+    if (dataSource == "KNMI") return overviewFetchBuienradar(locations, resolve)
     if (dataSource == "MVB") return overviewFetchMVB(locations, resolve)
   })
 

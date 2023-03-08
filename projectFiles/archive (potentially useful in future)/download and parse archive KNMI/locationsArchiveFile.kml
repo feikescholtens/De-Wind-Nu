@@ -1,0 +1,821 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+    <Document id="1">
+        <Placemark id="3">
+            <name>platform D15-FA-1 locatie DV</name>
+            <Point id="2">
+                <coordinates>2.935833,54.325556,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="5">
+            <name>platform D15-FA-1 locatie DV1</name>
+            <Point id="4">
+                <coordinates>2.935833,54.325556,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="7">
+            <name>platform D15-FA-1 locatie DV2</name>
+            <Point id="6">
+                <coordinates>2.935833,54.325556,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="9">
+            <name>platform P11-B locatie PG</name>
+            <Point id="8">
+                <coordinates>3.341667,52.36,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="11">
+            <name>platform P11-B locatie PG1</name>
+            <Point id="10">
+                <coordinates>3.341667,52.36,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="13">
+            <name>platform K14-FA-1C locatie KV</name>
+            <Point id="12">
+                <coordinates>3.627778,53.269444,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="15">
+            <name>platform K14-FA-1C locatie KV1</name>
+            <Point id="14">
+                <coordinates>3.627778,53.269444,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="17">
+            <name>platform K14-FA-1C locatie KV2</name>
+            <Point id="16">
+                <coordinates>3.627778,53.269444,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="19">
+            <name>platform A12-CPP locatie AK</name>
+            <Point id="18">
+                <coordinates>3.810278,55.399167,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="21">
+            <name>platform A12-CPP locatie AK1</name>
+            <Point id="20">
+                <coordinates>3.810278,55.399167,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="23">
+            <name>platform A12-CPP locatie AK2</name>
+            <Point id="22">
+                <coordinates>3.810278,55.399167,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="25">
+            <name>platform L9-FF-1 locatie MG</name>
+            <Point id="24">
+                <coordinates>4.960278,53.614444,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="27">
+            <name>platform L9-FF-1 locatie MG1</name>
+            <Point id="26">
+                <coordinates>4.960278,53.614444,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="29">
+            <name>platform L9-FF-1 locatie MG2</name>
+            <Point id="28">
+                <coordinates>4.960278,53.614444,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="31">
+            <name>platform AWG-1 locatie MA</name>
+            <Point id="30">
+                <coordinates>5.941667,53.491667,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="33">
+            <name>platform AWG-1 locatie MA1</name>
+            <Point id="32">
+                <coordinates>5.941667,53.491667,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="35">
+            <name>platform AWG-1 locatie MA2</name>
+            <Point id="34">
+                <coordinates>5.941667,53.491667,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="37">
+            <name>IJmond</name>
+            <Point id="36">
+                <coordinates>4.5175,52.463611,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="39">
+            <name>platform J6-A locatie JA</name>
+            <Point id="38">
+                <coordinates>2.945278,53.824167,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="41">
+            <name>platform J6-A locatie JA1</name>
+            <Point id="40">
+                <coordinates>2.945278,53.824167,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="43">
+            <name>platform J6-A locatie JA2</name>
+            <Point id="42">
+                <coordinates>2.945278,53.824167,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="45">
+            <name>platform Hoorn-A locatie QE</name>
+            <Point id="44">
+                <coordinates>4.150278,52.918056,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="47">
+            <name>platform Hoorn-A locatie QE1</name>
+            <Point id="46">
+                <coordinates>4.150278,52.918056,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="49">
+            <name>platform Hoorn-A locatie QE2</name>
+            <Point id="48">
+                <coordinates>4.150278,52.918056,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="51">
+            <name>platform Buitengaats/BG-OHVS2 locatie HW</name>
+            <Point id="50">
+                <coordinates>6.041667,54.036944,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="53">
+            <name>platform Buitengaats/BG-OHVS2 locatie HW1</name>
+            <Point id="52">
+                <coordinates>6.041667,54.036944,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="55">
+            <name>Voorschoten anemometer en windvaan</name>
+            <Point id="54">
+                <coordinates>4.436389,52.139722,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="57">
+            <name>IJmuiden locatie A</name>
+            <Point id="56">
+                <coordinates>4.555,52.462222,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="59">
+            <name>Texelhors</name>
+            <Point id="58">
+                <coordinates>4.7125,52.998056,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="61">
+            <name>De Kooij locatie W_21t</name>
+            <Point id="60">
+                <coordinates>4.781111,52.926944,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="63">
+            <name>De Kooy waarneemterrein</name>
+            <Point id="62">
+                <coordinates>4.781111,52.926944,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="65">
+            <name>F3 (W - FD)</name>
+            <Point id="64">
+                <coordinates>4.696111,54.853889,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="67">
+            <name>platform F3 locatie FD2</name>
+            <Point id="66">
+                <coordinates>4.696111,54.853889,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="69">
+            <name>Schiphol locatie 18Cm27</name>
+            <Point id="68">
+                <coordinates>4.78979,52.31719,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="71">
+            <name>Schiphol locatie 18Ct</name>
+            <Point id="70">
+                <coordinates>4.789722,52.317222,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="73">
+            <name>Schiphol locatie 18Rtw</name>
+            <Point id="72">
+                <coordinates>4.789722,52.317222,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="75">
+            <name>Schiphol locatie 22t</name>
+            <Point id="74">
+                <coordinates>4.79801,52.3121,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="77">
+            <name>Schiphol locatie 36CdR</name>
+            <Point id="76">
+                <coordinates>4.77925,52.2945,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="79">
+            <name>Schiphol locatie 36Ct</name>
+            <Point id="78">
+                <coordinates>4.7365,52.30972,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="81">
+            <name>Schiphol locatie 36Lt</name>
+            <Point id="80">
+                <coordinates>4.70753,52.33151,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="83">
+            <name>Schiphol locatie 36Rt06</name>
+            <Point id="82">
+                <coordinates>4.74326,52.29037,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="85">
+            <name>Schiphol locatie AssenDelft</name>
+            <Point id="84">
+                <coordinates>4.72596,52.48199,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="87">
+            <name>Schiphol locatie Muiden</name>
+            <Point id="86">
+                <coordinates>4.789722,52.317222,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="89">
+            <name>Schiphol locatie Nieuwkoop</name>
+            <Point id="88">
+                <coordinates>4.789722,52.317222,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="91">
+            <name>Schiphol locatie Nieuw Vennep</name>
+            <Point id="90">
+                <coordinates>4.64772,52.25497,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="93">
+            <name>Vlieland locatie A</name>
+            <Point id="92">
+                <coordinates>4.91748,53.24183,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="95">
+            <name>Vlieland waarneemterrein</name>
+            <Point id="94">
+                <coordinates>4.91748,53.24183,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="97">
+            <name>Vlieland locatie present weather sensor</name>
+            <Point id="96">
+                <coordinates>4.94028,53.25319,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="99">
+            <name>Vlieland locatie wind</name>
+            <Point id="98">
+                <coordinates>4.91748,53.24183,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="101">
+            <name>Wijdenes</name>
+            <Point id="100">
+                <coordinates>5.173611,52.6325,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="103">
+            <name>Berkhout</name>
+            <Point id="102">
+                <coordinates>4.978889,52.642778,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="105">
+            <name>Hoorn Terschelling</name>
+            <Point id="104">
+                <coordinates>5.345833,53.391111,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="107">
+            <name>platform K13 locatie 0</name>
+            <Point id="106">
+                <coordinates>3.220278,53.217778,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="109">
+            <name>platform K13 locatie 1</name>
+            <Point id="108">
+                <coordinates>3.220278,53.217778,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="111">
+            <name>platform K13 locatie 2</name>
+            <Point id="110">
+                <coordinates>3.220278,53.217778,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="113">
+            <name>platform K13 locatie 0</name>
+            <Point id="112">
+                <coordinates>3.220278,53.217778,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="115">
+            <name>platform K13 locatie 1</name>
+            <Point id="114">
+                <coordinates>3.220278,53.217778,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="117">
+            <name>platform K13 locatie 2</name>
+            <Point id="116">
+                <coordinates>3.220278,53.217778,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="119">
+            <name>Houtribdijk</name>
+            <Point id="118">
+                <coordinates>5.400556,52.648056,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="121">
+            <name>De Bilt locatie A</name>
+            <Point id="120">
+                <coordinates>5.1797,52.09882,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="123">
+            <name>De Bilt locatie C</name>
+            <Point id="122">
+                <coordinates>5.1794,52.09882,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="125">
+            <name>De Bilt testwaarneemterrein</name>
+            <Point id="124">
+                <coordinates>5.17728,52.09941,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="127">
+            <name>De Bilt wind nabij pagode</name>
+            <Point id="126">
+                <coordinates>5.17649,52.0995,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="129">
+            <name>Stavoren</name>
+            <Point id="128">
+                <coordinates>5.383333,52.896667,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="131">
+            <name>Lelystad locatie 23t</name>
+            <Point id="130">
+                <coordinates>5.52131,52.45825,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="133">
+            <name>Leeuwarden locatie 06t</name>
+            <Point id="132">
+                <coordinates>5.73828,53.22078,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="135">
+            <name>Leeuwarden locatie 24t</name>
+            <Point id="134">
+                <coordinates>5.751667,53.223056,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="137">
+            <name>Leeuwarden locatie A</name>
+            <Point id="136">
+                <coordinates>5.75162,53.223,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="139">
+            <name>Leeuwarden locatie obs06t</name>
+            <Point id="138">
+                <coordinates>5.75162,53.223,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="141">
+            <name>Marknesse</name>
+            <Point id="140">
+                <coordinates>5.8875,52.701944,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="143">
+            <name>Deelen locatie 20t</name>
+            <Point id="142">
+                <coordinates>5.8781,52.0685,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="145">
+            <name>Deelen locatie A</name>
+            <Point id="144">
+                <coordinates>5.87232,52.05486,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="147">
+            <name>Deelen locatie obs02t</name>
+            <Point id="146">
+                <coordinates>5.87232,52.05486,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="149">
+            <name>Deelen locatie obs20t</name>
+            <Point id="148">
+                <coordinates>5.872222,52.054722,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="151">
+            <name>Lauwersoog</name>
+            <Point id="150">
+                <coordinates>6.199167,53.411667,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="153">
+            <name>Heino</name>
+            <Point id="152">
+                <coordinates>6.258889,52.434444,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="155">
+            <name>Hoogeveen</name>
+            <Point id="154">
+                <coordinates>6.573056,52.748889,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="157">
+            <name>Eelde locatie 05t</name>
+            <Point id="156">
+                <coordinates>6.56507,53.11425,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="159">
+            <name>Eelde locatie 23t</name>
+            <Point id="158">
+                <coordinates>6.58494,53.12363,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="161">
+            <name>Hupsel</name>
+            <Point id="160">
+                <coordinates>6.656667,52.067778,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="163">
+            <name>Huibertgat</name>
+            <Point id="162">
+                <coordinates>6.398333,53.573889,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="165">
+            <name>Nieuw Beerta</name>
+            <Point id="164">
+                <coordinates>7.149167,53.194444,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="167">
+            <name>Twenthe locatie A</name>
+            <Point id="166">
+                <coordinates>6.89087,52.27315,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="169">
+            <name>Cadzand</name>
+            <Point id="168">
+                <coordinates>3.379167,51.38,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="171">
+            <name>Vlissingen locatie A</name>
+            <Point id="170">
+                <coordinates>3.595833,51.441389,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="173">
+            <name>Vlissingen locatie B</name>
+            <Point id="172">
+                <coordinates>3.595833,51.441389,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="175">
+            <name>Hoofdplaat</name>
+            <Point id="174">
+                <coordinates>3.672222,51.377778,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="177">
+            <name>Oosterschelde</name>
+            <Point id="176">
+                <coordinates>3.621667,51.766667,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="179">
+            <name>Vlakte van de Raan</name>
+            <Point id="178">
+                <coordinates>3.241944,51.503611,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="181">
+            <name>Hansweert</name>
+            <Point id="180">
+                <coordinates>3.9975,51.445833,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="183">
+            <name>Schaar</name>
+            <Point id="182">
+                <coordinates>3.693889,51.655833,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="185">
+            <name>platform BSA locatie SG</name>
+            <Point id="184">
+                <coordinates>3.056667,51.7,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="187">
+            <name>Westdorpe</name>
+            <Point id="186">
+                <coordinates>3.861111,51.224722,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="189">
+            <name>Lichteiland Goeree(PEHSC) locatie 0</name>
+            <Point id="188">
+                <coordinates>3.67,51.925833,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="191">
+            <name>Lichteiland Goeree locatie 0</name>
+            <Point id="190">
+                <coordinates>3.67,51.925833,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="193">
+            <name>Lichteiland Goeree locatie 1</name>
+            <Point id="192">
+                <coordinates>3.67,51.925833,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="195">
+            <name>Lichteiland Goeree locatie 2</name>
+            <Point id="194">
+                <coordinates>3.67,51.925833,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="197">
+            <name>Europlatform locatie 0</name>
+            <Point id="196">
+                <coordinates>3.275,51.997778,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="199">
+            <name>Europlatform locatie 1</name>
+            <Point id="198">
+                <coordinates>3.275,51.997778,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="201">
+            <name>Europlatform locatie 2</name>
+            <Point id="200">
+                <coordinates>3.275,51.997778,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="203">
+            <name>Wilhelminadorp</name>
+            <Point id="202">
+                <coordinates>3.894167,51.530278,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="205">
+            <name>Stavenisse</name>
+            <Point id="204">
+                <coordinates>4.006111,51.595556,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="207">
+            <name>Hoek van Holland</name>
+            <Point id="206">
+                <coordinates>4.121667,51.991111,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="209">
+            <name>Lage licht</name>
+            <Point id="208">
+                <coordinates>4.121667,51.991111,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="211">
+            <name>Tholen</name>
+            <Point id="210">
+                <coordinates>4.1925,51.478611,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="213">
+            <name>Woensdrecht locatie 07t</name>
+            <Point id="212">
+                <coordinates>4.32858,51.44461,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="215">
+            <name>Woensdrecht locatie 25t</name>
+            <Point id="214">
+                <coordinates>4.35683,51.45358,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="217">
+            <name>Woensdrecht locatie A</name>
+            <Point id="216">
+                <coordinates>4.342,51.44775,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="219">
+            <name>Woensdrecht locatie obs07t</name>
+            <Point id="218">
+                <coordinates>4.342,51.44775,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="221">
+            <name>Rotterdam Geulhaven</name>
+            <Point id="220">
+                <coordinates>4.3125,51.891944,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="223">
+            <name>Rotterdam locatie 06t</name>
+            <Point id="222">
+                <coordinates>4.43494,51.95589,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="225">
+            <name>Rotterdam locatie 24t</name>
+            <Point id="224">
+                <coordinates>4.4469,51.96067,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="227">
+            <name>Cabauw locatie A</name>
+            <Point id="226">
+                <coordinates>4.92592,51.96903,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="229">
+            <name>Cabauw locatie sw2t</name>
+            <Point id="228">
+                <coordinates>4.925833,51.969167,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="231">
+            <name>Cabauw locatie sw3g</name>
+            <Point id="230">
+                <coordinates>4.9247,51.9717,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="233">
+            <name>Cabauw locatie sw3t</name>
+            <Point id="232">
+                <coordinates>4.9247,51.9717,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="235">
+            <name>Gilze-Rijen locatie 10t</name>
+            <Point id="234">
+                <coordinates>4.91717,51.57005,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="237">
+            <name>Gilze-Rijen locatie 28t</name>
+            <Point id="236">
+                <coordinates>4.94859,51.56664,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="239">
+            <name>Gilze-Rijen locatie A</name>
+            <Point id="238">
+                <coordinates>4.93515,51.56495,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="241">
+            <name>Gilze-Rijen locatie obs10t</name>
+            <Point id="240">
+                <coordinates>4.93515,51.56495,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="243">
+            <name>Herwijnen</name>
+            <Point id="242">
+                <coordinates>5.145278,51.857778,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="245">
+            <name>Eindhoven locatie 04t</name>
+            <Point id="244">
+                <coordinates>5.36374,51.44192,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="247">
+            <name>Eindhoven locatie 22t</name>
+            <Point id="246">
+                <coordinates>5.38323,51.45926,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="249">
+            <name>Eindhoven locatie A</name>
+            <Point id="248">
+                <coordinates>5.377,51.44978,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="251">
+            <name>Eindhoven locatie obs04t</name>
+            <Point id="250">
+                <coordinates>5.377,51.44978,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="253">
+            <name>Volkel locatie 06Lt</name>
+            <Point id="252">
+                <coordinates>5.69153,51.65187,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="255">
+            <name>Volkel locatie 24Rt</name>
+            <Point id="254">
+                <coordinates>5.72405,51.66229,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="257">
+            <name>Volkel locatie A</name>
+            <Point id="256">
+                <coordinates>5.70662,51.65854,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="259">
+            <name>Volkel locatie obs06Lt</name>
+            <Point id="258">
+                <coordinates>5.70662,51.65854,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="261">
+            <name>Ell</name>
+            <Point id="260">
+                <coordinates>5.7625,51.196667,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="263">
+            <name>Maastricht locatie 04t</name>
+            <Point id="262">
+                <coordinates>5.76172,50.90522,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="265">
+            <name>Maastricht locatie 22t</name>
+            <Point id="264">
+                <coordinates>5.77323,50.9167,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="267">
+            <name>Arcen</name>
+            <Point id="266">
+                <coordinates>6.196111,51.497222,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="269">
+            <name>Saba</name>
+            <Point id="268">
+                <coordinates>-63.220833,17.646111,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="271">
+            <name>St. Eustatius</name>
+            <Point id="270">
+                <coordinates>-62.982673,17.495485,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="273">
+            <name>Bonaire</name>
+            <Point id="272">
+                <coordinates>-68.27583,12.13,0.0</coordinates>
+            </Point>
+        </Placemark>
+    </Document>
+</kml>

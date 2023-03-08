@@ -1,5 +1,5 @@
 import fetch from "node-fetch"
-import { generateId } from "../../serverFunctions.js"
+import { generateId } from "../../developmentFunctions.js"
 import { readFileSync } from 'fs'
 
 let locations = JSON.parse(readFileSync("../../locations.json"));

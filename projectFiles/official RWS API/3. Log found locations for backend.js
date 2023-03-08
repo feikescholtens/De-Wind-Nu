@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, writeFileSync } from "fs"
 import transformation from "transform-coordinates"
-import { generateId } from "../../serverFunctions.js"
+import { generateId } from "../../developmentFunctions.js"
 
 const transform = transformation("EPSG:25831", "4326")
 const existingLocations = JSON.parse(readFileSync("../../locations.json"))

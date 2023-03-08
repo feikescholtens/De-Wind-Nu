@@ -27,7 +27,7 @@ function logNodeApp(message, type, addTimeStamp) {
 export async function runFunc() {
 
   const firestore = new Firestore({
-    projectId: process.env.GCP_PROJECT_ID
+    projectId: "de-wind-nu"
   })
 
   let forecastData = await (await firestore.doc("Harmonie forecast today & future/document").get()).data()
@@ -50,15 +50,19 @@ export async function runFunc() {
 
     //Saving archived forecast
     if (Object.keys(preSplit).length > 1) {
-      firestore.doc(`Harmonie forecast archive/${dateArchive}`).set(preSplit)
+      await firestore.doc(`Harmonie forecast archive/${dateArchive}`).set(preSplit).catch(error => console.log(error));
       logNodeApp(`Archived forecast data from ${dateArchive}!`, "info", true)
+    } else {
+      logNodeApp(`Not archiving ${dateArchive} since it has no data!`, "info", true)
     }
 
     NoDaysToArchive--
   }
 
   //Saving forecast for today and future
-  firestore.doc("Harmonie forecast today & future/document").set(postSplit)
+  await firestore.doc("Harmonie forecast today & future/document").delete().catch(error => console.log(error));
+  await firestore.doc("Harmonie forecast today & future/document").set(postSplit).catch(error => console.log(error));
+  logNodeApp(`Saved forecast data from today and the days after!`, "info", true)
 
   //Function for splitting the forecast data
   function splitForecastData(forecastData, dateAfterArchive) {

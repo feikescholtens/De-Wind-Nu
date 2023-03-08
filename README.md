@@ -1,5 +1,5 @@
 # De Wind Nu
-De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met voorspellingen in grafieken. 
+De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met verwachtingen in grafieken. 
 Deze kunnen gebruikt worden voor het informeren van surfers of zeilers. Het [changelog](CHANGELOG.md) is hier te bekijken.
 
 ## Homepagina

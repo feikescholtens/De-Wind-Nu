@@ -7,7 +7,7 @@ export async function addFeedback(request, response) {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: process.env.APP_EMAIL,
+      user: "dewindnu@gmail.com",
       pass: process.env.GMAIL_APP_KEY
     }
   });

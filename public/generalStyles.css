@@ -32,7 +32,7 @@ body.dark {
     --textColour1: #E8EAED;
     --textColour2: #b4b4b4;
     --textColour3: grey;
-    --lineColour: #333;
+    --lineColour: #2f2f2f;
     --anchorColour: #d686ff;
     --shadowColour: var(--BGColour);
 }
@@ -275,7 +275,7 @@ div.spin {
 
 /* Popup styling */
 
-button.windPageButton {
+button.colouredButton {
     margin: 5px;
     padding: 8px 14px;
     border-radius: 12px;
@@ -308,7 +308,7 @@ button.popupOther {
     background-color: rgb(140, 140, 140);
 }
 
-button.windPageButton:hover {
+button.colouredButton:hover {
     opacity: 0.5;
 }
 
