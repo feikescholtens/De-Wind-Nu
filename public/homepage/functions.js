@@ -265,17 +265,17 @@ function setMeasurementData(container, dataLocation, returnNode) {
     relativeTimeElement = container.querySelector(".relativeTime")
 
   windSpeed = dataLocation.windSpeed
-  if (windSpeed || windSpeed == 0) {
+  if (windSpeed != undefined) {
     if (unit !== "Bft") windSpeed = (units[unit].factor * windSpeed).toFixed(decimals)
     else windSpeed = convertValueToBft(windSpeed)
   } else windSpeed = "-"
   windGusts = dataLocation.windGusts
-  if (windGusts || windGusts == 0) {
+  if (windGusts != undefined) {
     if (unit !== "Bft") windGusts = (units[unit].factor * windGusts).toFixed(decimals)
     else windGusts = convertValueToBft(windGusts)
   } else windGusts = "-"
   windDirection = dataLocation.windDirection
-  if (windDirection || windDirection == 0) {
+  if (windDirection != undefined) {
     windDirection = windDirection.toFixed(0)
     windDirectionLetters = directionToLetters(windDirection)
     directionArrow = `<span style="transform: rotate(${windDirection}deg);" title="Windrichting" class="material-symbols-rounded listElementArrow">&#xf1e3;</span>`
@@ -538,7 +538,7 @@ function addMarkerArrowToMap(dataLocation, dataSource, locationID) {
   if (dataLocation) {
     arrow.style.transform = `translateX(calc(-0.3 * var(--markerSize))) rotate(${dataLocation.windDirection}deg)`
 
-    if (!dataLocation.windSpeed && dataLocation !== 0) return
+    if (dataLocation.windSpeed == undefined) return
     const windSpeedBft = convertValueToBft(dataLocation.windSpeed)
     document.getElementById(locationID).innerText = windSpeedBft
   }

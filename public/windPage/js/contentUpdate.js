@@ -10,7 +10,7 @@ export async function contentUpdate() {
   //Put interolated data into the arrays if requested
   const dataTypeArray = ["windSpeed", "windGusts", "windDirection"]
   dataTypeArray.forEach(dataType => {
-    if (data[dataType] || data[dataType] == 0) {
+    if (data[dataType] != undefined) {
       for (let k = 0; k < data[dataType].length; k++) {
         if (data[dataType][k] < 0 || isNaN(data[dataType][k])) { //Also checking for NaN's because of data is already loaded, negative values are replaced with NaN
           if (interpolation == "1") {
@@ -32,7 +32,7 @@ export async function contentUpdate() {
     if (dataWUnits[dataType] && dataWUnits[dataType].length !== 0) {
       for (let i = 0; i < dataWUnits[dataType].length; i++) {
 
-        if (dataWUnits[dataType][i] || dataWUnits[dataType][i] == 0) {
+        if (dataWUnits[dataType][i] != undefined) {
 
           //Unit needs to be changed
           if (arraysUnitChange.includes(dataType)) {

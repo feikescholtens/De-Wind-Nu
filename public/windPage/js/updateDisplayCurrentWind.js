@@ -1,11 +1,11 @@
-import { drawDirectionArrow } from "./drawDirectionArrow.js"
+import { drawDirectionArrow, drawCanvasBackground } from "./drawCanvas.js"
 import { directionToLetters } from "../../globalFunctions.js"
 import { setLabelPostitions } from "./functions.js"
 
 Array.prototype.lastMeasurement = function() { return this[this.length - 1] }
 let directionStuffDrawn = false
 
-export function updateCurrentWind() {
+export function updateCurrentWind(forceRedraw) {
 
   const currentWindLabel = document.querySelector("[data-currentWind]")
   const forecastedWindLabel = document.querySelector("[data-forecastedWind]")
@@ -17,8 +17,13 @@ export function updateCurrentWind() {
   const ctx = document.querySelector("[data-compass]").getContext("2d")
 
   //Setting winddirection values / arrows
-
+  if (forceRedraw) {
+    ctx.clearRect(0, 0, document.querySelector("[data-compass]").width, document.querySelector("[data-compass]").height)
+    directionStuffDrawn = false
+  }
   if (!directionStuffDrawn) {
+    drawCanvasBackground(ctx)
+
     if (dataWUnits.windDirectionForecast) {
       if (dataWUnits.windDirectionForecast.length !== 0) {
         const forecastedDirection = dataWUnits.windDirectionForecast[dataWUnits.windDirection.length - 1]
@@ -56,17 +61,17 @@ export function updateCurrentWind() {
   const labels = [currentWindLabel, forecastedWindLabel, currentGustsLabel, currentDirectionLabel, forecastedDirectionLabel]
 
   if (currentGustsLabel.innerHTML !== "" && forecastedDirectionLabel.innerHTML !== "" && forecastedWindLabel.innerHTML !== "")
-    setLabelPostitions(labels, [15, 39, 55, 79, 95])
+    setLabelPostitions(labels, [9, 36, 54, 75, 91])
   if (currentGustsLabel.innerHTML !== "" && forecastedDirectionLabel.innerHTML == "" && forecastedWindLabel.innerHTML == "")
-    setLabelPostitions(labels, [22, 0, 50, 75, 0])
+    setLabelPostitions(labels, [20, 0, 50, 75, 0])
   if (currentGustsLabel.innerHTML == "" && forecastedDirectionLabel.innerHTML !== "" && forecastedWindLabel.innerHTML !== "")
-    setLabelPostitions(labels, [20, 47, 0, 69, 89])
+    setLabelPostitions(labels, [16, 44, 0, 65, 86])
   if (currentGustsLabel.innerHTML !== "" && forecastedDirectionLabel.innerHTML == "" && forecastedWindLabel.innerHTML !== "")
     setLabelPostitions(labels, [17, 43, 63, 85, 0])
   if (currentGustsLabel.innerHTML !== "" && forecastedDirectionLabel.innerHTML !== "" && forecastedWindLabel.innerHTML == "")
     setLabelPostitions(labels, [17, 0, 45, 70, 88])
   if (currentGustsLabel.innerHTML == "" && forecastedDirectionLabel.innerHTML == "" && forecastedWindLabel.innerHTML == "")
-    setLabelPostitions(labels, [38, 0, 0, 69, 0])
+    setLabelPostitions(labels, [32, 0, 0, 62, 0])
 
   const lastMeasurementTimeBasedOn = dataWUnits.windSpeed.length || dataWUnits.windDirection.length
   const lastMeasurementTime = dataWUnits.times[lastMeasurementTimeBasedOn - 1]

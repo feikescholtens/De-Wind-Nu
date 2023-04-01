@@ -1,4 +1,4 @@
-import { format, addDays, sub, isSameDay, add } from "date-fns"
+import { format, addDays, subDays, isSameDay, add, addHours, subHours } from "date-fns"
 import module from "date-fns-tz"
 const { utcToZonedTime } = module
 
@@ -44,17 +44,23 @@ export function processAllNegativeArrays(wind_speed, wind_gusts, wind_direction)
 export function giveRWSFetchOptions(dateParsed, databaseData, DSTDates) {
 
   let startTime, endTime, dateStartFetch, dateEndFetch
-  if (dateParsed > DSTDates[0] && dateParsed < DSTDates[1]) {
+  if (dateParsed > DSTDates.toDST && dateParsed < DSTDates.fromDST) {
     // Summertime
     startTime = endTime = "22:00:00"
-    dateStartFetch = format(utcToZonedTime(sub(dateParsed, { days: 1 }), timeZone), "yyyy-MM-dd")
+
+    dateStartFetch = subDays(dateParsed, 1)
+    if (isSameDay(dateStartFetch, DSTDates.toDST) && dateStartFetch.getHours() === 22) dateStartFetch = addHours(dateStartFetch, 1)
+    dateStartFetch = format(utcToZonedTime(dateStartFetch, timeZone), "yyyy-MM-dd")
+    //Explaination for above: if the system is using UTC timezone, subDays will subtract 24 hours instead of 23. This is because UTC doesn't use DST.
+    //Because of this, the format function doesn't pick the right day
+
     dateEndFetch = format(utcToZonedTime(dateParsed, timeZone), "yyyy-MM-dd")
-  } else if (isSameDay(dateParsed, DSTDates[0])) {
+  } else if (isSameDay(dateParsed, DSTDates.toDST)) {
     //Day of going to summertime
     startTime = "00:00:00"
     endTime = "22:00:00"
     dateStartFetch = dateEndFetch = format(utcToZonedTime(dateParsed, timeZone), "yyyy-MM-dd")
-  } else if (isSameDay(dateParsed, DSTDates[1])) {
+  } else if (isSameDay(dateParsed, DSTDates.fromDST)) {
     //Day of going to wintertime
     startTime = "22:00:00"
     endTime = "00:00:00"
@@ -159,9 +165,13 @@ export function giveMVBFetchOptions(dateParsed, DSTDates, databaseData, newToken
   const dateStartFetch = dateParsed.toISOString()
   let dateEndFetch = addDays(dateParsed, 1)
 
-  if (isSameDay(dateParsed, DSTDates[1]) && dateEndFetch.getUTCHours() == 22) dateEndFetch = add(dateEndFetch, { hours: 1 }).toISOString()
-  //Check if the date requested is the day of switching to CET. This day contains 25 hours, and since UTC doesn't include DST, it only 
-  //adds 24 hours in the addDays function above. So if the day matches the DST date and the hours equals 22, add one hour.
+  if (isSameDay(dateParsed, DSTDates.fromDST) && global.serverTimeZone === "UTC") dateEndFetch = addHours(dateEndFetch, 1).toISOString()
+  // Check if the date requested is the day of switching from summertime to wintertime. This day contains 25 hours, and since UTC doesn't include DST, it just 
+  // adds 24 hours in the addDays function above. The requested data will therefore miss 1 hour of data for the requested day.
+  if (isSameDay(dateParsed, DSTDates.toDST) && global.serverTimeZone === "UTC") dateEndFetch = subHours(dateEndFetch, 1).toISOString()
+  // Check if the date requested is the day of switching from wintertime to summertime. This day contains 23 hours, and since UTC doesn't include DST, it just 
+  // adds 24 hours in the addDays function above. The requested data will therefore contain 1 extra hour (of the day after) which will confuse the rest of the script and cause a bug.
+
   else dateEndFetch = dateEndFetch.toISOString()
 
   return {
@@ -188,16 +198,6 @@ export function giveMVBOverviewFetchOptions(locationsArray, newToken) {
     "method": "POST"
   }
 
-}
-
-export function JSONError(rawData) {
-  if (!rawData || !rawData.length) return true
-
-  //All other errors (exept for when there's no data at all) are handled in logFetchErrors in serverFunctions.js
-  if (rawData.error) {
-    if (rawData.error == "not found") return false //This error is not handled here
-  }
-  return false
 }
 
 export function MessageError(rawData, resolve) {
@@ -240,6 +240,38 @@ export function VLINDERerror(rawData, resolve) {
     resolve({
       data: {
         "VLINDER": [
+          [],
+          [],
+          []
+        ]
+      }
+    })
+
+    return true
+  }
+
+  return false
+}
+
+export function JSONErrorVLINDER(rawData) {
+  if (!rawData || !rawData.length) return true
+
+  //All other errors (exept for when there's no data at all) are handled in logFetchErrors in serverFunctions.js
+  if (rawData.error) {
+    if (rawData.error == "not found") return false //This error is not handled here
+  }
+  return false
+}
+
+//KNMI specific
+
+export function KNMIerror(rawData, resolve) {
+  if (rawData.error) {
+    log(`KNMI API error: \"${rawData.error}\"`, "error", true)
+
+    resolve({
+      data: {
+        "KNMI": [
           [],
           [],
           []

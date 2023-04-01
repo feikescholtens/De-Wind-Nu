@@ -1,5 +1,28 @@
 # Change log
 
+## v3.5.1
+- Added a windrose background to the current wind screen, giving the drawn arrows on the canvas instantly more meaning
+- Switching dates doesn't require pressing the 'query' button anymore. The API's seem reliable enough that the data can instantly be requested as the date is changed with the arrows
+- Using different API's for some locations now, so that gusts are available or so that the data updates faster. Modified locations: Houtribdijk, IJmuiden Buitenhaven, Vlieland, Wijdenes, Lauwersoog, Europlatform and Geulhaven radarpost
+- Added locations: Buitengaats platform, F3-FB1 platform, Lichteiland Goeree KNMI sensor, Saba (Juancho E. Yrausquin Airport), Sint Eustatius (F. D. Roosevelt Airport) and Bonaire (Flamingo Airport)
+- Some visual footer improvements: replaced checkboxes with sliders / switches
+- Made settings button larger and added shadow
+- Now showing a user an alert notifing them that their time zone differs from the 'Europe/Amsterdam' one on which the site is build on
+
+Bugfixes:
+- Finally wind gusts have returned by switching an API (see 'Backend work' down below)
+- Wrong label 'Windvlagen' instead of 'Windsterkte verwachting' in tooltip windspeed chart, can't go wrong anymore now (knock knock) (thanks for the bugreport Lars)
+- Fixed RWS locations requesting the same data for the first day of summertime (day when it switches) and second day of summertime. Additional (search) tags: DST, summertime, request, dates
+- Fixed (new) KNMI API, MVB and VLINDER locations requesting wrong data of the day of switching to summertime. Added an explaination for it
+- Fixed site not updating when changing theme from 'Dark' to 'Automatic' when Automatic resolves to be a light mode
+- Fixed current wind box values and labels not resizing on very small screens
+
+Backend work:
+- Used some technically better operators in if-statements
+- Replaced Buienradar API with official KNMI EDR API for the wind page
+
+---
+
 ## v3.5.0
 - Big update on location handling homepage. Now shows user's approximate location based on IP-address (except when user's on a VPN). Then show user popup or message in a newly added top bar to change the location preference to choose GPS based location
 

@@ -1,14 +1,15 @@
 {
   "1071": {
     "name": "Leeuwarden",
-    "lat": 53.223,
-    "lon": 5.751574,
+    "lat": 53.2230555555556,
+    "lon": 5.75166666666667,
     "datasets": {
       "KNMI": {
         "location_id": "6270"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06270"
   },
   "1103": {
     "name": "Brussel Koninklijk Paleis",
@@ -23,14 +24,15 @@
   },
   "1141": {
     "name": "Den Helder",
-    "lat": 52.924177,
-    "lon": 4.779338,
+    "lat": 52.9269444444444,
+    "lon": 4.78111111111111,
     "datasets": {
       "KNMI": {
         "location_id": "6235"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06235"
   },
   "1157": {
     "name": "Vorselaar Klooster",
@@ -45,25 +47,27 @@
   },
   "1218": {
     "name": "De Bilt",
-    "lat": 52.098822,
-    "lon": 5.179706,
+    "lat": 52.0988888888889,
+    "lon": 5.17972222222222,
     "datasets": {
       "KNMI": {
         "location_id": "6260"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06260"
   },
   "1251": {
     "name": "Wilhelminadorp",
-    "lat": 51.525976,
-    "lon": 3.883644,
+    "lat": 51.5258333333333,
+    "lon": 3.88361111111111,
     "datasets": {
       "KNMI": {
         "location_id": "6323"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06323"
   },
   "1418": {
     "name": "Oudenaarde De Donk",
@@ -100,14 +104,15 @@
   },
   "1612": {
     "name": "Hoogeveen",
-    "lat": 52.749056,
-    "lon": 6.57297,
+    "lat": 52.7488888888889,
+    "lon": 6.57305555555556,
     "datasets": {
       "KNMI": {
         "location_id": "6279"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06279"
   },
   "1641": {
     "name": "Huibertgat",
@@ -161,14 +166,15 @@
   },
   "1892": {
     "name": "Groenlo-Hupsel",
-    "lat": 52.067534,
-    "lon": 6.656725,
+    "lat": 52.0677777777778,
+    "lon": 6.65666666666667,
     "datasets": {
       "KNMI": {
         "location_id": "6283"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06283"
   },
   "2136": {
     "name": "Marollegat",
@@ -235,14 +241,15 @@
   },
   "2721": {
     "name": "Volkel",
-    "lat": 51.65852,
-    "lon": 5.706595,
+    "lat": 51.6586111111111,
+    "lon": 5.70666666666667,
     "datasets": {
       "KNMI": {
         "location_id": "6375"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06375"
   },
   "2829": {
     "name": "Haringvlietsluizen",
@@ -320,14 +327,15 @@
   },
   "3107": {
     "name": "Nieuw Beerta",
-    "lat": "53.194438",
-    "lon": "7.149327",
+    "lat": 53.1944444444444,
+    "lon": 7.14916666666667,
     "datasets": {
       "KNMI": {
         "location_id": "6286"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06286"
   },
   "3139": {
     "name": "Hoek van Holland",
@@ -344,15 +352,14 @@
   },
   "3153": {
     "name": "Europlatform",
-    "lat": 51.99780100000011,
-    "lon": 3.275074999999995,
-    "x": 518884.956435892,
-    "y": 5760829.35541647,
+    "lat": 51.9977777777778,
+    "lon": 3.275,
     "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "EPL"
+      "KNMI": {
+        "location_id": "6321"
       }
     },
+    "KNMI_ID": "06321",
     "active": true
   },
   "3216": {
@@ -424,14 +431,15 @@
   },
   "3356": {
     "name": "Lelystad",
-    "lat": 52.45727,
-    "lon": 5.519632,
+    "lat": 52.4483333333333,
+    "lon": 5.50805555555556,
     "datasets": {
       "KNMI": {
         "location_id": "6269"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06269"
   },
   "3359": {
     "name": "Geraardsbergen Oudenberg",
@@ -446,14 +454,15 @@
   },
   "3406": {
     "name": "Stavoren",
-    "lat": "52.89660",
-    "lon": "5.38333",
+    "lat": 52.8966666666667,
+    "lon": 5.38333333333333,
     "datasets": {
       "KNMI": {
         "location_id": "6267"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06267"
   },
   "3459": {
     "name": "Aalst Heuvelpark",
@@ -468,15 +477,14 @@
   },
   "3554": {
     "name": "K13 Alpha platform",
-    "lat": 53.21700999999997,
-    "lon": 3.218931999999991,
-    "x": 514618.822878979,
-    "y": 5896433.91304204,
+    "lat": 53.2177777777778,
+    "lon": 3.22027777777778,
     "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "K13"
+      "KNMI": {
+        "location_id": "6252"
       }
     },
+    "KNMI_ID": "06252",
     "active": true
   },
   "3563": {
@@ -527,40 +535,39 @@
   },
   "3695": {
     "name": "IJmuiden Buitenhaven",
-    "lat": 52.46232600000002,
-    "lon": 4.554822000000572,
-    "x": 605632.956827924,
-    "y": 5813598.08945097,
+    "lat": 52.4622222222222,
+    "lon": 4.555,
     "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "IJMH"
+      "KNMI": {
+        "location_id": "6225"
       }
     },
+    "KNMI_ID": "06225",
     "active": true
   },
   "3696": {
     "name": "Texelhors",
-    "lat": 52.995007,
-    "lon": 4.719896,
-    "x": 617438.130657321,
-    "y": 5873703.05052095,
+    "lat": 52.995,
+    "lon": 4.72,
     "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "TEHO"
+      "KNMI": {
+        "location_id": "6229"
       }
     },
+    "KNMI_ID": "06229",
     "active": true
   },
   "3714": {
     "name": "Vlissingen",
-    "lat": 51.441291,
-    "lon": 3.595902,
+    "lat": 51.4413888888889,
+    "lon": 3.59583333333333,
     "datasets": {
       "KNMI": {
         "location_id": "6310"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06310"
   },
   "3723": {
     "name": "HKZA platform 1",
@@ -588,15 +595,14 @@
   },
   "3885": {
     "name": "Geulhaven radarpost",
-    "lat": 51.89181400000011,
-    "lon": 4.31253100000026,
-    "x": 590321.143000125,
-    "y": 5749819.65457646,
+    "lat": 51.8919444444444,
+    "lon": 4.3125,
     "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "RP10"
+      "KNMI": {
+        "location_id": "6343"
       }
     },
+    "KNMI_ID": "06343",
     "active": true
   },
   "3902": {
@@ -623,14 +629,15 @@
   },
   "3958": {
     "name": "Gilze Rijen",
-    "lat": 51.564893,
-    "lon": 4.935122,
+    "lat": 51.565,
+    "lon": 4.93527777777778,
     "datasets": {
       "KNMI": {
         "location_id": "6350"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06350"
   },
   "3985": {
     "name": "Maldegem Courtmanslaan",
@@ -669,15 +676,14 @@
   },
   "4352": {
     "name": "Lauwersoog",
-    "lat": 53.411574,
-    "lon": 6.199025,
-    "x": 712485.362427151,
-    "y": 5922496.96218518,
+    "lat": 53.4116666666667,
+    "lon": 6.19916666666667,
     "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "LAUW"
+      "KNMI": {
+        "location_id": "6277"
       }
     },
+    "KNMI_ID": "06277",
     "active": true
   },
   "4363": {
@@ -693,14 +699,15 @@
   },
   "4393": {
     "name": "Terschelling Hoorn",
-    "lat": "53.391217",
-    "lon": "5.345745",
+    "lat": 53.3911111111111,
+    "lon": 5.34583333333333,
     "datasets": {
       "KNMI": {
         "location_id": "6251"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06251"
   },
   "4415": {
     "name": "Maaseik Herenlaak",
@@ -763,14 +770,15 @@
   },
   "4711": {
     "name": "Eindhoven",
-    "lat": 51.449772,
-    "lon": 5.377004,
+    "lat": 51.4497222222222,
+    "lon": 5.37694444444444,
     "datasets": {
       "KNMI": {
         "location_id": "6370"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06370"
   },
   "4734": {
     "name": "Oudsbergen Oudsberg",
@@ -809,14 +817,15 @@
   },
   "4997": {
     "name": "Arcen",
-    "lat": "51.5",
-    "lon": "6.2",
+    "lat": 51.4972222222222,
+    "lon": 6.19611111111111,
     "datasets": {
       "KNMI": {
         "location_id": "6391"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06391"
   },
   "5003": {
     "name": "Sint-Laureins Boerekreek",
@@ -868,14 +877,15 @@
   },
   "5331": {
     "name": "Groningen",
-    "lat": 53.123676,
-    "lon": 6.584847,
+    "lat": 53.1236111111111,
+    "lon": 6.58472222222222,
     "datasets": {
       "KNMI": {
         "location_id": "6280"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06280"
   },
   "5367": {
     "name": "Zandkreeksluis (Kats)",
@@ -905,13 +915,14 @@
   },
   "5407": {
     "name": "Maastricht",
-    "lat": 50.905256,
-    "lon": 5.761783,
+    "lat": 50.9052777777778,
+    "lon": 5.76194444444444,
     "datasets": {
       "KNMI": {
         "location_id": "6380"
       }
     },
+    "KNMI_ID": "06380",
     "active": true
   },
   "5444": {
@@ -951,14 +962,15 @@
   },
   "5673": {
     "name": "Hoek van Holland",
-    "lat": "51.991003",
-    "lon": "4.121822",
+    "lat": 51.9911111111111,
+    "lon": 4.12166666666667,
     "datasets": {
       "KNMI": {
         "location_id": "6330"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06330"
   },
   "5687": {
     "name": "Tienen Centrum",
@@ -995,15 +1007,14 @@
   },
   "5838": {
     "name": "Wijdenes",
-    "lat": 52.63244,
-    "lon": 5.173466,
-    "x": 646538.674114683,
-    "y": 5833598.51786221,
+    "lat": 52.6325,
+    "lon": 5.17361111111111,
     "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "WIJD"
+      "KNMI": {
+        "location_id": "6248"
       }
     },
+    "KNMI_ID": "06248",
     "active": true
   },
   "5852": {
@@ -1257,20 +1268,6 @@
     },
     "active": true
   },
-  "7147": {
-    "name": "Vlissingen meetpaal",
-    "lat": 51.44296100000006,
-    "lon": 3.59740000000002,
-    "x": 541518.745919649,
-    "y": 5699254.96425966,
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "VLIS"
-      }
-    },
-    "active": false,
-    "reasonNotActive": "This is a KNMI station and it is more up-to-date in their API."
-  },
   "7356": {
     "name": "Heist-op-den-Berg landelijk",
     "lat": 51.051216,
@@ -1334,14 +1331,15 @@
   },
   "7713": {
     "name": "Berkhout",
-    "lat": 52.642670000000244,
-    "lon": 4.97869000000192,
+    "lat": 52.6427777777778,
+    "lon": 4.97888888888889,
     "datasets": {
       "KNMI": {
         "location_id": "6249"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06249"
   },
   "7722": {
     "name": "Herzele Educatief park",
@@ -1393,15 +1391,14 @@
   },
   "8105": {
     "name": "Houtribdijk",
-    "lat": 52.648056000000835,
-    "lon": 5.4005560000050465,
-    "x": 662396.645469852,
-    "y": 5835825.85858452,
+    "lat": 52.6480555555556,
+    "lon": 5.40055555555556,
     "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "HOUD"
+      "KNMI": {
+        "location_id": "6258"
       }
     },
+    "KNMI_ID": "06258",
     "active": true
   },
   "8139": {
@@ -1417,25 +1414,27 @@
   },
   "8231": {
     "name": "Rotterdam",
-    "lat": 51.960667,
-    "lon": 4.446901,
+    "lat": 51.9605555555556,
+    "lon": 4.44694444444445,
     "datasets": {
       "KNMI": {
         "location_id": "6344"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06344"
   },
   "8245": {
     "name": "Woensdrecht",
-    "lat": 51.447735,
-    "lon": 4.341991,
+    "lat": 51.4477777777778,
+    "lon": 4.34194444444444,
     "datasets": {
       "KNMI": {
         "location_id": "6340"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06340"
   },
   "8254": {
     "name": "Zeebrugge - Meteopark",
@@ -1478,14 +1477,15 @@
   },
   "8527": {
     "name": "Arnhem",
-    "lat": 52.054862,
-    "lon": 5.872323,
+    "lat": 52.0547222222222,
+    "lon": 5.87222222222222,
     "datasets": {
       "KNMI": {
         "location_id": "6275"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06275"
   },
   "8540": {
     "name": "Lier Zimmertoren",
@@ -1569,7 +1569,7 @@
     "active": true
   },
   "9057": {
-    "name": "F3 platform",
+    "name": "F3-OLT platform",
     "lat": 54.849994999999936,
     "lon": 4.716658000000711,
     "x": 610215.841475144,
@@ -1581,19 +1581,17 @@
     },
     "active": true
   },
-  "9099": {
-    "name": "Marker Wadden",
-    "lat": 52.600320000000785,
-    "lon": 5.391229000004971,
-    "x": 661941.941846159,
-    "y": 5830496.19165586,
+  "7304": {
+    "name": "F3-FB1 platform",
+    "lat": 54.8538888888889,
+    "lon": 4.69611111111111,
     "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "MWAD"
+      "KNMI": {
+        "location_id": "6239"
       }
     },
-    "active": false,
-    "reasonNotActive": "This stations doesn't seem to have given any data in it's history. Don't know why it's even in this list."
+    "KNMI_ID": "06239",
+    "active": true
   },
   "9399": {
     "name": "Londerzeel Groenhof",
@@ -1630,27 +1628,27 @@
   },
   "9460": {
     "name": "Vlieland",
-    "lat": 53.240027,
-    "lon": 4.920791,
-    "x": 627792.566605279,
-    "y": 5901709.86707934,
+    "lat": 53.24,
+    "lon": 4.92083333333333,
     "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "VLI1"
+      "KNMI": {
+        "location_id": "6242"
       }
     },
+    "KNMI_ID": "06242",
     "active": true
   },
   "9462": {
     "name": "Westdorpe",
-    "lat": 51.224769,
-    "lon": 3.860992,
+    "lat": 51.2247222222222,
+    "lon": 3.86111111111111,
     "datasets": {
       "KNMI": {
         "location_id": "6319"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06319"
   },
   "9470": {
     "name": "Antwerpen Inst. Trop. Geneeskunde",
@@ -1665,14 +1663,15 @@
   },
   "9556": {
     "name": "Ell",
-    "lat": 51.1967,
-    "lon": 5.762545,
+    "lat": 51.1966666666667,
+    "lon": 5.7625,
     "datasets": {
       "KNMI": {
         "location_id": "6377"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06377"
   },
   "9690": {
     "name": "Blankenberge",
@@ -1726,14 +1725,15 @@
   },
   "9784": {
     "name": "Heino",
-    "lat": "52.433867",
-    "lon": "6.261723",
+    "lat": 52.4344444444444,
+    "lon": 6.25888888888889,
     "datasets": {
       "KNMI": {
         "location_id": "6278"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06278"
   },
   "9810": {
     "name": "Stroommeetpaal Eemshaven",
@@ -1748,52 +1748,41 @@
     },
     "active": true
   },
-  "9866": {
-    "name": "Q1-A platform (Hoorn)",
-    "lat": 52.92535269059845,
-    "lon": 4.150285753428387,
-    "x": 577327.765231775,
-    "y": 5864586.03138184,
-    "datasets": {
-      "Rijkswaterstaat": {
-        "location_id": "Q1"
-      }
-    },
-    "active": false,
-    "reasonNotActive": "This station was double (also from same API) with ID 7117."
-  },
   "9990": {
     "name": "Herwijnen",
-    "lat": 51.85759,
-    "lon": 5.145399,
+    "lat": 51.8577777777778,
+    "lon": 5.14527777777778,
     "datasets": {
       "KNMI": {
         "location_id": "6356"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06356"
   },
   "0290": {
     "name": "Twente",
-    "lat": 52.273148,
-    "lon": 6.890875,
+    "lat": 52.2730555555556,
+    "lon": 6.89083333333333,
     "datasets": {
       "KNMI": {
         "location_id": "6290"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06290"
   },
   "0304": {
     "name": "Marknesse",
-    "lat": "52.70191",
-    "lon": "5.88738",
+    "lat": 52.7019444444445,
+    "lon": 5.8875,
     "datasets": {
       "KNMI": {
         "location_id": "6273"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06273"
   },
   "0205": {
     "name": "Oostende",
@@ -1810,25 +1799,27 @@
   },
   "0227": {
     "name": "Schiphol",
-    "lat": 52.315408,
-    "lon": 4.790223,
+    "lat": 52.3172222222222,
+    "lon": 4.78972222222222,
     "datasets": {
       "KNMI": {
         "location_id": "6240"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06240"
   },
   "0323": {
     "name": "Lopik-Cabauw",
-    "lat": 51.969031,
-    "lon": 4.925922,
+    "lat": 51.9691666666667,
+    "lon": 4.92583333333333,
     "datasets": {
       "KNMI": {
         "location_id": "6348"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06348"
   },
   "0727": {
     "name": "J6 platform",
@@ -1857,7 +1848,7 @@
     "active": true
   },
   "0868": {
-    "name": "Lichteiland Goeree",
+    "name": "Lichteiland Goeree Rijkswaterstaat sensor",
     "lat": 51.925745000000084,
     "lon": 3.6698740000000147,
     "x": 546063.014918327,
@@ -1867,6 +1858,18 @@
         "location_id": "LEG"
       }
     },
+    "active": true
+  },
+  "2224": {
+    "name": "Lichteiland Goeree KNMI sensor",
+    "lat": 51.9258333333333,
+    "lon": 3.67,
+    "datasets": {
+      "KNMI": {
+        "location_id": "6320"
+      }
+    },
+    "KNMI_ID": "06320",
     "active": true
   },
   "0906": {
@@ -1910,14 +1913,15 @@
   },
   "0757": {
     "name": "Voorschoten",
-    "lat": "52.139574",
-    "lon": "4.436400",
+    "lat": 52.1397222222222,
+    "lon": 4.43638888888889,
     "datasets": {
       "KNMI": {
         "location_id": "6215"
       }
     },
-    "active": true
+    "active": true,
+    "KNMI_ID": "06215"
   },
   "0753": {
     "name": "Turnhout Centrum",
@@ -1983,6 +1987,54 @@
         "location_id": "hnc0YxKu18Jw7OdqhA3g5Pyc"
       }
     },
+    "active": true
+  },
+  "1359": {
+    "name": "Buitengaats platform",
+    "lat": 54.0369444444444,
+    "lon": 6.04166666666667,
+    "datasets": {
+      "KNMI": {
+        "location_id": "6214"
+      }
+    },
+    "KNMI_ID": "06214",
+    "active": true
+  },
+  "4371": {
+    "name": "Saba (Juancho E. Yrausquin Airport)",
+    "lat": 17.6461111111111,
+    "lon": -63.2208333333333,
+    "datasets": {
+      "KNMI": {
+        "location_id": "78871"
+      }
+    },
+    "KNMI_ID": "78871",
+    "active": true
+  },
+  "6660": {
+    "name": "Sint Eustatius (F. D. Roosevelt Airport)",
+    "lat": 17.4955555555556,
+    "lon": -62.9827777777778,
+    "datasets": {
+      "KNMI": {
+        "location_id": "78873"
+      }
+    },
+    "KNMI_ID": "78873",
+    "active": true
+  },
+  "6019": {
+    "name": "Bonaire (Flamingo Airport)",
+    "lat": 12.13,
+    "lon": -68.2758333333333,
+    "datasets": {
+      "KNMI": {
+        "location_id": "78990"
+      }
+    },
+    "KNMI_ID": "78990",
     "active": true
   }
 }

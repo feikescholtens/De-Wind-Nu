@@ -1,7 +1,6 @@
 import { startOfDay, sub, subHours } from "date-fns"
 import module from "date-fns-tz"
 const { getTimezoneOffset } = module
-import fetch from "node-fetch"
 import { Firestore } from "@google-cloud/firestore"
 import { firestoreAuth } from "./forecastFunctions.js"
 
@@ -23,7 +22,7 @@ export function getTimeChangeDates(date) {
   }
   if (DSTEnd.getUTCHours() !== 22) DSTEnd = sub(DSTEnd, { hours: 2 })
 
-  return [DSTStart, DSTEnd]
+  return { toDST: DSTStart, fromDST: DSTEnd }
 
 }
 
@@ -68,9 +67,9 @@ export function calcInterpolation(array, times, startTimeIndexInTimes, stopTimeI
   for (let i = startTimeIndexInTimes; i < array.length; i++) {
     let j
 
-    if (!array[i] && array[i] !== 0) {
+    if (array[i] == undefined) {
       for (j = i + 1; j < array.length; j++) {
-        if (array[j] || array[j] == 0) break
+        if (array[j] != undefined) break
       }
 
       const startIndex = i - 1,
@@ -87,7 +86,7 @@ export function calcInterpolation(array, times, startTimeIndexInTimes, stopTimeI
   }
 
   for (let k = startTimeIndexInTimes; k < stopTimeIndexInTimes; k++) {
-    if (!array[k] && array[k] !== 0) {
+    if (array[k] == undefined) {
       const interpolatedValue = interpolatedData.filter(element => element.index == k)[0].value
       array[k] = interpolatedValue
     }

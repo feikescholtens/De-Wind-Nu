@@ -9,7 +9,7 @@ export async function initMap(dataAlreadyFetched, locationToUse) {
 
   const center = determineCenterToZoomTo("center")
   const zoom = determineCenterToZoomTo("zoom", true)
-  const excludeZoomFitMarkers = ["3318", "4806", "0727", "1843", "9057", "8609", "6823", "2214"]
+  const excludeZoomFitMarkers = ["3318", "4806", "0727", "1843", "9057", "8609", "6823", "2214", "4371", "6660", "6019"]
   mapboxgl.accessToken = "pk.eyJ1IjoiZmVpa2VzY2hvbHRlbnMiLCJhIjoiY2t1aDlpZWEwMGhkYTJwbm02Zmt0Y21sOCJ9.PA3iy-3LQhjCkfxhxL2zUw"
 
   const mapOptions = {

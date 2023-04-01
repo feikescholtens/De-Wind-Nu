@@ -1,6 +1,8 @@
 import { displayPopUpWithName } from "./jsPopUps/functions.js"
 import { displayPopUpFeedback } from "./jsPopUps/feedback.js"
 import { updateGraphs } from "./wind/js/graphOrTableUpdate.js"
+import { updateCurrentWind } from "./wind/js/updateDisplayCurrentWind.js"
+import { getTimezoneOffset } from "https://cdn.jsdelivr.net/npm/date-fns-tz/+esm"
 
 export function setGeneralSettings() { //Sets the correct general settings under the "Instellingen" heading
 
@@ -81,6 +83,25 @@ export function redirect() {
     displayPopUpWithName(location.hash.substring(1))
 }
 
+export function handleTimeZoneWarning() {
+
+  const validTimeZone = "Europe/Amsterdam"
+  const UTCoffset_validTimeZone = getTimezoneOffset(validTimeZone) / (1000 * 60 * 60)
+
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+  const UTCoffset_userTimeZone = getTimezoneOffset(userTimeZone) / (1000 * 60 * 60)
+
+  if (UTCoffset_validTimeZone !== UTCoffset_userTimeZone)
+    alert(`De Wind Nu doesn't work as intended on your device!
+
+Your detected time zone is '${userTimeZone}' but the only supported time zone is '${validTimeZone}' or other time zones with the same UTC (also known as Greenwich Mean Time) offset.
+
+This means that all dates and times aren't displayed correctly. Timestamps of measurements and forecasts differ from their truly measured time in the Netherlands.
+
+Support for more time zones hasn't been implemented yet because De Wind Nu only has stations that are located in the Netherlands.`)
+
+}
+
 export function updateLocalVariables() {
   //Setting local storage variables if never set before
 
@@ -147,7 +168,7 @@ export function updateLocalVariables() {
 
   //v3.5.0
   const hiddenDatasets = JSON.parse(localStorage.getItem("hiddenDatasets"))
-  if (hiddenDatasets["Windsterkte voorspelling"] !== undefined) {
+  if (hiddenDatasets["Windsterkte voorspelling"] != undefined) {
     hiddenDatasets["Windsterkte verwachting"] = hiddenDatasets["Windsterkte voorspelling"]
     hiddenDatasets["Windvlagen verwachting"] = hiddenDatasets["Windvlagen voorspelling"]
     hiddenDatasets["Windrichting verwachting"] = hiddenDatasets["Windrichting voorspelling"]
@@ -168,7 +189,8 @@ export function changeTheme(newValue) {
   if (localStorage.getItem("theme") == "auto") {
     if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
       document.body.classList.add("dark")
-    }
+    } else
+      document.body.classList.remove("dark")
   } else if (localStorage.getItem("theme") == "dark") {
     document.body.classList.add("dark")
   } else if (localStorage.getItem("theme") == "light") {
@@ -176,7 +198,10 @@ export function changeTheme(newValue) {
   }
 
   if (location.pathname == "/") location.reload()
-  if (location.pathname.substring(1, 5) == "wind" && localStorage.getItem("dataForm") == "graphs") updateGraphs()
+  if (location.pathname.substring(1, 5) == "wind" && localStorage.getItem("dataForm") == "graphs") {
+    updateCurrentWind(true)
+    updateGraphs()
+  }
 }
 
 export function changeShowBar(showBarSelector) {

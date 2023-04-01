@@ -31,10 +31,10 @@ export function updateGraphs() {
   let datasets = datasetInfo.copy()
 
   const maxWindSpeed = Math.max(...dataWUnits.windSpeed.filter((value) => {
-    return (!isNaN(value) && value !== undefined)
+    return (!isNaN(value) && value != undefined)
   }))
   const maxGusts = Math.max(...dataWUnits.windGusts.filter((value) => {
-    return (!isNaN(value) && value !== undefined)
+    return (!isNaN(value) && value != undefined)
   }))
 
   const dataTypeArray = ["windSpeed", "windGusts", "windDirection", "windSpeedForecast", "windGustsForecast", "windDirectionForecast"]
@@ -102,7 +102,7 @@ export function updateGraphs() {
     chartWindSpeed.config.options.scales.y.grid.color =
     chartWindDirection.config.options.scales.x.grid.color =
     chartWindDirection.config.options.scales.y.grid.color =
-    getComputedStyle(document.body).getPropertyValue("--lineColour")
+    getComputedStyle(document.body).getPropertyValue("--lineColour1")
 
 }
 

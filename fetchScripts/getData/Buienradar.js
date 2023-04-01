@@ -14,7 +14,7 @@ export async function fetchBuienradar(dateParsed, databaseData, resolve, times) 
   const dateStartFetch = format(utcToZonedTime(dateParsed, timeZone), "yyyy-M-d")
 
   const rawDataString = await fetch(`https://graphdata.buienradar.nl/1.0/actualarchive/weatherstation/${locationID}/?startDate=${dateStartFetch}`)
-    .then(response => response.text()).catch((error) => catchError(resolve, data, error, "KNMI"))
+    .then(response => response.text()).catch((error) => catchError(resolve, data, error, "Buienradar"))
 
   let rawData
   try { rawData = JSON.parse(rawDataString) } catch { return }
@@ -50,15 +50,15 @@ export async function fetchBuienradar(dateParsed, databaseData, resolve, times) 
     // This only happens when the clock turns one hour back when timezones switch from CEST to CET. 02:00, 02:10, 02:20, 02:30, 02:40, 02:50 will 
     // already be in the temprary array, so look at the second value of these times in the measurementTimes array to get the right indici.
 
-    if (rawData.observations[indexTime].values.ff && rawData.observations[indexTime].values.ff >= 0) {
+    if (rawData.observations[indexTime].values.ff != undefined && rawData.observations[indexTime].values.ff > 0) {
       wind_speed.push(rawData.observations[indexTime].values.ff * 0.53995726994149)
     } else wind_speed.push(-999)
 
-    if (rawData.observations[indexTime].values.fx && rawData.observations[indexTime].values.fx >= 0) {
+    if (rawData.observations[indexTime].values.fx != undefined && rawData.observations[indexTime].values.fx > 0) {
       wind_gusts.push(rawData.observations[indexTime].values.fx * 0.53995726994149)
     } else wind_gusts.push(-999)
 
-    if (rawData.observations[indexTime].values.dd && rawData.observations[indexTime].values.dd >= 0) {
+    if (rawData.observations[indexTime].values.dd != undefined && rawData.observations[indexTime].values.dd > 0) {
       wind_direction.push(rawData.observations[indexTime].values.dd)
     } else wind_direction.push(-999)
   })

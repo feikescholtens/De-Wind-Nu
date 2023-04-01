@@ -82,7 +82,7 @@ export async function fetchMVB(dateParsed, databaseData, resolve, times, DSTDate
         // already be in the temprary array, so look at the second value of these times in the measurementTimes array to get the right indici.
 
         if (measurementType.Values[indexTime]) {
-          if (measurementType.Values[indexTime].Value) {
+          if (measurementType.Values[indexTime].Value != undefined) {
             tempArray.push(measurementType.Values[indexTime].Value)
           } else tempArray.push(-999)
         } else tempArray.push(-999)

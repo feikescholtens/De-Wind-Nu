@@ -31,10 +31,10 @@ export async function overviewFetchBuienradar(locations, resolve) {
         //Timezone offset needs to be determined by looking at when CEST ends and begins, thanks for not including it in the API Buienradar
         const dateLocalTimeZone = parseISO(locationData.timestamp),
           DSTDates = getTimeChangeDates(parseISO(locationData.timestamp))
-        DSTDates[0] = addHours(DSTDates[0], 2)
-        DSTDates[1] = addHours(DSTDates[1], 3)
+        DSTDates.toDST = addHours(DSTDates.toDST, 2)
+        DSTDates.fromDST = addHours(DSTDates.fromDST, 3)
         let timeZoneHours
-        if (dateLocalTimeZone >= DSTDates[0] && dateLocalTimeZone < DSTDates[1]) timeZoneHours = 2
+        if (dateLocalTimeZone >= DSTDates.toDST && dateLocalTimeZone < DSTDates.fromDST) timeZoneHours = 2
         else timeZoneHours = 1
         const dateUTC = parseISO(`${locationData.timestamp}+0${timeZoneHours}:00`)
 

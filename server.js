@@ -15,6 +15,7 @@ import { getLocationListParsingHarmonie } from "./developmentFunctions.js"
 global.log = log
 global.MVBAPIKey = {}
 global.port = process.env.PORT || 3000
+global.serverTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
 global.forecastData = {}
 
 //Define variables
@@ -49,7 +50,7 @@ if (port == 3000) {
   app.get("/devTools/giveLocationsParsingHarmonie", (request, response) => getLocationListParsingHarmonie(request, response, locations))
 } else {
   const promises = [] //Used to keep track of the promises, so that when all environmental variables are fetched, the forecast can be fetched
-  const placeHolderVariable = ["GCP_CLIENT_EMAIL", "GCP_LOGGER_KEY", "GCP_PRIVATE_KEY", "GMAIL_APP_KEY", "MVB_PWD_ENCODED", "IPQUALITYSCORE_KEY"].forEach((identifier) => promises.push(setEnvironmentVariable(identifier)))
+  const placeHolderVariable = ["GCP_CLIENT_EMAIL", "GCP_LOGGER_KEY", "GCP_PRIVATE_KEY", "GMAIL_APP_KEY", "MVB_PWD_ENCODED", "IPQUALITYSCORE_KEY", "KDP_EDR_KEY"].forEach((identifier) => promises.push(setEnvironmentVariable(identifier)))
   Promise.all(promises).then(() => fetchForecast())
 }
 

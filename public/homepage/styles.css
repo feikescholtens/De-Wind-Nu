@@ -50,7 +50,7 @@ div.barLocationNotification {
     z-index: 998;
     padding: 10px;
     box-sizing: border-box;
-    background-color: var(--lineColour);
+    background-color: var(--lineColour1);
     color: var(--textColour1);
 }
 
@@ -81,9 +81,10 @@ button#settingsButton {
     bottom: calc(10px + 20px);
     right: 10px;
     border-radius: 50%;
-    height: 40px;
-    width: 40px;
+    height: 50px;
+    width: 50px;
     border: none;
+    box-shadow: -1px 1px 5px 2px rgba(0, 0, 0, 0.5);
 }
 
 button#settingsButton:after {
@@ -99,7 +100,7 @@ button#settingsButton:after {
 }
 
 span#iconSettings {
-    font-size: 32px !important;
+    font-size: 42px !important;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -115,7 +116,11 @@ span#iconSettings {
     }
 
     div.mapboxgl-ctrl-bottom-right {
-        margin-bottom: 45px;
+        margin-bottom: 55px;
+    }
+
+    button.mapboxgl-ctrl-attrib-button {
+        box-shadow: -1px 1px 5px 2px rgba(0, 0, 0, 0.5);
     }
 }
 
@@ -243,7 +248,7 @@ div.listElement {
     align-items: center;
     padding: 8px;
     margin-bottom: 10px;
-    border: 1px var(--lineColour) solid;
+    border: 1px var(--lineColour1) solid;
     border-radius: 15px;
     font-size: 14px;
 }

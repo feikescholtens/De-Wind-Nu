@@ -170,21 +170,11 @@ function setLabels(context) {
   let label = context.dataset.label
 
   if (context.parsed.y !== null) {
+    const datasetLabel = datasetInfo[context.dataset.labelCode].label
+    const valueFormatted = context.formattedValue.replace(".", ",")
 
-    if (context.chart.id == 0) {
-      if (context.datasetIndex == 0) {
-        label = "Windsterkte: " + context.formattedValue.replace(".", ",") + " " + unit
-      } else if (context.datasetIndex == 1) {
-        label = "Windvlagen: " + context.formattedValue.replace(".", ",") + " " + unit
-      } else if (context.datasetIndex == 2) {
-        label = "Windsterkte verwachting: " + context.formattedValue.replace(".", ",") + " " + unit
-      } else if (context.datasetIndex == 3) {
-        label = "Windvlagen verwachting: " + context.formattedValue.replace(".", ",") + " " + unit
-      }
-
-    } else if (context.chart.id == 1) {
-      label += ": " + context.formattedValue.replace(".", ",") + "°"
-    }
+    if (context.chart.id == 0) label = `${datasetLabel}: ${valueFormatted} ${unit}`
+    else if (context.chart.id == 1) label += `: ${valueFormatted}°`
   }
   return label
 }

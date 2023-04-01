@@ -1,9 +1,10 @@
 import { addDays, isToday, parse, format, parseISO, startOfDay } from "https://esm.run/date-fns"
 import { contentUpdate } from "./js/contentUpdate.js"
 import { changeDataForm, formulateErrorMessage, showErrorMessage, hideErrorMessage, hideMain, showLoader, hideLoader, setNewNumber, showMain, showCurrentWindBox, hideCurrentWindBox, changeInterpolation, calcInterpolation, changeTableSort, getAbsoluteDate, getRelativeDate, getDatePickerMax, switchPreviousDay, switchNextDay, setDateInUrl, checkWrapFlexNavBar } from "./js/functions.js"
-import { redirect, updateLocalVariables, changeTheme, changeShowBar, changeUnit, units, setGeneralSettings, addUIListeners, changeDecimals } from "../globalFunctions.js"
+import { redirect, updateLocalVariables, changeTheme, changeShowBar, changeUnit, units, setGeneralSettings, addUIListeners, changeDecimals, handleTimeZoneWarning } from "../globalFunctions.js"
 redirect()
 updateLocalVariables()
+handleTimeZoneWarning()
 // if (isIOS()) document.getElementById("settings").style.width = document.body.clientWidth - 40 + "px"
 
 Object.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
@@ -53,7 +54,7 @@ globalThis.data = {},
   globalThis.decimals, //Is set in setGeneralSettings function
   globalThis.interpolation = localStorage.getItem("interpolation"),
   globalThis.times,
-  globalThis.currentWindBoxSize = 350,
+  globalThis.currentWindBoxSize = 420,
   globalThis.units = units,
   globalThis.overflowWidth = 0
 
@@ -96,15 +97,23 @@ if (localStorage.getItem("tableSort") == "ascending") tableSort.innerHTML = `Tij
 locationLabelNode.style.right = (document.body.clientWidth - document.getElementsByTagName("main")[0].clientWidth) / 2 + "px"
 window.addEventListener("resize", () => locationLabelNode.style.right = (document.body.clientWidth - document.getElementsByTagName("main")[0].clientWidth) / 2 + "px")
 //Canvas
-window.onresize = () => {
+function applyCanvasDynamicStyles() {
   compassCanvas.style.height = compassCanvas.clientWidth
-  currentWindBox.style.width = currentWindBox.style.height = (compassCanvas.clientWidth * (200 / currentWindBoxSize)) / Math.sqrt(2) + "px"
-  currentWindBox.style.marginTop = -(175 / currentWindBoxSize) * compassCanvas.clientWidth + "px"
+  currentWindBox.style.width = currentWindBox.style.height = (compassCanvas.clientWidth * (212 / currentWindBoxSize)) / Math.sqrt(2) + "px"
+  currentWindBox.style.marginTop = -((420 / 2) / currentWindBoxSize) * compassCanvas.clientWidth + "px"
 }
+applyCanvasDynamicStyles()
+window.addEventListener("resize", applyCanvasDynamicStyles)
 
 //Add listeners for changing dates / requesting data
 document.querySelector("[data-previousDay]").addEventListener("click", switchPreviousDay)
-document.querySelector("[data-nextDay]").addEventListener("click", switchNextDay)
+document.querySelector("[data-nextDay]").addEventListener("click", switchNextDay);
+[document.querySelector("[data-previousDay]"), document.querySelector("[data-nextDay]")].forEach(arrow => arrow.addEventListener("click", () => {
+  const dateFetchString = document.querySelector("[data-currentDay]").innerText
+  const dateFetch = getAbsoluteDate(dateFetchString)
+
+  fetchData(startOfDay(dateFetch).toISOString())
+}))
 document.querySelector("[data-currentDay]").addEventListener("click", () => document.querySelector("[data-datePicker]").showPicker())
 document.querySelector("[data-datePicker]").addEventListener("change", (e) => {
   const dateSelected = parse(e.target.value, "yyyy-MM-dd", new Date())
@@ -114,12 +123,6 @@ document.querySelector("[data-datePicker]").addEventListener("change", (e) => {
   setDateInUrl(dateSelected)
 
   fetchData(startOfDay(dateSelected).toISOString())
-})
-document.querySelector("[data-getData]").addEventListener("click", () => {
-  const dateFetchString = document.querySelector("[data-currentDay]").innerText
-  const dateFetch = getAbsoluteDate(dateFetchString)
-
-  fetchData(startOfDay(dateFetch).toISOString())
 })
 
 //Listener functions for when settings are changed
@@ -143,7 +146,7 @@ tableSort.addEventListener("click", () => changeTableSort(tableSort))
 
 addUIListeners()
 checkWrapFlexNavBar(true)
-window.onresize = checkWrapFlexNavBar
+window.addEventListener("resize", checkWrapFlexNavBar)
 
 //Listener for logo and title
 document.querySelectorAll("[data-gobackhome]").forEach(element => element.addEventListener("click", () => { //Somehow the camelcased "data-goBackHome" won't work on Safari

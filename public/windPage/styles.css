@@ -28,17 +28,17 @@ nav {
     display: flex;
     grid-gap: 10px;
     align-items: center;
-    cursor: pointer;
     justify-content: space-between;
 }
 
 #dateControls {
-    width: 270px;
+    width: 221px;
     height: 100%;
     display: grid;
-    grid-template-columns: 44px 133px 44px calc(44px + 5px);
+    grid-template-columns: 44px 133px 44px;
     text-align: center;
     margin-left: auto;
+    cursor: pointer;
 }
 
 #dateControls span {
@@ -48,10 +48,6 @@ nav {
     color: var(--BGColour);
     background-color: var(--textColour2);
     border-radius: 12px;
-}
-
-#dateControls span#getDataButton {
-    margin-left: 5px;
 }
 
 #datePicker {
@@ -73,7 +69,8 @@ p#currentDate {
 
 h4#location {
     color: var(--textColour2);
-    font-size: clamp(12px, 18px, 20px)
+    font-size: clamp(12px, 18px, 20px);
+    cursor: text;
 }
 
 /*  */
@@ -92,12 +89,14 @@ h3#dataInfo {
     width: 150px;
     height: 150px;
     transform: translate(-50%, -50%);
-    margin: calc(-350px / 2) 0 20px 0;
+    margin: calc(-420px / 2) 0 calc(49px - 5px) 0;
+    /* Explanaition bottom margin: height of the tabs div + it's top-padding - the height of the tab indicator */
+    /* This definitely needed to be better documented because it's still unclear why these margins need to be set */
 }
 
 canvas#compass {
-    width: min(calc(100vw - 2 * 10px), 350px);
-    height: min(calc(100vw - 2 * 10px), 350px);
+    width: min(calc(100vw - 2 * 10px), 420px);
+    height: min(calc(100vw - 2 * 10px), 420px);
     left: 50%;
     position: relative;
     transform: translateX(-50%);

@@ -2,6 +2,7 @@ import { logFetchErrors } from "./fetchScripts/fetchUtilFunctions.js"
 import { validID } from "./serverFunctions.js"
 import { fetchVLINDER } from "./fetchScripts/getData/VLINDER.js"
 import { fetchRWS } from "./fetchScripts/getData/Rijkswaterstaat.js"
+import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
 import { fetchBuienradar } from "./fetchScripts/getData/Buienradar.js"
 import { fetchMVB } from "./fetchScripts/getData/MVB.js"
 import { getTimeChangeDates, generateTimes, calcInterpolation, getArchivedForecast, startOfDayTimeZone } from "./getScriptUtilFunctions.js"
@@ -42,8 +43,8 @@ export async function getData(request, response, date, locations, forecastData) 
   if (["VLINDER"].includes(dataset)) NoMeasurementsXHour = 12
   let times
   const DSTDates = getTimeChangeDates(dateParsed)
-  const dateToDST = format(utcToZonedTime(DSTDates[0], timeZone), "dd-MM")
-  const dateFromDST = format(utcToZonedTime(DSTDates[1], timeZone), "dd-MM")
+  const dateToDST = format(utcToZonedTime(DSTDates.toDST, timeZone), "dd-MM")
+  const dateFromDST = format(utcToZonedTime(DSTDates.fromDST, timeZone), "dd-MM")
   const dateRequest = format(utcToZonedTime(dateParsed, timeZone), "dd-MM")
   if (dateRequest == dateToDST) times = generateTimes(60 / NoMeasurementsXHour, "toDST")
   else if (dateRequest == dateFromDST) times = generateTimes(60 / NoMeasurementsXHour, "fromDST")
@@ -65,7 +66,8 @@ export async function getData(request, response, date, locations, forecastData) 
     }
     //KNMI (with Buienradar as a backup option)
     if (location.datasets.KNMI) {
-      return fetchBuienradar(dateParsed, location, resolve, times)
+      return fetchKNMI(dateParsed, location, resolve, times, DSTDates)
+      // return fetchBuienradar(dateParsed, location, resolve, times)
     }
     //Meetnet Vlaamse Banken
     if (location.datasets.MVB) {
@@ -153,7 +155,7 @@ export async function getData(request, response, date, locations, forecastData) 
   }
 
   if (values.windSpeed.length == 0 && values.windGusts.length == 0 && values.windDirection.length == 0 && values.windSpeedForecast && isToday(dateParsed)) {
-    log(`Location "${location.name}" doesn't have any measurements!`, "fetchError", true)
+    log(`Location "${location.name}" doesn't have any measurements for today!`, "fetchError", true)
   }
   if (values.windSpeed.length == 0 && values.windGusts.length == 0 && values.windDirection.length == 0 && !values.windSpeedForecast) {
     log(`Location "${location.name}" doesn't have any data (neither measurements nor forecast)!`, "fetchError", true)

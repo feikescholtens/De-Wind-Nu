@@ -17,7 +17,11 @@ export async function getOverviewData(request, response, locations) {
   const dataFetched = await new Promise(async (resolve) => {
     if (dataSource == "VLINDER") return overviewFetchVLINDER(locations, resolve)
     if (dataSource == "Rijkswaterstaat") return overviewFetchRWS(locations, resolve)
-    if (dataSource == "KNMI") return overviewFetchBuienradar(locations, resolve)
+    if (dataSource == "KNMI") {
+      return overviewFetchBuienradar(locations, resolve)
+      //return overviewFetchKNMI(locations, resolve) 
+      //Not in use yet (function also doesn't exist), implementing this when KNMI EDR API supports CUBE data (so multiple stations can be requested)
+    }
     if (dataSource == "MVB") return overviewFetchMVB(locations, resolve)
   })
 

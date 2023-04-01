@@ -53,7 +53,7 @@ export async function fetchRWS(dateParsed, databaseData, resolve, times, DSTDate
 
         if (measurementType.MetingenLijst[indexTime]) {
           if (measurementType.MetingenLijst[indexTime].Meetwaarde) {
-            if (measurementType.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek) {
+            if (measurementType.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek != undefined) {
               if (measurementType.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek >= 999) {
                 tempArray.push(-999)
               } else tempArray.push(measurementType.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek)

@@ -92,7 +92,6 @@
         <span data-previousDay title="Vorige dag" class="material-symbols-rounded">&#xe408;</span>
         <p data-currentDay id="currentDate"></p><input data-datePicker id="datePicker" type="date">
         <span data-nextDay title="Volgende dag" class="material-symbols-rounded">&#xe409;</span>
-        <span data-getData id="getDataButton" title="Bekijk data voor deze dag" class="material-symbols-rounded">&#xe4fc;</span>
       </div>
     </nav>
 
@@ -101,7 +100,7 @@
     <main class="hidden">
 
         <h2 data-headingCurrentWind class="sectionHeader"></h2>
-            <canvas data-compass id="compass" width="350px" height="350px"></canvas>
+            <canvas data-compass id="compass" width="420px" height="420px"></canvas>
 
             <div data-currentWindBox id="currentWindBox">
                 <div data-currentWind id="currentWind"></div>
@@ -148,7 +147,10 @@
                 </select>
 
                 <label for="showBar">Toon tabbladen met snel wisselen tussen weergavevormen</label>
-                <input type="checkbox" data-showBar id="showBar"></input>
+                <label class="switch">
+                  <input type="checkbox" data-showBar id="showBar"></input>
+                  <span class="slider round"></span>
+                </label>
 
                 <label for="unit">Eenheid</label>
                 <select data-unit id="unit">
@@ -175,7 +177,10 @@
                 </select>
 
                 <label for="interpolation">Interpoleer ontbrekende meetwaarden</label>
-                <input type="checkbox" data-interpolation id="interpolation">
+                <label class="switch">
+                  <input type="checkbox" data-interpolation id="interpolation">
+                  <span class="slider round"></span>
+                </label>
 
               </div>
 

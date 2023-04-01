@@ -1,8 +1,9 @@
 import { changeTiles, changeOverviewForm, changeLocationPreference, setOverviewListData, fitMapToMarkers, panMapToLocation, setOverviewMapData, acquireLocation, showLocationPreferenceOptions, getLocationToUse } from "./functions.js"
-import { redirect, updateLocalVariables, changeTheme, changeShowBar, units, changeUnit, changeDecimals, setGeneralSettings, addUIListeners } from "../globalFunctions.js"
+import { redirect, updateLocalVariables, changeTheme, changeShowBar, units, changeUnit, changeDecimals, setGeneralSettings, addUIListeners, handleTimeZoneWarning } from "../globalFunctions.js"
 import { initMap, initList } from "./mapOrListInit.js"
 redirect()
 updateLocalVariables()
+handleTimeZoneWarning()
 
 globalThis.data = {},
   globalThis.unit = localStorage.getItem("unit"),
