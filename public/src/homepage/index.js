@@ -1,3 +1,7 @@
+//Rollup CSS imports, get extracted into stylesheet file
+import "./styles.css"
+import "../generalStyles.css"
+
 import { changeTiles, changeOverviewForm, changeLocationPreference, setOverviewListData, fitMapToMarkers, panMapToLocation, setOverviewMapData, acquireLocation, showLocationPreferenceOptions, getLocationToUse } from "./functions.js"
 import { redirect, updateLocalVariables, changeTheme, changeShowBar, units, changeUnit, changeDecimals, setGeneralSettings, addUIListeners, handleTimeZoneWarning } from "../globalFunctions.js"
 import { initMap, initList } from "./mapOrListInit.js"

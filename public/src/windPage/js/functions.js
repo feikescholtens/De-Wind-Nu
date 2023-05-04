@@ -1,4 +1,5 @@
 import { contentUpdate } from "./contentUpdate.js"
+import { tooltipLine } from "../js/objects/chartData.js"
 import {
   addHours,
   differenceInCalendarDays,
@@ -10,8 +11,8 @@ import {
   subDays,
   parse,
   startOfDay
-} from "https://esm.run/date-fns"
-import nl from "https://esm.run/date-fns/locale/nl"
+} from "date-fns"
+import nl from "date-fns/locale/nl"
 
 export function changeDataForm(selector, e) {
 

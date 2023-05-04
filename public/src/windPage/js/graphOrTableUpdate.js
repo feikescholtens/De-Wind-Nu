@@ -1,4 +1,5 @@
 import { newChartOptions, checkInterpolated } from "./functions.js"
+import { datasetObject, datasetInfo, optionsWindSpeedChart, optionsWindDirectionChart } from "../js/objects/chartData.js"
 
 const graphNodeElements = [document.querySelector("[data-headingchartwindspeed]"),
   document.querySelector("[data-chartwindSpeed]"),

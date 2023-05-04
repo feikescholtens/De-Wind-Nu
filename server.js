@@ -30,13 +30,10 @@ const locationsString = JSON.stringify(locations)
 app.listen(port, () => log(`server running at port ${port}`, "info"))
 app.use(express.json({ limit: "500kb" }))
 
-app.use("/", express.static(path.resolve(__dirname, "public/homepage")))
-app.use("/wind/", express.static(path.resolve(__dirname, "public/windPage")))
+app.use("/", express.static(path.resolve(__dirname, "public/dist/homepage")))
+app.use("/wind/", express.static(path.resolve(__dirname, "public/dist/windPage")))
 
-app.use("/jsPopUps", express.static(path.resolve(__dirname, "public/jsPopUps")))
-app.use("/images", cors(), express.static(path.resolve(__dirname, "public/images")))
-app.use("/generalStyles.css", express.static(path.resolve(__dirname, "public/generalStyles.css")))
-app.use("/globalFunctions.js", express.static(path.resolve(__dirname, "public/globalFunctions.js")))
+app.use("/images", cors(), express.static(path.resolve(__dirname, "public/assets")))
 
 app.set("view-engine", "ejs")
 app.set("trust proxy", true)
@@ -47,6 +44,7 @@ if (port == 3000) {
   dotenv.config()
   fetchForecast()
 
+  app.use("/src", express.static(path.resolve(__dirname, "public/src"))) //Needed for sourcemaps
   app.get("/devTools/giveLocationsParsingHarmonie", (request, response) => getLocationListParsingHarmonie(request, response, locations))
 } else {
   const promises = [] //Used to keep track of the promises, so that when all environmental variables are fetched, the forecast can be fetched
@@ -57,12 +55,12 @@ if (port == 3000) {
 //ROUTES ---------------------------------------------------------------------------------------------------
 
 //Homepage & windpage
-app.get("/", (request, response) => response.render(path.join(__dirname, "/public/homepage/index.ejs"), { locationsString }))
+app.get("/", (request, response) => response.render(path.join(__dirname, "/public/dist/homepage/index.ejs"), { locationsString }))
 app.get("/getClientIPLocation", (request, response) => getClientIPLocation(request, response))
 app.get("/wind/:id", (request, response) => {
   if (!locations[request.params.id]) { response.redirect("/"); return }
   const spotName = locations[request.params.id].name
-  response.render(path.join(__dirname, "/public/windPage/index.ejs"), { spotName })
+  response.render(path.join(__dirname, "/public/dist/windPage/index.ejs"), { spotName })
 })
 app.get("/1984", (request, response) => response.redirect("/wind/8700"))
 

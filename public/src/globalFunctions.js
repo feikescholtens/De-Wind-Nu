@@ -1,8 +1,8 @@
 import { displayPopUpWithName } from "./jsPopUps/functions.js"
 import { displayPopUpFeedback } from "./jsPopUps/feedback.js"
-import { updateGraphs } from "./wind/js/graphOrTableUpdate.js"
-import { updateCurrentWind } from "./wind/js/updateDisplayCurrentWind.js"
-import { getTimezoneOffset } from "https://cdn.jsdelivr.net/npm/date-fns-tz/+esm"
+import { updateGraphs } from "./windPage/js/graphOrTableUpdate.js"
+import { updateCurrentWind } from "./windPage/js/updateDisplayCurrentWind.js"
+import { getTimezoneOffset } from "date-fns-tz"
 
 export function setGeneralSettings() { //Sets the correct general settings under the "Instellingen" heading
 

@@ -1,5 +1,5 @@
 import { directionToLetters } from "../globalFunctions.js"
-import { parseISO, isValid, differenceInMinutes, differenceInSeconds } from "https://esm.run/date-fns"
+import { parseISO, isValid, differenceInMinutes, differenceInSeconds } from "date-fns"
 import { initMap, initList } from "./mapOrListInit.js"
 
 export function setLocURL(map) {

@@ -23,3 +23,5 @@ LICENSE.md
 projectFiles/
 GitHubImages/
 docs/
+rollup.config.js
+public/src

@@ -1,5 +1,16 @@
 # Change log
 
+## v3.5.2
+- Site functioning again (see bugfixes), loading times should have increased by quite a bit
+
+Bugfixes:
+- Fixed uncached browsers error due to update 2.30.0 of date-fns (see backend work)
+
+Backend work:
+- Finally implemented a bundler (Rollup) which probably prevented the site from not functioning
+
+---
+
 ## v3.5.1
 - Added a windrose background to the current wind screen, giving the drawn arrows on the canvas instantly more meaning
 - Switching dates doesn't require pressing the 'query' button anymore. The API's seem reliable enough that the data can instantly be requested as the date is changed with the arrows

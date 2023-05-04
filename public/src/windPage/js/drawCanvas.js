@@ -13,7 +13,6 @@ function calcDecimalPlaces(angle) {
 
 export function drawCanvasBackground(ctx) {
   correctionMiddle = (currentWindBoxSize - sizeBoxToDrawIn) / 2
-
   const directions = ["N", "NNO", "NO", "ONO", "O", "OZO", "ZO", "ZZO", "Z", "ZZW", "ZW", "WZW", "W", "WNW", "NW", "NNW"]
 
   const NoLines = 32

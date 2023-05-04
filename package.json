@@ -1,10 +1,12 @@
 {
   "name": "de-wind-nu",
-  "version": "3.0.2",
   "description": "De Wind Nu verzamelt actuele weerdata van meetstations door heel Nederland. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.",
   "main": "\u001b[D\u001b[D\u001b[D\u001bapp",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "rollup -c rollup.config.js",
+    "watch": "rollup -c rollup.config.js --watch",
+    "gcp-build": ""
   },
   "type": "module",
   "author": "Feike Scholtens",
@@ -18,16 +20,22 @@
     "ejs": "^3.1.8",
     "express": "^4.18.2",
     "google-auth-library": "^7.11.0",
-    "jsdom": "^19.0.0",
-    "jsfive": "^0.3.8",
     "node-fetch": "^3.2.0",
     "node-schedule": "^2.1.0",
     "nodemailer": "^6.7.0",
     "request-ip": "^3.3.0"
   },
   "devDependencies": {
+    "@rollup/plugin-html": "^1.0.2",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "cssnano": "^6.0.1",
     "dotenv": "^10.0.0",
+    "html-minifier-terser": "^7.2.0",
     "nodemon": "^2.0.20",
-    "transform-coordinates": "^1.0.0"
+    "postcss": "^8.4.23",
+    "rollup": "^3.21.3",
+    "rollup-plugin-postcss": "^4.0.2",
+    "transform-coordinates": "^1.0.0",
+    "uglify-js": "^3.17.4"
   }
 }

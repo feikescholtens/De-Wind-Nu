@@ -1,4 +1,4 @@
-const tooltipLine = {
+export const tooltipLine = {
   id: "tooltipLine",
   beforeDraw: chart => {
     if (chart.tooltip._active && chart.tooltip._active.length) {
@@ -18,14 +18,14 @@ const tooltipLine = {
   }
 }
 
-const datasetObject = {
+export const datasetObject = {
   borderWidth: 2,
   pointHoverBackgroundColor: "rgb(111, 111, 111)",
   pointHoverBorderWidth: 0,
   pointHoverRadius: 4
 }
 
-const datasetInfo = {
+export const datasetInfo = {
   windSpeed: {
     label: "Windsterkte",
     labelCode: "windSpeed",
@@ -64,7 +64,7 @@ const datasetInfo = {
   }
 }
 
-const optionsWindSpeedChart = {
+export const optionsWindSpeedChart = {
   scales: {
     y: {
       display: true,
@@ -146,7 +146,7 @@ const optionsWindSpeedChart = {
   }
 }
 
-let optionsWindDirectionChart = JSON.parse(JSON.stringify(optionsWindSpeedChart))
+export let optionsWindDirectionChart = JSON.parse(JSON.stringify(optionsWindSpeedChart))
 optionsWindDirectionChart.scales.y.title.text = "Windrichting [°]"
 optionsWindDirectionChart.scales.y = {
   ...optionsWindDirectionChart.scales.y,
