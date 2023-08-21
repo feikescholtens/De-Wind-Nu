@@ -86,6 +86,10 @@ export const optionsWindSpeedChart = {
       ticks: {
         font: {
           family: "Lato",
+        },
+        maxTicksLimit: () => {
+          if (document.body.clientWidth < 500) return 13
+          else return 25
         }
       }
     }
@@ -146,18 +150,17 @@ export const optionsWindSpeedChart = {
   }
 }
 
-export let optionsWindDirectionChart = JSON.parse(JSON.stringify(optionsWindSpeedChart))
+export let optionsWindDirectionChart = JSON.parse(JSON.stringify(optionsWindSpeedChart)) //Watch out functions don't get cloned using this method
 optionsWindDirectionChart.scales.y.title.text = "Windrichting [°]"
-optionsWindDirectionChart.scales.y = {
-  ...optionsWindDirectionChart.scales.y,
-  ...{
-    max: 360,
-    min: 0,
-    ticks: {
-      stepSize: 22.5,
-      callback: (value) => { return value.toString().replace(".", ",") }
-    }
-  }
+optionsWindDirectionChart.scales.y.max = 360
+optionsWindDirectionChart.scales.y.min = 0
+optionsWindDirectionChart.scales.y.ticks = {
+  stepSize: 22.5,
+  callback: (value) => { return value.toString().replace(".", ",") }
+}
+optionsWindDirectionChart.scales.x.ticks.maxTicksLimit = () => {
+  if (document.body.clientWidth < 500) return 13
+  else return 25
 }
 
 optionsWindSpeedChart.plugins.tooltip.callbacks.label = (context) => setLabels(context)

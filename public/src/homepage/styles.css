@@ -85,6 +85,7 @@ button#settingsButton {
     width: 50px;
     border: none;
     box-shadow: -1px 1px 5px 2px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
 }
 
 button#settingsButton:after {
@@ -99,8 +100,14 @@ button#settingsButton:after {
     border-radius: 7px;
 }
 
-span#iconSettings {
-    font-size: 42px !important;
+div#iconSettings {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+div#iconSettings svg {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -130,6 +137,14 @@ div.mapboxgl-ctrl-bottom-left,
 div.mapboxgl-ctrl-bottom-right {
     z-index: 999;
 }
+
+/* ---------------- Custom popup styling ------------*/
+
+.mapboxgl-popup-content {
+    box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, .3)
+}
+
+/* ------------------------------------------------- */
 
 .alwaysBlackText {
     color: black;
@@ -175,6 +190,8 @@ div.markerContainerKNMI {
     z-index: 4;
 }
 
+/* Current location marker styling */
+
 div.circleCurrentLocation {
     width: 15px;
     height: 15px;
@@ -197,9 +214,55 @@ div.circleCurrentLocation:after {
     border-radius: 7px;
 }
 
+/* " " " ": animation acquiring new location */
+
+#acquireLocationLoader {
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: calc(19px / 2);
+    top: calc(19px / 2);
+    z-index: -1;
+}
+
+#acquireLocationLoader::after,
+#acquireLocationLoader::before {
+    content: "";
+    box-sizing: border-box;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 4px solid var(--locationLoaderColour);
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: animation 1.2s linear infinite;
+}
+
+@keyframes animation {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+/* ////////////////// */
+
 div.popUp {
     display: grid;
     grid-template-columns: 1fr;
+}
+
+div#popupSuggestionClickMarker {
+    font-size: 18px;
+    font-weight: 600;
 }
 
 p.locationPopUpTitle {
@@ -270,8 +333,9 @@ span.listElementStar {
     vertical-align: bottom;
 }
 
-span.listElementArrow {
+div.listElementArrow {
     vertical-align: middle;
+    display: inline-block;
 }
 
 p.forceFontLoad {

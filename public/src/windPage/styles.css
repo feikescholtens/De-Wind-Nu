@@ -41,10 +41,9 @@ nav {
     cursor: pointer;
 }
 
-#dateControls span {
+#dateControls div {
     width: 44px;
     height: 44px;
-    line-height: 44px;
     color: var(--BGColour);
     background-color: var(--textColour2);
     border-radius: 12px;

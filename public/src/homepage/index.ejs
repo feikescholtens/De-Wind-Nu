@@ -7,8 +7,6 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-
-
   <meta name="description" content="De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met verwachtingen in grafieken. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
     <meta name="keywords" content="actuele wind in knopen,
     windmetingen Brouwersdam,
@@ -36,19 +34,15 @@
     <meta property="twitter:image" content="https://dewindnu.nl/images/logoEncircled.png">
     <meta property="twitter:description" content="De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met verwachtingen in grafieken. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.">
 
-
-  
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <script>
     const data = <%- locationsString %>
 </script>
 
-  <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
-
-  <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
-  <link rel="stylesheet" href="https://use.typekit.net/xus5meu.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet" /> 
+  <!-- Don't bundle the mapbox JS OR the CSS, they will both have a negative effect on the performance -->
 
   <!-- This style must be here and not in the stylesheet -->
   <style>
@@ -76,7 +70,6 @@
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="theme-color" content="#000000">
 
-  <script defer src="https://app.tinyanalytics.io/pixel/Mreolf5HTWkARkpS"></script>
 </head>
 
 <body>
@@ -221,8 +214,10 @@
     if (localStorage.getItem("overviewForm") == "map" || !localStorage.getItem("overviewForm")) {
       main.innerHTML = `<div id="mapWrapper"><div data-barLocationNotification id="barLocationNotificationMap" class="barLocationNotification noDisplay"></div>
       <div id="map"></div>
-      <button id="settingsButton" class="noDisplay">
-        <span title="Scroll naar de instellingen" class="material-symbols-rounded noSelect" id="iconSettings">&#xe8b8;</span>
+      <button id="settingsButton" class="noDisplay" aria-label="settings">
+        <div title="Scroll naar de instellingen" class="noSelect" id="iconSettings">
+          <svg xmlns="http://www.w3.org/2000/svg" height="42" viewBox="0 96 960 960" width="42"><path d="M552 1001H408q-18 0-32-11t-16-29l-15-94q-13-4-29.5-13.5T288 835l-86 41q-17 8-34.5 2T141 855L68 725q-10-16-5.5-33.5T81 663l80-58q-1-6-1.5-14.5T159 576q0-6 .5-14.5T161 547l-80-59q-14-11-18.5-28.5T68 427l73-130q10-15 27.5-21.5T202 277l88 40q10-8 26-17t29-13l15-97q2-18 16-29t32-11h144q18 0 32 11t16 29l15 96q13 5 29.5 13.5T672 317l86-40q16-8 34-2t27 22l74 129q10 16 5.5 34T879 488l-81 57q1 7 2 15.5t1 15.5q0 7-1 15t-2 15l81 57q14 11 18.5 28.5T893 725l-75 130q-9 17-26 23t-34-2l-87-41q-11 9-26.5 18.5T615 867l-15 94q-2 18-16 29t-32 11Zm-74-295q54 0 92-38t38-92q0-54-38-92t-92-38q-54 0-92 38t-38 92q0 54 38 92t92 38Zm0-60q-30 0-50-20.5T408 576q0-29 20-49.5t50-20.5q29 0 49.5 20.5T548 576q0 29-20.5 49.5T478 646Zm2-70Zm-36 331h71l15-111q34-8 65-25t55-44l106 46 31-59-92-67q4-18 7-35.5t3-35.5q0-18-2.5-35.5T695 505l93-67-32-59-105 46q-23-28-54-47t-67-23l-14-110h-72l-13 110q-36 6-67.5 24.5T308 425l-104-46-32 59 91 66q-4 18-7 36t-3 36q0 18 3 36.5t7 35.5l-91 66 32 59 104-46q25 26 56.5 44t66.5 26l13 110Z"/></svg>
+        </div>
       </button></div>${main.innerHTML}`
     //Above lines should make the same HTML as in functions.js (homepage) bottom of function changeOverviewForm 
     }
@@ -233,8 +228,12 @@
 
     main.innerHTML = `<div class="tabContainerWrapper"><div data-overviewForm class="tabContainer">
         <div class="tabHeader">
-            <div data-map class="active"><span class="material-symbols-rounded tabIcon">&#xe80b;</span>Kaart</div>
-            <div data-list><span class="material-symbols-rounded tabIcon">&#xe8d2;</span>Lijst</div>
+            <div data-map class="active"><div class="tabIcon">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M480.862 1001q-88.024 0-165.443-33.5Q238 934 179.947 876.286q-58.052-57.715-91.5-135.06Q55 663.881 55 575.94 55 488 88.447 410.724q33.448-77.275 91.5-135Q238 218 315.536 184q77.535-34 165.692-34 88.157 0 165.109 34 76.953 34 134.808 91.5Q839 333 872.5 410.446q33.5 77.445 33.5 165.5 0 88.054-33.404 165.442t-91.382 135.196q-57.977 57.807-135.334 91.112Q568.524 1001 480.862 1001ZM439 906v-81q-35 0-58.017-25.412-23.016-25.413-23.016-59.588v-43L159 498q-5 20-7 38.5t-2 37.939q0 126.231 82 221.896Q314 892 439 906Zm286-105q21-23 37-49.5t27-55.5q11-29 16.5-59.341T811 574q0-101.854-56-185.927T605 265v17q0 33.763-24.147 58.881Q556.706 366 522.96 366H439v84.701Q439 468 425.5 478.5T394.701 489H315v85h251.195q16.575 0 27.69 13.144Q605 600.287 605 616.755V740h41q28 0 49.58 17T725 801Z"/></svg>
+            </div>Kaart</div>
+            <div data-list><div class="tabIcon">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M184 908q-19.75 0-33.375-13.675Q137 880.649 137 859.825 137 840 150.625 826.5 164.25 813 184 813h338q19.75 0 33.375 13.675Q569 840.351 569 860.175 569 881 555.375 894.5 541.75 908 522 908H184Zm0-379q-19.75 0-33.375-13.675Q137 501.649 137 481.825 137 462 150.625 448 164.25 434 184 434h592q19.75 0 33.375 14.175 13.625 14.176 13.625 34Q823 502 809.375 515.5 795.75 529 776 529H184Zm0 189q-19.75 0-33.375-13.675Q137 690.649 137 670.825 137 651 150.625 637.5 164.25 624 184 624h592q19.75 0 33.375 13.675Q823 651.351 823 671.175 823 691 809.375 704.5 795.75 718 776 718H184Zm0-379q-19.75 0-33.375-13.675Q137 311.649 137 290.825 137 271 150.625 257.5 164.25 244 184 244h592q19.75 0 33.375 13.675Q823 271.351 823 291.175 823 312 809.375 325.5 795.75 339 776 339H184Z"/></svg>
+            </div>Lijst</div>
         </div>
         <div class="tabIndicator"></div>
     </div></div>${main.innerHTML}` 

@@ -1,6 +1,9 @@
 //Rollup CSS imports, get extracted into stylesheet file
 import "./styles.css"
 import "../generalStyles.css"
+import "../../assets/xus5meu.css"
+import "../../assets/chart.min.js"
+import "../../assets/Mreolf5HTWkARkpS"
 
 import { addDays, isToday, parse, format, parseISO, startOfDay } from "date-fns"
 import { contentUpdate } from "./js/contentUpdate.js"
@@ -26,7 +29,7 @@ try {
   dateURL = null
   relativeDate = "Vandaag"
   dateISO = startOfDay(getAbsoluteDate(relativeDate)).toISOString()
-  history.replaceState(null, null, `${window.location.origin + window.location.pathname}`)
+  history.replaceState(null, null, `${window.location.origin + window.location.pathname + window.location.hash}`)
 }
 document.querySelector("[data-currentDay]").innerText = relativeDate
 if (dateURL !== null) document.querySelector("[data-datePicker]").value = format(dateURL, "yyyy-MM-dd")

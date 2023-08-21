@@ -34,6 +34,7 @@ app.use("/", express.static(path.resolve(__dirname, "public/dist/homepage")))
 app.use("/wind/", express.static(path.resolve(__dirname, "public/dist/windPage")))
 
 app.use("/images", cors(), express.static(path.resolve(__dirname, "public/assets")))
+app.use("/robots.txt", cors(), express.static(path.resolve(__dirname, "public/assets/robots.txt")))
 
 app.set("view-engine", "ejs")
 app.set("trust proxy", true)

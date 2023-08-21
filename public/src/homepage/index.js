@@ -1,8 +1,10 @@
 //Rollup CSS imports, get extracted into stylesheet file
 import "./styles.css"
 import "../generalStyles.css"
+import "../../assets/xus5meu.css"
+import "../../assets/Mreolf5HTWkARkpS"
 
-import { changeTiles, changeOverviewForm, changeLocationPreference, setOverviewListData, fitMapToMarkers, panMapToLocation, setOverviewMapData, acquireLocation, showLocationPreferenceOptions, getLocationToUse } from "./functions.js"
+import { changeTiles, changeOverviewForm, changeLocationPreference, setOverviewListData, fitMapToMarkers, panMapToLocation, setOverviewMapData, acquireLocation, showLocationPreferenceOptions, getLocationToUse, distanceLocationToCurrentLocation } from "./functions.js"
 import { redirect, updateLocalVariables, changeTheme, changeShowBar, units, changeUnit, changeDecimals, setGeneralSettings, addUIListeners, handleTimeZoneWarning } from "../globalFunctions.js"
 import { initMap, initList } from "./mapOrListInit.js"
 redirect()
@@ -14,6 +16,7 @@ globalThis.data = {},
   globalThis.decimals, //Is set in setGeneralSettings function
   globalThis.units = units,
   globalThis.popUps = {},
+  globalThis.closestMarkerToCurrentLocationObject = {},
   globalThis.markersLats = [],
   globalThis.markersLons = [],
   globalThis.lowAccuracyLocation,
@@ -65,6 +68,9 @@ locationPreferenceSelector.onchange = () => changeLocationPreference(locationPre
 
 //Initialize main UI's
 acquireLocation().then((locationToUse) => {
+  //Add the distance to the user's current location to the data object
+  if (locationToUse) { for (const id in data) data[id].distance = distanceLocationToCurrentLocation(locationToUse.lat, locationToUse.lon, data[id].lat, data[id].lon) }
+
   if (localStorage.getItem("overviewForm") == "map") initMap(false, locationToUse)
   if (localStorage.getItem("overviewForm") == "list") initList(false, locationToUse)
 

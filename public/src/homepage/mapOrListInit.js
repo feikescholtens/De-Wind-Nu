@@ -42,6 +42,9 @@ export async function initMap(dataAlreadyFetched, locationToUse) {
     fetch("getOverviewData/MVB").then(response => response.json()).then(dataOverview => setOverviewMapData({ MVB: dataOverview }, map))
   } else setOverviewMapData(globalThis.data, map)
 
+  const dataDistanceSorted = Object.keys(data).sort((a, b) => data[a].distance - data[b].distance)
+  const closestLocationID = dataDistanceSorted[0]
+
   for (const id in data) {
     if (!excludeZoomFitMarkers.includes(id)) {
       markersLats.push(data[id].lat)
@@ -64,10 +67,11 @@ export async function initMap(dataAlreadyFetched, locationToUse) {
     globalThis.popUps[id] = { Node: popup.querySelector("div") }
 
     const popUpObject = new mapboxgl.Popup({ offset: 13, closeButton: false }).setDOMContent(popup)
-    new mapboxgl.Marker(marker).setLngLat([data[id].lon, data[id].lat]).setPopup(popUpObject).addTo(map)
-
+    const markerObject = new mapboxgl.Marker(marker).setLngLat([data[id].lon, data[id].lat])
+    markerObject.setPopup(popUpObject).addTo(map)
     globalThis.popUps[id].Object = popUpObject
 
+    if (id === closestLocationID) { globalThis.closestMarkerToCurrentLocationObject = markerObject }
   }
 
   [markersLats, markersLons].forEach(array => array.sort())
@@ -79,11 +83,37 @@ export async function initMap(dataAlreadyFetched, locationToUse) {
     history.replaceState({}, "De Wind Nu", "/")
     addCurrentLocationMarker(true, locationToUse.lat, locationToUse.lon)
   }
+
+  //Show popup with instruction / suggestion to click on windsack to view more measurements on closest location
+  //Code pieces that are linked to this functionality:
+  //
+  // functions.js lines 188 - 191
+  // globalFunctions.js line 113
+  if (localStorage.getItem("popupClickOnLocationSuggestionShowed") == "1") return //This suggestion has already been shown once
+
+  const popupElement = document.createElement("div")
+  popupElement.id = "popupSuggestionClickMarker"
+  popupElement.classList = "popUp alwaysBlackText"
+  popupElement.innerHTML = "Druk op een windzak voor de recentste meting. <br><br> Vervolgens kun je met de gekleurde knop alle metingen bekijken!"
+  const popUpObject = new mapboxgl.Popup({ offset: 13, closeButton: false }).setDOMContent(popupElement)
+  closestMarkerToCurrentLocationObject.setPopup(popUpObject)
+  if (localStorage.getItem("userChoseLocationPreference") == "1") closestMarkerToCurrentLocationObject.togglePopup()
+
+  const popUpObjectOriginal = globalThis.popUps[closestLocationID].Object
+
+  closestMarkerToCurrentLocationObject._element.addEventListener("click", () => closestMarkerToCurrentLocationObject.setPopup(popUpObjectOriginal))
+  popUpObject.once("close", () => {
+    if (!document.querySelector("[data-locationpopuptitle]"))
+      localStorage.setItem("popupClickOnLocationSuggestionShowed", "1")
+
+    closestMarkerToCurrentLocationObject.setPopup(popUpObjectOriginal)
+  })
+
+  /////////
+
 }
 
 export function initList(dataAlreadyFetched, locationToUse) {
-
-  if (locationToUse) { for (const id in data) data[id].distance = distance(locationToUse.lat, locationToUse.lon, data[id].lat, data[id].lon) }
 
   const dataSorted = Object.entries(data)
   if (locationToUse) dataSorted.sort((a, b) => { return a[1].distance - b[1].distance }) //If position is retrieved, sort by distance
@@ -110,23 +140,4 @@ export function initList(dataAlreadyFetched, locationToUse) {
     fetch("getOverviewData/KNMI").then(response => response.json()).then(dataOverview => setOverviewListData({ KNMI: dataOverview }))
     fetch("getOverviewData/MVB").then(response => response.json()).then(dataOverview => setOverviewListData({ MVB: dataOverview }))
   } else setOverviewListData(globalThis.data)
-}
-
-function distance(lat1, lon1, lat2, lon2) {
-  if ((lat1 == lat2) && (lon1 == lon2)) return 0
-  else {
-    const radlat1 = Math.PI * lat1 / 180
-    const radlat2 = Math.PI * lat2 / 180
-    const theta = lon1 - lon2
-    const radtheta = Math.PI * theta / 180
-
-    let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta)
-    if (dist > 1) dist = 1
-    dist = Math.acos(dist)
-    dist = dist * 180 / Math.PI
-    dist = dist * 60 * 1.1515
-    dist = dist * 1.609344
-
-    return Math.round(dist)
-  }
 }

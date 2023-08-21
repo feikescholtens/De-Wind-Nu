@@ -17,7 +17,7 @@ import nl from "date-fns/locale/nl"
 export function changeDataForm(selector, e) {
 
   let clickedOption
-  if (e) clickedOption = e.target.textContent.substring(1) //When using tabs
+  if (e) clickedOption = e.target.textContent.replace(/\s/g, "") //When using tabs
   else clickedOption = selector.value //When using selector in settings
 
   //Check if the dataForm is changed at all

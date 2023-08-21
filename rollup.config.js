@@ -73,7 +73,7 @@ function buildWebPageBundleConfig(mainJSFile, HTMLFile, destinationDir, pathURL)
             }),
       }),
       postcss({
-        extract: "styles.css",
+        extract: "styles.css", //DO EXTRACT CSS! Not doing it recudes Lighthouse performance with almost 40...
         plugins: [cssnano()]
       }),
       minifyJS(`${destinationDir}/index.unmin.js`, `${destinationDir}/index.js`, pathURL),

@@ -23,6 +23,7 @@ body {
     --lineColour3: #dedede;
     --anchorColour: #0000EE;
     --shadowColour: grey;
+    --locationLoaderColour: #fff;
 
     background-color: var(--BGColour);
     color: var(--textColour1);
@@ -39,6 +40,7 @@ body.dark {
     --lineColour3: #3c3c3c;
     --anchorColour: #d686ff;
     --shadowColour: var(--BGColour);
+    --locationLoaderColour: #545454;
 }
 
 header,
@@ -47,6 +49,11 @@ main,
 footer {
     max-width: 800px;
     margin: 0 auto;
+}
+
+svg {
+    fill: currentColor;
+    /* Gives SVG's the same color as the text-color */
 }
 
 .hidden {
@@ -119,16 +126,6 @@ h2.sectionHeader {
     padding: 10px 10px 0 10px;
 }
 
-.material-symbols-rounded {
-    cursor: pointer;
-    margin: auto 0;
-    font-variation-settings:
-        "FILL"0,
-        "wght"800,
-        "GRAD"0,
-        "opsz"48
-}
-
 /* Text selector styling */
 
 .text-selector {
@@ -192,10 +189,19 @@ h2.sectionHeader {
     margin-top: -5px;
 }
 
-span.tabIcon {
+div.tabIcon {
     vertical-align: middle;
     margin-right: 5px;
+    display: inline-block;
+    height: 44px;
     pointer-events: none;
+}
+
+div.tabIcon svg {
+    display: block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 /* Marker & loader styling */
@@ -502,6 +508,7 @@ div.close {
     height: 21px;
     text-align: center;
     line-height: 21px;
+    /* cursor: pointer; */
 }
 
 div.messageBox table {

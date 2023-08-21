@@ -1,5 +1,25 @@
 # Change log
 
+## v3.5.3
+- Improved performance by bundling even more stylesheets and scripts and using inline SVG icons instead of the big Material Symbols library
+
+- Improved visibility of the popups by blurring and darkening the background
+
+- Updated the coordinates of the Rijkswaterstaat locations using this sheet: https://rijkswaterstaatdata.nl/publish/pages/199518/locatiecodes_waswordt.xlsx. Affected locations: HKZA 1, HKZA 2 and Q1 platform
+
+- Labels of the x-axis are now more logical, being either steps of 1 or 2 hours instead of labels going like this: 00:00, 00:50, 01:40, etc (thanks Ton Albers for the feedback/suggestion)
+
+- Showing a visual indication when the high accuracy location on the map is being updated
+
+- Improved popup visibility by giving it a shadow
+
+- Showing a popup at the closest location to the user's location to hint the user to click a windsack and navigate towards the windPage 
+
+Bugfixes:
+- Fixed URL hashes when displaying / closing popups
+
+---
+
 ## v3.5.2
 - Site functioning again (see bugfixes), loading times should have increased by quite a bit
 
@@ -13,11 +33,17 @@ Backend work:
 
 ## v3.5.1
 - Added a windrose background to the current wind screen, giving the drawn arrows on the canvas instantly more meaning
+
 - Switching dates doesn't require pressing the 'query' button anymore. The API's seem reliable enough that the data can instantly be requested as the date is changed with the arrows
+
 - Using different API's for some locations now, so that gusts are available or so that the data updates faster. Modified locations: Houtribdijk, IJmuiden Buitenhaven, Vlieland, Wijdenes, Lauwersoog, Europlatform and Geulhaven radarpost
+
 - Added locations: Buitengaats platform, F3-FB1 platform, Lichteiland Goeree KNMI sensor, Saba (Juancho E. Yrausquin Airport), Sint Eustatius (F. D. Roosevelt Airport) and Bonaire (Flamingo Airport)
+
 - Some visual footer improvements: replaced checkboxes with sliders / switches
+
 - Made settings button larger and added shadow
+
 - Now showing a user an alert notifing them that their time zone differs from the 'Europe/Amsterdam' one on which the site is build on
 
 Bugfixes:

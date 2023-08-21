@@ -106,10 +106,11 @@ export function updateLocalVariables() {
   //Setting local storage variables if never set before
 
   //Background / site functioning
-  if (!localStorage.getItem("hadFirstVisit")) {
+  if (!localStorage.getItem("seenWelcomeScreen")) {
     displayPopUpWithName("welkom")
-    localStorage.setItem("hadFirstVisit", "1")
+    localStorage.setItem("seenWelcomeScreen", "1")
   }
+  if (!localStorage.getItem("popupClickOnLocationSuggestionShowed")) localStorage.setItem("popupClickOnLocationSuggestionShowed", "0")
   //General settings
   //Theme setting is controlled in the index.ejs files to prevent flasing due to loading time
   if (!localStorage.getItem("showBar")) localStorage.setItem("showBar", 1)
@@ -179,6 +180,9 @@ export function updateLocalVariables() {
 
     localStorage.setItem("hiddenDatasets", JSON.stringify(hiddenDatasets))
   }
+
+  //v3.5.3
+  localStorage.removeItem("hadFirstVisit")
 }
 
 //Functions to be executed when one of the global settings change
