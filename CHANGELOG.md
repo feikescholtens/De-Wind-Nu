@@ -1,5 +1,13 @@
 # Change log
 
+## v3.5.4
+
+Bugfixes:
+- Fixed forecast parse script crashing! Caused by missing forecast GRIB files from the Euros website, but the fault remained mainly by my not so great code
+
+Backend work:
+- Fixed the analytics not getting any updates. This was because I bundled the analytics script into the main Javascript file. Because this script changes via the URL, it didn't work. Now it is installed like it's supposed to be
+
 ## v3.5.3
 - Improved performance by bundling even more stylesheets and scripts and using inline SVG icons instead of the big Material Symbols library
 

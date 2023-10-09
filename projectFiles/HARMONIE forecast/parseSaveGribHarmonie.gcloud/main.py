@@ -28,7 +28,7 @@ def logNodeApp(message, Type, addTimeStamp):
 os.environ["TZ"] = "Europe/Amsterdam"
 timezone = pytz.timezone("Europe/Amsterdam")
 
-#Locations from 7 february 2022
+#Locations from 9 october 2023
 locations = json.load(open("locations.json"))
 projectIdAndBucket = "de-wind-nu"
 
@@ -49,23 +49,25 @@ def runFunc (event, context):
   oldForecast = document.get().to_dict()
   now = datetime.now()
 
-  if ("timeRun" in oldForecast.keys()):
-    nextRunAvailable = parse(oldForecast["timeRun"]) + timedelta(hours=(2 + 6), minutes=55)
-    if (now < nextRunAvailable and forceFetchandSave == False): 
-      logNodeApp("Won't check for forecast availability, update not online yet!", "info", True)
-      return
+  if (oldForecast):
+    if ("timeRun" in oldForecast.keys()):
+      nextRunAvailable = parse(oldForecast["timeRun"]) + timedelta(hours=(2 + 6), minutes=55)
+      if (now < nextRunAvailable and forceFetchandSave == False): 
+        logNodeApp("Won't check for forecast availability, update not online yet!", "info", True)
+        return
 
   page = get("https://www.euroszeilen.utwente.nl/weer/grib/")
   tree = html.fromstring(page.content)
 
   timeMostRecentRun = parse(tree.cssselect(".container:nth-child(2) .row:nth-child(4) div p")[0].text_content()[11:27])
 
-  if ("timeRun" in oldForecast.keys()):
-    if (timeMostRecentRun <= parse(oldForecast["timeRun"]) and forceFetchandSave == False):
-      logNodeApp("New forecast run not available yet (retrieved from scraped page), retrying in 1 minute!", "info", True)
-      if (datetime.now().minute == 10):
-        logNodeApp("This was the last time trying to fetch!", "info", True)
-      return
+  if (oldForecast):
+    if ("timeRun" in oldForecast.keys()):
+      if (timeMostRecentRun <= parse(oldForecast["timeRun"]) and forceFetchandSave == False):
+        logNodeApp("New forecast run not available yet (retrieved from scraped page), retrying in 1 minute!", "info", True)
+        if (datetime.now().minute == 10):
+          logNodeApp("This was the last time trying to fetch!", "info", True)
+        return
   
   logNodeApp("New run available, fetching and saving it...", "info", True)
 
@@ -137,12 +139,13 @@ def runFunc (event, context):
         newForecast[location["id"]] = series
       
   #Joining the two forecast files
-  if "timeRun" in oldForecast.keys():
-    if (oldForecast["timeRun"] == saveForecast["timeRun"] and forceFetchandSave == False):
-      logNodeApp("New forecast run not available yet (retrieved from parsed data), retrying in 1 minute!", "info", True)
-      if (datetime.now().minute == 5):
-        logNodeApp("This was the last time trying to fetch!", "error", True)
-      return
+  if (oldForecast):
+    if "timeRun" in oldForecast.keys():
+      if (oldForecast["timeRun"] == saveForecast["timeRun"] and forceFetchandSave == False):
+        logNodeApp("New forecast run not available yet (retrieved from parsed data), retrying in 1 minute!", "info", True)
+        if (datetime.now().minute == 5):
+          logNodeApp("This was the last time trying to fetch!", "error", True)
+        return
 
   keys = list(newForecast.keys())
 
@@ -152,7 +155,10 @@ def runFunc (event, context):
   if (len(keys) <= 1):
     indexTimeNewForecast = 0
   else:
-    if (keys[1] not in oldForecast.keys()):
+    if (oldForecast is None):
+      NoTimesToDelete = 0
+      indexTimeNewForecast = 0
+    elif (keys[1] not in oldForecast.keys()):
       NoTimesToDelete = 0
       indexTimeNewForecast = 0
     else:
@@ -162,25 +168,32 @@ def runFunc (event, context):
         else:
           indexTimeNewForecast = 0
 
-  if (keys[1] in oldForecast.keys()):
-    NoTimesToDelete = len(oldForecast[keys[1]]) - indexTimeNewForecast
+  if (oldForecast):
+    if (keys[1] in oldForecast.keys()):
+      NoTimesToDelete = len(oldForecast[keys[1]]) - indexTimeNewForecast
 
   for i in range(len(keys)):
     if (keys[i] !=  "timeRun"):
       locationID = keys[i]
 
-      if (locationID not in oldForecast.keys()):
-        oldForecast[locationID] = []
+      if (oldForecast):
+        if (locationID not in oldForecast.keys()):
+          oldForecast[locationID] = []
 
       #Deleting old forecasts (for which newer is available)
-      if (len(oldForecast[locationID]) >= NoTimesToDelete):
-        for j in range(NoTimesToDelete):
-          oldForecast[locationID].pop()
-      else:
-        for j in range(len(oldForecast[locationID])):
-          oldForecast[locationID].pop()
+      if (oldForecast):
+        if (len(oldForecast[locationID]) >= NoTimesToDelete):
+          for j in range(NoTimesToDelete):
+            oldForecast[locationID].pop()
+        else:
+          for j in range(len(oldForecast[locationID])):
+            oldForecast[locationID].pop()
 
-      saveForecast[locationID] = oldForecast[locationID] + newForecast[locationID]
+      if (oldForecast):
+        saveForecast[locationID] = oldForecast[locationID] + newForecast[locationID]
+      else:
+        saveForecast[locationID] = newForecast[locationID]
+
 
   document.set(saveForecast)
 

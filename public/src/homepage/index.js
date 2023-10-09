@@ -2,7 +2,6 @@
 import "./styles.css"
 import "../generalStyles.css"
 import "../../assets/xus5meu.css"
-import "../../assets/Mreolf5HTWkARkpS"
 
 import { changeTiles, changeOverviewForm, changeLocationPreference, setOverviewListData, fitMapToMarkers, panMapToLocation, setOverviewMapData, acquireLocation, showLocationPreferenceOptions, getLocationToUse, distanceLocationToCurrentLocation } from "./functions.js"
 import { redirect, updateLocalVariables, changeTheme, changeShowBar, units, changeUnit, changeDecimals, setGeneralSettings, addUIListeners, handleTimeZoneWarning } from "../globalFunctions.js"

@@ -3,7 +3,6 @@ import "./styles.css"
 import "../generalStyles.css"
 import "../../assets/xus5meu.css"
 import "../../assets/chart.min.js"
-import "../../assets/Mreolf5HTWkARkpS"
 
 import { addDays, isToday, parse, format, parseISO, startOfDay } from "date-fns"
 import { contentUpdate } from "./js/contentUpdate.js"
