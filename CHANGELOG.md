@@ -1,5 +1,10 @@
 # Change log
 
+## v3.5.5
+
+Bugfixes:
+- Fixed site crashing due to timezone switch (DST) error
+
 ## v3.5.4
 
 Bugfixes:
