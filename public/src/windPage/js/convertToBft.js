@@ -12,7 +12,7 @@ export function convertToBft(data, dataWUnits) {
       }
 
       //Loop through every windforce and check if the value falls into that category
-      for (let j = 0; j < (units["Bft"].ranges.length - 2); j++) {
+      for (let j = 0; j < (units["Bft"].ranges.length - 1); j++) {
         if ((parseFloat(data[dataType][i]) >= units["Bft"].ranges[j]) && (parseFloat(data[dataType][i]) < units["Bft"].ranges[j + 1])) {
           if (dataWUnits[dataType][i]) dataWUnits[dataType][i] = (j + 1).toString()
         }

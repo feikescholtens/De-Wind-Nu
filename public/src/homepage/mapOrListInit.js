@@ -37,7 +37,7 @@ export async function initMap(dataAlreadyFetched, locationToUse) {
 
   if (!dataAlreadyFetched) {
     fetch("getOverviewData/VLINDER").then(response => response.json()).then(dataOverview => setOverviewMapData({ VLINDER: dataOverview }, map))
-    fetch("getOverviewData/Rijkswaterstaat").then(response => response.json()).then(dataOverview => setOverviewMapData({ Rijkswaterstaat: dataOverview }, map))
+    fetch("getOverviewData/RWS").then(response => response.json()).then(dataOverview => setOverviewMapData({ RWS: dataOverview }, map))
     fetch("getOverviewData/KNMI").then(response => response.json()).then(dataOverview => setOverviewMapData({ KNMI: dataOverview }, map))
     fetch("getOverviewData/MVB").then(response => response.json()).then(dataOverview => setOverviewMapData({ MVB: dataOverview }, map))
   } else setOverviewMapData(globalThis.data, map)
@@ -136,7 +136,7 @@ export function initList(dataAlreadyFetched, locationToUse) {
 
   if (!dataAlreadyFetched) {
     fetch("getOverviewData/VLINDER").then(response => response.json()).then(dataOverview => setOverviewListData({ VLINDER: dataOverview }))
-    fetch("getOverviewData/Rijkswaterstaat").then(response => response.json()).then(dataOverview => setOverviewListData({ Rijkswaterstaat: dataOverview }))
+    fetch("getOverviewData/RWS").then(response => response.json()).then(dataOverview => setOverviewListData({ RWS: dataOverview }))
     fetch("getOverviewData/KNMI").then(response => response.json()).then(dataOverview => setOverviewListData({ KNMI: dataOverview }))
     fetch("getOverviewData/MVB").then(response => response.json()).then(dataOverview => setOverviewListData({ MVB: dataOverview }))
   } else setOverviewListData(globalThis.data)

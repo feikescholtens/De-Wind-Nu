@@ -9,7 +9,7 @@ export const popUpData = {
     In dit overzicht zijn ook de wind- krachten en richtingen weergegeven.</p>
     <br>
     <div id="gridWrapper">
-      <div><button class="colouredButton popupRijkswaterstaat">Groene</button></div><div>locaties zijn van Rijkswaterstaat</div>
+      <div><button class="colouredButton popupRWS">Groene</button></div><div>locaties zijn van Rijkswaterstaat</div>
       <div><button class="colouredButton popupKNMI">Blauwe</button></div><div>locaties zijn van het KNMI</div>
       <div><button class="colouredButton popupMVB">Rode</button></div><div>locaties zijn van het Meetnet Vlaamse Banken</div>
       <div><button class="colouredButton popupVLINDER">Gele</button></div><div>locaties zijn van het VLINDER project van de UGent (deze voldoen niet aan de officiële eisen voor meetstations 
@@ -34,7 +34,7 @@ export const popUpData = {
     kunnen onderaan veranderd worden (scroll op de witte balk bovenaan). Ook kan er een zeekaart toegevoegd worden.</p>
     <br>
     <div id="gridWrapper">
-      <div><button class="colouredButton popupRijkswaterstaat">Groene</button></div><div>locaties zijn van Rijkswaterstaat</div>
+      <div><button class="colouredButton popupRWS">Groene</button></div><div>locaties zijn van Rijkswaterstaat</div>
       <div><button class="colouredButton popupKNMI">Blauwe</button></div><div>locaties zijn van het KNMI</div>
       <div><button class="colouredButton popupMVB">Rode</button></div><div>locaties zijn van het Meetnet Vlaamse Banken</div>
       <div><button class="colouredButton popupVLINDER">Gele</button></div><div>locaties zijn van het VLINDER project van de UGent (deze voldoen niet aan de officiële eisen voor meetstations 
@@ -100,7 +100,7 @@ export const popUpData = {
      mogelijk gemaakt door de data van de volgende bronnen: </p>
      <ul>
      <li><a target='_blank' href='https://rijkswaterstaat.nl/'>Rijkswaterstaat</a> waterdata;</li>
-     <li>KNMI, aangeleverd door de website van <a target='_blank' href='https://www.buienradar.nl'>Buienradar.nl</a>;</li>
+     <li>KNMI;</li>
      <li>Meetnet Vlaamse Banken, van de Vlaamse Hydrografie 
      (zie <a href="https://www.agentschapmdk.be/nl/vlaamse-hydrografie" target="_blank">Vlaamse Hydrografie | Agentschap MDK</a>);</li>
      <li><a target='_blank' href='https://vlinder.ugent.be/'>VLINDER.nl</a> project van de UGent.</li>

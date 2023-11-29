@@ -1,9 +1,8 @@
 import { logFetchErrors } from "./fetchScripts/fetchUtilFunctions.js"
 import { validID } from "./serverFunctions.js"
 import { fetchVLINDER } from "./fetchScripts/getData/VLINDER.js"
-import { fetchRWS } from "./fetchScripts/getData/Rijkswaterstaat.js"
+import { fetchRWS } from "./fetchScripts/getData/RWS.js"
 import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
-import { fetchBuienradar } from "./fetchScripts/getData/Buienradar.js"
 import { fetchMVB } from "./fetchScripts/getData/MVB.js"
 import { getTimeChangeDates, generateTimes, calcInterpolation, getArchivedForecast, startOfDayTimeZone } from "./getScriptUtilFunctions.js"
 import { format, add, parseISO, isBefore, isValid, isToday, isFuture } from "date-fns"
@@ -34,12 +33,12 @@ export async function getData(request, response, date, locations, forecastData) 
 
   const locationID = request.params.id
   const location = locations[locationID]
-  const dataset = Object.keys(location.datasets)[0]
+  const dataset = Object.keys(location).find(element => element.includes("ID")).split("_")[0]
   let values = {}
 
   //Times 
   let NoMeasurementsXHour
-  if (["Rijkswaterstaat", "KNMI", "MVB"].includes(dataset)) NoMeasurementsXHour = 6
+  if (["RWS", "KNMI", "MVB"].includes(dataset)) NoMeasurementsXHour = 6
   if (["VLINDER"].includes(dataset)) NoMeasurementsXHour = 12
   let times
   const DSTDates = getTimeChangeDates(dateParsed)
@@ -56,23 +55,10 @@ export async function getData(request, response, date, locations, forecastData) 
   const dataFetched = await new Promise(async (resolve) => {
     if (isFuture(dateParsed)) { resolve(null); return }
 
-    // VLINDER
-    if (location.datasets.VLINDER) {
-      return fetchVLINDER(dateParsed, location, resolve, times, DSTDates)
-    }
-    // Rijkswaterstaat
-    if (location.datasets.Rijkswaterstaat) {
-      return fetchRWS(dateParsed, location, resolve, times, DSTDates)
-    }
-    //KNMI (with Buienradar as a backup option)
-    if (location.datasets.KNMI) {
-      return fetchKNMI(dateParsed, location, resolve, times, DSTDates)
-      // return fetchBuienradar(dateParsed, location, resolve, times)
-    }
-    //Meetnet Vlaamse Banken
-    if (location.datasets.MVB) {
-      return fetchMVB(dateParsed, location, resolve, times, DSTDates)
-    }
+    if (location.VLINDER_ID) return fetchVLINDER(dateParsed, location, resolve, times, DSTDates)
+    if (location.RWS_ID) return fetchRWS(dateParsed, location, resolve, times, DSTDates)
+    if (location.KNMI_ID) return fetchKNMI(dateParsed, location, resolve, times, DSTDates)
+    if (location.MVB_IDs) return fetchMVB(dateParsed, location, resolve, times, DSTDates)
   })
 
   if (!dataFetched || dataFetched.data.error) {

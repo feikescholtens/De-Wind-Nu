@@ -74,7 +74,7 @@ export async function fetchRWS(dateParsed, databaseData, resolve, times, DSTDate
     })
   }
 
-  data["Rijkswaterstaat"] = processAllNegativeArrays(wind_speed, wind_gusts, wind_direction)
+  data["RWS"] = processAllNegativeArrays(wind_speed, wind_gusts, wind_direction)
   resolve({ data })
 
 }

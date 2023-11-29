@@ -1,3 +1,10 @@
+//Motivation: this script takes all locations that currently give data (as long as No. measurements today	>> 0)
+//in the KNMI EDR API. It also gives a yes or no in the 'Currently in use as KNMI location' column.
+//If there is a no for this value, research if this location can be used with the EDR API instead of the RWS one,
+//since the EDR API is far superior.
+
+//Open the table.html file for the result
+
 import fetch from "node-fetch"
 const dotenv = await import("dotenv")
 dotenv.config({ path: "../../.env" })
@@ -20,15 +27,18 @@ for (let i = 0; i < data.features.length; i++) {
 
   const lon = data.features[i].geometry.coordinates[0]
   const lat = data.features[i].geometry.coordinates[1]
-  const locationID = data.features[i].properties.location
+  const locationID = data.features[i].id
   const locationName = data.features[i].properties.name
 
-
-  const dataLocation = await fetch(`https://api.dataplatform.knmi.nl/edr/collections/observations/position?coord=POINT(${lon} ${lat})&datetime=${dateTodayStart}/..&parameter-name=ff_10m_10, fx_10m_10, dd_10`, { headers: { "Authorization": apiKey } }).then(response => response.json())
+  console.log(lon, lat)
+  const dataLocation = await fetch(`https://api.dataplatform.knmi.nl/edr/collections/observations/position?coords=POINT(${lon} ${lat})&datetime=${dateTodayStart}/..&parameter-name=ff_10m_10,fx_10m_10,dd_10`, { headers: { "Authorization": apiKey } }).then(response => response.json())
 
   row.push(locationID)
   row.push(locationName)
-  row.push(dataLocation.domain.axes.t.values.length)
+  if (dataLocation.detail) row.push(`0, KNMI API: ${dataLocation.detail}`)
+  else row.push(dataLocation.domain.axes.t.values.length)
+
+
 
   // if (dataLocation.domain.axes.t.values.length === 0)
   const keyInLocationsIfExistant = Object.keys(locations).find(key => {

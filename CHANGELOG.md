@@ -1,9 +1,27 @@
 # Change log
 
+## 3.5.6
+
+- KNMI overview measurements are not behind anymore and fixed that some locations didn't have any overview measurement at all. See backend work for reasoning
+- Added locations D15 platform KNMI sensor, P11 platform KNMI sensor, K14 platform KNMI sensor, A12 platform KNMI sensor, L9 platform KNMI sensor, AWG platform KNMI sensor, J6 platform KNMI sensor, HKZA platform KNMI sensor, Assendelft, Muiden, Nieuw-Vennep, Nieuwkoop and Borssele Alpha platform KNMI sensor
+- Changed data source Stroommeetpaal IJgeul, Huibertgat, Cadzand, Brouwershavense Gat, Vlakte van de Raan, Hansweert, Oosterschelde zeezijde (Schaar), Stavenisse and Marollegat from Rijkswaterstaat to KNMI
+- Updated GitHub pages (readme) images
+
+Bugfixes:
+- Fixed some values not getting converted to Bft (for measurements between 56 and 63 knots, Bft force 11)
+
+Backend work:
+- Replaced Buienradar API with official KNMI EDR API for the overview page. Site is now completely independent of Buienradar and only uses the most direct, official and fastest API's :)
+- Cleaned up locations.json file, lot less lines now. Code is now consistent with the use of RWS and not mixing up Rijkswaterstaat and RWS together (except for comments or quoted strings)
+
+---
+
 ## v3.5.5
 
 Bugfixes:
 - Fixed site crashing due to timezone switch (DST) error
+
+---
 
 ## v3.5.4
 
@@ -12,6 +30,8 @@ Bugfixes:
 
 Backend work:
 - Fixed the analytics not getting any updates. This was because I bundled the analytics script into the main Javascript file. Because this script changes via the URL, it didn't work. Now it is installed like it's supposed to be
+
+---
 
 ## v3.5.3
 - Improved performance by bundling even more stylesheets and scripts and using inline SVG icons instead of the big Material Symbols library

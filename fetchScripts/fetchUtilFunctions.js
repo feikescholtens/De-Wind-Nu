@@ -74,9 +74,9 @@ export function giveRWSFetchOptions(dateParsed, databaseData, DSTDates) {
   }
   //All above is needed due to *** RWS API
 
-  const locationID = databaseData.datasets.Rijkswaterstaat.location_id
-  const locationX = databaseData.x
-  const locationY = databaseData.y
+  const locationID = databaseData.RWS_ID
+  const locationX = databaseData.RWS_COORDS[0]
+  const locationY = databaseData.RWS_COORDS[1]
 
   return {
     "headers": {
@@ -142,7 +142,7 @@ export function SuccesvolFalseError(rawData, resolve) {
   if (!rawData.Succesvol) {
     resolve({
       data: {
-        "Rijkswaterstaat": [
+        "RWS": [
           [],
           [],
           []
@@ -161,7 +161,7 @@ export function SuccesvolFalseError(rawData, resolve) {
 export function giveMVBFetchOptions(dateParsed, DSTDates, databaseData, newToken) {
 
   const keyFetch = newToken || MVBAPIKey.APIKey
-  const locationID = JSON.stringify(databaseData.datasets.MVB.location_id)
+  const locationID = JSON.stringify(databaseData.MVB_IDs)
   const dateStartFetch = dateParsed.toISOString()
   let dateEndFetch = addDays(dateParsed, 1)
 
@@ -265,8 +265,10 @@ export function JSONErrorVLINDER(rawData) {
 //KNMI specific
 
 export function KNMIerror(rawData, resolve) {
-  if (rawData.error) {
-    log(`KNMI API error: \"${rawData.error}\"`, "error", true)
+  //Both used for overviewdata as data, overviewdata gives "detail" field in returned JSON, data gives "error" field in returned JSON
+
+  if (rawData.error || rawData.detail) {
+    log(`KNMI API error: \"${rawData.error || rawData.detail}\"`, "error", true)
 
     resolve({
       data: {

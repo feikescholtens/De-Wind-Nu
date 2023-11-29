@@ -156,7 +156,7 @@ div.VLINDER {
     z-index: 1;
 }
 
-div.Rijkswaterstaat {
+div.RWS {
     background-color: rgb(46, 179, 99);
     border-top-color: rgb(46, 179, 99);
     z-index: 2;
@@ -178,7 +178,7 @@ div.markerContaineVLINDER {
     z-index: 1;
 }
 
-div.markerContainerRijkswaterstaat {
+div.markerContainerRWS {
     z-index: 2;
 }
 

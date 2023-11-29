@@ -8,16 +8,16 @@ export async function overviewFetchRWS(locations, resolve) {
     IDMatches = []
 
   for (const id in locations) {
-    if (Object.keys(locations[id].datasets)[0] == "Rijkswaterstaat") {
+    if (locations[id].RWS_ID) {
       locationsArray.push({
-        X: locations[id].x,
-        Y: locations[id].y,
-        Code: locations[id].datasets["Rijkswaterstaat"].location_id
+        X: locations[id].RWS_COORDS[0],
+        Y: locations[id].RWS_COORDS[1],
+        Code: locations[id].RWS_ID
       })
 
       IDMatches.push({
         applicationID: id,
-        Rijkswaterstaat: locations[id].datasets.Rijkswaterstaat.location_id,
+        RWS: locations[id].RWS_ID,
       })
     }
   }
@@ -36,7 +36,7 @@ export async function overviewFetchRWS(locations, resolve) {
 
     //Match reveived location with one from own list to get application ID for each location
     for (let i = 0; i < IDMatches.length; i++) {
-      if (IDMatches[i].Rijkswaterstaat == locationData.Locatie.Code) {
+      if (IDMatches[i].RWS == locationData.Locatie.Code) {
 
         locationData.MetingenLijst.forEach(() => {
 

@@ -256,7 +256,7 @@ export function convertValueToBft(value) {
   }
 
   //Loop through every windforce and check if the value falls into that category
-  for (let j = 0; j < (ranges.length - 2); j++) {
+  for (let j = 0; j < (ranges.length - 1); j++) {
     if ((value >= ranges[j]) && (value < ranges[j + 1])) {
       return (j + 1).toString()
     }
@@ -480,8 +480,8 @@ export function createPopupIDAndMarkerElement(location, locationID) {
   marker.className = "markerContainer"
   marker.innerHTML = `<div class="marker" title="${location.name}"></div>`
 
-  const dataset = Object.keys(location.datasets)[0]
-  if (["VLINDER", "Rijkswaterstaat", "KNMI", "MVB"].includes(dataset)) {
+  const dataset = Object.keys(location).find(element => element.includes("ID")).split("_")[0]
+  if (["VLINDER", "RWS", "KNMI", "MVB"].includes(dataset)) {
     marker.classList.add(`markerContainer${dataset}`)
     Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add(dataset) })
     popupId = `popup${dataset}`
