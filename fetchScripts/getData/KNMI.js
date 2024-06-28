@@ -23,7 +23,7 @@ export async function fetchKNMI(dateParsed, databaseData, resolve, times, DSTDat
   // adds 24 hours in the addDays function above. The requested data will therefore contain 1 extra hour (of the day after) which will confuse the rest of the script and cause a bug.
   else dateEndFetch = dateEndFetch.toISOString()
 
-  const rawDataString = await fetch(`https://api.dataplatform.knmi.nl/edr/collections/observations/locations/${locationID}?datetime=${dateStartFetch}/${dateEndFetch}&parameter-name=ff_10m_10,fx_10m_10,dd_10`, { headers: { "Authorization": process.env.KDP_EDR_KEY } })
+  const rawDataString = await fetch(`https://api.dataplatform.knmi.nl/edr/v1/collections/observations/locations/${locationID}?datetime=${dateStartFetch}/${dateEndFetch}&parameter-name=ff_10m_10,fx_10m_10,dd_10`, { headers: { "Authorization": process.env.KDP_EDR_KEY } })
     .then(response => response.text()).catch((error) => catchError(resolve, data, error, "KNMI"))
   let rawData
   try { rawData = JSON.parse(rawDataString) } catch { return }

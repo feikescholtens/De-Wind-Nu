@@ -15,7 +15,7 @@ writeFileSync("../../locations.backup.json", allLocations)
 
 //Fetch all location data EDR API
 const apiKey = process.env.KDP_EDR_KEY
-const data = await fetch("https://api.dataplatform.knmi.nl/edr/collections/observations/locations", { headers: { "Authorization": apiKey } }).then(response => response.json())
+const data = await fetch("https://api.dataplatform.knmi.nl/edr/v1/collections/observations/locations", { headers: { "Authorization": apiKey } }).then(response => response.json())
 console.log(data)
 
 //Parse data

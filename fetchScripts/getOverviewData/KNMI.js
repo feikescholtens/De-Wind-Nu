@@ -6,7 +6,7 @@ export async function overviewFetchKNMI(locations, resolve) {
   const date = subHours(new Date(), 3).toISOString() //Look for measurements from the last 3 hours,
   //can be reduced to 1 hour if works well
 
-  const rawDataString = await fetch(`https://api.dataplatform.knmi.nl/edr/collections/observations/cube?datetime=${date}/..&parameter-name=ff_10m_10,fx_10m_10,dd_10`, { headers: { "Authorization": process.env.KDP_EDR_KEY } })
+  const rawDataString = await fetch(`https://api.dataplatform.knmi.nl/edr/v1/collections/observations/cube?datetime=${date}/..&parameter-name=ff_10m_10,fx_10m_10,dd_10`, { headers: { "Authorization": process.env.KDP_EDR_KEY } })
     .then(response => response.text()).catch((error) => catchError(resolve, {}, error, "KNMI"))
   let rawData
   try { rawData = JSON.parse(rawDataString) } catch { return }

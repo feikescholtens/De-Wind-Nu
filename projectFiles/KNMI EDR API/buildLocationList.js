@@ -14,7 +14,7 @@ import { startOfDay } from "date-fns"
 const apiKey = process.env.KDP_EDR_KEY
 
 const locations = Object.fromEntries(Object.entries(JSON.parse(readFileSync("../../locations.json"))).filter(([key, value]) => value.active))
-const data = await fetch("https://api.dataplatform.knmi.nl/edr/collections/observations/locations", { headers: { "Authorization": apiKey } }).then(response => response.json())
+const data = await fetch("https://api.dataplatform.knmi.nl/edr/v1/collections/observations/locations", { headers: { "Authorization": apiKey } }).then(response => response.json())
 
 const dateTodayStart = startOfDay(new Date()).toISOString()
 
@@ -31,7 +31,7 @@ for (let i = 0; i < data.features.length; i++) {
   const locationName = data.features[i].properties.name
 
   console.log(lon, lat)
-  const dataLocation = await fetch(`https://api.dataplatform.knmi.nl/edr/collections/observations/position?coords=POINT(${lon} ${lat})&datetime=${dateTodayStart}/..&parameter-name=ff_10m_10,fx_10m_10,dd_10`, { headers: { "Authorization": apiKey } }).then(response => response.json())
+  const dataLocation = await fetch(`https://api.dataplatform.knmi.nl/edr/v1/collections/observations/position?coords=POINT(${lon} ${lat})&datetime=${dateTodayStart}/..&parameter-name=ff_10m_10,fx_10m_10,dd_10`, { headers: { "Authorization": apiKey } }).then(response => response.json())
 
   row.push(locationID)
   row.push(locationName)

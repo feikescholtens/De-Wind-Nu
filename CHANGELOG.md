@@ -1,5 +1,10 @@
 # Change log
 
+## 3.5.7
+
+Bugfixes:
+- KNMI changed their API endpoint
+
 ## 3.5.6
 
 - KNMI overview measurements are not behind anymore and fixed that some locations didn't have any overview measurement at all. See backend work for reasoning
