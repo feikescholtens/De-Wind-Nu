@@ -12,8 +12,8 @@
   "author": "Feike Scholtens",
   "license": "GPL-3.0",
   "dependencies": {
-    "@google-cloud/firestore": "^5.0.2",
-    "@google-cloud/secret-manager": "^4.1.2",
+    "@google-cloud/firestore": "^7.9.0",
+    "@google-cloud/secret-manager": "^5.6.0",
     "cors": "^2.8.5",
     "date-fns": "^2.27.0",
     "date-fns-tz": "^1.1.7",
@@ -32,7 +32,6 @@
     "cssnano": "^6.0.1",
     "dotenv": "^10.0.0",
     "html-minifier-terser": "^7.2.0",
-    "nodemon": "^2.0.20",
     "postcss": "^8.4.23",
     "rollup": "^3.21.3",
     "rollup-plugin-postcss": "^4.0.2",

@@ -1,5 +1,9 @@
 # Change log
 
+## 3.5.8
+
+- Updated Node to version 20, site should be functioning now
+
 ## 3.5.7
 
 Bugfixes:
