@@ -46,7 +46,6 @@ if (port == 3000) {
   fetchForecast()
 
   app.use("/src", express.static(path.resolve(__dirname, "public/src"))) //Needed for sourcemaps
-  app.get("/devTools/giveLocationsParsingHarmonie", (request, response) => getLocationListParsingHarmonie(request, response, locations))
 } else {
   const promises = [] //Used to keep track of the promises, so that when all environmental variables are fetched, the forecast can be fetched
   const placeHolderVariable = ["GCP_CLIENT_EMAIL", "GCP_LOGGER_KEY", "GCP_PRIVATE_KEY", "GMAIL_APP_KEY", "MVB_PWD_ENCODED", "IPQUALITYSCORE_KEY", "KDP_EDR_KEY"].forEach((identifier) => promises.push(setEnvironmentVariable(identifier)))
@@ -68,6 +67,7 @@ app.get("/1984", (request, response) => response.redirect("/wind/8700"))
 //Data API's
 app.get("/getData/:id", (request, response) => getData(request, response, request.query.date, locations, forecastData))
 app.get("/getOverviewData/:dataSource", (request, response) => getOverviewData(request, response, locations))
+app.get("/giveLocationsParsingHarmonie", (request, response) => getLocationListParsingHarmonie(request, response, locations))
 
 //Mail developer (me! :)) once feedback received
 app.post("/addFeedback", (request, response) => addFeedback(request, response))
