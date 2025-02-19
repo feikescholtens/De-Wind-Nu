@@ -8,10 +8,12 @@ import { getTimeChangeDates, generateTimes, calcInterpolation, getArchivedForeca
 import { format, add, parseISO, isBefore, isValid, isToday, isFuture } from "date-fns"
 import module from "date-fns-tz"
 const { utcToZonedTime, formatInTimeZone } = module
+import { Firestore } from "@google-cloud/firestore"
+import { firestoreAuth } from "./getScriptUtilFunctions.js"
 
 const timeZone = "Europe/Amsterdam"
 
-export async function getData(request, response, date, locations, forecastData) {
+export async function getData(request, response, date, locations) {
 
   if (!validID(request.params.id, locations, response)) return
 
@@ -75,6 +77,10 @@ export async function getData(request, response, date, locations, forecastData) 
 
   //Check if requested forecast is in the past or not, set the forecast for that location for that day to forecastObj and set the forecast information string accordingly 
   if (!isBefore(dateParsed, startOfDayTimeZone(new Date(), timeZone))) {
+    //Fetch the forecast data from the firestore database
+    const firestore = new Firestore(firestoreAuth())
+    const forecastData = await (await firestore.doc("Harmonie forecast today & future v2/document").get()).data() || {}
+
     if (forecastData[locationID]) {
       forecastObj = forecastData[locationID]
 
@@ -90,7 +96,7 @@ export async function getData(request, response, date, locations, forecastData) 
     const archivedForecast = await getArchivedForecast(dateFormatted, locationID)
     if (archivedForecast) {
       forecastObj = archivedForecast
-      forecastInfoString = "HARMONIE model (verschillende versies) van het KNMI, uit archief"
+      forecastInfoString = "HARMONIE model van het KNMI, uit archief"
     }
   }
 

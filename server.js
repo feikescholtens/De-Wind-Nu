@@ -8,15 +8,11 @@ import { getData } from "./getData.js"
 import { getOverviewData } from "./getOverviewData.js"
 import { addFeedback } from "./addFeedback.js"
 import { log } from "./globalFunctions.js"
-import schedule from "node-schedule"
-import { createRecurrenceRule, scheduledGetForecast, firestoreAuth } from "./forecastFunctions.js"
-import { Firestore } from "@google-cloud/firestore"
 import { getLocationListParsingHarmonie } from "./developmentFunctions.js"
 global.log = log
 global.MVBAPIKey = {}
 global.port = process.env.PORT || 3000
 global.serverTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
-global.forecastData = {}
 
 //Define variables
 const __dirname = path.resolve()
@@ -43,7 +39,6 @@ app.set("trust proxy", true)
 if (port == 3000) {
   const dotenv = await import("dotenv")
   dotenv.config()
-  fetchForecast()
 
   app.use("/src", express.static(path.resolve(__dirname, "public/src"))) //Needed for sourcemaps
 } else {
@@ -65,7 +60,7 @@ app.get("/wind/:id", (request, response) => {
 app.get("/1984", (request, response) => response.redirect("/wind/8700"))
 
 //Data API's
-app.get("/getData/:id", (request, response) => getData(request, response, request.query.date, locations, forecastData))
+app.get("/getData/:id", (request, response) => getData(request, response, request.query.date, locations))
 app.get("/getOverviewData/:dataSource", (request, response) => getOverviewData(request, response, locations))
 app.get("/giveLocationsParsingHarmonie", (request, response) => getLocationListParsingHarmonie(request, response, locations))
 
@@ -86,14 +81,3 @@ app.post("/logGCPMessage", (request, response) => {
 
 //If unknown url is typed in
 app.use("/*", (request, response) => response.redirect("/"))
-
-//------------------------------------------------------------------------------------------------------
-
-//Load forecast (timing dependend on local / remote runtime) and schedule updates
-async function fetchForecast() {
-  const firestore = new Firestore(firestoreAuth())
-  forecastData = await (await firestore.doc("Harmonie forecast today & future v2/document").get()).data() || {}
-}
-
-const ruleUpdatedForecast = createRecurrenceRule([2, 8, 14, 20, 19], [55, 21], [30])
-schedule.scheduleJob(ruleUpdatedForecast, async () => { scheduledGetForecast(16) })

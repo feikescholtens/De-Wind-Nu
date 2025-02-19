@@ -22,7 +22,6 @@
     "google-auth-library": "^7.11.0",
     "lodash": "^4.17.21",
     "node-fetch": "^3.2.0",
-    "node-schedule": "^2.1.0",
     "nodemailer": "^6.7.0",
     "request-ip": "^3.3.0"
   },
