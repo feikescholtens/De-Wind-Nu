@@ -28,7 +28,7 @@ export async function scheduledGetForecast(NoTries) {
 
   async function getNewForecast() {
     tryCount++
-    const newForecast = await (await firestore.doc("Harmonie forecast today & future/document").get()).data()
+    const newForecast = await (await firestore.doc("Harmonie forecast today & future v2/document").get()).data()
     if (newForecast.timeRun == forecastData.timeRun) {
       if (tryCount < NoTries) {
         setTimeout(() => { getNewForecast() }, 60 * 1000)

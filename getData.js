@@ -7,7 +7,7 @@ import { fetchMVB } from "./fetchScripts/getData/MVB.js"
 import { getTimeChangeDates, generateTimes, calcInterpolation, getArchivedForecast, startOfDayTimeZone } from "./getScriptUtilFunctions.js"
 import { format, add, parseISO, isBefore, isValid, isToday, isFuture } from "date-fns"
 import module from "date-fns-tz"
-const { utcToZonedTime } = module
+const { utcToZonedTime, formatInTimeZone } = module
 
 const timeZone = "Europe/Amsterdam"
 
@@ -78,19 +78,19 @@ export async function getData(request, response, date, locations, forecastData) 
     if (forecastData[locationID]) {
       forecastObj = forecastData[locationID]
 
-      const forecastRun = parseISO(forecastData.timeRun + "Z")
-      const forecastRunLocal = utcToZonedTime(forecastRun, "Europe/Amsterdam")
-      const forecastRunString = format(forecastRunLocal, "HH:mm")
+      const forecastRun = parseISO(forecastData.timeRun + "Z") //The  + "Z" can be removed one parse-save-grib-harmonie-v2 is operational
+      const forecastRunString = formatInTimeZone(forecastRun, "UTC", "HH:mm z")
 
-      const timeNextRun = add(forecastRunLocal, { hours: (2 + 6), minutes: 58 })
-      const timeNextRunString = format(timeNextRun, "HH:mm")
-      forecastInfoString = `HARMONIE model van het KNMI, run van ${forecastRunString}, volgende update ± ${timeNextRunString}`
+      const timeNextRun = add(forecastRun, { hours: (1 + 2), minutes: 54 }) // Duration determined with script in googleCloudUtilities directory, based of ~864/19=45 publication times
+      const timeNextRunString = formatInTimeZone(timeNextRun, "UTC", "HH:mm z")
+
+      forecastInfoString = `HARMONIE model (versie Cy43) van het KNMI, run van ${forecastRunString}, volgende update ~${timeNextRunString} (± 8 minuten)`
     }
   } else {
     const archivedForecast = await getArchivedForecast(dateFormatted, locationID)
     if (archivedForecast) {
       forecastObj = archivedForecast
-      forecastInfoString = "HARMONIE model van het KNMI, uit archief"
+      forecastInfoString = "HARMONIE model (verschillende versies) van het KNMI, uit archief"
     }
   }
 

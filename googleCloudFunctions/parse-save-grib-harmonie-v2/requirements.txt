@@ -1,0 +1,10 @@
+functions-framework==3.*
+numpy
+requests
+pytz
+google-cloud-firestore
+google-cloud-secret-manager
+h5netcdf
+scipy
+datetime
+python-dotenv

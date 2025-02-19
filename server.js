@@ -92,7 +92,7 @@ app.use("/*", (request, response) => response.redirect("/"))
 //Load forecast (timing dependend on local / remote runtime) and schedule updates
 async function fetchForecast() {
   const firestore = new Firestore(firestoreAuth())
-  forecastData = await (await firestore.doc("Harmonie forecast today & future/document").get()).data() || {}
+  forecastData = await (await firestore.doc("Harmonie forecast today & future v2/document").get()).data() || {}
 }
 
 const ruleUpdatedForecast = createRecurrenceRule([2, 8, 14, 20, 19], [55, 21], [30])
