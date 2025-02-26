@@ -49,7 +49,6 @@ if (port == 3000) {
 } else {
   const promises = [] //Used to keep track of the promises, so that when all environmental variables are fetched, the forecast can be fetched
   const placeHolderVariable = ["GCP_CLIENT_EMAIL", "GCP_LOGGER_KEY", "GCP_PRIVATE_KEY", "GMAIL_APP_KEY", "MVB_PWD_ENCODED", "IPQUALITYSCORE_KEY", "KDP_EDR_KEY"].forEach((identifier) => promises.push(setEnvironmentVariable(identifier)))
-  Promise.all(promises).then(() => fetchForecast())
 }
 
 //ROUTES ---------------------------------------------------------------------------------------------------
