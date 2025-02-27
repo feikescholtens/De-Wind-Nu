@@ -2,7 +2,6 @@ import { startOfDay, sub, subHours } from "date-fns"
 import module from "date-fns-tz"
 const { getTimezoneOffset } = module
 import { Firestore } from "@google-cloud/firestore"
-import { firestoreAuth } from "./forecastFunctions.js"
 
 export function getTimeChangeDates(date) {
 
@@ -113,4 +112,14 @@ export function startOfDayTimeZone(date, timeZone) {
   }
 
   return date
+}
+
+export function firestoreAuth() {
+  return {
+    projectId: "de-wind-nu",
+    credentials: {
+      client_email: process.env.GCP_CLIENT_EMAIL,
+      private_key: process.env.GCP_PRIVATE_KEY
+    }
+  }
 }
