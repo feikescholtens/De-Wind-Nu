@@ -10,6 +10,8 @@ from utility_functions import (get_webserver_address,
 from join_forecast_functions import join_old_and_new_forecast
 from datetime import datetime
 import pytz
+from pathlib import Path
+import shutil
 
 mode = "development" # production or development, e.g. to determine address of the webserver
 
@@ -24,11 +26,11 @@ force_parse_local_files = False
 # to True as well, otherwise the requested behaviour will fail parsing local file with
 # older model run
 # -----------------------------------------------------------------------------------------
-force_parse_certain_model_run = None
+force_parse_certain_model_run = "20250226T21"
 # Set to a certain model run to force parsing that model run, e.g. "20250203T09".
 # To fetch the latest, set to None
 # -----------------------------------------------------------------------------------------
-quit_if_datetime_model_run_not_newer_KNMI = True 
+quit_if_datetime_model_run_not_newer_KNMI = False 
 # Only implies if two variables above are default, e.g. False and None. If True, 
 # the script will immediately exit once filenames KNMI are fetched and a newer than 
 # currently stored forecast run is not available yet
@@ -36,8 +38,12 @@ quit_if_datetime_model_run_not_newer_KNMI = True
 force_update_forecast_with_older_run = False 
 # If an older model run is parsed than currently is in old_forecast, 
 # should the script still update with the new/but actually outdated forecast?
+# If False, the script will also not save any intervals that are already archived
+# So intervals with time 23:00 (local) from the past (will only occur in the T21 (UTC) run)
+# will not be saved, since it's already in the archived forecast and has no place in the 
+# 'today' forecast, since that interval is in the past (for the local time at least)
 # -----------------------------------------------------------------------------------------
-use_local_JSON_for_getting_and_storing_forecasts = False 
+use_local_JSON_for_getting_and_storing_forecasts = True 
 # Instead of setting the data in the Firestore documents, 
 # save them to JSON files in the test_input_and_output_forecasts directory
 # Saving to Firestore will overwrite in the (hardcoded) bucket, JSON files will be kept
@@ -89,7 +95,7 @@ def main (request):
         new_forecast_wind_and_direction["timeRun"] = time_run_ISO_string
 
         for parse_location in locations_to_parse:
-            location_array_wind_direction = parse_wind_speed_and_direction(data_arrays, parse_location, parse_method, NO_decimals)
+            location_array_wind_direction = parse_wind_speed_and_direction(data_arrays, parse_location, parse_method, NO_decimals, force_update_forecast_with_older_run)
             if (len(location_array_wind_direction) != 0): # Location array is empty if the location is outside the grid
                 new_forecast_wind_and_direction[parse_location["id"]] = location_array_wind_direction
 
@@ -99,7 +105,7 @@ def main (request):
         data_arrays = [ds_gust.variables[variable][:] for variable in variables_names]
 
         for parse_location in locations_to_parse:
-            location_array_gust = parse_wind_gust(data_arrays, parse_location, parse_method, NO_decimals)
+            location_array_gust = parse_wind_gust(data_arrays, parse_location, parse_method, NO_decimals, force_update_forecast_with_older_run)
             if (len(location_array_gust) != 0): # Location array is empty if the location is outside the grid
                 new_forecast_gust[parse_location["id"]] = location_array_gust
 
@@ -119,3 +125,4 @@ def main (request):
 # Only needed for development environment; then the function won't be called automatically
 if mode == "development":
     main([])
+    if Path("__pycache__").exists() and Path("__pycache__").is_dir(): shutil.rmtree(Path("__pycache__"))
