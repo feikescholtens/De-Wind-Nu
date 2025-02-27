@@ -111,6 +111,7 @@ def main (request):
 
     # Merge the parsed wind, direction and gust forecasts
     new_forecast = merge_parsed_wind_direction_gust(new_forecast_wind_and_direction, new_forecast_gust)
+    print(f"Parsed forecast run with timeRun of {new_forecast["timeRun"]}")
 
     # -------- 3rd part: joining the old and new forecast data and saving accordingly --------------
 
@@ -119,7 +120,8 @@ def main (request):
 
     # Saving the updated forecast according to the configuration
     save_updated_forecast(updated_forecast, use_local_JSON_for_getting_and_storing_forecasts, firestore_document_to_use)
-
+    print("Saved updated forecast to the assigned place")
+    
     return "Executed the script. Errors might still have occured. See logs for more details."
 
 # Only needed for development environment; then the function won't be called automatically
