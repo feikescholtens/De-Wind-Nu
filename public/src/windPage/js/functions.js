@@ -10,7 +10,9 @@ import {
   format,
   subDays,
   parse,
-  startOfDay
+  startOfDay,
+  set,
+  add
 } from "date-fns"
 import nl from "date-fns/locale/nl"
 
@@ -251,18 +253,14 @@ export function setDateInUrl(date) {
 }
 
 export function getDatePickerMax() {
+  const harmonieForecastTime = 60 //time in hours that Harmonie calculates the forecast for
+  const hourOfRun3DayForecastAvailable = harmonieForecastTime % 24 + 1 //time in hours (local) of current day that the 3 day forecast (starting at 01:00 local) will be available, equal to 12 (UTC)
 
-  const date = new Date()
-  if (new Date().getTimezoneOffset() == -60) date.setHours(9)
-  else date.setHours(10)
-  date.setMinutes(58)
+  let dateTimeRun3DayForecastAvailable = set(new Date(), { hours: hourOfRun3DayForecastAvailable, minutes: 0, seconds: 0 }) //datetime (local) of model run for which the 3 day forecast will be available (13:00 local)
+  dateTimeRun3DayForecastAvailable = add(dateTimeRun3DayForecastAvailable, { hours: 2, minutes: 54 }) //datetime (local) of current day that the 3 day forecast will be available (15:54 local)
 
-
-  if (new Date() > date) return addHours(new Date(), 48)
-  else {
-    return addHours(new Date(), 24)
-  }
-
+  if (new Date() > dateTimeRun3DayForecastAvailable) return addHours(new Date(), 72) //Three day forecast is available, therefore max date is 3 days from now
+  else return addHours(new Date(), 48) //Three day forecast is not available, therefore max date is 2 days from now
 }
 
 export function isIOS() {
