@@ -72,7 +72,6 @@ export async function getData(request, response, date, locations) {
     values["windGusts"] = dataFetched.data[datasetMeasurements][1]
     values["windDirection"] = dataFetched.data[datasetMeasurements][2]
   }
-  console.log(values)
 
   //Forecast
   let forecastObj, forecastInfoString = "niet beschikbaar"

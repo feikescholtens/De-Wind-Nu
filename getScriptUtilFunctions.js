@@ -78,7 +78,7 @@ export function calcInterpolation(array, times, startTimeIndexInTimes, stopTimeI
 
       for (let k = startIndex; k < stopIndex - 1; k++) {
         const value = startValue + ((stopValue - startValue) / (stopIndex - startIndex)) * (k + 1 - startIndex)
-        if (value) interpolatedData.push({ time: times[k + 1], index: k + 1, value: value })
+        if (value !== undefined) interpolatedData.push({ time: times[k + 1], index: k + 1, value: value })
       }
       i = j
     }
