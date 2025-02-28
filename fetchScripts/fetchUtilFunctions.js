@@ -74,9 +74,9 @@ export function giveRWSFetchOptions(dateParsed, databaseData, DSTDates) {
   }
   //All above is needed due to *** RWS API
 
-  const locationID = databaseData.RWS_ID
-  const locationX = databaseData.RWS_COORDS[0]
-  const locationY = databaseData.RWS_COORDS[1]
+  const locationID = databaseData.measurements.API_ID
+  const locationX = databaseData.measurements.API_Coordinates[0]
+  const locationY = databaseData.measurements.API_Coordinates[1]
 
   return {
     "headers": {
@@ -161,7 +161,7 @@ export function SuccesvolFalseError(rawData, resolve) {
 export function giveMVBFetchOptions(dateParsed, DSTDates, databaseData, newToken) {
 
   const keyFetch = newToken || MVBAPIKey.APIKey
-  const locationID = JSON.stringify(databaseData.MVB_IDs)
+  const locationID = JSON.stringify(databaseData.measurements.API_ID)
   const dateStartFetch = dateParsed.toISOString()
   let dateEndFetch = addDays(dateParsed, 1)
 

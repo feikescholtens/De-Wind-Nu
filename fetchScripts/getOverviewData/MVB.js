@@ -40,8 +40,8 @@ export async function overviewFetchMVB(locations, resolve) {
       IDMatches = []
 
     for (const id in locations) {
-      if (locations[id].MVB_IDs) {
-        locations[id].MVB_IDs.forEach(measurementType => {
+      if (locations[id].measurements.source == "MVB") {
+        locations[id].measurements.API_ID.forEach(measurementType => {
           locationsArray.push(measurementType)
 
           IDMatches.push({

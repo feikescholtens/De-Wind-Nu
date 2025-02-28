@@ -12,7 +12,7 @@ export async function fetchVLINDER(dateParsed, databaseData, resolve, times, DST
 
   let data = []
 
-  const locationID = databaseData.VLINDER_ID
+  const locationID = databaseData.measurements.API_ID
   const dateStartFetch = subSeconds(dateParsed, 1).toISOString()
 
   let dateEndFetch = add(dateParsed, { days: 1, seconds: 1 })

@@ -18,12 +18,12 @@ export async function overviewFetchKNMI(locations, resolve) {
 
     //Match reveived location with one from own list to get application ID for each location
     for (const id in locations) {
-      if (locations[id].KNMI_ID) {
+      if (locations[id].measurements.source == "KNMI") {
         //Match based on coordinates
         const lat = locationData.domain.axes.y.values[0]
         const lon = locationData.domain.axes.x.values[0]
 
-        if (locations[id].KNMI_COORDS[0] == lat && locations[id].KNMI_COORDS[1] == lon) {
+        if (locations[id].measurements.API_Coordinates[0] == lat && locations[id].measurements.API_Coordinates[1] == lon) {
           const timeStampString = locationData.domain.axes.t.values.at(-1)
           const indexLastMeasurement = locationData.domain.axes.t.values.indexOf(timeStampString)
 

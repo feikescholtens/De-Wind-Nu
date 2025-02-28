@@ -1,4 +1,4 @@
-import { getMapBoxStyle, createPopupIDAndMarkerElement, fitMapToMarkers, panMapToLocation, addCurrentLocationMarker, setOverviewMapData, setOverviewListData, tilesObjects, determineCenterToZoomTo } from "./functions.js"
+import { getMapBoxStyle, createPopupIDAndMarkerElement, fitMapToMarkers, panMapToLocation, addCurrentLocationMarker, setOverviewMapData, setOverviewListData, tilesObjects, determineCenterToZoomTo, getLocationsForecastOnly } from "./functions.js"
 
 export async function initMap(dataAlreadyFetched, locationToUse) {
 
@@ -34,7 +34,8 @@ export async function initMap(dataAlreadyFetched, locationToUse) {
       console.log("Ignore above error message (from ajax.js:143). Switched tile URL to one with unlimited requests, bacause a) API limit reached, b) OR users exceeded the rate limit per second. In both cases we get a 429 error!")
     }
   })
-
+  // getLocationsForecastOnly()
+  setOverviewMapData({ FORECAST_ONLY: getLocationsForecastOnly() }, map) //Call the function to update the popups that only have forecast data in the map
   if (!dataAlreadyFetched) {
     fetch("getOverviewData/VLINDER").then(response => response.json()).then(dataOverview => setOverviewMapData({ VLINDER: dataOverview }, map))
     fetch("getOverviewData/RWS").then(response => response.json()).then(dataOverview => setOverviewMapData({ RWS: dataOverview }, map))

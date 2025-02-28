@@ -4,1726 +4,2282 @@
     "lat": 53.2230555555556,
     "lon": 5.75166666666667,
     "active": true,
-    "KNMI_ID": "06270",
-    "KNMI_COORDS": [
-      53.2231,
-      5.7517
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06270",
+      "API_Coordinates": [
+        53.2231,
+        5.7517
+      ]
+    }
   },
   "1103": {
     "name": "Brussel Koninklijk Paleis",
     "lat": 50.841455,
     "lon": 4.363672,
     "active": true,
-    "VLINDER_ID": "xgRUxj1N6DiRKzekQqI4Z5Ns"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "xgRUxj1N6DiRKzekQqI4Z5Ns"
+    }
   },
   "1136": {
     "name": "L9 platform KNMI sensor",
     "lat": 53.6144,
     "lon": 4.9603,
     "active": true,
-    "KNMI_ID": "06207",
-    "KNMI_COORDS": [
-      53.6144,
-      4.9603
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06207",
+      "API_Coordinates": [
+        53.6144,
+        4.9603
+      ]
+    }
   },
   "1141": {
     "name": "Den Helder",
     "lat": 52.9269444444444,
     "lon": 4.78111111111111,
     "active": true,
-    "KNMI_ID": "06235",
-    "KNMI_COORDS": [
-      52.9269,
-      4.7811
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06235",
+      "API_Coordinates": [
+        52.9269,
+        4.7811
+      ]
+    }
   },
   "1157": {
     "name": "Vorselaar Klooster",
     "lat": 51.201971,
     "lon": 4.772456,
     "active": true,
-    "VLINDER_ID": "zdaMx592RdPfr5bHa8h8bu4W"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "zdaMx592RdPfr5bHa8h8bu4W"
+    }
   },
   "1218": {
     "name": "De Bilt",
     "lat": 52.0988888888889,
     "lon": 5.17972222222222,
     "active": true,
-    "KNMI_ID": "06260",
-    "KNMI_COORDS": [
-      52.0989,
-      5.1797
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06260",
+      "API_Coordinates": [
+        52.0989,
+        5.1797
+      ]
+    }
+  },
+  "1234": {
+    "name": "Scheveningen (alleen verwachting)",
+    "lat": 52.104539,
+    "lon": 4.261353,
+    "active": true,
+    "measurements": {}
   },
   "1251": {
     "name": "Wilhelminadorp",
     "lat": 51.5258333333333,
     "lon": 3.88361111111111,
     "active": true,
-    "KNMI_ID": "06323",
-    "KNMI_COORDS": [
-      51.5258,
-      3.8836
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06323",
+      "API_Coordinates": [
+        51.5258,
+        3.8836
+      ]
+    }
   },
   "1359": {
     "name": "Buitengaats platform",
     "lat": 54.0369444444444,
     "lon": 6.04166666666667,
-    "KNMI_ID": "06214",
     "active": true,
-    "KNMI_COORDS": [
-      54.0369,
-      6.0417
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06214",
+      "API_Coordinates": [
+        54.0369,
+        6.0417
+      ]
+    }
   },
   "1418": {
     "name": "Oudenaarde De Donk",
     "lat": 50.843253,
     "lon": 3.586195,
     "active": true,
-    "VLINDER_ID": "V1qJJx8s5dfvPgqyPmQ0Uvhq"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "V1qJJx8s5dfvPgqyPmQ0Uvhq"
+    }
   },
   "1505": {
     "name": "De Haan Golf",
     "lat": 51.260389,
     "lon": 2.991917,
     "active": true,
-    "VLINDER_ID": "Do5lLMfezIdmUCzzsE0IwIbE"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "Do5lLMfezIdmUCzzsE0IwIbE"
+    }
   },
   "1535": {
     "name": "Diksmuide De Blankaert",
     "lat": 50.9895009,
     "lon": 2.8562197,
     "active": true,
-    "VLINDER_ID": "WviZBVI37BRGQdtd0BFgBm7h"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "WviZBVI37BRGQdtd0BFgBm7h"
+    }
   },
   "1612": {
     "name": "Hoogeveen",
     "lat": 52.7488888888889,
     "lon": 6.57305555555556,
     "active": true,
-    "KNMI_ID": "06279",
-    "KNMI_COORDS": [
-      52.7489,
-      6.5731
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06279",
+      "API_Coordinates": [
+        52.7489,
+        6.5731
+      ]
+    }
   },
   "1641": {
     "name": "Huibertgat",
     "lat": 53.5739,
     "lon": 6.3983,
     "active": true,
-    "KNMI_ID": "06285",
-    "KNMI_COORDS": [
-      53.5739,
-      6.3983
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06285",
+      "API_Coordinates": [
+        53.5739,
+        6.3983
+      ]
+    }
   },
   "1660": {
     "name": "Maeslantkering geleidetor",
     "lat": 51.95399900000011,
     "lon": 4.1600460000001345,
     "active": true,
-    "RWS_ID": "MLKZ",
-    "RWS_COORDS": [
-      579718.089134798,
-      5756557.4430131
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "MLKZ",
+      "API_Coordinates": [
+        579718.089134798,
+        5756557.4430131
+      ]
+    }
   },
   "1805": {
     "name": "Sint-Niklaas Centrum",
     "lat": 51.165014,
     "lon": 4.146297,
     "active": true,
-    "VLINDER_ID": "V0Vrych4WeZJXlx9HnEzrtdB"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "V0Vrych4WeZJXlx9HnEzrtdB"
+    }
   },
   "1843": {
     "name": "Gannet platform",
     "lat": 57.185029999999784,
     "lon": 0.9999999999989315,
     "active": true,
-    "RWS_ID": "GAN1",
-    "RWS_COORDS": [
-      379117.977891604,
-      6339756.30889541
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "GAN1",
+      "API_Coordinates": [
+        379117.977891604,
+        6339756.30889541
+      ]
+    }
   },
   "1892": {
     "name": "Groenlo-Hupsel",
     "lat": 52.0677777777778,
     "lon": 6.65666666666667,
     "active": true,
-    "KNMI_ID": "06283",
-    "KNMI_COORDS": [
-      52.0678,
-      6.6567
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06283",
+      "API_Coordinates": [
+        52.0678,
+        6.6567
+      ]
+    }
   },
   "2136": {
     "name": "Marollegat",
     "lat": 51.4786,
     "lon": 4.1925,
     "active": true,
-    "KNMI_ID": "06331",
-    "KNMI_COORDS": [
-      51.4786,
-      4.1925
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06331",
+      "API_Coordinates": [
+        51.4786,
+        4.1925
+      ]
+    }
   },
   "2214": {
     "lat": 61.338187999999526,
     "lon": 1.1660989999996778,
     "name": "North Cormorant platform",
     "active": true,
-    "RWS_ID": "NC1",
-    "RWS_COORDS": [
-      401877.242645123,
-      6801835.30329146
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "NC1",
+      "API_Coordinates": [
+        401877.242645123,
+        6801835.30329146
+      ]
+    }
   },
   "2218": {
     "name": "Langemark-Poelkapelle DOVO",
     "lat": 50.95194,
     "lon": 2.95222,
     "active": true,
-    "VLINDER_ID": "tJ4tPJofKynz98YZ2f5dYLCR"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "tJ4tPJofKynz98YZ2f5dYLCR"
+    }
   },
   "2224": {
     "name": "Lichteiland Goeree KNMI sensor",
     "lat": 51.9258333333333,
     "lon": 3.67,
-    "KNMI_ID": "06320",
     "active": true,
-    "KNMI_COORDS": [
-      51.9258,
-      3.67
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06320",
+      "API_Coordinates": [
+        51.9258,
+        3.67
+      ]
+    }
   },
   "2418": {
     "name": "Uithuizerwad",
     "lat": 53.46593800002661,
     "lon": 6.757432000043045,
     "active": true,
-    "RWS_ID": "UHWD",
-    "RWS_COORDS": [
-      749387.579062717,
-      5930678.90555067
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "UHWD",
+      "API_Coordinates": [
+        749387.579062717,
+        5930678.90555067
+      ]
+    }
   },
   "2531": {
     "name": "Rotterdamse hoek",
     "lat": 52.74831000000136,
     "lon": 5.559000000006875,
     "active": true,
-    "RWS_ID": "FL02",
-    "RWS_COORDS": [
-      672717.142704692,
-      5847343.70995726
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "FL02",
+      "API_Coordinates": [
+        672717.142704692,
+        5847343.70995726
+      ]
+    }
   },
   "2721": {
     "name": "Volkel",
     "lat": 51.6586111111111,
     "lon": 5.70666666666667,
     "active": true,
-    "KNMI_ID": "06375",
-    "KNMI_COORDS": [
-      51.6586,
-      5.7067
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06375",
+      "API_Coordinates": [
+        51.6586,
+        5.7067
+      ]
+    }
   },
   "2829": {
     "name": "Haringvlietsluizen",
     "lat": 51.83616700000008,
     "lon": 4.054385000000098,
     "active": true,
-    "RWS_ID": "HVS01",
-    "RWS_COORDS": [
-      572647.08352493,
-      5743342.08299768
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "HVS01",
+      "API_Coordinates": [
+        572647.08352493,
+        5743342.08299768
+      ]
+    }
   },
   "2832": {
     "name": "Tielt Poelberg",
     "lat": 50.979972,
     "lon": 3.358833,
     "active": true,
-    "VLINDER_ID": "8NZZfd5wtnSZAJSABVLd4hA1"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "8NZZfd5wtnSZAJSABVLd4hA1"
+    }
   },
   "2833": {
     "name": "Lommel Centrum",
     "lat": 51.2312,
     "lon": 5.3139,
     "active": true,
-    "VLINDER_ID": "g6fFNlSTajdUGUrsJDWEDgz4"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "g6fFNlSTajdUGUrsJDWEDgz4"
+    }
   },
   "2847": {
     "name": "Menen Centrum",
     "lat": 50.796269,
     "lon": 3.115786,
     "active": true,
-    "VLINDER_ID": "N0EAjpEOhFCM9Q6hQdXommu8"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "N0EAjpEOhFCM9Q6hQdXommu8"
+    }
   },
   "2924": {
     "name": "Wierumergronden",
     "lat": 53.51582800000393,
     "lon": 5.958261000012834,
     "active": true,
-    "RWS_ID": "WIER",
-    "RWS_COORDS": [
-      696130.296598613,
-      5933727.14138876
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "WIER",
+      "API_Coordinates": [
+        696130.296598613,
+        5933727.14138876
+      ]
+    }
   },
   "3019": {
     "name": "Westhinder",
     "lat": "51.3886111111111",
     "lon": "2.43777777777778",
     "active": true,
-    "MVB_IDs": [
-      "MP7WC3",
-      "MP7WRS",
-      "MP7WVC"
-    ]
+    "measurements": {
+      "source": "MVB",
+      "API_ID": [
+        "MP7WC3",
+        "MP7WRS",
+        "MP7WVC"
+      ]
+    }
   },
   "3107": {
     "name": "Nieuw Beerta",
     "lat": 53.1944444444444,
     "lon": 7.14916666666667,
     "active": true,
-    "KNMI_ID": "06286",
-    "KNMI_COORDS": [
-      53.1944,
-      7.1492
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06286",
+      "API_Coordinates": [
+        53.1944,
+        7.1492
+      ]
+    }
   },
   "3139": {
     "name": "Hoek van Holland",
     "lat": 51.977574000000054,
     "lon": 4.119881000000123,
     "active": true,
-    "RWS_ID": "HOEK",
-    "RWS_COORDS": [
-      576917.675576278,
-      5759136.13463449
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "HOEK",
+      "API_Coordinates": [
+        576917.675576278,
+        5759136.13463449
+      ]
+    }
   },
   "3153": {
     "name": "Europlatform",
     "lat": 51.9977777777778,
     "lon": 3.275,
-    "KNMI_ID": "06321",
     "active": true,
-    "KNMI_COORDS": [
-      51.9978,
-      3.275
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06321",
+      "API_Coordinates": [
+        51.9978,
+        3.275
+      ]
+    }
   },
   "3172": {
     "name": "Nieuwkoop",
     "lat": 52.1514,
     "lon": 4.765,
-    "KNMI_ID": "06238",
     "active": true,
-    "KNMI_COORDS": [
-      52.1514,
-      4.765
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06238",
+      "API_Coordinates": [
+        52.1514,
+        4.765
+      ]
+    }
   },
   "3216": {
     "name": "Oostende - Meteopark",
     "lat": "51.2376638888889",
     "lon": "2.93014722222222",
     "active": true,
-    "MVB_IDs": [
-      "OMPWC3",
-      "OMPWRS",
-      "OMPWVC"
-    ]
+    "measurements": {
+      "source": "MVB",
+      "API_ID": [
+        "OMPWC3",
+        "OMPWRS",
+        "OMPWVC"
+      ]
+    }
   },
   "3235": {
     "name": "Zeebrugge Daminstrumentatie",
     "lat": "51.3541666666667",
     "lon": "3.17222222222222",
     "active": true,
-    "MVB_IDs": [
-      "ZDIWRS",
-      "ZDIWVC",
-      "OS7WRS"
-    ]
+    "measurements": {
+      "source": "MVB",
+      "API_ID": [
+        "ZDIWRS",
+        "ZDIWVC",
+        "OS7WRS"
+      ]
+    }
   },
   "3290": {
     "name": "Terneuzen Westsluis",
     "lat": 51.32778400000012,
     "lon": 3.8162160000000243,
     "active": true,
-    "RWS_ID": "TNWS",
-    "RWS_COORDS": [
-      556868.640270215,
-      5686592.99245246
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "TNWS",
+      "API_Coordinates": [
+        556868.640270215,
+        5686592.99245246
+      ]
+    }
   },
   "3318": {
     "name": "Nelson platform",
     "lat": 57.66168999999975,
     "lon": 1.144999999999313,
     "active": true,
-    "RWS_ID": "NLS1",
-    "RWS_COORDS": [
-      389328.47782212,
-      6392559.95957432
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "NLS1",
+      "API_Coordinates": [
+        389328.47782212,
+        6392559.95957432
+      ]
+    }
   },
   "3323": {
     "name": "Lier Donkhoeve",
     "lat": 51.1364,
     "lon": 4.5444,
     "active": true,
-    "VLINDER_ID": "w2iKDX5uZoe7gF0cUFAeMBo2"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "w2iKDX5uZoe7gF0cUFAeMBo2"
+    }
   },
   "3356": {
     "name": "Lelystad",
     "lat": 52.4483333333333,
     "lon": 5.50805555555556,
     "active": true,
-    "KNMI_ID": "06269",
-    "KNMI_COORDS": [
-      52.4483,
-      5.5081
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06269",
+      "API_Coordinates": [
+        52.4483,
+        5.5081
+      ]
+    }
   },
   "3359": {
     "name": "Geraardsbergen Oudenberg",
     "lat": 50.77327,
     "lon": 3.891167,
     "active": true,
-    "VLINDER_ID": "ALg8aViYNhDHRgwIW7ZB9l1y"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "ALg8aViYNhDHRgwIW7ZB9l1y"
+    }
   },
   "3372": {
     "name": "A12 platform KNMI sensor",
     "lat": 55.3992,
     "lon": 3.8103,
     "active": true,
-    "KNMI_ID": "06205",
-    "KNMI_COORDS": [
-      55.3992,
-      3.8103
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06205",
+      "API_Coordinates": [
+        55.3992,
+        3.8103
+      ]
+    }
   },
   "3406": {
     "name": "Stavoren",
     "lat": 52.8966666666667,
     "lon": 5.38333333333333,
     "active": true,
-    "KNMI_ID": "06267",
-    "KNMI_COORDS": [
-      52.8967,
-      5.3833
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06267",
+      "API_Coordinates": [
+        52.8967,
+        5.3833
+      ]
+    }
   },
   "3459": {
     "name": "Aalst Heuvelpark",
     "lat": 50.927167,
     "lon": 4.075722,
     "active": true,
-    "VLINDER_ID": "hA49FTkzXFZBSPq1cu6l4J5b"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "hA49FTkzXFZBSPq1cu6l4J5b"
+    }
   },
   "3554": {
     "name": "K13 Alpha platform",
     "lat": 53.2177777777778,
     "lon": 3.22027777777778,
-    "KNMI_ID": "06252",
     "active": true,
-    "KNMI_COORDS": [
-      53.2178,
-      3.2203
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06252",
+      "API_Coordinates": [
+        53.2178,
+        3.2203
+      ]
+    }
   },
   "3563": {
     "name": "Mechelen Dijle",
     "lat": 51.0229,
     "lon": 4.4825,
     "active": true,
-    "VLINDER_ID": "8UMyHhYpXOQpejqup2upLBlV"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "8UMyHhYpXOQpejqup2upLBlV"
+    }
   },
   "3617": {
     "name": "L9 platform Rijkswaterstaat sensor",
     "lat": 53.616669000000115,
     "lon": 4.966667000001658,
     "active": true,
-    "RWS_ID": "L9",
-    "RWS_COORDS": [
-      630087.998728811,
-      5942671.15254043
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "L9",
+      "API_Coordinates": [
+        630087.998728811,
+        5942671.15254043
+      ]
+    }
   },
   "3637": {
     "name": "Sint-Truiden Abdij",
     "lat": 50.817338,
     "lon": 5.188869,
     "active": true,
-    "VLINDER_ID": "EpYBjkKLsYyRErDGstWeFI3A"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "EpYBjkKLsYyRErDGstWeFI3A"
+    }
   },
   "3671": {
     "name": "Antwerpen Linkeroever",
     "lat": 51.222422,
     "lon": 4.381726,
     "active": true,
-    "VLINDER_ID": "SMivapZavheUAoe0thH2d22U"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "SMivapZavheUAoe0thH2d22U"
+    }
   },
   "3695": {
     "name": "IJmuiden Buitenhaven",
     "lat": 52.4622222222222,
     "lon": 4.555,
-    "KNMI_ID": "06225",
     "active": true,
-    "KNMI_COORDS": [
-      52.4622,
-      4.555
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06225",
+      "API_Coordinates": [
+        52.4622,
+        4.555
+      ]
+    }
   },
   "3696": {
     "name": "Texelhors",
     "lat": 52.995,
     "lon": 4.72,
-    "KNMI_ID": "06229",
     "active": true,
-    "KNMI_COORDS": [
-      52.995,
-      4.72
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06229",
+      "API_Coordinates": [
+        52.995,
+        4.72
+      ]
+    }
   },
   "3714": {
     "name": "Vlissingen",
     "lat": 51.4413888888889,
     "lon": 3.59583333333333,
     "active": true,
-    "KNMI_ID": "06310",
-    "KNMI_COORDS": [
-      51.4414,
-      3.5958
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06310",
+      "API_Coordinates": [
+        51.4414,
+        3.5958
+      ]
+    }
   },
   "3723": {
     "name": "HKZA platform Rijkswaterstaat sensor 1",
     "lat": 52.319527,
     "lon": 4.0431285,
     "active": true,
-    "RWS_ID": "HKZA1",
-    "RWS_COORDS": [
-      571099.371,
-      5797090.138
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "HKZA1",
+      "API_Coordinates": [
+        571099.371,
+        5797090.138
+      ]
+    }
   },
   "3835": {
     "name": "Muiden",
     "lat": 52.3353,
     "lon": 5.0922,
-    "KNMI_ID": "06236",
     "active": true,
-    "KNMI_COORDS": [
-      52.3353,
-      5.0922
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06236",
+      "API_Coordinates": [
+        52.3353,
+        5.0922
+      ]
+    }
   },
   "3880": {
     "name": "Gent Sterre",
     "lat": 51.022379,
     "lon": 3.709695,
     "active": true,
-    "VLINDER_ID": "zZ6ZeSg11dJ5zp5GrNwNck9A"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "zZ6ZeSg11dJ5zp5GrNwNck9A"
+    }
   },
   "3885": {
     "name": "Geulhaven radarpost",
     "lat": 51.8919444444444,
     "lon": 4.3125,
-    "KNMI_ID": "06343",
     "active": true,
-    "KNMI_COORDS": [
-      51.8919,
-      4.3125
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06343",
+      "API_Coordinates": [
+        51.8919,
+        4.3125
+      ]
+    }
   },
   "3902": {
     "name": "Herentals Hidrodoe",
     "lat": 51.19283,
     "lon": 4.8135,
     "active": true,
-    "VLINDER_ID": "ETJYb2VdWHhzRY0XIqW5Ldni"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "ETJYb2VdWHhzRY0XIqW5Ldni"
+    }
   },
   "3937": {
     "name": "Keerbergen Campus",
     "lat": 51.00311,
     "lon": 4.659717,
     "active": true,
-    "VLINDER_ID": "jtvKBelmZOkuCZMw2NpcaYxI"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "jtvKBelmZOkuCZMw2NpcaYxI"
+    }
   },
   "3958": {
     "name": "Gilze Rijen",
     "lat": 51.565,
     "lon": 4.93527777777778,
     "active": true,
-    "KNMI_ID": "06350",
-    "KNMI_COORDS": [
-      51.565,
-      4.9353
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06350",
+      "API_Coordinates": [
+        51.565,
+        4.9353
+      ]
+    }
   },
   "3985": {
     "name": "Maldegem Courtmanslaan",
     "lat": 51.2087,
     "lon": 3.4528,
     "active": true,
-    "VLINDER_ID": "l7rFOO2GjgOciJAKIhm8mVZV"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "l7rFOO2GjgOciJAKIhm8mVZV"
+    }
   },
   "4037": {
     "name": "Cadzand",
     "lat": 51.38,
     "lon": 3.3792,
     "active": true,
-    "KNMI_ID": "06308",
-    "KNMI_COORDS": [
-      51.38,
-      3.3792
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06308",
+      "API_Coordinates": [
+        51.38,
+        3.3792
+      ]
+    }
   },
   "4235": {
     "name": "Bree Tongerlo",
     "lat": 51.136244,
     "lon": 5.656769,
     "active": true,
-    "VLINDER_ID": "Tw2SbKEtwIHD5OVf23zfKvfO"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "Tw2SbKEtwIHD5OVf23zfKvfO"
+    }
   },
   "4246": {
     "name": "Borssele Alpha platform KNMI sensor",
     "lat": 51.7,
     "lon": 3.0567,
     "active": true,
-    "KNMI_ID": "06317",
-    "KNMI_COORDS": [
-      51.7,
-      3.0567
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06317",
+      "API_Coordinates": [
+        51.7,
+        3.0567
+      ]
+    }
   },
   "4352": {
     "name": "Lauwersoog",
     "lat": 53.4116666666667,
     "lon": 6.19916666666667,
-    "KNMI_ID": "06277",
     "active": true,
-    "KNMI_COORDS": [
-      53.4117,
-      6.1992
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06277",
+      "API_Coordinates": [
+        53.4117,
+        6.1992
+      ]
+    }
   },
   "4363": {
     "name": "Mechelen Noord",
     "lat": 51.030889,
     "lon": 4.478445,
     "active": true,
-    "VLINDER_ID": "3hG2KPxxvlPVDjDIlEkbS7A5"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "3hG2KPxxvlPVDjDIlEkbS7A5"
+    }
   },
   "4371": {
     "name": "Saba (Juancho E. Yrausquin Airport)",
     "lat": 17.6461111111111,
     "lon": -63.2208333333333,
-    "KNMI_ID": "78871",
     "active": true,
-    "KNMI_COORDS": [
-      17.6461,
-      -63.2208
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "78871",
+      "API_Coordinates": [
+        17.6461,
+        -63.2208
+      ]
+    }
   },
   "4393": {
     "name": "Terschelling Hoorn",
     "lat": 53.3911111111111,
     "lon": 5.34583333333333,
     "active": true,
-    "KNMI_ID": "06251",
-    "KNMI_COORDS": [
-      53.3911,
-      5.3458
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06251",
+      "API_Coordinates": [
+        53.3911,
+        5.3458
+      ]
+    }
   },
   "4415": {
     "name": "Maaseik Herenlaak",
     "lat": 51.101508,
     "lon": 5.818359,
     "active": true,
-    "VLINDER_ID": "XeIIA97QzN5xxk6AvdzAPquY"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "XeIIA97QzN5xxk6AvdzAPquY"
+    }
   },
   "4426": {
     "name": "Vlakte van de Raan",
     "lat": 51.5036,
     "lon": 3.2419,
     "active": true,
-    "KNMI_ID": "06313",
-    "KNMI_COORDS": [
-      51.5036,
-      3.2419
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06313",
+      "API_Coordinates": [
+        51.5036,
+        3.2419
+      ]
+    }
   },
   "4512": {
     "name": "Eeklo Het Leen",
     "lat": 51.167015,
     "lon": 3.572062,
     "active": true,
-    "VLINDER_ID": "mmcaGqeSebmJIAOPsOfZuCs5"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "mmcaGqeSebmJIAOPsOfZuCs5"
+    }
   },
   "4573": {
     "name": "Assendelft",
     "lat": 52.4819,
     "lon": 4.7258,
-    "KNMI_ID": "06233",
     "active": true,
-    "KNMI_COORDS": [
-      52.4819,
-      4.7258
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06233",
+      "API_Coordinates": [
+        52.4819,
+        4.7258
+      ]
+    }
   },
   "4585": {
     "name": "Heist-op-den-Berg centrum",
     "lat": 51.078689,
     "lon": 4.728812,
     "active": true,
-    "VLINDER_ID": "36Ysu7TgQhOhkF2oJFiIoFLj"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "36Ysu7TgQhOhkF2oJFiIoFLj"
+    }
   },
   "4662": {
     "name": "Zeelandbrug",
     "lat": 51.6286000000001,
     "lon": 3.9177850000000363,
     "active": true,
-    "RWS_ID": "ZBWI",
-    "RWS_COORDS": [
-      563525.897877064,
-      5720130.26737017
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "ZBWI",
+      "API_Coordinates": [
+        563525.897877064,
+        5720130.26737017
+      ]
+    }
   },
   "4710": {
     "name": "AWG platform KNMI sensor",
     "lat": 53.4917,
     "lon": 5.9417,
     "active": true,
-    "KNMI_ID": "06208",
-    "KNMI_COORDS": [
-      53.4917,
-      5.9417
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06208",
+      "API_Coordinates": [
+        53.4917,
+        5.9417
+      ]
+    }
   },
   "4711": {
     "name": "Eindhoven",
     "lat": 51.4497222222222,
     "lon": 5.37694444444444,
     "active": true,
-    "KNMI_ID": "06370",
-    "KNMI_COORDS": [
-      51.4497,
-      5.3769
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06370",
+      "API_Coordinates": [
+        51.4497,
+        5.3769
+      ]
+    }
   },
   "4734": {
     "name": "Oudsbergen Oudsberg",
     "lat": 51.0652694,
     "lon": 5.6134583,
     "active": true,
-    "VLINDER_ID": "eTuhBpgua9VVEqANPehNrR7g"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "eTuhBpgua9VVEqANPehNrR7g"
+    }
   },
   "4806": {
     "name": "A12 platform Rijkswaterstaat sensor",
     "lat": 55.4166629999998,
     "lon": 3.816671000000001,
     "active": true,
-    "RWS_ID": "A12",
-    "RWS_COORDS": [
-      551697.869815018,
-      6141462.20430188
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "A12",
+      "API_Coordinates": [
+        551697.869815018,
+        6141462.20430188
+      ]
+    }
   },
   "4941": {
     "name": "Turnhout Stadsboerderij",
     "lat": 51.335522,
     "lon": 4.934732,
     "active": true,
-    "VLINDER_ID": "vqYF3lib7K3re0Zc38ZCzlom"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "vqYF3lib7K3re0Zc38ZCzlom"
+    }
   },
   "4997": {
     "name": "Arcen",
     "lat": 51.4972222222222,
     "lon": 6.19611111111111,
     "active": true,
-    "KNMI_ID": "06391",
-    "KNMI_COORDS": [
-      51.4972,
-      6.1961
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06391",
+      "API_Coordinates": [
+        51.4972,
+        6.1961
+      ]
+    }
   },
   "5003": {
     "name": "Sint-Laureins Boerekreek",
     "lat": 51.260578,
     "lon": 3.580151,
     "active": true,
-    "VLINDER_ID": "7u5R4nnIY5QmgbeBablX7PCd"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "7u5R4nnIY5QmgbeBablX7PCd"
+    }
   },
   "5096": {
     "name": "Aalst Centrum",
     "lat": 50.935556,
     "lon": 4.041389,
     "active": true,
-    "VLINDER_ID": "11eLa6DbyiHBWFT1FxHzTMII"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "11eLa6DbyiHBWFT1FxHzTMII"
+    }
   },
   "5098": {
     "name": "Brouwershavense Gat",
     "lat": 51.7667,
     "lon": 3.6217,
     "active": true,
-    "KNMI_ID": "06312",
-    "KNMI_COORDS": [
-      51.7667,
-      3.6217
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06312",
+      "API_Coordinates": [
+        51.7667,
+        3.6217
+      ]
+    }
   },
   "5260": {
     "name": "Rotterdam Geulhaven",
     "lat": 51.88862600000009,
     "lon": 4.313755000000273,
     "active": true,
-    "RWS_ID": "ROT2",
-    "RWS_COORDS": [
-      590411.766154589,
-      5749466.62406122
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "ROT2",
+      "API_Coordinates": [
+        590411.766154589,
+        5749466.62406122
+      ]
+    }
   },
   "5331": {
     "name": "Groningen",
     "lat": 53.1236111111111,
     "lon": 6.58472222222222,
     "active": true,
-    "KNMI_ID": "06280",
-    "KNMI_COORDS": [
-      53.1236,
-      6.5847
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06280",
+      "API_Coordinates": [
+        53.1236,
+        6.5847
+      ]
+    }
   },
   "5367": {
     "name": "Zandkreeksluis (Kats)",
     "lat": 51.543971000000084,
     "lon": 3.8652760000000286,
     "active": true,
-    "RWS_ID": "KATS",
-    "RWS_COORDS": [
-      560002.850035323,
-      5710674.15809413
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "KATS",
+      "API_Coordinates": [
+        560002.850035323,
+        5710674.15809413
+      ]
+    }
   },
   "5392": {
     "name": "AWG platform Rijkswaterstaat sensor",
     "lat": 53.4916400000037,
     "lon": 5.941140000012515,
     "active": true,
-    "RWS_ID": "AWG",
-    "RWS_COORDS": [
-      695106.58080376,
-      5930990.21887629
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "AWG",
+      "API_Coordinates": [
+        695106.58080376,
+        5930990.21887629
+      ]
+    }
   },
   "5407": {
     "name": "Maastricht",
     "lat": 50.9052777777778,
     "lon": 5.76194444444444,
-    "KNMI_ID": "06380",
     "active": true,
-    "KNMI_COORDS": [
-      50.9053,
-      5.7619
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06380",
+      "API_Coordinates": [
+        50.9053,
+        5.7619
+      ]
+    }
   },
   "5444": {
     "name": "Asse Koereit",
     "lat": 50.9353,
     "lon": 4.1926,
     "active": true,
-    "VLINDER_ID": "iASUcbCWYglQzIdyQnALsTTT"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "iASUcbCWYglQzIdyQnALsTTT"
+    }
   },
   "5503": {
     "name": "Hansweert",
     "lat": 51.4458,
     "lon": 3.9975,
     "active": true,
-    "KNMI_ID": "06315",
-    "KNMI_COORDS": [
-      51.4458,
-      3.9975
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06315",
+      "API_Coordinates": [
+        51.4458,
+        3.9975
+      ]
+    }
   },
   "5631": {
     "name": "Melle Proefhoeve",
     "lat": 50.980438,
     "lon": 3.815763,
     "active": true,
-    "VLINDER_ID": "jvy7zdAPZ5ymI2hydh6tvnmm"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "jvy7zdAPZ5ymI2hydh6tvnmm"
+    }
   },
   "5673": {
     "name": "Hoek van Holland",
     "lat": 51.9911111111111,
     "lon": 4.12166666666667,
     "active": true,
-    "KNMI_ID": "06330",
-    "KNMI_COORDS": [
-      51.9911,
-      4.1217
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06330",
+      "API_Coordinates": [
+        51.9911,
+        4.1217
+      ]
+    }
   },
   "5687": {
     "name": "Tienen Centrum",
     "lat": 50.810032,
     "lon": 4.940457,
     "active": true,
-    "VLINDER_ID": "dIo3hFEg7DeF32Nj9fqUoDcp"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "dIo3hFEg7DeF32Nj9fqUoDcp"
+    }
   },
   "5731": {
     "name": "Gent Ottogracht",
     "lat": 51.058099,
     "lon": 3.728067,
     "active": true,
-    "VLINDER_ID": "ItzXCMYUzi31xyiEZpLxB7ef"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "ItzXCMYUzi31xyiEZpLxB7ef"
+    }
   },
   "5772": {
     "name": "Beveren Haven",
     "lat": 51.26685,
     "lon": 4.293436,
     "active": true,
-    "VLINDER_ID": "DOo1XWMfhmleI0M9jlkOf1Wt"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "DOo1XWMfhmleI0M9jlkOf1Wt"
+    }
   },
   "5838": {
     "name": "Wijdenes",
     "lat": 52.6325,
     "lon": 5.17361111111111,
-    "KNMI_ID": "06248",
     "active": true,
-    "KNMI_COORDS": [
-      52.6325,
-      5.1736
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06248",
+      "API_Coordinates": [
+        52.6325,
+        5.1736
+      ]
+    }
   },
   "5852": {
     "name": "Borssele Alpha platform Rijkswaterstaat sensor",
     "lat": 51.6999210000001,
     "lon": 3.056706999999991,
     "active": true,
-    "RWS_ID": "BSA",
-    "RWS_COORDS": [
-      503918.942357358,
-      5727664.94973239
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "BSA",
+      "API_Coordinates": [
+        503918.942357358,
+        5727664.94973239
+      ]
+    }
   },
   "5862": {
     "name": "Zelzate Centrum",
     "lat": 51.19893,
     "lon": 3.814217,
     "active": true,
-    "VLINDER_ID": "yig7e7HGi27NcwzIOgcvhBC2"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "yig7e7HGi27NcwzIOgcvhBC2"
+    }
   },
   "5990": {
     "name": "Koekelberg UNESCO campus",
     "lat": 50.86514,
     "lon": 4.308056,
     "active": true,
-    "VLINDER_ID": "en06bHr9AwHDTwNnvhdtMFmy"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "en06bHr9AwHDTwNnvhdtMFmy"
+    }
   },
   "6019": {
     "name": "Bonaire (Flamingo Airport)",
     "lat": 12.13,
     "lon": -68.2758333333333,
-    "KNMI_ID": "78990",
     "active": true,
-    "KNMI_COORDS": [
-      12.13,
-      -68.2758
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "78990",
+      "API_Coordinates": [
+        12.13,
+        -68.2758
+      ]
+    }
   },
   "6327": {
     "name": "Stavenisse",
     "lat": 51.5956,
     "lon": 4.0061,
     "active": true,
-    "KNMI_ID": "06324",
-    "KNMI_COORDS": [
-      51.5956,
-      4.0061
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06324",
+      "API_Coordinates": [
+        51.5956,
+        4.0061
+      ]
+    }
   },
   "6353": {
     "name": "Bergsediepsluis (Oesterdam)",
     "lat": 51.51019700000009,
     "lon": 4.173901000000157,
     "active": true,
-    "RWS_ID": "BDWI",
-    "RWS_COORDS": [
-      581464.221684069,
-      5707216.45883811
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "BDWI",
+      "API_Coordinates": [
+        581464.221684069,
+        5707216.45883811
+      ]
+    }
   },
   "6524": {
     "name": "Oudenaarde Scheldevallei",
     "lat": 50.820251,
     "lon": 3.586094,
     "active": true,
-    "VLINDER_ID": "J8SNioTAfAz5UNh0uIt9VE72"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "J8SNioTAfAz5UNh0uIt9VE72"
+    }
   },
   "6660": {
     "name": "Sint Eustatius (F. D. Roosevelt Airport)",
     "lat": 17.4955555555556,
     "lon": -62.9827777777778,
-    "KNMI_ID": "78873",
     "active": true,
-    "KNMI_COORDS": [
-      17.4956,
-      -62.9828
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "78873",
+      "API_Coordinates": [
+        17.4956,
+        -62.9828
+      ]
+    }
   },
   "6707": {
     "name": "Bonheiden Mechels Broek",
     "lat": 51.0271,
     "lon": 4.5163,
     "active": true,
-    "VLINDER_ID": "0xwg6AsDvbnxXzB4S3c2BRyJ"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "0xwg6AsDvbnxXzB4S3c2BRyJ"
+    }
   },
   "6816": {
     "name": "Evergem Kluizen",
     "lat": 51.15472,
     "lon": 3.708611,
     "active": true,
-    "VLINDER_ID": "wjNeGPl3OhXCsIfsIuLjKVRd"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "wjNeGPl3OhXCsIfsIuLjKVRd"
+    }
   },
   "6823": {
     "name": "Brent Charlie platform",
     "lat": 61.09610999999952,
     "lon": 1.721389999999954,
     "active": true,
-    "RWS_ID": "BTC1",
-    "RWS_COORDS": [
-      431057.398943666,
-      6774166.0702699
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "BTC1",
+      "API_Coordinates": [
+        431057.398943666,
+        6774166.0702699
+      ]
+    }
   },
   "6835": {
     "name": "Nieuwpoort Centrum",
     "lat": 51.129539,
     "lon": 2.75206,
     "active": true,
-    "VLINDER_ID": "V0sYUGN2UObPDcHRmrhUntEv"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "V0sYUGN2UObPDcHRmrhUntEv"
+    }
   },
   "6862": {
     "name": "Grevelingensluis (Bruinisse)",
     "lat": 51.66661100000014,
     "lon": 4.095666000000117,
     "active": true,
-    "RWS_ID": "GRWI",
-    "RWS_COORDS": [
-      575774.487899888,
-      5724527.14821832
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "GRWI",
+      "API_Coordinates": [
+        575774.487899888,
+        5724527.14821832
+      ]
+    }
   },
   "6866": {
     "name": "Tielt Centrum",
     "lat": 50.997417,
     "lon": 3.328104,
     "active": true,
-    "VLINDER_ID": "CRjDzKhYB7Q0yrBMsvYrOABc"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "CRjDzKhYB7Q0yrBMsvYrOABc"
+    }
   },
   "6901": {
     "name": "Markermeer midden",
     "lat": 52.53213900000051,
     "lon": 5.2311940000035335,
     "active": true,
-    "RWS_ID": "FL42o",
-    "RWS_COORDS": [
-      651339.91252293,
-      5822566.22032937
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "FL42o",
+      "API_Coordinates": [
+        651339.91252293,
+        5822566.22032937
+      ]
+    }
   },
   "6914": {
     "name": "Zelzate Haven",
     "lat": 51.207515,
     "lon": 3.803448,
     "active": true,
-    "VLINDER_ID": "S1cUFJPTdRN13R1eTiXoH77C"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "S1cUFJPTdRN13R1eTiXoH77C"
+    }
   },
   "6943": {
     "name": "K14 platform Rijkswaterstaat sensor",
     "lat": 53.266670000000005,
     "lon": 3.633330000000016,
     "active": true,
-    "RWS_ID": "K14",
-    "RWS_COORDS": [
-      542240.42600117,
-      5902123.13674842
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "K14",
+      "API_Coordinates": [
+        542240.42600117,
+        5902123.13674842
+      ]
+    }
   },
   "6993": {
     "name": "Gingelom Boekhout",
     "lat": 50.743256,
     "lon": 5.226407,
     "active": true,
-    "VLINDER_ID": "DqtAUxOaYtpvQev7UdLAGni5"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "DqtAUxOaYtpvQev7UdLAGni5"
+    }
   },
   "6998": {
     "name": "De Panne De Westhoek",
     "lat": 51.07774,
     "lon": 2.560609,
     "active": true,
-    "VLINDER_ID": "IAKRIUlMMP39zdbXNEbCW3Re"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "IAKRIUlMMP39zdbXNEbCW3Re"
+    }
   },
   "7014": {
     "name": "Ieper Centrum",
     "lat": 50.850999,
     "lon": 2.882751,
     "active": true,
-    "VLINDER_ID": "2MDSH0xR5dG2plS7R9ZLNutq"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "2MDSH0xR5dG2plS7R9ZLNutq"
+    }
   },
   "7020": {
     "name": "Zottegem Campus",
     "lat": 50.8631,
     "lon": 3.8084,
     "active": true,
-    "VLINDER_ID": "H3M4uDKhcoVHfnsBxcZv6BeL"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "H3M4uDKhcoVHfnsBxcZv6BeL"
+    }
   },
   "7117": {
     "name": "Q1 platform",
     "lat": 52.92533499999996,
     "lon": 4.150361000000124,
     "active": true,
-    "RWS_ID": "Q1",
-    "RWS_COORDS": [
-      577327.765231775,
-      5864586.03138184
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "Q1",
+      "API_Coordinates": [
+        577327.765231775,
+        5864586.03138184
+      ]
+    }
   },
   "7135": {
     "name": "Nieuwpoort",
     "lat": "51.1558333333333",
     "lon": "2.71666666666667",
     "active": true,
-    "MVB_IDs": [
-      "NP7WC3",
-      "NP7WRS",
-      "NP7WVC"
-    ]
+    "measurements": {
+      "source": "MVB",
+      "API_ID": [
+        "NP7WC3",
+        "NP7WRS",
+        "NP7WVC"
+      ]
+    }
   },
   "7304": {
     "name": "F3-FB1 platform",
     "lat": 54.8538888888889,
     "lon": 4.69611111111111,
-    "KNMI_ID": "06239",
     "active": true,
-    "KNMI_COORDS": [
-      54.8539,
-      4.6961
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06239",
+      "API_Coordinates": [
+        54.8539,
+        4.6961
+      ]
+    }
   },
   "7356": {
     "name": "Heist-op-den-Berg landelijk",
     "lat": 51.051216,
     "lon": 4.685974,
     "active": true,
-    "VLINDER_ID": "gL8ySh0fD0yikpZGaWQG61oH"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "gL8ySh0fD0yikpZGaWQG61oH"
+    }
   },
   "7511": {
     "name": "Melle Proefhoeve 2",
     "lat": 50.980438,
     "lon": 3.815763,
     "active": true,
-    "VLINDER_ID": "lOM9ntUwfV7154olxq9ylQcC"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "lOM9ntUwfV7154olxq9ylQcC"
+    }
   },
   "7550": {
     "name": "P11 platform Rijkswaterstaat sensor",
     "lat": 52.35867000000004,
     "lon": 3.3415000000000004,
     "active": true,
-    "RWS_ID": "P11",
-    "RWS_COORDS": [
-      523256.298159867,
-      5800986.61235339
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "P11",
+      "API_Coordinates": [
+        523256.298159867,
+        5800986.61235339
+      ]
+    }
   },
   "7579": {
     "name": "Lommel Bosland",
     "lat": 51.186371,
     "lon": 5.342152,
     "active": true,
-    "VLINDER_ID": "eUPvvLdGP4DEbphRbM1wgjig"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "eUPvvLdGP4DEbphRbM1wgjig"
+    }
   },
   "7619": {
     "name": "Wandelaar",
     "lat": "51.3944444444444",
     "lon": "3.04583333333333",
     "active": true,
-    "MVB_IDs": [
-      "MP0WC3",
-      "MP0WRS",
-      "MP0WVC"
-    ]
+    "measurements": {
+      "source": "MVB",
+      "API_ID": [
+        "MP0WC3",
+        "MP0WRS",
+        "MP0WVC"
+      ]
+    }
   },
   "7713": {
     "name": "Berkhout",
     "lat": 52.6427777777778,
     "lon": 4.97888888888889,
     "active": true,
-    "KNMI_ID": "06249",
-    "KNMI_COORDS": [
-      52.6428,
-      4.9789
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06249",
+      "API_Coordinates": [
+        52.6428,
+        4.9789
+      ]
+    }
   },
   "7722": {
     "name": "Herzele Educatief park",
     "lat": 50.8844,
     "lon": 3.8834,
     "active": true,
-    "VLINDER_ID": "WBOSyZXZgzSIK42bG8KfRkKW"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "WBOSyZXZgzSIK42bG8KfRkKW"
+    }
   },
   "7739": {
     "name": "Gent Gentbrugse Meersen",
     "lat": 51.035293,
     "lon": 3.769741,
     "active": true,
-    "VLINDER_ID": "bZrYlw0clWwB6ZY8rBdgrbLL"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "bZrYlw0clWwB6ZY8rBdgrbLL"
+    }
   },
   "7941": {
     "name": "Scheur Wielingen",
     "lat": "51.4183333333333",
     "lon": "3.29861111111111",
     "active": true,
-    "MVB_IDs": [
-      "MP4WC3",
-      "MP4WRS",
-      "MP4WVC"
-    ]
+    "measurements": {
+      "source": "MVB",
+      "API_ID": [
+        "MP4WC3",
+        "MP4WRS",
+        "MP4WVC"
+      ]
+    }
   },
   "8080": {
     "name": "Brussel Kathedraal",
     "lat": 50.847025,
     "lon": 4.357971,
     "active": true,
-    "VLINDER_ID": "Ziocm4OqUjrp7W9988artyfN"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "Ziocm4OqUjrp7W9988artyfN"
+    }
   },
   "8105": {
     "name": "Houtribdijk",
     "lat": 52.6480555555556,
     "lon": 5.40055555555556,
-    "KNMI_ID": "06258",
     "active": true,
-    "KNMI_COORDS": [
-      52.6481,
-      5.4006
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06258",
+      "API_Coordinates": [
+        52.6481,
+        5.4006
+      ]
+    }
   },
   "8139": {
     "name": "Kontich Heemtuin",
     "lat": 51.13478,
     "lon": 4.44967,
     "active": true,
-    "VLINDER_ID": "XcdmHK6Yw2NeVdAFM4djB59J"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "XcdmHK6Yw2NeVdAFM4djB59J"
+    }
   },
   "8231": {
     "name": "Rotterdam",
     "lat": 51.9605555555556,
     "lon": 4.44694444444445,
     "active": true,
-    "KNMI_ID": "06344",
-    "KNMI_COORDS": [
-      51.9606,
-      4.4469
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06344",
+      "API_Coordinates": [
+        51.9606,
+        4.4469
+      ]
+    }
   },
   "8233": {
     "name": "HKZA platform KNMI sensor",
     "lat": 52.3194,
     "lon": 4.0422,
     "active": true,
-    "KNMI_ID": "06216",
-    "KNMI_COORDS": [
-      52.3194,
-      4.0422
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06216",
+      "API_Coordinates": [
+        52.3194,
+        4.0422
+      ]
+    }
   },
   "8245": {
     "name": "Woensdrecht",
     "lat": 51.4477777777778,
     "lon": 4.34194444444444,
     "active": true,
-    "KNMI_ID": "06340",
-    "KNMI_COORDS": [
-      51.4478,
-      4.3419
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06340",
+      "API_Coordinates": [
+        51.4478,
+        4.3419
+      ]
+    }
   },
   "8254": {
     "name": "Zeebrugge - Meteopark",
     "lat": "51.3330555555556",
     "lon": "3.21916666666667",
     "active": true,
-    "MVB_IDs": [
-      "ZMPWRS",
-      "ZMPWVC",
-      "OS7WRS"
-    ]
+    "measurements": {
+      "source": "MVB",
+      "API_ID": [
+        "ZMPWRS",
+        "ZMPWVC",
+        "OS7WRS"
+      ]
+    }
   },
   "8325": {
     "name": "Gent Oostakker",
     "lat": 51.089413,
     "lon": 3.784514,
     "active": true,
-    "VLINDER_ID": "6VeMTnop5DCcops6rNVRDcBR"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "6VeMTnop5DCcops6rNVRDcBR"
+    }
   },
   "8362": {
     "name": "P11 platform KNMI sensor",
     "lat": 52.36,
     "lon": 3.3417,
     "active": true,
-    "KNMI_ID": "06203",
-    "KNMI_COORDS": [
-      52.36,
-      3.3417
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06203",
+      "API_Coordinates": [
+        52.36,
+        3.3417
+      ]
+    }
   },
   "8408": {
     "name": "Terschelling Noordzee",
     "lat": 53.42794000000058,
     "lon": 5.333190000003958,
     "active": true,
-    "RWS_ID": "TERS",
-    "RWS_COORDS": [
-      655016.251709493,
-      5922412.47580659
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "TERS",
+      "API_Coordinates": [
+        655016.251709493,
+        5922412.47580659
+      ]
+    }
   },
   "8502": {
     "name": "K14 platform KNMI sensor",
     "lat": 53.2694,
     "lon": 3.6278,
     "active": true,
-    "KNMI_ID": "06204",
-    "KNMI_COORDS": [
-      53.2694,
-      3.6278
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06204",
+      "API_Coordinates": [
+        53.2694,
+        3.6278
+      ]
+    }
   },
   "8527": {
     "name": "Arnhem",
     "lat": 52.0547222222222,
     "lon": 5.87222222222222,
     "active": true,
-    "KNMI_ID": "06275",
-    "KNMI_COORDS": [
-      52.0547,
-      5.8722
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06275",
+      "API_Coordinates": [
+        52.0547,
+        5.8722
+      ]
+    }
   },
   "8540": {
     "name": "Lier Zimmertoren",
     "lat": 51.128779,
     "lon": 4.569839,
     "active": true,
-    "VLINDER_ID": "wmOdkPszrgIG5CMd47zn3y08"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "wmOdkPszrgIG5CMd47zn3y08"
+    }
   },
   "8541": {
     "name": "Gent Watersportbaan",
     "lat": 51.052655,
     "lon": 3.675183,
     "active": true,
-    "VLINDER_ID": "2kfOFUtZ5wZEEpM6xbL42aFM"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "2kfOFUtZ5wZEEpM6xbL42aFM"
+    }
   },
   "8609": {
     "name": "D15 platform Rijkswaterstaat sensor",
     "lat": 54.316662999999934,
     "lon": 2.9333329999999966,
     "active": true,
-    "RWS_ID": "D15",
-    "RWS_COORDS": [
-      495663.241516565,
-      6018756.72170369
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "D15",
+      "API_Coordinates": [
+        495663.241516565,
+        6018756.72170369
+      ]
+    }
   },
   "8650": {
     "name": "Ninove Pastorij",
     "lat": 50.8368,
     "lon": 4.0221,
     "active": true,
-    "VLINDER_ID": "qxCwQVK8J7frFmlSyNHY1vjS"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "qxCwQVK8J7frFmlSyNHY1vjS"
+    }
   },
   "8700": {
     "name": "Oosterschelde zeezijde (Schaar)",
     "lat": 51.6558,
     "lon": 3.6939,
     "active": true,
-    "KNMI_ID": "06316",
-    "KNMI_COORDS": [
-      51.6558,
-      3.6939
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06316",
+      "API_Coordinates": [
+        51.6558,
+        3.6939
+      ]
+    }
   },
   "8753": {
     "name": "Ieper Vesten",
     "lat": 50.84639,
     "lon": 2.883056,
     "active": true,
-    "VLINDER_ID": "ULRkNeA9OIT41itKx9ArGEwP"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "ULRkNeA9OIT41itKx9ArGEwP"
+    }
   },
   "8857": {
     "name": "Maldegem Markt",
     "lat": 51.208354,
     "lon": 3.445343,
     "active": true,
-    "VLINDER_ID": "QNVdfKUcGfeaSoHnd1uLRn74"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "QNVdfKUcGfeaSoHnd1uLRn74"
+    }
   },
   "9039": {
     "name": "J6 platform KNMI sensor",
     "lat": 53.8242,
     "lon": 2.9453,
     "active": true,
-    "KNMI_ID": "06211",
-    "KNMI_COORDS": [
-      53.8242,
-      2.9453
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06211",
+      "API_Coordinates": [
+        53.8242,
+        2.9453
+      ]
+    }
   },
   "9057": {
     "name": "F3-OLT platform",
     "lat": 54.849994999999936,
     "lon": 4.716658000000711,
     "active": true,
-    "RWS_ID": "F3",
-    "RWS_COORDS": [
-      610215.841475144,
-      6079449.4135779
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "F3",
+      "API_Coordinates": [
+        610215.841475144,
+        6079449.4135779
+      ]
+    }
   },
   "9399": {
     "name": "Londerzeel Groenhof",
     "lat": 51.028222,
     "lon": 4.255669,
     "active": true,
-    "VLINDER_ID": "7DR6TiwO0x9hamaMswCc6578"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "7DR6TiwO0x9hamaMswCc6578"
+    }
   },
   "9424": {
     "name": "Antwerpen Eilandje",
     "lat": 51.238839,
     "lon": 4.417377,
     "active": true,
-    "VLINDER_ID": "4JX1mVgdkKnn8i3ueY9aaVXA"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "4JX1mVgdkKnn8i3ueY9aaVXA"
+    }
   },
   "9438": {
     "name": "Gent Sterrenwacht A. Pien",
     "lat": 51.04573,
     "lon": 3.72449,
     "active": true,
-    "VLINDER_ID": "lPh9kCaXyDhdcmI1dSY4WjDF"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "lPh9kCaXyDhdcmI1dSY4WjDF"
+    }
   },
   "9442": {
     "name": "D15 platform KNMI sensor",
     "lat": 54.3256,
     "lon": 2.9358,
     "active": true,
-    "KNMI_ID": "06201",
-    "KNMI_COORDS": [
-      54.3256,
-      2.9358
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06201",
+      "API_Coordinates": [
+        54.3256,
+        2.9358
+      ]
+    }
   },
   "9460": {
     "name": "Vlieland",
     "lat": 53.24,
     "lon": 4.92083333333333,
-    "KNMI_ID": "06242",
     "active": true,
-    "KNMI_COORDS": [
-      53.24,
-      4.9208
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06242",
+      "API_Coordinates": [
+        53.24,
+        4.9208
+      ]
+    }
   },
   "9462": {
     "name": "Westdorpe",
     "lat": 51.2247222222222,
     "lon": 3.86111111111111,
     "active": true,
-    "KNMI_ID": "06319",
-    "KNMI_COORDS": [
-      51.2247,
-      3.8611
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06319",
+      "API_Coordinates": [
+        51.2247,
+        3.8611
+      ]
+    }
   },
   "9470": {
     "name": "Antwerpen Inst. Trop. Geneeskunde",
     "lat": 51.212211,
     "lon": 4.398065,
     "active": true,
-    "VLINDER_ID": "ezxlxqTCtJb6ChsNwO3GwAe8"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "ezxlxqTCtJb6ChsNwO3GwAe8"
+    }
   },
   "9556": {
     "name": "Ell",
     "lat": 51.1966666666667,
     "lon": 5.7625,
     "active": true,
-    "KNMI_ID": "06377",
-    "KNMI_COORDS": [
-      51.1967,
-      5.7625
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06377",
+      "API_Coordinates": [
+        51.1967,
+        5.7625
+      ]
+    }
   },
   "9690": {
     "name": "Blankenberge",
     "lat": "51.3152777777778",
     "lon": "3.10944444444444",
     "active": true,
-    "MVB_IDs": [
-      "BL7WC3",
-      "BL7WRS",
-      "BL7WVC"
-    ]
+    "measurements": {
+      "source": "MVB",
+      "API_ID": [
+        "BL7WC3",
+        "BL7WRS",
+        "BL7WVC"
+      ]
+    }
   },
   "9745": {
     "name": "HKZA platform Rijkswaterstaat sensor 2",
     "lat": 52.319527,
     "lon": 4.0431287,
     "active": true,
-    "RWS_ID": "HKZA2",
-    "RWS_COORDS": [
-      571099.371,
-      5797090.138
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "HKZA2",
+      "API_Coordinates": [
+        571099.371,
+        5797090.138
+      ]
+    }
   },
   "9747": {
     "name": "Antwerpen Zandvliet",
     "lat": 51.350618,
     "lon": 4.315013,
     "active": true,
-    "VLINDER_ID": "QDpOI8z0Avo55bojIzbom6l5"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "QDpOI8z0Avo55bojIzbom6l5"
+    }
   },
   "9758": {
     "name": "Sint-Niklaas Ster",
     "lat": 51.1671,
     "lon": 4.1906,
     "active": true,
-    "VLINDER_ID": "yne5qgw98kSGqMNk2hHRHEgX"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "yne5qgw98kSGqMNk2hHRHEgX"
+    }
   },
   "9784": {
     "name": "Heino",
     "lat": 52.4344444444444,
     "lon": 6.25888888888889,
     "active": true,
-    "KNMI_ID": "06278",
-    "KNMI_COORDS": [
-      52.4344,
-      6.2589
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06278",
+      "API_Coordinates": [
+        52.4344,
+        6.2589
+      ]
+    }
   },
   "9810": {
     "name": "Stroommeetpaal Eemshaven",
     "lat": 53.474390000030404,
     "lon": 6.821730000046831,
     "active": true,
-    "RWS_ID": "SPE",
-    "RWS_COORDS": [
-      753602.88269246,
-      5931845.6170377
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "SPE",
+      "API_Coordinates": [
+        753602.88269246,
+        5931845.6170377
+      ]
+    }
   },
   "9941": {
     "name": "Nieuw-Vennep",
     "lat": 52.255,
     "lon": 4.6478,
-    "KNMI_ID": "06237",
     "active": true,
-    "KNMI_COORDS": [
-      52.255,
-      4.6478
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06237",
+      "API_Coordinates": [
+        52.255,
+        4.6478
+      ]
+    }
   },
   "9990": {
     "name": "Herwijnen",
     "lat": 51.8577777777778,
     "lon": 5.14527777777778,
     "active": true,
-    "KNMI_ID": "06356",
-    "KNMI_COORDS": [
-      51.8578,
-      5.1453
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06356",
+      "API_Coordinates": [
+        51.8578,
+        5.1453
+      ]
+    }
   },
   "0290": {
     "name": "Twente",
     "lat": 52.2730555555556,
     "lon": 6.89083333333333,
     "active": true,
-    "KNMI_ID": "06290",
-    "KNMI_COORDS": [
-      52.2731,
-      6.8908
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06290",
+      "API_Coordinates": [
+        52.2731,
+        6.8908
+      ]
+    }
   },
   "0304": {
     "name": "Marknesse",
     "lat": 52.7019444444445,
     "lon": 5.8875,
     "active": true,
-    "KNMI_ID": "06273",
-    "KNMI_COORDS": [
-      52.7019,
-      5.8875
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06273",
+      "API_Coordinates": [
+        52.7019,
+        5.8875
+      ]
+    }
   },
   "0205": {
     "name": "Oostende",
     "lat": "51.2375",
     "lon": "2.92416666666667",
     "active": true,
-    "MVB_IDs": [
-      "OS7WRS"
-    ]
+    "measurements": {
+      "source": "MVB",
+      "API_ID": [
+        "OS7WRS"
+      ]
+    }
   },
   "0227": {
     "name": "Schiphol",
     "lat": 52.3172222222222,
     "lon": 4.78972222222222,
     "active": true,
-    "KNMI_ID": "06240",
-    "KNMI_COORDS": [
-      52.3172,
-      4.7897
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06240",
+      "API_Coordinates": [
+        52.3172,
+        4.7897
+      ]
+    }
   },
   "0323": {
     "name": "Lopik-Cabauw",
     "lat": 51.9691666666667,
     "lon": 4.92583333333333,
     "active": true,
-    "KNMI_ID": "06348",
-    "KNMI_COORDS": [
-      51.9692,
-      4.9258
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06348",
+      "API_Coordinates": [
+        51.9692,
+        4.9258
+      ]
+    }
   },
   "0727": {
     "name": "J6 platform Rijkswaterstaat sensor",
     "lat": 53.81663199999994,
     "lon": 2.9500099999999967,
     "active": true,
-    "RWS_ID": "J6",
-    "RWS_COORDS": [
-      496708.794769268,
-      5963121.52220118
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "J6",
+      "API_Coordinates": [
+        496708.794769268,
+        5963121.52220118
+      ]
+    }
   },
   "0577": {
     "name": "Lage Licht (Hoek van Holland)",
     "lat": 51.98139300000006,
     "lon": 4.081434000000092,
     "active": true,
-    "RWS_ID": "LGL1",
-    "RWS_COORDS": [
-      574270.750149378,
-      5759520.90939086
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "LGL1",
+      "API_Coordinates": [
+        574270.750149378,
+        5759520.90939086
+      ]
+    }
   },
   "0868": {
     "name": "Lichteiland Goeree Rijkswaterstaat sensor",
     "lat": 51.925745000000084,
     "lon": 3.6698740000000147,
     "active": true,
-    "RWS_ID": "LEG",
-    "RWS_COORDS": [
-      546063.014918327,
-      5752991.39166245
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "LEG",
+      "API_Coordinates": [
+        546063.014918327,
+        5752991.39166245
+      ]
+    }
   },
   "0906": {
     "name": "Nes (Ameland)",
     "lat": 53.429970000002214,
     "lon": 5.7589400000091455,
     "active": true,
-    "RWS_ID": "NES",
-    "RWS_COORDS": [
-      683288.335482817,
-      5923648.18977766
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "NES",
+      "API_Coordinates": [
+        683288.335482817,
+        5923648.18977766
+      ]
+    }
   },
   "0890": {
     "name": "Stroommeetpaal IJgeul",
     "lat": 52.4636,
     "lon": 4.5175,
     "active": true,
-    "KNMI_ID": "06209",
-    "KNMI_COORDS": [
-      52.4636,
-      4.5175
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06209",
+      "API_Coordinates": [
+        52.4636,
+        4.5175
+      ]
+    }
   },
   "0904": {
     "name": "IJmuiden havenhoofd zuid",
     "lat": 52.463693000000085,
     "lon": 4.5322830000005405,
     "active": true,
-    "RWS_ID": "IJZ1",
-    "RWS_COORDS": [
-      604098.550551581,
-      5813717.41176161
-    ]
+    "measurements": {
+      "source": "RWS",
+      "API_ID": "IJZ1",
+      "API_Coordinates": [
+        604098.550551581,
+        5813717.41176161
+      ]
+    }
   },
   "0757": {
     "name": "Voorschoten",
     "lat": 52.1397222222222,
     "lon": 4.43638888888889,
     "active": true,
-    "KNMI_ID": "06215",
-    "KNMI_COORDS": [
-      52.1397,
-      4.4364
-    ]
+    "measurements": {
+      "source": "KNMI",
+      "API_ID": "06215",
+      "API_Coordinates": [
+        52.1397,
+        4.4364
+      ]
+    }
   },
   "0753": {
     "name": "Turnhout Centrum",
     "lat": 51.324583,
     "lon": 4.952109,
     "active": true,
-    "VLINDER_ID": "VDwYVFKNaGF0YpQtM4xe3Ic5"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "VDwYVFKNaGF0YpQtM4xe3Ic5"
+    }
   },
   "0110": {
     "name": "Mechelen De Lindepoort",
     "lat": 51.02813,
     "lon": 4.477398,
     "active": true,
-    "VLINDER_ID": "h2Nl284RotYblunrLM8m6KtO"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "h2Nl284RotYblunrLM8m6KtO"
+    }
   },
   "0070": {
     "name": "Antwerpen Zoo",
     "lat": 51.216477,
     "lon": 4.42344,
     "active": true,
-    "VLINDER_ID": "RyLeKizFOca8R95PJ9Ed9MPQ"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "RyLeKizFOca8R95PJ9Ed9MPQ"
+    }
   },
   "0297": {
     "name": "Geel Centrum",
     "lat": 51.16176,
     "lon": 4.997653,
     "active": true,
-    "VLINDER_ID": "aIbZHX6cZzv4DQbMPS5MrM57"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "aIbZHX6cZzv4DQbMPS5MrM57"
+    }
   },
   "0265": {
     "name": "Pelt Nolimpark",
     "lat": 51.221908,
     "lon": 5.396069,
     "active": true,
-    "VLINDER_ID": "hI1sYgmyyHsY74OKORcVjgIH"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "hI1sYgmyyHsY74OKORcVjgIH"
+    }
   },
   "0222": {
     "name": "Mechelen Nekkerspoel",
     "lat": 51.0317,
     "lon": 4.4941,
     "active": true,
-    "VLINDER_ID": "hnc0YxKu18Jw7OdqhA3g5Pyc"
+    "measurements": {
+      "source": "VLINDER",
+      "API_ID": "hnc0YxKu18Jw7OdqhA3g5Pyc"
+    }
   }
 }

@@ -35,13 +35,13 @@ export async function getData(request, response, date, locations) {
 
   const locationID = request.params.id
   const location = locations[locationID]
-  const dataset = Object.keys(location).find(element => element.includes("ID")).split("_")[0]
+  const datasetMeasurements = location.measurements.source
   let values = {}
 
   //Times 
-  let NoMeasurementsXHour
-  if (["RWS", "KNMI", "MVB"].includes(dataset)) NoMeasurementsXHour = 6
-  if (["VLINDER"].includes(dataset)) NoMeasurementsXHour = 12
+  let NoMeasurementsXHour = 6 // Default and also used for forecast only locations
+  if (["RWS", "KNMI", "MVB"].includes(datasetMeasurements)) NoMeasurementsXHour = 6
+  if (["VLINDER"].includes(datasetMeasurements)) NoMeasurementsXHour = 12
   let times
   const DSTDates = getTimeChangeDates(dateParsed)
   const dateToDST = format(utcToZonedTime(DSTDates.toDST, timeZone), "dd-MM")
@@ -55,22 +55,24 @@ export async function getData(request, response, date, locations) {
 
   //Measurements
   const dataFetched = await new Promise(async (resolve) => {
+    if (datasetMeasurements == null) { resolve(null); return } //This will run if the location is forecast only
     if (isFuture(dateParsed)) { resolve(null); return }
 
-    if (location.VLINDER_ID) return fetchVLINDER(dateParsed, location, resolve, times, DSTDates)
-    if (location.RWS_ID) return fetchRWS(dateParsed, location, resolve, times, DSTDates)
-    if (location.KNMI_ID) return fetchKNMI(dateParsed, location, resolve, times, DSTDates)
-    if (location.MVB_IDs) return fetchMVB(dateParsed, location, resolve, times, DSTDates)
+    if (datasetMeasurements == "VLINDER") return fetchVLINDER(dateParsed, location, resolve, times, DSTDates)
+    if (datasetMeasurements == "RWS") return fetchRWS(dateParsed, location, resolve, times, DSTDates)
+    if (datasetMeasurements == "KNMI") return fetchKNMI(dateParsed, location, resolve, times, DSTDates)
+    if (datasetMeasurements == "MVB") return fetchMVB(dateParsed, location, resolve, times, DSTDates)
   })
 
   if (!dataFetched || dataFetched.data.error) {
     logFetchErrors(dataFetched, response)
     values["windSpeed"] = values["windGusts"] = values["windDirection"] = []
   } else {
-    values["windSpeed"] = dataFetched.data[dataset][0]
-    values["windGusts"] = dataFetched.data[dataset][1]
-    values["windDirection"] = dataFetched.data[dataset][2]
+    values["windSpeed"] = dataFetched.data[datasetMeasurements][0]
+    values["windGusts"] = dataFetched.data[datasetMeasurements][1]
+    values["windDirection"] = dataFetched.data[datasetMeasurements][2]
   }
+  console.log(values)
 
   //Forecast
   let forecastObj, forecastInfoString = "niet beschikbaar"
@@ -161,7 +163,7 @@ export async function getData(request, response, date, locations) {
     response.json({
       date: dateParsed.toISOString(),
       values: values,
-      dataset: dataset,
+      datasetMeasurements: datasetMeasurements,
       forecastInfoString: forecastInfoString
     })
 }

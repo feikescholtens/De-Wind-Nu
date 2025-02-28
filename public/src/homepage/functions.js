@@ -317,10 +317,17 @@ function setMeasurementData(container, dataLocation, returnNode) {
     }
   }
 
+  if (dataLocation == "FORECAST_ONLY") {
+    windSpeedGustsElement.remove()
+    windDirectionElement.remove()
+    relativeTimeElement.remove()
+  }
+
   if (returnNode) return container
 }
 
 function checkOldMeasurement(dataLocation) {
+  if (dataLocation == "FORECAST_ONLY") return
 
   const timeStampString = dataLocation.timeStamp
   const timeStamp = parseISO(timeStampString)
@@ -356,6 +363,14 @@ export function distanceLocationToCurrentLocation(lat1, lon1, lat2, lon2) {
 
     return Math.round(dist)
   }
+}
+
+export function getLocationsForecastOnly() {
+  const locationsForecastOnly = {}
+  for (const id in data) {
+    if (Object.keys(data[id].measurements).length === 0) locationsForecastOnly[id] = "FORECAST_ONLY"
+  }
+  return locationsForecastOnly
 }
 
 //Functions for map
@@ -480,13 +495,12 @@ export function createPopupIDAndMarkerElement(location, locationID) {
   marker.className = "markerContainer"
   marker.innerHTML = `<div class="marker" title="${location.name}"></div>`
 
-  const dataset = Object.keys(location).find(element => element.includes("ID")).split("_")[0]
+  const dataset = location.measurements.source
   if (["VLINDER", "RWS", "KNMI", "MVB"].includes(dataset)) {
     marker.classList.add(`markerContainer${dataset}`)
     Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add(dataset) })
     popupId = `popup${dataset}`
   } else {
-    marker.classList.add(`markerContainerOther`)
     Array.from(marker.getElementsByTagName("div")).forEach(element => { element.classList.add("Other") })
     popupId = `popupOther`
   }
@@ -558,7 +572,6 @@ export function addCurrentLocationMarker(addMarker, lat, lon) {
 export function setOverviewMapData(data, map) {
 
   Object.keys(data).forEach(dataSource => {
-
     globalThis.data[dataSource] = { ...data[dataSource] }
 
     if (!map._loaded) map.on("load", () => {

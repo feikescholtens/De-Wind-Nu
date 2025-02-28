@@ -184,8 +184,6 @@ async function processRetrievedData(dataFetched) {
   }
 
   showMain()
-
-  const dataset = dataFetched.dataset
   const dateData = parseISO(dataFetched.date)
   globalThis.times = dataFetched.values.times
   globalThis.date = getRelativeDate(dateData),
@@ -195,10 +193,12 @@ async function processRetrievedData(dataFetched) {
   data = dataFetched.values
   dataWUnits = data.copy();
   ({ interpolatedData, interpolatedIndices } = calcInterpolation())
-
-  if (dataset == "MVB") measurementSourceLabelNode.innerText = "Meetnet Vlaamse Banken"
-  else if (dataset == "VLINDER") measurementSourceLabelNode.innerText = "UGent VLINDER project"
-  else measurementSourceLabelNode.innerText = dataset
+  if (dataFetched.datasetMeasurements == undefined) measurementSourceLabelNode.remove()
+  else if (dataFetched.datasetMeasurements == "MVB") measurementSourceLabelNode.innerText = "Metingen: Meetnet Vlaamse Banken"
+  else if (dataFetched.datasetMeasurements == "VLINDER") measurementSourceLabelNode.innerText = "Metingen: UGent VLINDER project"
+  else if (dataFetched.datasetMeasurements == "RWS") measurementSourceLabelNode.innerText = "Metingen: Rijkswaterstaat"
+  else measurementSourceLabelNode.innerText = `Metingen: ${dataFetched.datasetMeasurements}`
+  measurementSourceLabelNode.append(document.createElement("br"))
 
   forecastSourceLabelNode.innerText = dataFetched.forecastInfoString
   globalThis.datePickerMax = getDatePickerMax()

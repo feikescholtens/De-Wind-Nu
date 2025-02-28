@@ -10,8 +10,7 @@ Array.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
 export async function fetchKNMI(dateParsed, databaseData, resolve, times, DSTDates) {
 
   let data = []
-
-  const locationID = databaseData.KNMI_ID
+  const locationID = databaseData.measurements.API_ID
   const dateStartFetch = dateParsed.toISOString()
 
   let dateEndFetch = addDays(dateParsed, 1)

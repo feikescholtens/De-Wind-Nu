@@ -8,16 +8,16 @@ export async function overviewFetchRWS(locations, resolve) {
     IDMatches = []
 
   for (const id in locations) {
-    if (locations[id].RWS_ID) {
+    if (locations[id].measurements.source == "RWS") {
       locationsArray.push({
-        X: locations[id].RWS_COORDS[0],
-        Y: locations[id].RWS_COORDS[1],
-        Code: locations[id].RWS_ID
+        X: locations[id].measurements.API_Coordinates[0],
+        Y: locations[id].measurements.API_Coordinates[1],
+        Code: locations[id].measurements.API_ID
       })
 
       IDMatches.push({
         applicationID: id,
-        RWS: locations[id].RWS_ID,
+        RWS: locations[id].measurements.API_ID,
       })
     }
   }
