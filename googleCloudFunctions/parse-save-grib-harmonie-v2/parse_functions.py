@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.interpolate import RegularGridInterpolator
 from time_utils import convert_unix_to_local_date_and_time, get_date_today_local_time, convert_unix_to_local_date_obj
+from collections import Counter
 
 date_today_local_time = get_date_today_local_time()
 
@@ -156,14 +157,58 @@ def merge_parsed_wind_direction_gust(wind_and_direction, gust):
 			for time_interval_gust in location_array_gust:
 				
 				# Match the two and merge them
-				if (time_interval_wind_and_direction['date'] == time_interval_gust['date'] and 
-					time_interval_wind_and_direction['time'] == time_interval_gust['time']):
+				if (time_interval_wind_and_direction["date"] == time_interval_gust["date"] and 
+					time_interval_wind_and_direction["time"] == time_interval_gust["time"]):
 
 					# time_interval_merged: {date: "03-02-2025", time: "09:00", s: 10.0, d: 180.0, g: 15.0}  (single time interval)
 					time_interval_merged = {**time_interval_wind_and_direction, **time_interval_gust}
 					# merged_location_array: [{date: "03-02-2025", time: "09:00", s: 10.0, d: 180.0, g: 15.0}, ...] (all time intervals)
 					merged_location_array.append(time_interval_merged)
 		
+		merged_location_array = remove_wrong_DST_intervals(merged_location_array)
+		
 		# Reconstruct the object for this location
 		merged_forecast[location_id] = merged_location_array
 	return merged_forecast
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def remove_wrong_DST_intervals (merged_location_array):
+	# Removes the wrong 02:00 intervals from the array
+	# Because of switching from DST (to wintertime) , the 02:00 interval occurs twice in the arrays for windspeed&direction and gust
+	# and 4 times in the merged array
+	# Switching to DST (to summertime) is not a problem, because the 02:00 interval doesn't exist on this day
+	
+	indices_0200_interval = [] # [5, 6, 7, 8]
+
+	# Find all indices of the 02:00 intervals that occur 4 times in the array
+	date_counts = {}
+	for entry in merged_location_array:
+		date = entry["date"]
+		if entry["time"] == "02:00":
+			date_counts[date] = date_counts.get(date, 0) + 1
+	for i, entry in enumerate(merged_location_array):
+		if entry["time"] == "02:00" and date_counts[entry["date"]] > 1:
+			indices_0200_interval.append(i)
+
+	# Keep the first and last 02:00 interval in the array, remove the middle 2 (these are incorrectly matched)
+	indices_to_remove = indices_0200_interval[1:-1]
+	for index in sorted(indices_to_remove, reverse=True):
+		del merged_location_array[index]
+
+	return merged_location_array
