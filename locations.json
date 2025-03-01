@@ -1546,6 +1546,13 @@
       ]
     }
   },
+  "7654": {
+    "name": "Makkum (alleen verwachting)",
+    "lat": 53.052725,
+    "lon": 5.376359,
+    "active": true,
+    "measurements": {}
+  },
   "7713": {
     "name": "Berkhout",
     "lat": 52.6427777777778,
