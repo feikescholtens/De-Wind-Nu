@@ -1,6 +1,7 @@
 from utility_functions import (determine_split_date,
 						get_unique_dates,
-						check_split_date_in_past)
+						check_split_date_in_past,
+						obj_key_values_to_array)
 from get_save_forecast_functions import (get_forecast,
 										 save_archive_forecast,
 									 save_NEW_forecast_today_future)
@@ -14,7 +15,7 @@ mode = "development" # production or development
 # ---------------- Configuration parameters for development environment* -------------------------
 # *in production environment these are overwriten by the ones in the request that calls main(...)
 # ------------------------------------------------------------------------------------------------
-use_local_JSON_for_getting_and_storing_forecasts = True 
+use_local_JSON_for_getting_and_storing_forecasts = False 
 # Instead of setting the data in the Firestore documents, 
 # save them to JSON files in the test_input_and_output_forecasts directory
 # Saving to Firestore will overwrite in the (hardcoded) bucket, JSON files will be kept
@@ -24,7 +25,7 @@ dont_archive_forecast_only_strip_dates_yesterday = False
 # If True, the forecast data will not be archived, only the data for yesterday will be 
 # stripped (equivalent to the old  deleteForecastYesterday(-v2) function)
 # -----------------------------------------------------------------------------------------
-overwrite_split_date_with = "27-02-2025"
+overwrite_split_date_with = False
 # The split date is the date for which days equal or after will be stored in the 
 # "Harmonie forecast today & future" doucment, for days before the data will be stored 
 # in the archive
@@ -45,7 +46,7 @@ firestore_document_archive = "Harmonie forecast archive v2_testing_only"
 
 def main (request):
 	global use_local_JSON_for_getting_and_storing_forecasts, dont_archive_forecast_only_strip_dates_yesterday, overwrite_split_date_with, firestore_document_today_future, firestore_document_archive
-	if mode == "production": use_local_JSON_for_getting_and_storing_forecasts, dont_archive_forecast_only_strip_dates_yesterday, overwrite_split_date_with, firestore_document_today_future, firestore_document_archive = request.get_json(silent=True)["config_parameters"]
+	if mode == "production": use_local_JSON_for_getting_and_storing_forecasts, dont_archive_forecast_only_strip_dates_yesterday, overwrite_split_date_with, firestore_document_today_future, firestore_document_archive = obj_key_values_to_array(request.get_json(silent=True)["config_parameters"])
 
 	# -------------------- 1st part: getting the forecast data, prepairing variables -----------------------------------------------------
 
@@ -60,6 +61,7 @@ def main (request):
 	# In production this will be the current date/date of today, in development this can be an other date (e.g. for testing)
 	split_date = determine_split_date(overwrite_split_date_with)
 	if split_date == None: return "An error occured, see logs."
+	print(f"Split date for archived determined to be {split_date}")
 
 	# -------------------- 2nd part: reconstruct the forecast data into two objects ------------------------------------------------------
 

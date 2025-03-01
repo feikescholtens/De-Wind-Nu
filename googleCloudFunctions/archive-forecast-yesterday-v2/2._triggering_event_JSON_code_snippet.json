@@ -1,1 +1,9 @@
-{ "config_parameters": [false, false, false, "Harmonie forecast today & future v2", "Harmonie forecast archive v2_testing_only"] }
+{
+  "config_parameters": {
+    "use_local_JSON_for_getting_and_storing_forecasts": false,
+    "dont_archive_forecast_only_strip_dates_yesterday": false,
+    "overwrite_split_date_with": false,
+    "firestore_document_today_future": "Harmonie forecast today & future v2",
+    "firestore_document_archive": "Harmonie forecast archive v2_testing_only"
+  }
+}

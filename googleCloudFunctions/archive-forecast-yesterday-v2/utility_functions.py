@@ -16,6 +16,22 @@ timezone_obj = pytz.timezone("Europe/Amsterdam")
 
 
 
+def obj_key_values_to_array (object):
+	# Convert the key-value pairs of an object to an array
+	array = []
+	for key in object.keys():
+		array.append(object[key])
+	return array
+
+
+
+
+
+
+
+
+
+
 
 
 
