@@ -6,7 +6,8 @@ from utility_functions import (get_webserver_address,
                                get_path_like_objects_NetCDF_files, 
                                fetch_locations_to_parse, 
                                get_old_forecast, 
-                               save_updated_forecast)
+                               save_updated_forecast,
+                               obj_key_values_to_array)
 from join_forecast_functions import join_old_and_new_forecast
 from datetime import datetime
 import pytz
@@ -26,7 +27,7 @@ force_parse_local_files = False
 # to True as well, otherwise the requested behaviour will fail parsing local file with
 # older model run
 # -----------------------------------------------------------------------------------------
-force_parse_certain_model_run = "20250226T21"
+force_parse_certain_model_run = None
 # Set to a certain model run to force parsing that model run, e.g. "20250203T09".
 # To fetch the latest, set to None
 # -----------------------------------------------------------------------------------------
@@ -35,10 +36,13 @@ quit_if_datetime_model_run_not_newer_KNMI = False
 # the script will immediately exit once filenames KNMI are fetched and a newer than 
 # currently stored forecast run is not available yet
 # -----------------------------------------------------------------------------------------
-force_update_forecast_with_older_run = False 
+force_update_forecast_with_older_run = True 
 # If an older model run is parsed than currently is in old_forecast, 
 # should the script still update with the new/but actually outdated forecast?
-# If False, the script will also not save any intervals that are already archived
+# -----------------------------------------------------------------------------------------
+dont_update_already_archived_intervals = True
+# If True, the script will save intervals that are already archived in Firestore
+# document
 # So intervals with time 23:00 (local) from the past (will only occur in the T21 (UTC) run)
 # will not be saved, since it's already in the archived forecast and has no place in the 
 # 'today' forecast, since that interval is in the past (for the local time at least)
@@ -55,8 +59,8 @@ firestore_document_to_use = "Harmonie forecast today & future v2"
 # -----------------------------------------------------------------------------------------
 
 def main (request):
-    global force_parse_local_files, force_parse_certain_model_run, quit_if_datetime_model_run_not_newer_KNMI, force_update_forecast_with_older_run, use_local_JSON_for_getting_and_storing_forecasts, firestore_document_to_use
-    if mode == "production": force_parse_local_files, force_parse_certain_model_run, quit_if_datetime_model_run_not_newer_KNMI, force_update_forecast_with_older_run, use_local_JSON_for_getting_and_storing_forecasts, firestore_document_to_use = request.get_json(silent=True)["config_parameters"]
+    global force_parse_local_files, force_parse_certain_model_run, quit_if_datetime_model_run_not_newer_KNMI, force_update_forecast_with_older_run, dont_update_already_archived_intervals, use_local_JSON_for_getting_and_storing_forecasts, firestore_document_to_use
+    if mode == "production": force_parse_local_files, force_parse_certain_model_run, quit_if_datetime_model_run_not_newer_KNMI, force_update_forecast_with_older_run, dont_update_already_archived_intervals, use_local_JSON_for_getting_and_storing_forecasts, firestore_document_to_use = obj_key_values_to_array(request.get_json(silent=True)["config_parameters"])
 
     # -------- 1st part: getting the old forecast data (before parsing) ----------------------------
     
@@ -95,7 +99,7 @@ def main (request):
         new_forecast_wind_and_direction["timeRun"] = time_run_ISO_string
 
         for parse_location in locations_to_parse:
-            location_array_wind_direction = parse_wind_speed_and_direction(data_arrays, parse_location, parse_method, NO_decimals, force_update_forecast_with_older_run)
+            location_array_wind_direction = parse_wind_speed_and_direction(data_arrays, parse_location, parse_method, NO_decimals, dont_update_already_archived_intervals)
             if (len(location_array_wind_direction) != 0): # Location array is empty if the location is outside the grid
                 new_forecast_wind_and_direction[parse_location["id"]] = location_array_wind_direction
 
@@ -105,7 +109,7 @@ def main (request):
         data_arrays = [ds_gust.variables[variable][:] for variable in variables_names]
 
         for parse_location in locations_to_parse:
-            location_array_gust = parse_wind_gust(data_arrays, parse_location, parse_method, NO_decimals, force_update_forecast_with_older_run)
+            location_array_gust = parse_wind_gust(data_arrays, parse_location, parse_method, NO_decimals, dont_update_already_archived_intervals)
             if (len(location_array_gust) != 0): # Location array is empty if the location is outside the grid
                 new_forecast_gust[parse_location["id"]] = location_array_gust
 

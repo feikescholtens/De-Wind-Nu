@@ -20,7 +20,7 @@ date_today_local_time = get_date_today_local_time()
 
 
 
-def parse_wind_speed_and_direction (data_arrays, parse_location, method, NO_decimals, force_update_forecast_with_older_run):
+def parse_wind_speed_and_direction (data_arrays, parse_location, method, NO_decimals, dont_update_already_archived_intervals):
 
 	# Get ID and coordinates for location to parse
 	location_id = parse_location["id"]
@@ -56,10 +56,10 @@ def parse_wind_speed_and_direction (data_arrays, parse_location, method, NO_deci
 			"d": round(wind_direction)
 		}
 
-		# If we're not forcing the update of the forecast with older runs, we only want to keep the forecast data that is not in the past, so we skip the data that is older than the current date
+		# We, if configured so by the dont_update_already_archived_intervals variable, only want to keep the forecast data that is not in the past, so we skip the data that is older than the current date
 		# See also comments in main.py under variable force_update_forecast_with_older_run
 		date_interval_obj = convert_unix_to_local_date_obj(time_intervals[interval_hour])
-		if (force_update_forecast_with_older_run == False and date_interval_obj < date_today_local_time): continue
+		if (dont_update_already_archived_intervals == True and date_interval_obj < date_today_local_time): continue
 
 		location_array = np.append(location_array, location_object)
 
@@ -80,7 +80,7 @@ def parse_wind_speed_and_direction (data_arrays, parse_location, method, NO_deci
 
 
 
-def parse_wind_gust (data_arrays, parse_location, method, NO_decimals, force_update_forecast_with_older_run):
+def parse_wind_gust (data_arrays, parse_location, method, NO_decimals, dont_update_already_archived_intervals):
 
 	# Get ID and coordinates for location to parse
 	location_id = parse_location["id"]
@@ -110,6 +110,12 @@ def parse_wind_gust (data_arrays, parse_location, method, NO_decimals, force_upd
 			"time": time_interval,
 			"g": round(gust.item(), NO_decimals), # .item gets the value as regular python float
 		}
+
+		# We, if configured so by the dont_update_already_archived_intervals variable, only want to keep the forecast data that is not in the past, so we skip the data that is older than the current date
+		# See also comments in main.py under variable force_update_forecast_with_older_run
+		date_interval_obj = convert_unix_to_local_date_obj(time_intervals[interval_hour])
+		if (dont_update_already_archived_intervals == True and date_interval_obj < date_today_local_time): continue
+		
 		location_array = np.append(location_array, location_object)
 
 		# For debugging purposes

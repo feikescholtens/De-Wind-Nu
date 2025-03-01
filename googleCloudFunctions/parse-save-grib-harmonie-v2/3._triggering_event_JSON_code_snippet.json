@@ -1,0 +1,11 @@
+{
+  "config_parameters": {
+    "force_parse_local_files": false,
+    "force_parse_certain_model_run": null,
+    "quit_if_datetime_model_run_not_newer_KNMI": true,
+    "force_update_forecast_with_older_run": false,
+    "dont_update_already_archived_intervals": true,
+    "use_local_JSON_for_getting_and_storing_forecasts": false,
+    "firestore_document_to_use": "Harmonie forecast today & future v2"
+  }
+}

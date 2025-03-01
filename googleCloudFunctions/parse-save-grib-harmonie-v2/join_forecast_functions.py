@@ -8,7 +8,7 @@ def join_old_and_new_forecast (old_forecast, new_forecast, force_update_forecast
 	
 	# If the new forecast is not newer than the old forecast, the old forecast is returned,
 	# unless the configuration is set to forcefully update the forecast with older runs
-	# The function below checks this and returns the old forecast if necessary, or True if the new forecast should be parsed
+	# The function below checks this and returns the old forecast if necessary, or True if the new forecast should be used to update
 	continue_or_return_old_forecast = continue_depending_on_state_of_old_forecast(old_forecast, new_forecast, force_update_forecast_with_older_run)
 	if continue_or_return_old_forecast == True: pass
 	else: return continue_or_return_old_forecast
@@ -63,6 +63,7 @@ def continue_depending_on_state_of_old_forecast (old_forecast, new_forecast, for
 			and force_update_forecast_with_older_run == False): 
 			print("Parsed forecast is not newer than old forecast, keeping the old forecast... Change configuration to forcefully overwrite this behaviour.")
 			return old_forecast
+		else: 	return True
 	else:	print("Warning: there was no old forecast data, or it's retrieval failed. Continue parsing new forecast...")
 	
 	return True
