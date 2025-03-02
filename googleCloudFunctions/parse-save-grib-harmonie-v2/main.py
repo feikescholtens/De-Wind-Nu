@@ -27,7 +27,7 @@ force_parse_local_files = False
 # to True as well, otherwise the requested behaviour will fail parsing local file with
 # older model run
 # -----------------------------------------------------------------------------------------
-force_parse_certain_model_run = "20241026T19"
+force_parse_certain_model_run = "20250301T20"
 # Set to a certain model run to force parsing that model run, e.g. "20250203T09".
 # To fetch the latest, set to None
 # -----------------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ force_update_forecast_with_older_run = False
 # If an older model run is parsed than currently is in old_forecast, 
 # should the script still update with the new/but actually outdated forecast?
 # -----------------------------------------------------------------------------------------
-dont_update_already_archived_intervals = False
+dont_update_already_archived_intervals = True
 # If True, the script will save intervals that are already archived in Firestore
 # document
 # So intervals with time 23:00 (local) from the past (will only occur in the T21 (UTC) run)
