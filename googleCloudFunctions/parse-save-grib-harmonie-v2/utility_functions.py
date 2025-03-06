@@ -210,9 +210,11 @@ def save_updated_forecast (updated_forecast, use_local_JSON_for_getting_and_stor
 		try:
 			with open("test_input_and_output_forecasts/forecast_after_parsing.json", "w") as file:
 				json.dump(updated_forecast, file, indent=4)
+				print(f"Saved updated forecast to local JSON file")
 		except Exception as e:
 			print(f"Failed to get save JSON data for updated_forecast data, failed with error: {e}")
 		
 	if use_local_JSON_for_getting_and_storing_forecasts == False:
 		# Save data to Firestore document
 		document.set(updated_forecast)
+		print(f"Saved updated forecast to Firestore document {firestore_document_to_use}")

@@ -1,5 +1,5 @@
 from datetime import datetime
-
+import json
 
 
 def join_old_and_new_forecast (old_forecast, new_forecast, force_update_forecast_with_older_run):
@@ -32,6 +32,8 @@ def join_old_and_new_forecast (old_forecast, new_forecast, force_update_forecast
 		UPDATED_location_forecast_array = OLD_location_array_stripped_from_updated_times + UPDATED_location_forecast_array
 		joined_forecast[location_id] = UPDATED_location_forecast_array
 	
+		if (location_id == "8700"):			print(f"First interval for location 8700 in updated forecast array: {json.dumps(UPDATED_location_forecast_array[0])}")
+
 	joined_forecast["timeRun"] = new_forecast["timeRun"]
 	return joined_forecast
 

@@ -9,10 +9,12 @@ from utility_functions import (get_webserver_address,
                                save_updated_forecast,
                                obj_key_values_to_array)
 from join_forecast_functions import join_old_and_new_forecast
+from time_utils import get_date_today_local_time
 from datetime import datetime
 import pytz
 from pathlib import Path
 import shutil
+import json
 
 mode = "development" # production or development, e.g. to determine address of the webserver
 
@@ -27,11 +29,11 @@ force_parse_local_files = False
 # to True as well, otherwise the requested behaviour will fail parsing local file with
 # older model run
 # -----------------------------------------------------------------------------------------
-force_parse_certain_model_run = "20250301T20"
+force_parse_certain_model_run = None
 # Set to a certain model run to force parsing that model run, e.g. "20250203T09".
 # To fetch the latest, set to None
 # -----------------------------------------------------------------------------------------
-quit_if_datetime_model_run_not_newer_KNMI = False 
+quit_if_datetime_model_run_not_newer_KNMI = True 
 # Only implies if two variables above are default, e.g. False and None. If True, 
 # the script will immediately exit once filenames KNMI are fetched and a newer than 
 # currently stored forecast run is not available yet
@@ -98,8 +100,11 @@ def main (request):
         time_run_ISO_string = datetime.fromtimestamp(time_run_unix, pytz.utc).isoformat().replace("+00:00", "Z")
         new_forecast_wind_and_direction["timeRun"] = time_run_ISO_string
 
+        # Get the beginning of the current day in local time, used for skipping already archived intervals
+        date_today_local_time = get_date_today_local_time()
+
         for parse_location in locations_to_parse:
-            location_array_wind_direction = parse_wind_speed_and_direction(data_arrays, parse_location, parse_method, NO_decimals, dont_update_already_archived_intervals)
+            location_array_wind_direction = parse_wind_speed_and_direction(data_arrays, parse_location, parse_method, NO_decimals, dont_update_already_archived_intervals, date_today_local_time)
             if (len(location_array_wind_direction) != 0): # Location array is empty if the location is outside the grid
                 new_forecast_wind_and_direction[parse_location["id"]] = location_array_wind_direction
 
@@ -108,14 +113,18 @@ def main (request):
         variables_names = ["latitude", "longitude", "wind-speed-of-gust-01h-hagl", "time"]
         data_arrays = [ds_gust.variables[variable][:] for variable in variables_names]
 
+        # Get the beginning of the current day in local time, used for skipping already archived intervals
+        date_today_local_time = get_date_today_local_time()
+
         for parse_location in locations_to_parse:
-            location_array_gust = parse_wind_gust(data_arrays, parse_location, parse_method, NO_decimals, dont_update_already_archived_intervals)
+            location_array_gust = parse_wind_gust(data_arrays, parse_location, parse_method, NO_decimals, dont_update_already_archived_intervals, date_today_local_time)
             if (len(location_array_gust) != 0): # Location array is empty if the location is outside the grid
                 new_forecast_gust[parse_location["id"]] = location_array_gust
 
     # Merge the parsed wind, direction and gust forecasts
     new_forecast = merge_parsed_wind_direction_gust(new_forecast_wind_and_direction, new_forecast_gust)
     print(f"Parsed forecast run with timeRun of {new_forecast["timeRun"]}")
+    print(f"First interval for location 8700 in merged object is: {json.dumps(new_forecast["8700"][0])}")
 
     # -------- 3rd part: joining the old and new forecast data and saving accordingly --------------
 
@@ -124,7 +133,6 @@ def main (request):
 
     # Saving the updated forecast according to the configuration
     save_updated_forecast(updated_forecast, use_local_JSON_for_getting_and_storing_forecasts, firestore_document_to_use)
-    print("Saved updated forecast to the assigned place")
     
     return "Executed the script. Errors might still have occured. See logs for more details."
 

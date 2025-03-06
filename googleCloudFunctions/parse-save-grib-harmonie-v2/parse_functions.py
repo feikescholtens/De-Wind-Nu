@@ -1,9 +1,6 @@
 import numpy as np
 from scipy.interpolate import RegularGridInterpolator
-from time_utils import convert_unix_to_local_date_and_time, get_date_today_local_time, convert_unix_to_local_date_obj
-from collections import Counter
-
-date_today_local_time = get_date_today_local_time()
+from time_utils import convert_unix_to_local_date_and_time, convert_unix_to_local_date_obj
 
 
 
@@ -21,7 +18,7 @@ date_today_local_time = get_date_today_local_time()
 
 
 
-def parse_wind_speed_and_direction (data_arrays, parse_location, method, NO_decimals, dont_update_already_archived_intervals):
+def parse_wind_speed_and_direction (data_arrays, parse_location, method, NO_decimals, dont_update_already_archived_intervals, date_today_local_time):
 
 	# Get ID and coordinates for location to parse
 	location_id = parse_location["id"]
@@ -81,7 +78,7 @@ def parse_wind_speed_and_direction (data_arrays, parse_location, method, NO_deci
 
 
 
-def parse_wind_gust (data_arrays, parse_location, method, NO_decimals, dont_update_already_archived_intervals):
+def parse_wind_gust (data_arrays, parse_location, method, NO_decimals, dont_update_already_archived_intervals, date_today_local_time):
 
 	# Get ID and coordinates for location to parse
 	location_id = parse_location["id"]
