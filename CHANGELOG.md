@@ -1,5 +1,13 @@
 # Change log
 
+## 3.6.0
+
+- feature: Port Google Cloud Function archiveForecastYesterday to Python #4
+- feature: New forecast parsing update development #6
+- feature: Allow locations only meant for forecast #5
+- bug: Allow to view forecast data from day after 'Overmorgen' #3
+- bug: Fix forecast updating quicker on webserver #1
+
 ## 3.5.8
 
 - Updated Node to version 20, site should be functioning now
