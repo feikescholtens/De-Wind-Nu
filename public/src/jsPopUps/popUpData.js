@@ -12,7 +12,8 @@ export const popUpData = {
       <div><button class="colouredButton popupRWS">Groene</button></div><div>locaties zijn van Rijkswaterstaat</div>
       <div><button class="colouredButton popupKNMI">Blauwe</button></div><div>locaties zijn van het KNMI</div>
       <div><button class="colouredButton popupMVB">Rode</button></div><div>locaties zijn van het Meetnet Vlaamse Banken</div>
-      <div><button class="colouredButton popupVLINDER">Gele</button></div><div>locaties zijn van het VLINDER project van de UGent (deze voldoen niet aan de officiële eisen voor meetstations 
+      <div><button class="colouredButton popupVLINDER">Gele</button></div><div>locaties zijn van het VLINDER project van de UGent 
+      (deze voldoen niet aan de officiële eisen voor meetstations 
         en kunnen daarom lagere waardes aangeven)</div>
     </div><br>
     <p class='messageBoxP'>
@@ -27,7 +28,8 @@ export const popUpData = {
   over: { html: `
     <h3 class="popUpTitle">Over</h3>
     <p class='messageBoxP'>
-    De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met verwachtingen in grafieken. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.
+    De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met verwachtingen in grafieken. 
+    Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.
     <br><br>
     Bij het openen van de website is een overzicht weergegeven met de wind- krachten en richtingen.
     Opties zoals als de kaart tegels, met keuze tussen de standaardtegels van OpenStreetMap en tegels van hogere resolutie van Mapbox, 
@@ -37,7 +39,8 @@ export const popUpData = {
       <div><button class="colouredButton popupRWS">Groene</button></div><div>locaties zijn van Rijkswaterstaat</div>
       <div><button class="colouredButton popupKNMI">Blauwe</button></div><div>locaties zijn van het KNMI</div>
       <div><button class="colouredButton popupMVB">Rode</button></div><div>locaties zijn van het Meetnet Vlaamse Banken</div>
-      <div><button class="colouredButton popupVLINDER">Gele</button></div><div>locaties zijn van het VLINDER project van de UGent (deze voldoen niet aan de officiële eisen voor meetstations 
+      <div><button class="colouredButton popupVLINDER">Gele</button></div><div>locaties zijn van het VLINDER project van de UGent (deze voldoen niet aan 
+      de officiële eisen voor meetstations 
         en kunnen daarom lagere waardes aangeven)</div>
     </div><br>
     <p class='messageBoxP'>
@@ -47,7 +50,8 @@ export const popUpData = {
     maar er kan boven het tweede kopje ook gekozen worden voor een tabel (dit kan overigens ook onderaan de pagina gekozen worden). 
     Alle tijden op de website zijn in de Midden-Europese (zomer)tijd.
     <br><br>
-    Bovenaan is de naam van de locatie weergegeven met daarnaast de datum van de data. Onder het eerste kopje zijn de gegevens van de recentste metingen en de verwachtingen voor dit tijdstip weergegeven. 
+    Bovenaan is de naam van de locatie weergegeven met daarnaast de datum van de data. Onder het eerste kopje zijn de gegevens van de recentste metingen en de 
+    verwachtingen voor dit tijdstip weergegeven. 
     Daaronder is een grafiek te zien met de gemeten windsnelheden (gemiddelde snelheid over de afgelopen 10 minuten) en de windvlagen (maximale, 3 seconde durende, 
       windstoot in de afgelopen 10 minuten). 
       
@@ -61,17 +65,24 @@ export const popUpData = {
       <p class='messageBoxP'>
       Metingen worden gemaakt, in het geval van het KNMI, 
       door meetstations in kleine veldjes op open plekken, welke een uitgebreid arsenaal aan meetinstrumenten bevatten. Zo kan het KNMI bijvoorbeeld zicht, 
-      wolkenhoogte en luchtdruk meten, naast de meer bekende parameters als temperatuur en wind. Rijkswaterstaat en het Meetnet Vlaamse Banken hebben minder geavanceerde stations,
-      en meten voornamelijk de wind met meetpalen (vaak in of nabij zee). Het VLINDER project is onderdeel van de UGent in België. Dit is een netwerk van kleine meetstations welke maar een handvol parameters meten.
+      wolkenhoogte en luchtdruk meten, naast de meer bekende parameters als temperatuur en wind. Rijkswaterstaat en het Meetnet Vlaamse Banken hebben minder 
+      geavanceerde stations,
+      en meten voornamelijk de wind met meetpalen (vaak in of nabij zee). Het VLINDER project is onderdeel van de UGent in België. Dit is een netwerk van kleine 
+      meetstations welke maar een handvol parameters meten.
       Deze meetstations liggen meestal niet op open plekken en liggen niet op de juiste hoogte om aan de eisen van een officieel meetstation
-      te voldoen. Daarom geven ze een stuk lagere waardes aan. Deze afwijzing kan je zien door te kijken naar het verschil met de verwachtingslijn (bij de officiële meetstations is dit verschil een stuk kleiner).
-      <br>&nbsp;&nbsp;&nbsp;&nbsp;De verwachtingen, die ook in de grafieken zijn weergegeven, komen uit het HARMONIE-AROME Cy40 model van het KNMI. Dit model
-      bevat 39 parameters - dus niet alleen wind - en berekent de verwachtingen voor elk uur van de komende twee dagen over een gebied, met de grootte van Frankrijk, 
-      waarin Nederland centraal ligt. Dit wordt gedaan op supercomputers,
-      elke dag om 00:00, 06:00, 12:00 en 18:00 (UTC), wat ongeveer drie uur duurt per run. Als dit klaar is worden de 
-      verwachtingen zo snel mogelijk geupdate op de site. Onderaan de pagina is te zien van welke run je de verwachtingen bekijkt. Verwachtingen 
-      van vóór de tijd van de meest recente run, zijn van de vorige run, aangezien het model alleen in de toekomst de wind berekent. Verwachtingen 
-      van dagen na 23 mei 2022 worden opgeslagen en zijn ter inzage te bekijken.
+      te voldoen. Daarom geven ze een stuk lagere waardes aan. Deze afwijzing kan je zien door te kijken naar het verschil met de verwachtingslijn 
+      (bij de officiële meetstations is dit verschil een stuk kleiner).
+      
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;De verwachtingen, die ook in de grafieken zijn weergegeven, komen uit het HARMONIE-AROME Cy43 model van het KNMI. Dit model
+      bevat 256 parameters - dus niet alleen wind - en berekent de verwachtingen 60 uur vooruit (met een resolutie van 1 uur) over een gebied met de grootte van Frankrijk, 
+      waarin Nederland centraal ligt. Het model wordt eens per uur uitgevoerd (elke uitvoer wordt een 'model run' genoemd) en draait 
+      op supercomputers in IJsland. Het uitvoeren van een run duurt ongeveer drie uur. De model run van bijvoorbeeld 07:00 UTC (08:00 Nederlandse 
+      tijd in de winter, 09:00 in de zomer) komt beschikbaar rond 10:54 UTC (± 8 minuten, 11:54 Nederlandse tijd in de winter, 12:54 in de zomer). Als dit klaar is worden de 
+      verwachtingen zo snel mogelijk geüpdatet op de site (maximaal 2 minuten na publicering door het KNMI). Onderaan de pagina is te zien van welke run 
+      je de verwachtingen bekijkt. Verwachtingen van vóór de tijd van de meest recente run zijn van de vorige run, aangezien het model alleen in de toekomst de wind 
+      berekent. Verwachtingen van dagen na 23 mei 2022 worden opgeslagen en zijn ter inzage te bekijken. Sind eind 2024 (datum niet precies bekend) is de verwachting
+      overgegaan van versie Cy40 naar Cy43, maar nog wel met het oude interval van 4 model runs per dag. Sinds 6 maart 2025 wordt de verwachting met het nieuwe 1-uurs interval 
+      geüpdatet.
 
       </p>
     <h4 class="popUpHeading">Fouten / bugs</h4>
