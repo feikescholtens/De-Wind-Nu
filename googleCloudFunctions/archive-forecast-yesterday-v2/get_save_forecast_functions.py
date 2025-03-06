@@ -79,6 +79,7 @@ def save_archive_forecast(per_day_forecast_to_archive, use_local_JSON_for_gettin
 			
 			#Save data to Firestore document
 			document.set(forecast)
+			print(f"Archived the forecast data for date {date} in the Firestore document")
 
 
 
@@ -117,3 +118,4 @@ def save_NEW_forecast_today_future(NEW_forecast_today_future, use_local_JSON_for
 
 		# Save data to Firestore document
 		document.set(NEW_forecast_today_future)
+		print(f"Saved the forecast data for today and the future in the Firestore document. First interval, for location '8700', now stored is {json.dumps(NEW_forecast_today_future["8700"][0])}")
