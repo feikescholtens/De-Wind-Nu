@@ -1,8 +1,8 @@
 import { logFetchErrors } from "./fetchScripts/fetchUtilFunctions.js"
-import { overviewFetchVLINDER } from "./fetchScripts/getOverviewData/VLINDER.js"
-import { overviewFetchRWS } from "./fetchScripts/getOverviewData/RWS.js"
-import { overviewFetchKNMI } from "./fetchScripts/getOverviewData/KNMI.js"
-import { overviewFetchMVB } from "./fetchScripts/getOverviewData/MVB.js"
+import { fetchDataForOverview_VLINDER } from "./fetchScripts/VLINDER/fetchDataForOverview.js"
+import { fetchDataForOverview_RWS } from "./fetchScripts/RWS/fetchDataForOverview.js"
+import { fetchDataForOverview_KNMI } from "./fetchScripts/KNMI/fetchDataForOverview.js"
+import { fetchDataForOverview_MVB } from "./fetchScripts/MVB/fetchDataForOverview.js"
 
 export async function getOverviewData(request, response, locations) {
 
@@ -15,10 +15,10 @@ export async function getOverviewData(request, response, locations) {
   }
 
   const dataFetched = await new Promise(async (resolve) => {
-    if (dataSource == "VLINDER") return overviewFetchVLINDER(locations, resolve)
-    if (dataSource == "RWS") return overviewFetchRWS(locations, resolve)
-    if (dataSource == "KNMI") return overviewFetchKNMI(locations, resolve)
-    if (dataSource == "MVB") return overviewFetchMVB(locations, resolve)
+    if (dataSource == "VLINDER") return fetchDataForOverview_VLINDER(locations, resolve)
+    if (dataSource == "RWS") return fetchDataForOverview_RWS(locations, resolve)
+    if (dataSource == "KNMI") return fetchDataForOverview_KNMI(locations, resolve)
+    if (dataSource == "MVB") return fetchDataForOverview_MVB(locations, resolve)
   })
 
   if (dataFetched.data) {

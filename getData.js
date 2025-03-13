@@ -1,9 +1,10 @@
 import { logFetchErrors } from "./fetchScripts/fetchUtilFunctions.js"
-import { validID } from "./serverFunctions.js"
-import { fetchVLINDER } from "./fetchScripts/getData/VLINDER.js"
-import { fetchRWS } from "./fetchScripts/getData/RWS.js"
-import { fetchKNMI } from "./fetchScripts/getData/KNMI.js"
-import { fetchMVB } from "./fetchScripts/getData/MVB.js"
+import { log } from "./serverFunctions.js"
+import { isExistingLocation } from "./serverFunctions.js"
+import { fetchDataForDay_VLINDER } from "./fetchScripts/VLINDER/fetchDataForDay.js"
+import { fetchDataForDay_RWS } from "./fetchScripts/RWS/fetchDataForDay.js"
+import { fetchDataForDay_KNMI } from "./fetchScripts/KNMI/fetchDataForDay.js"
+import { fetchDataForDay_MVB } from "./fetchScripts/MVB/fetchDataForDay.js"
 import { getTimeChangeDates, generateTimes, calcInterpolation, getArchivedForecast, startOfDayTimeZone } from "./getScriptUtilFunctions.js"
 import { format, add, parseISO, isBefore, isValid, isToday, isFuture } from "date-fns"
 import module from "date-fns-tz"
@@ -15,12 +16,12 @@ const timeZone = "Europe/Amsterdam"
 
 export async function getData(request, response, date, locations) {
 
-  if (!validID(request.params.id, locations, response)) return
+  if (!isExistingLocation(request.params.id, locations, response)) return
 
   const timeOutTimer = setTimeout(() => {
     response.json({ errorCode: 504 })
     //Basically 504 error but this prevents CloudFlare from showing it's message
-    if (port == 3000) return
+    if (global.port == 3000) return
 
     log("Server should be restarted due to timed out!", "info", true)
   }, 29.5 * 1000)
@@ -50,7 +51,7 @@ export async function getData(request, response, date, locations) {
   if (dateRequest == dateToDST) times = generateTimes(60 / NoMeasurementsXHour, "toDST")
   else if (dateRequest == dateFromDST) times = generateTimes(60 / NoMeasurementsXHour, "fromDST")
   else times = generateTimes(60 / NoMeasurementsXHour)
-  values["times"] = times.copy()
+  values["times"] = times.customCopy()
   times[times.length - 1] = "00:00_nextDay"
 
   //Measurements
@@ -58,10 +59,10 @@ export async function getData(request, response, date, locations) {
     if (datasetMeasurements == null) { resolve(null); return } //This will run if the location is forecast only
     if (isFuture(dateParsed)) { resolve(null); return }
 
-    if (datasetMeasurements == "VLINDER") return fetchVLINDER(dateParsed, location, resolve, times, DSTDates)
-    if (datasetMeasurements == "RWS") return fetchRWS(dateParsed, location, resolve, times, DSTDates)
-    if (datasetMeasurements == "KNMI") return fetchKNMI(dateParsed, location, resolve, times, DSTDates)
-    if (datasetMeasurements == "MVB") return fetchMVB(dateParsed, location, resolve, times, DSTDates)
+    if (datasetMeasurements == "VLINDER") return fetchDataForDay_VLINDER(dateParsed, location, resolve, times, DSTDates)
+    if (datasetMeasurements == "RWS") return fetchDataForDay_RWS(dateParsed, location, resolve, times, DSTDates)
+    if (datasetMeasurements == "KNMI") return fetchDataForDay_KNMI(dateParsed, location, resolve, times, DSTDates)
+    if (datasetMeasurements == "MVB") return fetchDataForDay_MVB(dateParsed, location, resolve, times, DSTDates)
   })
 
   if (!dataFetched || dataFetched.data.error) {
