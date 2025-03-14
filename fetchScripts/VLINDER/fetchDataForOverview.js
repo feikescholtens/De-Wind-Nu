@@ -1,7 +1,13 @@
 import fetch from "node-fetch"
-import { VLINDERerror } from "./helperFunctions.js"
+import { VLINDER_API_error } from "./helperFunctions.js"
 import { parse } from "date-fns"
-import { catchError, getMatchedIDs } from "../fetchUtilFunctions.js"
+import { getMatchedIDs } from "../fetchUtilFunctions.js"
+import { catchFetchError, JSON_ParseError } from "../errorHandlingFunctions.js"
+
+
+
+
+
 
 export async function fetchDataForOverview_VLINDER(locations, resolve) {
 
@@ -9,10 +15,9 @@ export async function fetchDataForOverview_VLINDER(locations, resolve) {
     rawData // rawData is the raw data fetched from the API
 
   const rawDataString = await fetch("https://mooncake.ugent.be/api/measurements")
-    .then(response => response.text()).catch((error) => catchError(resolve, {}, error, "VLINDER")) // This handles all errors that can occur during the fetch, like timeouts or no internet connection
-
-  try { rawData = JSON.parse(rawDataString) } catch { return } // If the data can't be parsed to JSON, return
-  if (VLINDERerror(rawData, resolve)) return // Check if the data returned contains an error
+    .then(response => response.text()).catch((error) => catchFetchError(resolve, {}, error, "VLINDER")) // This handles all errors that can occur during the fetch, like timeouts or no internet connection
+  try { rawData = JSON.parse(rawDataString) } catch { JSON_ParseError(rawDataString, resolve, "VLINDER"); return } // If the data can't be parsed to JSON, log, resolve and return
+  if (VLINDER_API_error(rawData, resolve)) return // Check if the data returned contains an error
 
   const IDMatches = getMatchedIDs(locations, "VLINDER") // Array with objects that contain the application ID and the RWS ID
 

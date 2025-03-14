@@ -1,4 +1,3 @@
-import { logFetchErrors } from "./fetchScripts/fetchUtilFunctions.js"
 import { log } from "./serverFunctions.js"
 import { isExistingLocation } from "./serverFunctions.js"
 import { fetchDataForDay_VLINDER } from "./fetchScripts/VLINDER/fetchDataForDay.js"
@@ -66,7 +65,6 @@ export async function getData(request, response, date, locations) {
   })
 
   if (!dataFetched || dataFetched.data.error) {
-    logFetchErrors(dataFetched, response)
     values["windSpeed"] = values["windGusts"] = values["windDirection"] = []
   } else {
     values["windSpeed"] = dataFetched.data[datasetMeasurements][0]

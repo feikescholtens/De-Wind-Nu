@@ -1,89 +1,61 @@
-import { format, addDays, addHours, subHours, isSameDay } from "date-fns"
-import module from "date-fns-tz"
-const { utcToZonedTime } = module
 import fetch from "node-fetch"
-import { KNMIerror } from "./helperFunctions.js"
-import { catchError, theoreticalMeasurements } from "../fetchUtilFunctions.js"
-const timeZone = "Europe/Amsterdam"
+import { KNMI_API_error } from "./helperFunctions.js"
+import { theoreticalMeasurements, ISO_StringToLocalHHmm, processAllNegativeArrays } from "../fetchUtilFunctions.js"
+import { catchFetchError, JSON_ParseError } from "../errorHandlingFunctions.js"
+import { getFetchDates } from "./helperFunctionsForDay.js"
+
+
+
+
+
+
+
 
 export async function fetchDataForDay_KNMI(dateParsed, databaseData, resolve, times, DSTDates) {
 
-  let data = []
-  const locationID = databaseData.measurements.API_ID
-  const dateStartFetch = dateParsed.toISOString()
+  let data = {}, // data is the object that will be returned
+    rawData // rawData is the raw data fetched from the API
 
-  let dateEndFetch = addDays(dateParsed, 1)
-  if (isSameDay(dateParsed, DSTDates.fromDST) && global.serverTimeZone === "UTC") dateEndFetch = addHours(dateEndFetch, 1).toISOString()
-  // Check if the date requested is the day of switching from summertime to wintertime. This day contains 25 hours, and since UTC doesn't include DST, it just 
-  // adds 24 hours in the addDays function above. The requested data will therefore miss 1 hour of data for the requested day.
-  else if (isSameDay(dateParsed, DSTDates.toDST) && global.serverTimeZone === "UTC") dateEndFetch = subHours(dateEndFetch, 1).toISOString()
-  // Check if the date requested is the day of switching from wintertime to summertime. This day contains 23 hours, and since UTC doesn't include DST, it just 
-  // adds 24 hours in the addDays function above. The requested data will therefore contain 1 extra hour (of the day after) which will confuse the rest of the script and cause a bug.
-  else dateEndFetch = dateEndFetch.toISOString()
+  const KNMI_ID = databaseData.measurements.API_ID
+  const [dateStartFetch, dateEndFetch] = getFetchDates(dateParsed, DSTDates)
 
-  const rawDataString = await fetch(`https://api.dataplatform.knmi.nl/edr/v1/collections/observations/locations/${locationID}?datetime=${dateStartFetch}/${dateEndFetch}&parameter-name=ff_10m_10,fx_10m_10,dd_10`, { headers: { "Authorization": process.env.KDP_EDR_KEY } })
-    .then(response => response.text()).catch((error) => catchError(resolve, data, error, "KNMI"))
-  let rawData
-  try { rawData = JSON.parse(rawDataString) } catch { return }
-  if (KNMIerror(rawData, resolve)) return
+  const rawDataString = await fetch(`https://api.dataplatform.knmi.nl/edr/v1/collections/observations/locations/${KNMI_ID}?datetime=${dateStartFetch}/${dateEndFetch}&parameter-name=ff_10m_10,fx_10m_10,dd_10`, { headers: { "Authorization": process.env.KDP_EDR_KEY } })
+    .then(response => response.text()).catch((error) => catchFetchError(resolve, data, error, "KNMI")) // This handles all errors that can occur during the fetch, like timeouts or no internet connection
+  try { rawData = JSON.parse(rawDataString) } catch { JSON_ParseError(rawDataString, resolve, "KNMI"); return } // If the data can't be parsed to JSON, log, resolve and return
+  if (KNMI_API_error(rawData, resolve)) return // Check for error in the returned data
 
-  let wind_speed = [],
-    wind_gusts = [],
-    wind_direction = []
+  // Define variables
+  const windSpeed = [],
+    windGust = [],
+    windDirection = []
   let measurementTimes = []
 
-  rawData.domain.axes.t.values.forEach(measurementTime => {
-    let time = format(utcToZonedTime(measurementTime, timeZone), "HH:mm")
-    if (time == "00:00" && measurementTimes.length > 0) time = "00:00_nextDay"
-    measurementTimes.push(time)
-  })
+  rawData.domain.axes.t.values.forEach(measurementTime => measurementTimes.push(ISO_StringToLocalHHmm(measurementTime, measurementTimes))) // Add all the times of the measurements to the measurementTimes array
 
-  times.forEach(timeStamp => {
-    if (!measurementTimes.includes(timeStamp)) {
-      wind_speed.push(-999)
-      wind_gusts.push(-999)
-      wind_direction.push(-999)
+  times.forEach(timeStamp => { // Loop through all the times that are requested [00:00, 00:10, ..., 00:00_nextDay]
+    if (measurementTimes.includes(timeStamp) == false) { // If the time is not in the measurementTimes array, add -999 to all the data arrays to indicate that there is no data for this time (probably this time is in the future)
+      [windSpeed, windGust, windDirection].forEach(array => array.push(-999));
       return
     }
 
     let indexTime = measurementTimes.indexOf(timeStamp)
-    if (wind_speed[indexTime]) indexTime = measurementTimes.lastIndexOf(timeStamp) //Check if a time already exists in the temporary array. 
+    if (windSpeed[indexTime]) indexTime = measurementTimes.lastIndexOf(timeStamp) //Check if a time already exists in the data array. 
     // This only happens when the clock turns one hour back when timezones switch from CEST to CET. 02:00, 02:10, 02:20, 02:30, 02:40, 02:50 will 
-    // already be in the temprary array, so look at the second value of these times in the measurementTimes array to get the right indici.
+    // already be in the data array, so look at the second value of these times in the measurementTimes array to get the right indici.
 
-    if (rawData.ranges.ff_10m_10.values[indexTime] != undefined) {
-      wind_speed.push(rawData.ranges.ff_10m_10.values[indexTime] * 1.94384449)
-    } else wind_speed.push(-999)
+    if (rawData.ranges.ff_10m_10.values[indexTime] != undefined) windSpeed.push(rawData.ranges.ff_10m_10.values[indexTime] * 1.94384449) // Convert m/s to knots
+    else windSpeed.push(-999)
 
-    if (rawData.ranges.fx_10m_10.values[indexTime] != undefined) {
-      wind_gusts.push(rawData.ranges.fx_10m_10.values[indexTime] * 1.94384449)
-    } else wind_gusts.push(-999)
+    if (rawData.ranges.fx_10m_10.values[indexTime] != undefined) windGust.push(rawData.ranges.fx_10m_10.values[indexTime] * 1.94384449) // Convert m/s to knots
+    else windGust.push(-999)
 
-    if (rawData.ranges.dd_10.values[indexTime] != undefined) {
-      wind_direction.push(rawData.ranges.dd_10.values[indexTime])
-    } else wind_direction.push(-999)
+    if (rawData.ranges.dd_10.values[indexTime] != undefined) windDirection.push(rawData.ranges.dd_10.values[indexTime])
+    else windDirection.push(-999)
   })
 
   const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes, times)
-  if (!theoreticalMeasurementCount) {
-    resolve({
-      data: {
-        KNMI: [
-          [],
-          [],
-          []
-        ]
-      }
-    })
-    return
-  }
+  for (let j = 0; j < (times.length - theoreticalMeasurementCount); j++)[windSpeed, windGust, windDirection].forEach(array => array.pop()) // Strip the data arrays of all the -999 values at the end
 
-  for (let j = 0; j < (times.length - theoreticalMeasurementCount); j++) {
-    wind_speed.pop()
-    wind_gusts.pop()
-    wind_direction.pop()
-  }
-
-  data["KNMI"] = [wind_speed, wind_gusts, wind_direction]
+  data["KNMI"] = processAllNegativeArrays(windSpeed, windGust, windDirection)
   resolve({ data })
 }

@@ -1,8 +1,15 @@
 import fetch from "node-fetch"
-import { catchError, getMatchedIDs } from "../fetchUtilFunctions.js"
+import { getMatchedIDs } from "../fetchUtilFunctions.js"
+import { catchFetchError, JSON_ParseError } from "../errorHandlingFunctions.js"
 import { giveRWSOverviewFetchOptions } from "./helperFunctionsForOverview.js"
-import { SuccesvolFalseError } from "./helperFunctions.js"
+import { RWS_API_error } from "./helperFunctions.js"
 import { parseISO } from "date-fns"
+
+
+
+
+
+
 
 export async function fetchDataForOverview_RWS(locations, resolve) {
 
@@ -10,10 +17,9 @@ export async function fetchDataForOverview_RWS(locations, resolve) {
     rawData // rawData is the raw data fetched from the API
 
   const rawDataString = await fetch("https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenLaatsteWaarnemingen", giveRWSOverviewFetchOptions(locations))
-    .then(response => response.text()).catch((error) => catchError(resolve, {}, error, "RWS")) // This handles all errors that can occur during the fetch, like timeouts or no internet connection
-
-  try { rawData = JSON.parse(rawDataString) } catch { return } // If the data can't be parsed to JSON, return
-  if (SuccesvolFalseError(rawData, resolve)) return // RWS API returns false for "Succesvol" when there is no data, which is convenient
+    .then(response => response.text()).catch((error) => catchFetchError(resolve, {}, error, "RWS")) // This handles all errors that can occur during the fetch, like timeouts or no internet connection
+  try { rawData = JSON.parse(rawDataString) } catch { JSON_ParseError(rawDataString, resolve, "RWS"); return } // If the data can't be parsed to JSON, log, resolve and return
+  if (RWS_API_error(rawData, resolve)) return // RWS API returns false for "Succesvol" when there is no data, which is convenient
 
   const IDMatches = getMatchedIDs(locations, "RWS") // Array with objects that contain the application ID and the RWS ID
 

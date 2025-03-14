@@ -1,7 +1,7 @@
 import { log } from "../../serverFunctions.js"
-import { resolveEmptyArrays } from "../fetchUtilFunctions.js"
+import { resolveEmptyArrays } from "../errorHandlingFunctions.js"
 
-export function KNMIerror(rawData, resolve) {
+export function KNMI_API_error(rawData, resolve) {
   //Both used for overviewdata as data, overviewdata gives "detail" field in returned JSON, data gives "error" field in returned JSON
 
   if (rawData.error || rawData.detail) {

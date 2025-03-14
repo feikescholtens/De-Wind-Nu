@@ -1,4 +1,5 @@
 export function giveRWSOverviewFetchOptions(locations) {
+
   const fetchBody = {
     "AquoPlusWaarnemingMetadataLijst": [{
       "AquoMetadata": {
@@ -31,6 +32,7 @@ export function giveRWSOverviewFetchOptions(locations) {
     "body": JSON.stringify(fetchBody),
     "method": "POST"
   }
+
 }
 
 function getLocationList(locations) {

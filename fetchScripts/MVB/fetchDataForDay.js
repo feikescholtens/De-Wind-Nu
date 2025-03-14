@@ -2,7 +2,8 @@ import { format, parseISO, getUnixTime, addHours, parse } from "date-fns"
 import module from "date-fns-tz"
 const { utcToZonedTime } = module
 import fetch from "node-fetch"
-import { catchError, theoreticalMeasurements } from "../fetchUtilFunctions.js"
+import { theoreticalMeasurements } from "../fetchUtilFunctions.js"
+import { catchFetchError } from "../errorHandlingFunctions.js"
 import { MessageError } from "./helperFunctions.js"
 import { giveMVBFetchOptions } from "./helperFunctionsForDay.js"
 
@@ -19,7 +20,7 @@ export async function fetchDataForDay_MVB(dateParsed, databaseData, resolve, tim
       },
       "body": `grant_type=password&username=dewindnu@gmail.com&password=${process.env.MVB_PWD_ENCODED}`,
       "method": "POST"
-    }).then(response => response.text()).catch((error) => catchError(resolve, data, error, "MVB"))
+    }).then(response => response.text()).catch((error) => catchFetchError(resolve, data, error, "MVB"))
 
     let rawData
     try { rawData = JSON.parse(rawDataString) } catch { return }
@@ -44,7 +45,7 @@ export async function fetchDataForDay_MVB(dateParsed, databaseData, resolve, tim
     const timeZone = "Europe/Amsterdam"
 
     const rawDataString = await fetch("https://api.meetnetvlaamsebanken.be/V2/getData", giveMVBFetchOptions(dateParsed, DSTDates, databaseData, newToken))
-      .then(response => response.text()).catch((error) => catchError(resolve, data, error, "MVB"))
+      .then(response => response.text()).catch((error) => catchFetchError(resolve, data, error, "MVB"))
 
     let rawData
     try { rawData = JSON.parse(rawDataString) } catch { return }

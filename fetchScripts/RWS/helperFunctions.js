@@ -1,8 +1,7 @@
 import { log } from "../../serverFunctions.js"
-import { resolveEmptyArrays } from "../fetchUtilFunctions.js"
+import { resolveEmptyArrays } from "../errorHandlingFunctions.js"
 
-export function SuccesvolFalseError(rawData, resolve) {
-  //All fetcherrors are handled in logFetchErrors in serverFunctions.js
+export function RWS_API_error(rawData, resolve) {
 
   if (rawData.Foutmelding) log(`Rijkswaterstaat API "Succesvol"-error: ${rawData.Foutmelding}`, "error", true)
 

@@ -1,4 +1,3 @@
-import { logFetchErrors } from "./fetchScripts/fetchUtilFunctions.js"
 import { fetchDataForOverview_VLINDER } from "./fetchScripts/VLINDER/fetchDataForOverview.js"
 import { fetchDataForOverview_RWS } from "./fetchScripts/RWS/fetchDataForOverview.js"
 import { fetchDataForOverview_KNMI } from "./fetchScripts/KNMI/fetchDataForOverview.js"
@@ -20,12 +19,6 @@ export async function getOverviewData(request, response, locations) {
     if (dataSource == "KNMI") return fetchDataForOverview_KNMI(locations, resolve)
     if (dataSource == "MVB") return fetchDataForOverview_MVB(locations, resolve)
   })
-
-  if (dataFetched.data) {
-    if (dataFetched.data.error) {
-      logFetchErrors(dataFetched, response)
-    }
-  }
 
   response.json(dataFetched)
 }
