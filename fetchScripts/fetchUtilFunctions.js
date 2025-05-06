@@ -36,11 +36,17 @@ export function processAllNegativeArrays(wind_speed, wind_gusts, wind_direction)
 
 
 export function getMatchedIDs(locations, measurementSource) {
+  // This function returns an object with the API IDs as keys and the application IDs as values, for the given measurement source
+
   let IDMatches = {}
 
   for (const id in locations) {
     if (locations[id].measurements.source !== measurementSource) continue
-    IDMatches[locations[id].measurements.API_ID] = id
+
+    if (typeof locations[id].measurements.API_ID == "object") { // For the MVB API, the API_ID is an array of IDs
+      for (let i = 0; i < locations[id].measurements.API_ID.length; i++)
+        IDMatches[locations[id].measurements.API_ID[i]] = id
+    } else IDMatches[locations[id].measurements.API_ID] = id // For the other APIs, the API_ID is a string
   }
 
   return IDMatches

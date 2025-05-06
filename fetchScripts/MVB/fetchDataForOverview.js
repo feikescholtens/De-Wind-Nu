@@ -1,99 +1,40 @@
 import fetch from "node-fetch"
-import { getUnixTime, add, parse, parseISO } from "date-fns"
+import { parseISO } from "date-fns"
+import { getMatchedIDs } from "../fetchUtilFunctions.js"
 import { giveMVBOverviewFetchOptions } from "./helperFunctionsForOverview.js"
-import { MessageError } from "./helperFunctions.js"
+import { MVB_API_error } from "./helperFunctions.js"
+
+
+
+
 
 export async function fetchDataForOverview_MVB(locations, resolve) {
 
-  //Getting API key, if gotten, make request for data
-  if (Object.keys(MVBAPIKey).length == 0 || (getUnixTime(new Date()) + 5) > MVBAPIKey.expirationDate) {
+  let data = {}, // data is the object that will be returned
+    rawData // rawData is the raw data fetched from the API
 
-    const rawDataString = await fetch("https://api.meetnetvlaamsebanken.be/Token", {
-      "headers": {
-        "content-type": "application/x-www-form-urlencoded charset=UTF-8"
-      },
-      "body": `grant_type=password&username=dewindnu@gmail.com&password=${process.env.MVB_PWD_ENCODED}`,
-      "method": "POST"
-    }).then(response => response.text())
+  const rawDataString = await fetch("https://api.meetnetvlaamsebanken.be/V2/CurrentData", await giveMVBOverviewFetchOptions(locations, resolve))
+    .then(response => response.text()).catch((error) => catchFetchError(resolve, {}, error, "MVB")) // This handles all errors that can occur during the fetch, like timeouts or no internet connection
+  try { rawData = JSON.parse(rawDataString) } catch { JSON_ParseError(rawDataString, resolve, "MVB"); return } // If the data can't be parsed to JSON, log, resolve and return
+  if (MVB_API_error(rawData, resolve)) return
 
-    let rawData
-    try { rawData = JSON.parse(rawDataString) } catch { return }
-    if (MessageError(rawData, resolve)) return
+  const IDMatches = getMatchedIDs(locations, "MVB") // Array with objects that contain the application ID and the RWS ID
 
-    fetchDataMVB(rawData["access_token"])
+  rawData.forEach(locationData => { // For each location with latest measurements
 
-    const expiresString = add(parse(rawData[".expires"], "EEE, dd MMM yyyy HH:mm:ss 'GMT'", new Date()), { hours: 1 })
-    const issuedString = add(parse(rawData[".issued"], "EEE, dd MMM yyyy HH:mm:ss 'GMT'", new Date()), { hours: 1 })
-    MVBAPIKey = {
-      "expirationDate": getUnixTime(expiresString),
-      "issuedDate": getUnixTime(issuedString),
-      "APIKey": rawData["access_token"]
-    }
+    const applicationID = IDMatches[locationData.ID] // Get application ID for the MVB location
+    if (data[applicationID] == undefined) data[applicationID] = {} // Create object for the application ID if it doesn't exist
 
-  } else {
-    fetchDataMVB()
-  }
+    const parameterName = locationData.ID // Like "MP7WRS" or "OMPWC3"
+    const measurementValue = locationData.Value // Numeric value of the measurement
 
-  async function fetchDataMVB(newToken) {
+    if (parameterName.includes("WVC")) data[applicationID].windSpeed = measurementValue * 1.94384449 // Convert m/s to knots
+    if (parameterName.includes("WC3")) data[applicationID].windGusts = measurementValue * 1.94384449 // Convert m/s to knots
+    if (parameterName.includes("WRS")) data[applicationID].windDirection = measurementValue
 
-    let locationsArray = [],
-      IDMatches = []
+    if (parameterName.includes("WVC")) data[applicationID].timeStamp = parseISO(locationData.Timestamp).toISOString()
 
-    for (const id in locations) {
-      if (locations[id].measurements.source == "MVB") {
-        locations[id].measurements.API_ID.forEach(measurementType => {
-          locationsArray.push(measurementType)
+  })
 
-          IDMatches.push({
-            applicationID: id,
-            MVB: measurementType
-          })
-        })
-      }
-    }
-
-    const rawDataString = await fetch("https://api.meetnetvlaamsebanken.be/V2/CurrentData", giveMVBOverviewFetchOptions(locationsArray, newToken))
-      .then(response => response.text())
-
-    let rawData
-    try { rawData = JSON.parse(rawDataString) } catch { return }
-    if (MessageError(rawData, resolve)) return
-
-    let data = {}
-
-    rawData.forEach(locationData => {
-
-      // Match reveived location with one from own list to get application ID for each location
-      for (let i = 0; i < IDMatches.length; i++) {
-        if (IDMatches[i].MVB == locationData.ID) {
-
-          if (locationData.ID.includes("WVC")) {
-            const windSpeed = locationData.Value * 1.94384449
-
-            if (!data[IDMatches[i].applicationID]) data[IDMatches[i].applicationID] = { windSpeed: windSpeed }
-            else data[IDMatches[i].applicationID].windSpeed = windSpeed
-
-            data[IDMatches[i].applicationID].timeStamp = parseISO(locationData.Timestamp).toISOString()
-          }
-          if (locationData.ID.includes("WC3")) {
-            const windGusts = locationData.Value * 1.94384449
-
-            if (!data[IDMatches[i].applicationID]) data[IDMatches[i].applicationID] = { windGusts: windGusts }
-            else data[IDMatches[i].applicationID].windGusts = windGusts
-          }
-          if (locationData.ID.includes("WRS")) {
-            const windDirection = locationData.Value
-
-            if (!data[IDMatches[i].applicationID]) data[IDMatches[i].applicationID] = { windDirection: windDirection }
-            else data[IDMatches[i].applicationID].windDirection = windDirection
-          }
-
-          break
-        }
-      }
-
-    })
-
-    resolve(data)
-  }
+  resolve(data)
 }

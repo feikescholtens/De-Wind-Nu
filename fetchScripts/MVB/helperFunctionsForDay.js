@@ -1,8 +1,13 @@
 import { addDays, isSameDay, addHours, subHours } from "date-fns"
+import { aquireAPI_key } from "./helperFunctions.js"
 
-export function giveMVBFetchOptions(dateParsed, DSTDates, databaseData, newToken) {
 
-  const keyFetch = newToken || global.MVBAPIKey.APIKey
+
+
+export async function giveMVBFetchOptions(dateParsed, DSTDates, databaseData, resolve) {
+
+  const API_key = await aquireAPI_key(resolve)
+
   const locationID = JSON.stringify(databaseData.measurements.API_ID)
   const dateStartFetch = dateParsed.toISOString()
   let dateEndFetch = addDays(dateParsed, 1)
@@ -17,7 +22,7 @@ export function giveMVBFetchOptions(dateParsed, DSTDates, databaseData, newToken
 
   return {
     "headers": {
-      "authorization": `Bearer ${keyFetch}`,
+      "authorization": `Bearer ${API_key}`,
       "content-type": "application/json; charset=UTF-8"
     },
     "body": `{\"StartTime\":\"${dateStartFetch}\",\"EndTime\":\"${dateEndFetch}\",\"IDs\":${locationID}}`,
