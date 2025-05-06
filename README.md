@@ -7,12 +7,12 @@ De Wind Nu runt op het cloud-platform van Google. Het project loopt sinds 2022 e
 ## Homepagina
 Bij het openen van de website is het volgende overzicht weergegeven met de wind- snelheden en richtingen in Beaufort. 
 
-![alt text](./1._readme_images/homepage.png "Homepagina De Wind Nu")
+![alt text](./0._readme_images/homepage.png "Homepagina De Wind Nu")
 
 ## Wind pagina
 Na het klikken op een van de locaties wordt de data van de dezelfde dag getoond voor deze locatie.
 
 
-![alt text](./1._readme_images/windpage.png "Windpagina Oosterschelde zeezijde")
+![alt text](./0._readme_images/windpage.png "Windpagina Oosterschelde zeezijde")
 
 Meer informatie over hoe de site werkt is te vinden op https://dewindnu.nl#over
