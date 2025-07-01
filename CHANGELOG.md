@@ -1,5 +1,9 @@
 # Change log
 
+## 3.6.2
+
+- bug: Fixed location wind sacks not loading in overview
+
 ## 3.6.1
 
 - bug: Fixed analytics very slow loading, now using PostHog
