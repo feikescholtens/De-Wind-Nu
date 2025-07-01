@@ -1,5 +1,10 @@
 # Change log
 
+## 3.6.1
+
+- bug: Fixed analytics very slow loading, now using PostHog
+- server: big cleanup of all backend code
+
 ## 3.6.0
 
 - feature: Port Google Cloud Function archiveForecastYesterday to Python #4
