@@ -23,6 +23,7 @@ export async function fetchDataForOverview_VLINDER(locations, resolve) {
 
   rawData.forEach(locationData => {
     const applicationID = IDMatches[locationData.id] // Get application ID for the VLINDER location
+    if (applicationID === undefined) return // If the application ID is not found, skip this location
 
     const windSpeed = locationData.windSpeed * 0.539956803, // Convert km/h to knots
       windGusts = locationData.windGust * 0.539956803, // Convert km/h to knots
