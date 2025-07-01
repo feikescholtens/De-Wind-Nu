@@ -8,12 +8,19 @@ import { addDays, isToday, parse, format, parseISO, startOfDay } from "date-fns"
 import { contentUpdate } from "./js/contentUpdate.js"
 import { changeDataForm, formulateErrorMessage, showErrorMessage, hideErrorMessage, hideMain, showLoader, hideLoader, setNewNumber, showMain, showCurrentWindBox, hideCurrentWindBox, changeInterpolation, calcInterpolation, changeTableSort, getAbsoluteDate, getRelativeDate, getDatePickerMax, switchPreviousDay, switchNextDay, setDateInUrl, checkWrapFlexNavBar } from "./js/functions.js"
 import { redirect, updateLocalVariables, changeTheme, changeShowBar, changeUnit, units, setGeneralSettings, addUIListeners, changeDecimals, handleTimeZoneWarning } from "../globalFunctions.js"
+import posthog from "posthog-js"
 redirect()
 updateLocalVariables()
 handleTimeZoneWarning()
 // if (isIOS()) document.getElementById("settings").style.width = document.body.clientWidth - 40 + "px"
 
 Object.prototype.copy = function() { return JSON.parse(JSON.stringify(this)) }
+
+//Initialize PostHog for analytics
+posthog.init("phc_bU5HrnJn5DkToBMigMsJH6dbW2J9sgVvBDsHT4VQBcD", {
+  api_host: "https://eu.i.posthog.com",
+  person_profiles: "always"
+})
 
 //Immediately start retrieving the data
 const locationID = location.pathname.substring(6, 10)

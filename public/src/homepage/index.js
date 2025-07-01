@@ -6,6 +6,7 @@ import "../../assets/xus5meu.css"
 import { changeTiles, changeOverviewForm, changeLocationPreference, setOverviewListData, fitMapToMarkers, panMapToLocation, setOverviewMapData, acquireLocation, showLocationPreferenceOptions, getLocationToUse, distanceLocationToCurrentLocation } from "./functions.js"
 import { redirect, updateLocalVariables, changeTheme, changeShowBar, units, changeUnit, changeDecimals, setGeneralSettings, addUIListeners, handleTimeZoneWarning } from "../globalFunctions.js"
 import { initMap, initList } from "./mapOrListInit.js"
+import posthog from "posthog-js"
 redirect()
 updateLocalVariables()
 handleTimeZoneWarning()
@@ -33,6 +34,12 @@ const overviewFormSelector = document.querySelector("[data-overviewFormUnderSett
   tilesSelector = document.querySelector("[data-tiles]"),
   seaMapCheckbox = document.querySelector("[data-seaMap]"),
   locationPreferenceSelector = document.querySelector("[data-locationPreference]")
+
+//Initialize PostHog for analytics
+posthog.init("phc_bU5HrnJn5DkToBMigMsJH6dbW2J9sgVvBDsHT4VQBcD", {
+  api_host: "https://eu.i.posthog.com",
+  person_profiles: "always"
+})
 
 //Sets the options in the settingstable for the ones in local storage
 //General settings
