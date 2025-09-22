@@ -6,7 +6,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06270",
+      "API_ID": "0-20000-0-06270",
       "API_Coordinates": [
         53.2231,
         5.7517
@@ -30,7 +30,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06207",
+      "API_ID": "0-20000-0-06207",
       "API_Coordinates": [
         53.6144,
         4.9603
@@ -44,7 +44,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06235",
+      "API_ID": "0-20000-0-06235",
       "API_Coordinates": [
         52.9269,
         4.7811
@@ -68,7 +68,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06260",
+      "API_ID": "0-20000-0-06260",
       "API_Coordinates": [
         52.0989,
         5.1797
@@ -89,7 +89,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06323",
+      "API_ID": "0-20000-0-06323",
       "API_Coordinates": [
         51.5258,
         3.8836
@@ -103,7 +103,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06214",
+      "API_ID": "0-20000-0-06214",
       "API_Coordinates": [
         54.0369,
         6.0417
@@ -147,7 +147,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06279",
+      "API_ID": "0-20000-0-06279",
       "API_Coordinates": [
         52.7489,
         6.5731
@@ -161,7 +161,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06285",
+      "API_ID": "0-20000-0-06285",
       "API_Coordinates": [
         53.5739,
         6.3983
@@ -213,7 +213,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06283",
+      "API_ID": "0-20000-0-06283",
       "API_Coordinates": [
         52.0678,
         6.6567
@@ -227,7 +227,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06331",
+      "API_ID": "0-20000-0-06331",
       "API_Coordinates": [
         51.4786,
         4.1925
@@ -265,7 +265,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06320",
+      "API_ID": "0-20000-0-06320",
       "API_Coordinates": [
         51.9258,
         3.67
@@ -307,7 +307,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06375",
+      "API_ID": "0-20000-0-06375",
       "API_Coordinates": [
         51.6586,
         5.7067
@@ -393,7 +393,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06286",
+      "API_ID": "0-20000-0-06286",
       "API_Coordinates": [
         53.1944,
         7.1492
@@ -421,7 +421,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06321",
+      "API_ID": "0-20000-0-06321",
       "API_Coordinates": [
         51.9978,
         3.275
@@ -435,7 +435,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06238",
+      "API_ID": "0-528-0-06238",
       "API_Coordinates": [
         52.1514,
         4.765
@@ -515,7 +515,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06269",
+      "API_ID": "0-20000-0-06269",
       "API_Coordinates": [
         52.4483,
         5.5081
@@ -539,7 +539,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06205",
+      "API_ID": "0-20000-0-06205",
       "API_Coordinates": [
         55.3992,
         3.8103
@@ -553,7 +553,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06267",
+      "API_ID": "0-20000-0-06267",
       "API_Coordinates": [
         52.8967,
         5.3833
@@ -577,7 +577,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06252",
+      "API_ID": "0-20000-0-06252",
       "API_Coordinates": [
         53.2178,
         3.2203
@@ -635,7 +635,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06225",
+      "API_ID": "0-20000-0-06225",
       "API_Coordinates": [
         52.4622,
         4.555
@@ -649,7 +649,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06229",
+      "API_ID": "0-20000-0-06229",
       "API_Coordinates": [
         52.995,
         4.72
@@ -663,7 +663,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06310",
+      "API_ID": "0-20000-0-06310",
       "API_Coordinates": [
         51.4414,
         3.5958
@@ -691,7 +691,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06236",
+      "API_ID": "0-528-0-06236",
       "API_Coordinates": [
         52.3353,
         5.0922
@@ -715,7 +715,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06343",
+      "API_ID": "0-20000-0-06343",
       "API_Coordinates": [
         51.8919,
         4.3125
@@ -749,7 +749,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06350",
+      "API_ID": "0-20000-0-06350",
       "API_Coordinates": [
         51.565,
         4.9353
@@ -773,7 +773,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06308",
+      "API_ID": "0-20000-0-06308",
       "API_Coordinates": [
         51.38,
         3.3792
@@ -797,7 +797,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06317",
+      "API_ID": "0-528-0-06317",
       "API_Coordinates": [
         51.7,
         3.0567
@@ -811,7 +811,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06277",
+      "API_ID": "0-20000-0-06277",
       "API_Coordinates": [
         53.4117,
         6.1992
@@ -835,7 +835,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "78871",
+      "API_ID": "0-20000-0-78871",
       "API_Coordinates": [
         17.6461,
         -63.2208
@@ -849,7 +849,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06251",
+      "API_ID": "0-20000-0-06251",
       "API_Coordinates": [
         53.3911,
         5.3458
@@ -873,7 +873,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06313",
+      "API_ID": "0-20000-0-06313",
       "API_Coordinates": [
         51.5036,
         3.2419
@@ -897,7 +897,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06233",
+      "API_ID": "0-528-0-06233",
       "API_Coordinates": [
         52.4819,
         4.7258
@@ -935,7 +935,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06208",
+      "API_ID": "0-20000-0-06208",
       "API_Coordinates": [
         53.4917,
         5.9417
@@ -949,7 +949,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06370",
+      "API_ID": "0-20000-0-06370",
       "API_Coordinates": [
         51.4497,
         5.3769
@@ -997,7 +997,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06391",
+      "API_ID": "0-20000-0-06391",
       "API_Coordinates": [
         51.4972,
         6.1961
@@ -1031,7 +1031,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06312",
+      "API_ID": "0-20000-0-06312",
       "API_Coordinates": [
         51.7667,
         3.6217
@@ -1059,7 +1059,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06280",
+      "API_ID": "0-20000-0-06280",
       "API_Coordinates": [
         53.1236,
         6.5847
@@ -1101,7 +1101,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06380",
+      "API_ID": "0-20000-0-06380",
       "API_Coordinates": [
         50.9053,
         5.7619
@@ -1125,7 +1125,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06315",
+      "API_ID": "0-20000-0-06315",
       "API_Coordinates": [
         51.4458,
         3.9975
@@ -1149,7 +1149,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06330",
+      "API_ID": "0-20000-0-06330",
       "API_Coordinates": [
         51.9911,
         4.1217
@@ -1193,7 +1193,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06248",
+      "API_ID": "0-20000-0-06248",
       "API_Coordinates": [
         52.6325,
         5.1736
@@ -1241,7 +1241,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "78990",
+      "API_ID": "0-20000-0-78990",
       "API_Coordinates": [
         12.13,
         -68.2758
@@ -1255,7 +1255,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06324",
+      "API_ID": "0-20000-0-06324",
       "API_Coordinates": [
         51.5956,
         4.0061
@@ -1293,7 +1293,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "78873",
+      "API_ID": "0-20000-0-78873",
       "API_Coordinates": [
         17.4956,
         -62.9828
@@ -1481,7 +1481,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06239",
+      "API_ID": "0-20000-0-06239",
       "API_Coordinates": [
         54.8539,
         4.6961
@@ -1560,7 +1560,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06249",
+      "API_ID": "0-20000-0-06249",
       "API_Coordinates": [
         52.6428,
         4.9789
@@ -1618,7 +1618,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06258",
+      "API_ID": "0-20000-0-06258",
       "API_Coordinates": [
         52.6481,
         5.4006
@@ -1642,7 +1642,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06344",
+      "API_ID": "0-20000-0-06344",
       "API_Coordinates": [
         51.9606,
         4.4469
@@ -1656,7 +1656,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06216",
+      "API_ID": "0-528-0-06216",
       "API_Coordinates": [
         52.3194,
         4.0422
@@ -1670,7 +1670,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06340",
+      "API_ID": "0-20000-0-06340",
       "API_Coordinates": [
         51.4478,
         4.3419
@@ -1708,7 +1708,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06203",
+      "API_ID": "0-20000-0-06203",
       "API_Coordinates": [
         52.36,
         3.3417
@@ -1736,7 +1736,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06204",
+      "API_ID": "0-20000-0-06204",
       "API_Coordinates": [
         53.2694,
         3.6278
@@ -1750,7 +1750,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06275",
+      "API_ID": "0-20000-0-06275",
       "API_Coordinates": [
         52.0547,
         5.8722
@@ -1808,7 +1808,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06316",
+      "API_ID": "0-20000-0-06316",
       "API_Coordinates": [
         51.6558,
         3.6939
@@ -1842,7 +1842,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06211",
+      "API_ID": "0-20000-0-06211",
       "API_Coordinates": [
         53.8242,
         2.9453
@@ -1900,7 +1900,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06201",
+      "API_ID": "0-20000-0-06201",
       "API_Coordinates": [
         54.3256,
         2.9358
@@ -1914,7 +1914,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06242",
+      "API_ID": "0-20000-0-06242",
       "API_Coordinates": [
         53.24,
         4.9208
@@ -1928,7 +1928,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06319",
+      "API_ID": "0-20000-0-06319",
       "API_Coordinates": [
         51.2247,
         3.8611
@@ -1952,7 +1952,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06377",
+      "API_ID": "0-20000-0-06377",
       "API_Coordinates": [
         51.1967,
         5.7625
@@ -2014,7 +2014,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06278",
+      "API_ID": "0-20000-0-06278",
       "API_Coordinates": [
         52.4344,
         6.2589
@@ -2042,7 +2042,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06237",
+      "API_ID": "0-528-0-06237",
       "API_Coordinates": [
         52.255,
         4.6478
@@ -2056,7 +2056,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06356",
+      "API_ID": "0-20000-0-06356",
       "API_Coordinates": [
         51.8578,
         5.1453
@@ -2070,7 +2070,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06290",
+      "API_ID": "0-20000-0-06290",
       "API_Coordinates": [
         52.2731,
         6.8908
@@ -2084,7 +2084,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06273",
+      "API_ID": "0-20000-0-06273",
       "API_Coordinates": [
         52.7019,
         5.8875
@@ -2110,7 +2110,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06240",
+      "API_ID": "0-20000-0-06240",
       "API_Coordinates": [
         52.3172,
         4.7897
@@ -2124,7 +2124,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06348",
+      "API_ID": "0-20000-0-06348",
       "API_Coordinates": [
         51.9692,
         4.9258
@@ -2194,7 +2194,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06209",
+      "API_ID": "0-20000-0-06209",
       "API_Coordinates": [
         52.4636,
         4.5175
@@ -2222,7 +2222,7 @@
     "active": true,
     "measurements": {
       "source": "KNMI",
-      "API_ID": "06215",
+      "API_ID": "0-20000-0-06215",
       "API_Coordinates": [
         52.1397,
         4.4364
