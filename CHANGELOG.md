@@ -1,5 +1,10 @@
 # Change log
 
+## 3.6.3
+
+- feat: Y-axis of wind-gust-graph has minimum value of 16 knots now, makes reading changes with light winds easier like for this date/location: https://dewindnu.nl/wind/8527?datum=12-02-2023 #19
+- server: Updated to new KNMI dataset (old one was getting discontinued soon) #18
+
 ## 3.6.2
 
 - bug: Fixed location wind sacks not loading in overview
