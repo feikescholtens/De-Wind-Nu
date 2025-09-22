@@ -80,7 +80,8 @@ export const optionsWindSpeedChart = {
         font: {
           family: "Lato",
         }
-      }
+      },
+      suggestedMax: 16
     },
     x: {
       ticks: {
