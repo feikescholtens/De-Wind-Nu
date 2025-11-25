@@ -41,13 +41,13 @@ export async function fetchDataForDay_KNMI(dateParsed, databaseData, resolve, ti
     // This only happens when the clock turns one hour back when timezones switch from CEST to CET. 02:00, 02:10, 02:20, 02:30, 02:40, 02:50 will 
     // already be in the data array, so look at the second value of these times in the measurementTimes array to get the right indici.
 
-    if (rawData.coverages[0].ranges.ff.values[indexTime] != undefined) windSpeed.push(rawData.coverages[0].ranges.ff.values[indexTime] * 1.94384449) // Convert m/s to knots
+    if (rawData.coverages[0].ranges?.ff?.values[indexTime] != undefined) windSpeed.push(rawData.coverages[0].ranges.ff.values[indexTime] * 1.94384449) // Convert m/s to knots
     else windSpeed.push(-999)
 
-    if (rawData.coverages[0].ranges.gff.values[indexTime] != undefined) windGust.push(rawData.coverages[0].ranges.gff.values[indexTime] * 1.94384449) // Convert m/s to knots
+    if (rawData.coverages[0].ranges?.gff?.values[indexTime] != undefined) windGust.push(rawData.coverages[0].ranges.gff.values[indexTime] * 1.94384449) // Convert m/s to knots
     else windGust.push(-999)
 
-    if (rawData.coverages[0].ranges.dd.values[indexTime] != undefined) windDirection.push(rawData.coverages[0].ranges.dd.values[indexTime])
+    if (rawData.coverages[0].ranges?.dd?.values[indexTime] != undefined) windDirection.push(rawData.coverages[0].ranges.dd.values[indexTime])
     else windDirection.push(-999)
   })
 
