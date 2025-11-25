@@ -5,9 +5,8 @@ import { fetchDataForDay_RWS } from "./fetchScripts/RWS/fetchDataForDay.js"
 import { fetchDataForDay_KNMI } from "./fetchScripts/KNMI/fetchDataForDay.js"
 import { fetchDataForDay_MVB } from "./fetchScripts/MVB/fetchDataForDay.js"
 import { getTimeChangeDates, generateTimes, calcInterpolation, getArchivedForecast, startOfDayTimeZone } from "./getScriptUtilFunctions.js"
-import { format, add, parseISO, isBefore, isValid, isToday, isFuture } from "date-fns"
-import module from "date-fns-tz"
-const { utcToZonedTime, formatInTimeZone } = module
+import { add, parseISO, isBefore, isValid, isToday, isFuture } from "date-fns"
+import { formatInTimeZone } from "date-fns-tz"
 import { Firestore } from "@google-cloud/firestore"
 import { firestoreAuth } from "./getScriptUtilFunctions.js"
 
@@ -30,8 +29,8 @@ export async function getData(request, response, date, locations) {
 
   if (!isValid(dateParsed)) {
     dateParsed = startOfDayTimeZone(new Date(), timeZone)
-    dateFormatted = format(utcToZonedTime(new Date(), timeZone), "dd-MM-yyyy")
-  } else dateFormatted = format(utcToZonedTime(dateParsed, timeZone), "dd-MM-yyyy")
+    dateFormatted = formatInTimeZone(new Date(), timeZone, "dd-MM-yyyy")
+  } else dateFormatted = formatInTimeZone(dateParsed, timeZone, "dd-MM-yyyy")
 
   const locationID = request.params.id
   const location = locations[locationID]
@@ -44,9 +43,9 @@ export async function getData(request, response, date, locations) {
   if (["VLINDER"].includes(datasetMeasurements)) NoMeasurementsXHour = 12
   let times
   const DSTDates = getTimeChangeDates(dateParsed)
-  const dateToDST = format(utcToZonedTime(DSTDates.toDST, timeZone), "dd-MM")
-  const dateFromDST = format(utcToZonedTime(DSTDates.fromDST, timeZone), "dd-MM")
-  const dateRequest = format(utcToZonedTime(dateParsed, timeZone), "dd-MM")
+  const dateToDST = formatInTimeZone(DSTDates.toDST, timeZone, "dd-MM")
+  const dateFromDST = formatInTimeZone(DSTDates.fromDST, timeZone, "dd-MM")
+  const dateRequest = formatInTimeZone(dateParsed, timeZone, "dd-MM")
   if (dateRequest == dateToDST) times = generateTimes(60 / NoMeasurementsXHour, "toDST")
   else if (dateRequest == dateFromDST) times = generateTimes(60 / NoMeasurementsXHour, "fromDST")
   else times = generateTimes(60 / NoMeasurementsXHour)

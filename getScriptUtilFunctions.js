@@ -1,6 +1,5 @@
 import { startOfDay, sub, subHours } from "date-fns"
-import module from "date-fns-tz"
-const { getTimezoneOffset } = module
+import { getTimezoneOffset } from "date-fns-tz"
 import { Firestore } from "@google-cloud/firestore"
 
 export function getTimeChangeDates(date) {

@@ -5,9 +5,7 @@ import fetch from "node-fetch"
 import express from "express"
 import cors from "cors"
 import path from "path"
-import { format } from "date-fns"
-import module from "date-fns-tz"
-const { utcToZonedTime } = module
+import { formatInTimeZone } from "date-fns-tz"
 import nodemailer from "nodemailer"
 
 
@@ -20,7 +18,7 @@ export async function setEnvironmentVariables(app) {
   // From dotenv on localhost, if not on localhost, load env's from Google Secret Manager
   if (global.port == 3000) {
     const dotenv = await import("dotenv")
-    dotenv.config()
+    dotenv.config({ quiet: true })
   } else {
     const promises = [] //Used to keep track of the promises, so that when all environmental variables are fetched, the forecast can be fetched
     const placeHolderVariable = ["GCP_CLIENT_EMAIL", "GCP_PRIVATE_KEY", "GMAIL_APP_KEY", "MVB_PWD_ENCODED", "IPQUALITYSCORE_KEY", "KDP_EDR_KEY"].forEach((identifier) => promises.push(setEnvironmentVariableFromGoogleSecretManager(identifier)))
@@ -139,7 +137,7 @@ const consoleColours = {
 }
 
 export function log(message, type = "debug", addLocalDate) {
-  let dateTime = format(utcToZonedTime(new Date(), global.userTimeZone), "dd-MM-yyyy HH:mm") + " (CET/CEST): "
+  let dateTime = formatInTimeZone(new Date(), global.userTimeZone, "dd-MM-yyyy HH:mm") + " (CET/CEST): "
 
   if (addLocalDate) message = dateTime += message
   console.log(consoleColours[type], message)

@@ -1,5 +1,13 @@
 # Change log
 
+## 3.6.4
+
+- server: upgraded all packages, fixed breaking changes of express, date-fns-tz
+- bug: fix server crashing from KNMI response #21
+- server: Switched formatter, now using Biome, which is also a linter
+- server: linted all code
+- server: removed circular dependencies rollup
+
 ## 3.6.3
 
 - feat: Y-axis of wind-gust-graph has minimum value of 16 knots now, makes reading changes with light winds easier like for this date/location: https://dewindnu.nl/wind/8527?datum=12-02-2023 #19

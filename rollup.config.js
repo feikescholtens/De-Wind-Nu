@@ -1,7 +1,7 @@
 //This config is used for bundling in both a developer environment and production environment
 
 const deleteUnminifiedBundels = true
-const makeSourceMaps = false //Development: true, production: false
+const makeSourceMaps = true //Development: true, production: false
 
 //Homepage variables
 const homepageJS = "public/src/homepage/index.js",

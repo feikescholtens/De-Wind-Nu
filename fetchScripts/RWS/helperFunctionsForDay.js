@@ -1,6 +1,5 @@
-import { format, addDays, subDays, isSameDay, add, sub, addHours } from "date-fns"
-import module from "date-fns-tz"
-const { utcToZonedTime } = module
+import { addDays, subDays, isSameDay, add, sub, addHours } from "date-fns"
+import { formatInTimeZone } from "date-fns-tz"
 
 
 
@@ -61,27 +60,27 @@ function getRWSFetchDates(dateParsed, DSTDates) {
 
     dateStartFetch = subDays(dateParsed, 1)
     if (isSameDay(dateStartFetch, DSTDates.toDST) && dateStartFetch.getHours() === 22) dateStartFetch = addHours(dateStartFetch, 1)
-    dateStartFetch = format(utcToZonedTime(dateStartFetch, global.userTimeZone), "yyyy-MM-dd")
+    dateStartFetch = formatInTimeZone(dateStartFetch, global.userTimeZone, "yyyy-MM-dd")
     //Explaination for above: if the system is using UTC timezone, subDays will subtract 24 hours instead of 23. This is because UTC doesn't use DST.
     //Because of this, the format function doesn't pick the right day
 
-    dateEndFetch = format(utcToZonedTime(dateParsed, global.userTimeZone), "yyyy-MM-dd")
+    dateEndFetch = formatInTimeZone(dateParsed, global.userTimeZone, "yyyy-MM-dd")
   } else if (isSameDay(dateParsed, DSTDates.toDST)) {
     //Day of going to summertime
     startTime = "00:00:00"
     endTime = "22:00:00"
-    dateStartFetch = dateEndFetch = format(utcToZonedTime(dateParsed, global.userTimeZone), "yyyy-MM-dd")
+    dateStartFetch = dateEndFetch = formatInTimeZone(dateParsed, global.userTimeZone, "yyyy-MM-dd")
   } else if (isSameDay(dateParsed, DSTDates.fromDST)) {
     //Day of going to wintertime
     startTime = "22:00:00"
     endTime = "00:00:00"
-    dateStartFetch = format(utcToZonedTime(sub(dateParsed, { days: 1 }), global.userTimeZone), "yyyy-MM-dd")
-    dateEndFetch = format(utcToZonedTime(add(dateParsed, { days: 1, hours: 2 }), global.userTimeZone), "yyyy-MM-dd")
+    dateStartFetch = formatInTimeZone(sub(dateParsed, { days: 1 }), global.userTimeZone, "yyyy-MM-dd")
+    dateEndFetch = formatInTimeZone(add(dateParsed, { days: 1, hours: 2 }), global.userTimeZone, "yyyy-MM-dd")
   } else {
     //Wintertime
     startTime = endTime = "00:00:00"
-    dateStartFetch = format(utcToZonedTime(dateParsed, global.userTimeZone), "yyyy-MM-dd")
-    dateEndFetch = format(utcToZonedTime(addDays(dateParsed, 1), global.userTimeZone), "yyyy-MM-dd")
+    dateStartFetch = formatInTimeZone(dateParsed, global.userTimeZone, "yyyy-MM-dd")
+    dateEndFetch = formatInTimeZone(addDays(dateParsed, 1), global.userTimeZone, "yyyy-MM-dd")
   }
   //All above is needed due to *** RWS API
   return [startTime, endTime, dateStartFetch, dateEndFetch]

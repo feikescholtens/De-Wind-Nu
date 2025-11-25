@@ -280,6 +280,15 @@ function setMeasurementData(container, dataLocation, returnNode) {
     windDirectionElement = container.querySelector(".windDirection"),
     relativeTimeElement = container.querySelector(".relativeTime")
 
+  if (dataLocation == "FORECAST_ONLY") {
+    windSpeedGustsElement?.remove()
+    windDirectionElement?.remove()
+    relativeTimeElement?.remove()
+
+    if (returnNode) return container
+    else return
+  }
+
   windSpeed = dataLocation.windSpeed
   if (windSpeed != undefined) {
     if (unit !== "Bft") windSpeed = (units[unit].factor * windSpeed).toFixed(decimals)
@@ -315,12 +324,6 @@ function setMeasurementData(container, dataLocation, returnNode) {
     } else {
       relativeTimeElement.innerText = `${relativeMinutes} minuten geleden`
     }
-  }
-
-  if (dataLocation == "FORECAST_ONLY") {
-    windSpeedGustsElement.remove()
-    windDirectionElement.remove()
-    relativeTimeElement.remove()
   }
 
   if (returnNode) return container

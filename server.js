@@ -37,4 +37,4 @@ app.get("/giveLocationsParsingHarmonie", (req, res) => getLocationListParsingHar
 app.post("/addFeedback", (req, res) => addFeedback(req, res))
 
 // Route for unknown URLs
-app.use("/*", (req, res) => res.redirect("/"))
+app.use("_", (req, res) => res.redirect("/"))
