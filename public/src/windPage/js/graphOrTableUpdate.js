@@ -1,4 +1,3 @@
-import { newChartOptions, checkInterpolated } from "./functions.js"
 import { datasetObject, datasetInfo, optionsWindSpeedChart, optionsWindDirectionChart } from "../js/objects/chartData.js"
 
 const graphNodeElements = [document.querySelector("[data-headingchartwindspeed]"),
@@ -156,4 +155,23 @@ export function updateTable() {
     else if (localStorage.getItem("tableSort") == "ascending") table.append(row)
 
   }
+}
+
+// Helper functions for updateDisplayCurrentWind.js
+import { tooltipLine } from "../js/objects/chartData.js"
+
+function newChartOptions(datasets, options) {
+  return {
+    type: "line",
+    data: {
+      labels: times,
+      datasets: datasets
+    },
+    options: options,
+    plugins: [tooltipLine]
+  }
+}
+
+function checkInterpolated(ctx, dataType, value) {
+  if (interpolatedIndices[dataType].includes(ctx.p0DataIndex + 1) || interpolatedIndices[dataType].includes(ctx.p0DataIndex)) return value
 }

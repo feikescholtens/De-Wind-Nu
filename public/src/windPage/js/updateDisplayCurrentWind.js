@@ -1,6 +1,5 @@
 import { drawDirectionArrow, drawCanvasBackground } from "./drawCanvas.js"
-import { directionToLetters } from "../../globalFunctions.js"
-import { setLabelPostitions } from "./functions.js"
+import { directionToLetters } from "../../globalIndependentFunctions.js"
 
 Array.prototype.lastMeasurement = function() { return this[this.length - 1] }
 let directionStuffDrawn = false
@@ -88,4 +87,11 @@ export function updateCurrentWind(forceRedraw) {
   else
     headingWithTime.innerHTML = `Recentste meting (${new Date().getSeconds()} seconden geleden)`
 
+}
+
+// Helper functions for updateDisplayCurrentWind.js
+function setLabelPostitions(labels, percentages) {
+  for (let i = 0; i < labels.length; i++) {
+    labels[i].style.top = percentages[i] + "%"
+  }
 }

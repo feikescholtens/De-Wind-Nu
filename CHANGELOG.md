@@ -1,12 +1,12 @@
 # Change log
 
-## 3.6.4
+## 3.7.0
 
 - server: upgraded all packages, fixed breaking changes of express, date-fns-tz
 - bug: fix server crashing from KNMI response #21
+- server: removed circular dependencies rollup
 - server: Switched formatter, now using Biome, which is also a linter
 - server: linted all code
-- server: removed circular dependencies rollup
 
 ## 3.6.3
 

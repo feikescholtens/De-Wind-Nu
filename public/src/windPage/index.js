@@ -6,7 +6,7 @@ import "../../assets/chart.min.js"
 
 import { addDays, isToday, parse, format, parseISO, startOfDay } from "date-fns"
 import { contentUpdate } from "./js/contentUpdate.js"
-import { changeDataForm, formulateErrorMessage, showErrorMessage, hideErrorMessage, hideMain, showLoader, hideLoader, setNewNumber, showMain, showCurrentWindBox, hideCurrentWindBox, changeInterpolation, calcInterpolation, changeTableSort, getAbsoluteDate, getRelativeDate, getDatePickerMax, switchPreviousDay, switchNextDay, setDateInUrl, checkWrapFlexNavBar } from "./js/functions.js"
+import { changeDataForm, formulateErrorMessage, showErrorMessage, hideErrorMessage, hideMain, showLoader, hideLoader, setNewNumber, showMain, showCurrentWindBox, hideCurrentWindBox, changeInterpolation, calcInterpolation, changeTableSort, getAbsoluteDate, getRelativeDate, getDatePickerMax, switchPreviousDay, switchNextDay, setDateInUrl, checkWrapFlexNavBar } from "./js/index_HelperFunctions.js"
 import { redirect, updateLocalVariables, changeTheme, changeShowBar, changeUnit, units, setGeneralSettings, addUIListeners, changeDecimals, handleTimeZoneWarning } from "../globalFunctions.js"
 import posthog from "posthog-js"
 redirect()

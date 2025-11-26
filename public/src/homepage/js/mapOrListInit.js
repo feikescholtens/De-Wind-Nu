@@ -1,4 +1,6 @@
-import { getMapBoxStyle, createPopupIDAndMarkerElement, fitMapToMarkers, panMapToLocation, addCurrentLocationMarker, setOverviewMapData, setOverviewListData, tilesObjects, determineCenterToZoomTo, getLocationsForecastOnly } from "./functions.js"
+import { getMapBoxStyle, createPopupIDAndMarkerElement, tilesObjects, determineCenterToZoomTo , getLocationsForecastOnly} from "./mapOrListInit_helpers.js"
+import { panMapToLocation, setOverviewMapData, setOverviewListData } from "./sharedFunctions.js";
+import { addCurrentLocationMarker, fitMapToMarkers } from "./independentFunctions.js";
 
 export async function initMap(dataAlreadyFetched, locationToUse) {
 
@@ -31,7 +33,7 @@ export async function initMap(dataAlreadyFetched, locationToUse) {
       map.triggerRepaint()
       map._controls[0]._updateAttributions()
 
-      console.log("Ignore above error message (from ajax.js:143). Switched tile URL to one with unlimited requests, bacause a) API limit reached, b) OR users exceeded the rate limit per second. In both cases we get a 429 error!")
+      console.log("Request error 429 from above can be neglegted. They are due to (rate) limits of the high resolution tiles API, which are expected (if user has large screen or daily limits are reached). Switched tile URL to one with unlimited requests.")
     }
   })
   // getLocationsForecastOnly()
@@ -86,10 +88,6 @@ export async function initMap(dataAlreadyFetched, locationToUse) {
   }
 
   //Show popup with instruction / suggestion to click on windsack to view more measurements on closest location
-  //Code pieces that are linked to this functionality:
-  //
-  // functions.js lines 188 - 191
-  // globalFunctions.js line 113
   if (localStorage.getItem("popupClickOnLocationSuggestionShowed") == "1") return //This suggestion has already been shown once
 
   const popupElement = document.createElement("div")

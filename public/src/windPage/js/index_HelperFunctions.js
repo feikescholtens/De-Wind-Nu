@@ -1,5 +1,7 @@
+// Helper functions for index.js and index.js only
+// To avoid circular dependencies, functions that are only used in index.js are put in this file
+
 import { contentUpdate } from "./contentUpdate.js"
-import { tooltipLine } from "../js/objects/chartData.js"
 import {
   addHours,
   differenceInCalendarDays,
@@ -86,7 +88,6 @@ export function hideErrorMessage() {
   document.querySelector("[data-errorFetching]").classList.add("noDisplay")
 }
 
-
 export function hideMain() {
   document.getElementsByTagName("main")[0].classList.add("hidden")
 }
@@ -160,28 +161,6 @@ export function calcInterpolation() {
   })
 
   return { interpolatedData: interpolatedData, interpolatedIndices: interpolatedIndices }
-}
-
-export function checkInterpolated(ctx, dataType, value) {
-  if (interpolatedIndices[dataType].includes(ctx.p0DataIndex + 1) || interpolatedIndices[dataType].includes(ctx.p0DataIndex)) return value
-}
-
-export function newChartOptions(datasets, options) {
-  return {
-    type: "line",
-    data: {
-      labels: times,
-      datasets: datasets
-    },
-    options: options,
-    plugins: [tooltipLine]
-  }
-}
-
-export function setLabelPostitions(labels, percentages) {
-  for (let i = 0; i < labels.length; i++) {
-    labels[i].style.top = percentages[i] + "%"
-  }
 }
 
 export function changeTableSort(tableSort) {
