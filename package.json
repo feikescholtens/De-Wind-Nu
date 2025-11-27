@@ -3,9 +3,13 @@
   "description": "De Wind Nu verzamelt actuele weerdata van meetstations door heel Nederland. Deze kunnen gebruikt worden voor het informeren van surfers of zeilers.",
   "main": "\u001b[D\u001b[D\u001b[D\u001bapp",
   "scripts": {
-    "start": "node server.js",
-    "build": "rollup -c rollup.config.js",
+    "start": "nodemon server.js",
+    "build": "NODE_ENV=production rollup -c rollup.config.js",
+    "build:homepage": "BUILD_PAGE=homepage rollup -c rollup.config.js",
+    "build:windpage": "BUILD_PAGE=windpage rollup -c rollup.config.js",
     "watch": "rollup -c rollup.config.js --watch",
+    "watch:homepage": "BUILD_PAGE=homepage rollup -c rollup.config.js --watch",
+    "watch:windpage": "BUILD_PAGE=windpage rollup -c rollup.config.js --watch",
     "gcp-build": ""
   },
   "type": "module",
@@ -14,6 +18,7 @@
   "dependencies": {
     "@google-cloud/firestore": "^8.0.0",
     "@google-cloud/secret-manager": "^6.1.1",
+    "chart.js": "^3.9.1",
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",

@@ -1,4 +1,7 @@
 import { datasetObject, datasetInfo, optionsWindSpeedChart, optionsWindDirectionChart } from "../js/objects/chartData.js"
+import {Chart, LinearScale, CategoryScale, LineController, PointElement, LineElement, Tooltip} from 'chart.js'
+
+Chart.register(LinearScale, CategoryScale, LineController, PointElement, LineElement, Tooltip);
 
 const graphNodeElements = [document.querySelector("[data-headingchartwindspeed]"),
   document.querySelector("[data-chartwindSpeed]"),

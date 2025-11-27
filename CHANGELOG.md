@@ -2,11 +2,13 @@
 
 ## 3.7.0
 
-- server: upgraded all packages, fixed breaking changes of express, date-fns-tz
-- bug: fix server crashing from KNMI response #21
-- server: removed circular dependencies rollup
+- server: Upgraded all packages, fixed breaking changes of express, date-fns-tz
+- bug: Fix server crashing from KNMI response #21
+- server: Removed circular dependencies rollup
+- server: Using npm chart.js, extended rollup config
+- server: Updated chart.js
 - server: Switched formatter, now using Biome, which is also a linter
-- server: linted all code
+- server: Linted all code
 
 ## 3.6.3
 

@@ -1,7 +1,6 @@
-//This config is used for bundling in both a developer environment and production environment
-
-const deleteUnminifiedBundels = true
-const makeSourceMaps = true //Development: true, production: false
+const deleteUnminifiedBundles = true
+const makeSourceMaps = process.env.NODE_ENV !== 'production' 
+//Source maps are made for all watch and build commands except production build (npm run build)
 
 //Homepage variables
 const homepageJS = "public/src/homepage/index.js",
@@ -33,9 +32,20 @@ import UglifyJS from "uglify-js"
 import cssnano from "cssnano"
 
 //Array calling custom build function for both pages
-export default [buildWebPageBundleConfig(homepageJS, homepageHTML, homepageDestinationDir, homepagePathURL),
-  buildWebPageBundleConfig(windpageJS, windpageHTML, windpageDestinationDir, windpagePathURL)
-]
+// Check for BUILD_PAGE environment variable to build only specific page
+const buildPage = process.env.BUILD_PAGE
+
+const configs = []
+
+if (!buildPage || buildPage === 'homepage') {
+  configs.push(buildWebPageBundleConfig(homepageJS, homepageHTML, homepageDestinationDir, homepagePathURL))
+}
+
+if (!buildPage || buildPage === 'windpage') {
+  configs.push(buildWebPageBundleConfig(windpageJS, windpageHTML, windpageDestinationDir, windpagePathURL))
+}
+
+export default configs
 
 
 
@@ -116,7 +126,7 @@ function minifyJS(inputFile, outputFile, pathURL) {
         if (existsSync(`${inputFile}.map`)) unlinkSync(`${inputFile}.map`)
       }
 
-      if (deleteUnminifiedBundels) {
+      if (deleteUnminifiedBundles) {
         unlinkSync(inputFile)
         if (existsSync(`${inputFile}.map`)) unlinkSync(`${inputFile}.map`)
       }
