@@ -1,10 +1,10 @@
 export const tooltipLine = {
   id: "tooltipLine",
   beforeDraw: chart => {
-    if (chart.tooltip._active && chart.tooltip._active.length) {
+    if (chart.tooltip && chart.tooltip.getActiveElements().length) {
       const ctx = chart.ctx
       ctx.save()
-      const activePoint = chart.tooltip._active[0]
+      const activePoint = chart.tooltip.getActiveElements()[0]
 
       ctx.beginPath()
       ctx.setLineDash([5, 0])
@@ -97,9 +97,6 @@ export const optionsWindSpeedChart = {
   },
   radius: 0,
   tension: 0.3,
-  tooltip: {
-    enabled: true
-  },
   interaction: {
     mode: "index",
     intersect: false,
@@ -136,6 +133,7 @@ export const optionsWindSpeedChart = {
       }
     },
     tooltip: {
+      enabled: true,
       callbacks: {
         label: undefined,
         title: undefined
