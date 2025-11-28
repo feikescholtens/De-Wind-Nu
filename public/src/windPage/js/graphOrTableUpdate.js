@@ -2,6 +2,7 @@
 import {
 	CategoryScale,
 	Chart,
+	Legend,
 	LinearScale,
 	LineController,
 	LineElement,
@@ -15,7 +16,15 @@ import {
 	optionsWindSpeedChart,
 } from "../js/objects/chartData.js";
 
-Chart.register(LinearScale, CategoryScale, LineController, PointElement, LineElement, Tooltip);
+Chart.register(
+	LinearScale,
+	CategoryScale,
+	LineController,
+	PointElement,
+	LineElement,
+	Tooltip,
+	Legend,
+);
 
 const graphNodeElements = [
 	document.querySelector("[data-headingchartwindspeed]"),
