@@ -1,229 +1,229 @@
+/** biome-ignore-all lint/complexity/noImportantStyles: Necessary for overriding other styles **/
 main,
 footer {
-    width: 100%;
+	width: 100%;
 }
 
 main {
-    min-height: 100vh;
-    overflow-x: auto;
+	min-height: 100vh;
+	overflow-x: auto;
 }
 
 div#loaderText {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, calc(-50% + 50px));
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, calc(-50% + 50px));
 }
 
 nav {
-    margin: 0 10px;
-    box-sizing: border-box;
-    padding: 0 10px;
-    overflow: hidden;
-    /* Above only needed for Safari browser */
+	margin: 0 10px;
+	box-sizing: border-box;
+	padding: 0 10px;
+	overflow: hidden;
+	/* Above only needed for Safari browser */
 }
 
 /* Styling bar with location and date options / inputs */
 #locationDate {
-    display: flex;
-    grid-gap: 10px;
-    align-items: center;
-    justify-content: space-between;
+	display: flex;
+	grid-gap: 10px;
+	align-items: center;
+	justify-content: space-between;
 }
 
 #dateControls {
-    width: 221px;
-    height: 100%;
-    display: grid;
-    grid-template-columns: 44px 133px 44px;
-    text-align: center;
-    margin-left: auto;
-    cursor: pointer;
+	width: 221px;
+	height: 100%;
+	display: grid;
+	grid-template-columns: 44px 133px 44px;
+	text-align: center;
+	margin-left: auto;
+	cursor: pointer;
 }
 
 #dateControls div {
-    width: 44px;
-    height: 44px;
-    color: var(--BGColour);
-    background-color: var(--textColour2);
-    border-radius: 12px;
+	width: 44px;
+	height: 44px;
+	color: var(--BGColour);
+	background-color: var(--textColour2);
+	border-radius: 12px;
 }
 
 #datePicker {
-    visibility: hidden;
-    position: absolute;
-    z-index: -1;
+	visibility: hidden;
+	position: absolute;
+	z-index: -1;
 }
 
 .noSelect:focus {
-    outline: none !important;
+	outline: none !important;
 }
 
 p#currentDate {
-    margin: auto 0;
-    height: 44px;
-    line-height: 44px;
-    padding: 0 5px;
+	margin: auto 0;
+	height: 44px;
+	line-height: 44px;
+	padding: 0 5px;
 }
 
 h4#location {
-    color: var(--textColour2);
-    font-size: clamp(12px, 18px, 20px);
-    cursor: text;
+	color: var(--textColour2);
+	font-size: clamp(12px, 18px, 20px);
+	cursor: text;
 }
 
 /*  */
 
 h3#dataInfo {
-    font-weight: 400;
-    font-size: 16px;
-    padding: 0 10px;
-    margin-bottom: 20px;
-    color: var(--textColour2);
+	font-weight: 400;
+	font-size: 16px;
+	padding: 0 10px;
+	margin-bottom: 20px;
+	color: var(--textColour2);
 }
 
 #currentWindBox {
-    position: relative;
-    left: 50%;
-    width: 150px;
-    height: 150px;
-    transform: translate(-50%, -50%);
-    margin: calc(-420px / 2) 0 calc(49px - 5px) 0;
-    /* Explanaition bottom margin: height of the tabs div + it's top-padding - the height of the tab indicator */
-    /* This definitely needed to be better documented because it's still unclear why these margins need to be set */
+	position: relative;
+	left: 50%;
+	width: 150px;
+	height: 150px;
+	transform: translate(-50%, -50%);
+	margin: calc(-420px / 2) 0 calc(49px - 5px) 0;
+	/* Explanaition bottom margin: height of the tabs div + it's top-padding - the height of the tab indicator */
+	/* This definitely needed to be better documented because it's still unclear why these margins need to be set */
 }
 
 canvas#compass {
-    width: min(calc(100vw - 2 * 10px), 420px);
-    height: min(calc(100vw - 2 * 10px), 420px);
-    left: 50%;
-    position: relative;
-    transform: translateX(-50%);
+	width: min(calc(100vw - 2 * 10px), 420px);
+	height: min(calc(100vw - 2 * 10px), 420px);
+	left: 50%;
+	position: relative;
+	transform: translateX(-50%);
 }
 
 /* Styling current wind labels */
 #currentWind {
-    font-size: 3em;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    white-space: nowrap;
-    color: #6ab04c;
-    font-weight: 600;
+	font-size: 3em;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	white-space: nowrap;
+	color: #6ab04c;
+	font-weight: 600;
 }
 
 #forecastedWind {
-    font-size: 1.2em;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    white-space: nowrap;
-    color: #2e86de;
-    font-weight: 600;
+	font-size: 1.2em;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	white-space: nowrap;
+	color: #2e86de;
+	font-weight: 600;
 }
 
 #currentGusts {
-    font-size: 1.8em;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    white-space: nowrap;
-    color: #eb4d4b;
-    font-weight: 600;
-    top: 53%;
+	font-size: 1.8em;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	white-space: nowrap;
+	color: #eb4d4b;
+	font-weight: 600;
+	top: 53%;
 }
 
 #currentDirection {
-    font-size: 1.8em;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    white-space: nowrap;
-    color: #5f27cd;
-    font-weight: 600;
+	font-size: 1.8em;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	white-space: nowrap;
+	color: #5f27cd;
+	font-weight: 600;
 }
 
 #forecastedDirection {
-    font-size: 1.2em;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    white-space: nowrap;
-    color: #ff9f43;
-    font-weight: 600;
+	font-size: 1.2em;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	white-space: nowrap;
+	color: #ff9f43;
+	font-weight: 600;
 }
 
 label.measurementTypeIndicator {
-    white-space: nowrap;
-    color: var(--textColour1);
-    font-weight: 400;
+	white-space: nowrap;
+	color: var(--textColour1);
+	font-weight: 400;
 }
 
 label.labelSmall {
-    font-size: 16px;
+	font-size: 16px;
 }
 
 label.labelBig {
-    font-size: 20px;
+	font-size: 20px;
 }
 
 /* Tabs styling (specific for this tab) */
 
 .tabContainer {
-    padding-top: 10px;
+	padding-top: 10px;
 }
 
-.tabContainer .tabHeader>div {
-    width: 120px;
+.tabElement {
+	width: 120px;
 }
 
 .tabContainer .tabIndicator {
-    width: 120px;
+	width: 120px;
 }
 
 /* Other styles */
 
 canvas.charts {
-    margin-bottom: 10px;
-    padding-right: 10px;
+	margin-bottom: 10px;
+	padding-right: 10px;
 }
 
 table#data {
-    margin: 10px 0 20px 0;
-    box-sizing: border-box;
-    margin-left: 10px;
-    max-width: calc(100% - 2 * 10px);
-    border-collapse: collapse;
+	margin: 10px 0 20px 0;
+	box-sizing: border-box;
+	margin-left: 10px;
+	max-width: calc(100% - 2 * 10px);
+	border-collapse: collapse;
 }
 
 tr#tableFirstHeaderRow th {
-    font-size: 1.2em;
+	font-size: 1.2em;
 }
 
 tr#tableHeaderRow th {
-    font-weight: 600;
+	font-weight: 600;
 }
 
 table#data td:nth-child(1) {
-    border-right: 1px #bbb solid;
-    width: 80px;
+	border-right: 1px #bbb solid;
+	width: 80px;
 }
-
 
 table#data tr td:nth-child(2),
 table#data tr td:nth-child(3),
 table#data tr td:nth-child(4) {
-    max-width: 100px;
+	max-width: 100px;
 }
 
 table#data th,
 table#data td {
-    text-align: left;
-    vertical-align: top;
-    padding: 0px 5px;
+	text-align: left;
+	vertical-align: top;
+	padding: 0px 5px;
 }
 
 span#sortArrow {
-    float: right;
-    color: grey;
+	float: right;
+	color: grey;
 }

@@ -102,11 +102,11 @@
 
             <div data-dataForm class="tabContainer">
               <div class="tabHeader">
-                  <div data-graphs class="active">
+                  <div class="tabElement" data-graphs class="active">
                     <div class="tabIcon">
                       <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M481 547q-9-1-16.556-4.5Q456.889 539 451 533L305 386l-136 98q-23 17-48.5 4.074Q95 475.149 95 446q0-11.5 5-22t14-17l167-122q8-4 15.5-6.5T313 276q8 1 15.556 5 7.555 4 13.444 10l147 146 302-219q23-17 49-3.509t26 42.79q0 11.719-5 21.219-5 9.5-14 16.5L512 537q-8 5-15.5 8t-15.5 2Zm-1 407q-9 0-16-3.5t-14-9.5L232 730l-63 44q-24 17-49 4.009t-25-42.29Q95 724 100 714.5q5-9.5 14-16.5l95-67q7-5 14.55-8 7.55-3 16.45-2 8.32.727 15.76 4.045Q263.2 628.364 269 634l217 211 151-121q6-5 13.55-8 7.55-3 15.45-3h152q19.75 0 33.875 13.675Q866 740.351 866 760.175 866 780 851.875 793.5 837.75 807 818 807H682L513 944q-7.053 6.889-16.026 8.944Q488 955 480 954Z"/></svg>
                     </div>Grafieken</div>
-                  <div data-table><div class="tabIcon">
+                  <div class="tabElement" data-table><div class="tabIcon">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M811 960H189q-39.05 0-66.525-27.475Q95 905.05 95 866V285q0-39.463 27.475-67.231Q149.95 190 189 190h622q39.463 0 67.231 27.769Q906 245.537 906 285v581q0 39.05-27.769 66.525Q850.463 960 811 960ZM189 419h622V285H189v134Zm145 60H189v387h145V479Zm332 0v387h145V479H666Zm-60 0H394v387h212V479Z"/></svg>
                   </div>Tabel</div>
               </div>
@@ -144,7 +144,7 @@
 
                 <label for="showBar">Toon tabbladen met snel wisselen tussen weergavevormen</label>
                 <label class="switch">
-                  <input type="checkbox" data-showBar id="showBar"></input>
+                  <input class="switchInput" type="checkbox" data-showBar id="showBar"></input>
                   <span class="slider round"></span>
                 </label>
 
@@ -174,7 +174,7 @@
 
                 <label for="interpolation">Interpoleer ontbrekende meetwaarden</label>
                 <label class="switch">
-                  <input type="checkbox" data-interpolation id="interpolation">
+                  <input class="switchInput" type="checkbox" data-interpolation id="interpolation">
                   <span class="slider round"></span>
                 </label>
 
