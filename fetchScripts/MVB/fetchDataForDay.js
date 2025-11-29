@@ -29,18 +29,18 @@ export async function fetchDataForDay_MVB(dateParsed, databaseData, resolve, tim
 
 	rawData.Values.forEach((parameter) => {
 		// Loop through all the parameters in the data, like wind speed, gusts and direction
-		if (parameter.Values.length == 0) return; // If there are no measurements for this parameter, return
+		if (parameter.Values.length === 0) return; // If there are no measurements for this parameter, return
 
 		const measurementTimes = [], // MeasurementTimes is just an array with all the times of the measurements for this parameter
 			tempArray = []; // This contains the actual measurements for the parameter that's being looped through
 
-		parameter.Values.forEach((measurement) =>
-			measurementTimes.push(ISO_StringToLocalHHmm(measurement.Timestamp, measurementTimes)),
-		); // Add all the times of the measurements to the measurementTimes array
+		parameter.Values.forEach((measurement) => {
+			measurementTimes.push(ISO_StringToLocalHHmm(measurement.Timestamp, measurementTimes));
+		}); // Add all the times of the measurements to the measurementTimes array
 
 		times.forEach((timeStamp) => {
 			// Loop through all the times that are requested [00:00, 00:10, ..., 00:00_nextDay]
-			if (measurementTimes.includes(timeStamp) == false) {
+			if (measurementTimes.includes(timeStamp) === false) {
 				tempArray.push(-999);
 				return;
 			} // If the time is not in the measurementTimes array, add -999 to the tempArray to indicate that there is no data for this time (probably this time is in the future)
@@ -50,15 +50,12 @@ export async function fetchDataForDay_MVB(dateParsed, databaseData, resolve, tim
 			// This only happens when the clock turns one hour back when timezones switch from CEST to CET. 02:00, 02:10, 02:20, 02:30, 02:40, 02:50 will
 			// already be in the temporary array, so look at the second value of these times in the measurementTimes array to get the right indici.
 
-			if (parameter.Values[indexTime] == undefined) {
+			const value = parameter.Values[indexTime]?.Value;
+			if (value === undefined) {
 				tempArray.push(-999);
 				return;
 			}
-			if (parameter.Values[indexTime].Value == undefined) {
-				tempArray.push(-999);
-				return;
-			}
-			tempArray.push(parameter.Values[indexTime].Value);
+			tempArray.push(value);
 		});
 
 		const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes, times); // The amount of measurements that should be there, based on the length of the measurementTimes array
@@ -72,6 +69,6 @@ export async function fetchDataForDay_MVB(dateParsed, databaseData, resolve, tim
 		if (parameter.ID.includes("WRS")) windDirection = structuredClone(tempArray);
 	});
 
-	data["MVB"] = [windSpeed, windGusts, windDirection];
+	data.MVB = [windSpeed, windGusts, windDirection];
 	resolve({ data });
 }

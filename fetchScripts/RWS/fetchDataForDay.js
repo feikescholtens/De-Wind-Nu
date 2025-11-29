@@ -31,6 +31,7 @@ export async function fetchDataForDay_RWS(dateParsed, databaseData, resolve, tim
 		windGusts = [],
 		windDirection = [];
 
+	// biome-ignore lint/suspicious/noDoubleEquals: Needed to check for both null and undefined
 	if (rawData.WaarnemingenLijst == undefined) {
 		resolveEmptyArrays(resolve, "RWS");
 		return;
@@ -38,18 +39,18 @@ export async function fetchDataForDay_RWS(dateParsed, databaseData, resolve, tim
 
 	rawData.WaarnemingenLijst.forEach((parameter) => {
 		// Loop through all the parameters in the data, like wind speed, gusts and direction
-		if (parameter.MetingenLijst.length == 0) return; // If there are no measurements for this parameter, return
+		if (parameter.MetingenLijst.length === 0) return; // If there are no measurements for this parameter, return
 
 		const measurementTimes = [], // MeasurementTimes is just an array with all the times of the measurements for this parameter
 			tempArray = []; // This contains the actual measurements for the parameter that's being looped through
 
-		parameter.MetingenLijst.forEach((measurement) =>
-			measurementTimes.push(ISO_StringToLocalHHmm(measurement.Tijdstip, measurementTimes)),
-		); // Add all the times of the measurements to the measurementTimes array
+		parameter.MetingenLijst.forEach((measurement) => {
+			measurementTimes.push(ISO_StringToLocalHHmm(measurement.Tijdstip, measurementTimes));
+		}); // Add all the times of the measurements to the measurementTimes array
 
 		times.forEach((timeStamp) => {
 			// Loop through all the times that are requested [00:00, 00:10, ..., 00:00_nextDay]
-			if (measurementTimes.includes(timeStamp) == false) {
+			if (measurementTimes.includes(timeStamp) === false) {
 				tempArray.push(-999);
 				return;
 			} // If the time is not in the measurementTimes array, add -999 to the tempArray to indicate that there is no data for this time (probably this time is in the future)
@@ -59,37 +60,26 @@ export async function fetchDataForDay_RWS(dateParsed, databaseData, resolve, tim
 			// This only happens when the clock turns one hour back when timezones switch from CEST to CET. 02:00, 02:10, 02:20, 02:30, 02:40, 02:50 will
 			// already be in the temporary array, so look at the second value of these times in the measurementTimes array to get the right indici.
 
-			if (parameter.MetingenLijst[indexTime] == undefined) {
+			const value = parameter.MetingenLijst[indexTime]?.Meetwaarde?.Waarde_Numeriek;
+			if (value === undefined || value >= 999) {
 				tempArray.push(-999);
 				return;
 			}
-			if (parameter.MetingenLijst[indexTime].Meetwaarde == undefined) {
-				tempArray.push(-999);
-				return;
-			}
-			if (parameter.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek == undefined) {
-				tempArray.push(-999);
-				return;
-			}
-			if (parameter.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek >= 999) {
-				tempArray.push(-999);
-				return;
-			}
-			tempArray.push(parameter.MetingenLijst[indexTime].Meetwaarde.Waarde_Numeriek);
+			tempArray.push(value);
 		});
 
 		const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes, times); // The amount of measurements that should be there, based on the length of the measurementTimes array
 		for (let j = 0; j < times.length - theoreticalMeasurementCount; j++) tempArray.pop(); // Strip the tempArray of all the -999 values at the end
 
 		// Set the wind_speed, wind_gusts and wind_direction arrays based on the parameter that's being looped through
-		if (parameter.AquoMetadata.Grootheid.Code == "WINDSHD")
+		if (parameter.AquoMetadata.Grootheid.Code === "WINDSHD")
 			windSpeed = structuredClone(tempArray).map((x) => x * 1.94384449); // Convert m/s to knots
-		if (parameter.AquoMetadata.Grootheid.Code == "WINDSTOOT")
+		if (parameter.AquoMetadata.Grootheid.Code === "WINDSTOOT")
 			windGusts = structuredClone(tempArray).map((x) => x * 1.94384449); // Convert m/s to knots
-		if (parameter.AquoMetadata.Grootheid.Code == "WINDRTG")
+		if (parameter.AquoMetadata.Grootheid.Code === "WINDRTG")
 			windDirection = structuredClone(tempArray);
 	});
 
-	data["RWS"] = processAllNegativeArrays(windSpeed, windGusts, windDirection);
+	data.RWS = processAllNegativeArrays(windSpeed, windGusts, windDirection);
 	resolve({ data });
 }
