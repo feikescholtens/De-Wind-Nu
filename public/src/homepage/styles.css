@@ -1,350 +1,351 @@
+/** biome-ignore-all lint/complexity/noImportantStyles: Important style needed for proper functioning **/
 body {
-    margin: 0 auto;
-    overflow-x: hidden;
+	margin: 0 auto;
+	overflow-x: hidden;
 }
 
 header {
-    height: 100px;
-    max-width: 800px;
-    margin: 0 auto;
+	height: 100px;
+	max-width: 800px;
+	margin: 0 auto;
 }
 
 div#mapWrapper,
 div#map,
 div#list {
-    width: 100%;
-    min-height: calc(var(--vh, 1vh) * 100 - (100px + 49px - 35px));
+	width: 100%;
+	min-height: calc(var(--vh, 1vh) * 100 - (100px + 49px - 35px));
 }
 
 div.tabContainerWrapper {
-    height: 49px;
-    margin-top: -35px;
+	height: 49px;
+	margin-top: -35px;
 }
 
 .tabContainer {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 /* Tabs styling (specific for this tab) */
 
-.tabContainer .tabHeader>div {
-    width: 80px;
+.tabContainer .tabHeader > div {
+	width: 80px;
 }
 
 .tabContainer .tabIndicator {
-    width: 80px;
+	width: 80px;
 }
 
 /* -------- */
 
 div#mapWrapper {
-    width: calc(100 * var(--vw, 1vw));
-    margin-left: calc((100 * var(--vw, 1vw) - 100%) / -2);
+	width: calc(100 * var(--vw, 1vw));
+	margin-left: calc((100 * var(--vw, 1vw) - 100%) / -2);
 }
 
 /* Settings bar with notification about location */
 
 div.barLocationNotification {
-    z-index: 998;
-    padding: 10px;
-    box-sizing: border-box;
-    background-color: var(--lineColour1);
-    color: var(--textColour1);
+	z-index: 998;
+	padding: 10px;
+	box-sizing: border-box;
+	background-color: var(--lineColour1);
+	color: var(--textColour1);
 }
 
 div#barLocationNotificationMap {
-    position: absolute;
-    width: calc(100 * var(--vw, 1vw));
-    margin-left: calc((100 * var(--vw, 1vw) - 100%) / -2);
+	position: absolute;
+	width: calc(100 * var(--vw, 1vw));
+	margin-left: calc((100 * var(--vw, 1vw) - 100%) / -2);
 }
 
 div#barLocationNotificationList {
-    width: calc(100% - 2 * 10px);
-    margin-left: 10px;
+	width: calc(100% - 2 * 10px);
+	margin-left: 10px;
 }
 
 div.barLocationNotification span {
-    color: var(--anchorColour);
-    cursor: pointer;
-    text-decoration: underline;
+	color: var(--anchorColour);
+	cursor: pointer;
+	text-decoration: underline;
 }
 
 /* Settings icon scroll styling */
 
 button#settingsButton {
-    background-color: rgba(255, 255, 255, 0.5);
-    color: black;
-    z-index: 999;
-    position: absolute;
-    bottom: calc(10px + 20px);
-    right: 10px;
-    border-radius: 50%;
-    height: 50px;
-    width: 50px;
-    border: none;
-    box-shadow: -1px 1px 5px 2px rgba(0, 0, 0, 0.5);
-    cursor: pointer;
+	background-color: rgba(255, 255, 255, 0.5);
+	color: black;
+	z-index: 999;
+	position: absolute;
+	bottom: calc(10px + 20px);
+	right: 10px;
+	border-radius: 50%;
+	height: 50px;
+	width: 50px;
+	border: none;
+	box-shadow: -1px 1px 5px 2px rgba(0, 0, 0, 0.5);
+	cursor: pointer;
 }
 
 button#settingsButton:after {
-    content: "";
-    position: absolute;
-    left: -5px;
-    top: -5px;
-    z-index: -1;
-    width: 50px;
-    height: 50px;
-    /* background: #E83474; */
-    border-radius: 7px;
+	content: "";
+	position: absolute;
+	left: -5px;
+	top: -5px;
+	z-index: -1;
+	width: 50px;
+	height: 50px;
+	/* background: #E83474; */
+	border-radius: 7px;
 }
 
 div#iconSettings {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 }
 
 div#iconSettings svg {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 }
 
 @media screen and (max-width: 640px) {
-    button#settingsButton {
-        background-color: white;
-        color: black;
-        bottom: 10px;
-        right: 10px;
-    }
+	button#settingsButton {
+		background-color: white;
+		color: black;
+		bottom: 10px;
+		right: 10px;
+	}
 
-    div.mapboxgl-ctrl-bottom-right {
-        margin-bottom: 55px;
-    }
+	div.mapboxgl-ctrl-bottom-right {
+		margin-bottom: 55px;
+	}
 
-    button.mapboxgl-ctrl-attrib-button {
-        box-shadow: -1px 1px 5px 2px rgba(0, 0, 0, 0.5);
-    }
+	button.mapboxgl-ctrl-attrib-button {
+		box-shadow: -1px 1px 5px 2px rgba(0, 0, 0, 0.5);
+	}
 }
 
 /* ------------------------- */
 
 div.mapboxgl-ctrl-bottom-left,
 div.mapboxgl-ctrl-bottom-right {
-    z-index: 999;
+	z-index: 999;
 }
 
 /* ---------------- Custom popup styling ------------*/
 
 .mapboxgl-popup-content {
-    box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, .3)
+	box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.3);
 }
 
 /* ------------------------------------------------- */
 
 .alwaysBlackText {
-    color: black;
+	color: black;
 }
 
 div.VLINDER {
-    background-color: rgb(254, 202, 87);
-    border-top-color: rgb(254, 202, 87);
-    z-index: 1;
+	background-color: rgb(254, 202, 87);
+	border-top-color: rgb(254, 202, 87);
+	z-index: 1;
 }
 
 div.RWS {
-    background-color: rgb(46, 179, 99);
-    border-top-color: rgb(46, 179, 99);
-    z-index: 2;
+	background-color: rgb(46, 179, 99);
+	border-top-color: rgb(46, 179, 99);
+	z-index: 2;
 }
 
 div.KNMI {
-    background-color: rgb(101, 124, 201);
-    border-top-color: rgb(101, 124, 201);
-    z-index: 3;
+	background-color: rgb(101, 124, 201);
+	border-top-color: rgb(101, 124, 201);
+	z-index: 3;
 }
 
 div.MVB {
-    background-color: rgb(201, 62, 28);
-    border-top-color: rgb(201, 62, 28);
-    z-index: 4;
+	background-color: rgb(201, 62, 28);
+	border-top-color: rgb(201, 62, 28);
+	z-index: 4;
 }
 
 div.Other {
-    background-color: rgb(140, 140, 140);
-    border-top-color: rgb(140, 140, 140);
-    z-index: 5;
+	background-color: rgb(140, 140, 140);
+	border-top-color: rgb(140, 140, 140);
+	z-index: 5;
 }
 
 div.markerContaineVLINDER {
-    z-index: 1;
+	z-index: 1;
 }
 
 div.markerContainerRWS {
-    z-index: 2;
+	z-index: 2;
 }
 
 div.markerContainerKNMI {
-    z-index: 3;
+	z-index: 3;
 }
 
 div.markerContainerKNMI {
-    z-index: 4;
+	z-index: 4;
 }
 
 /* Current location marker styling */
 
 div.circleCurrentLocation {
-    width: 15px;
-    height: 15px;
-    background-color: #4285f4;
-    border-radius: 50%;
-    border: 2px white solid;
-    box-shadow: 0 0 5px 3px grey;
-    cursor: pointer;
+	width: 15px;
+	height: 15px;
+	background-color: #4285f4;
+	border-radius: 50%;
+	border: 2px white solid;
+	box-shadow: 0 0 5px 3px grey;
+	cursor: pointer;
 }
 
 div.circleCurrentLocation:after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1;
-    width: 50px;
-    height: 50px;
-    border-radius: 7px;
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	z-index: -1;
+	width: 50px;
+	height: 50px;
+	border-radius: 7px;
 }
 
 /* " " " ": animation acquiring new location */
 
 #acquireLocationLoader {
-    width: 80px;
-    height: 80px;
-    display: inline-block;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    left: calc(19px / 2);
-    top: calc(19px / 2);
-    z-index: -1;
+	width: 80px;
+	height: 80px;
+	display: inline-block;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	left: calc(19px / 2);
+	top: calc(19px / 2);
+	z-index: -1;
 }
 
 #acquireLocationLoader::after,
 #acquireLocationLoader::before {
-    content: "";
-    box-sizing: border-box;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 4px solid var(--locationLoaderColour);
-    position: absolute;
-    left: 0;
-    top: 0;
-    animation: animation 1.2s linear infinite;
+	content: "";
+	box-sizing: border-box;
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	border: 4px solid var(--locationLoaderColour);
+	position: absolute;
+	left: 0;
+	top: 0;
+	animation: animation 1.2s linear infinite;
 }
 
 @keyframes animation {
-    0% {
-        transform: scale(0);
-        opacity: 1;
-    }
+	0% {
+		transform: scale(0);
+		opacity: 1;
+	}
 
-    100% {
-        transform: scale(1);
-        opacity: 0;
-    }
+	100% {
+		transform: scale(1);
+		opacity: 0;
+	}
 }
 
 /* ////////////////// */
 
 div.popUp {
-    display: grid;
-    grid-template-columns: 1fr;
+	display: grid;
+	grid-template-columns: 1fr;
 }
 
 div#popupSuggestionClickMarker {
-    font-size: 18px;
-    font-weight: 600;
+	font-size: 18px;
+	font-weight: 600;
 }
 
 p.locationPopUpTitle {
-    padding: 10px;
-    font-weight: 600;
-    font-size: 18px;
-    text-align: left;
+	padding: 10px;
+	font-weight: 600;
+	font-size: 18px;
+	text-align: left;
 }
 
 button.popupLocationPrefferenceHigh {
-    background-color: #1a873c;
+	background-color: #1a873c;
 }
 
 button.popupLocationPrefferenceLow {
-    background-color: #de6421;
+	background-color: #de6421;
 }
 
 button.popupLocationPrefferenceNone {
-    background-color: #c71720;
+	background-color: #c71720;
 }
 
 div.mapboxgl-popup {
-    max-width: 200px;
-    z-index: 998;
+	max-width: 200px;
+	z-index: 998;
 }
 
 div.mapboxgl-popup-content {
-    text-align: center;
+	text-align: center;
 }
 
 button.mapboxgl-popup-close-button {
-    width: 18px;
-    height: 18px;
+	width: 18px;
+	height: 18px;
 }
 
 button:focus {
-    outline: none;
+	outline: none;
 }
 
 /* Styling grid of list elements */
 div.listElement {
-    display: grid;
-    grid-template-columns: 1fr 0.7fr 1fr;
-    margin: 5px 15px;
-    column-gap: 10px;
-    align-items: center;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px var(--lineColour1) solid;
-    border-radius: 15px;
-    font-size: 14px;
+	display: grid;
+	grid-template-columns: 1fr 0.7fr 1fr;
+	margin: 5px 15px;
+	column-gap: 10px;
+	align-items: center;
+	padding: 8px;
+	margin-bottom: 10px;
+	border: 1px var(--lineColour1) solid;
+	border-radius: 15px;
+	font-size: 14px;
 }
 
 div.buttonWrapper {
-    grid-column: 1 / 3;
+	grid-column: 1 / 3;
 }
 
 div.buttonWrapper button {
-    font-size: 1em !important;
-    margin: 0 !important;
+	font-size: 1em !important;
+	margin: 0 !important;
 }
 
 p.favorite {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 span.listElementStar {
-    vertical-align: bottom;
+	vertical-align: bottom;
 }
 
 div.listElementArrow {
-    vertical-align: middle;
-    display: inline-block;
+	vertical-align: middle;
+	display: inline-block;
 }
 
 p.forceFontLoad {
-    position: absolute;
-    bottom: 0;
+	position: absolute;
+	bottom: 0;
 }

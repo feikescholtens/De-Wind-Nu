@@ -1,5 +1,6 @@
 export const popUpData = {
-  welkom: { html: `
+	welkom: {
+		html: `
     <h3 style="font-size: 24px;" class="popUpTitle">De Wind Nu | Welkom!</h3>
     <p class='messageBoxP'>
     De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met verwachtingen in grafieken. 
@@ -24,8 +25,10 @@ export const popUpData = {
     Veel plezier en houdt het veilig op het water!
     <br><br>
     <i>PS: Deze informatie is ook onder elke pagina te vinden onder het "Over" kopje!</i></p>
-    ` },
-  over: { html: `
+    `,
+	},
+	over: {
+		html: `
     <h3 class="popUpTitle">Over</h3>
     <p class='messageBoxP'>
     De Wind Nu verzamelt actuele windmetingen van meetstations door heel Nederland en visualiseert deze samen met verwachtingen in grafieken. 
@@ -95,8 +98,10 @@ export const popUpData = {
     <br><br>&nbsp;&nbsp;&nbsp;&nbsp;
       Bij het gebruik van dewindnu.nl ga ja akkoord met de disclaimer welke onderaan te bekijken is.
     </p>
-    ` },
-  disclaimer: { html: `
+    `,
+	},
+	disclaimer: {
+		html: `
     <h3 class="popUpTitle">Disclaimer</h3>
     <p class='messageBoxP'>
     Gebruikers dienen niet te vertrouwen op de informatie die getoond wordt op deze website. Gebruik is dan ook op eigen risico en het is altijd de verantwoordelijkheid
@@ -104,8 +109,10 @@ export const popUpData = {
       <br><br>
     <i>Aan dewindnu.nl en de gegevens die hier getoond worden kunnen door gebruikers of andere personen geen rechten worden ontleend.</i>
     </p>
-    ` },
-  credit: { html: `
+    `,
+	},
+	credit: {
+		html: `
    <h3 class="popUpTitle">Credit / bronvermelding</h3>
    <p class='messageBoxP'>De Wind Nu is non-profit en heeft als doel om surfers te informeren over het weer. Niemand verdient geld aan deze website. Dit is
      mogelijk gemaakt door de data van de volgende bronnen: </p>
@@ -124,8 +131,10 @@ export const popUpData = {
      <li>OpenStreetMap;</li>
      <li>OpenSeaMap;</li>
      <li>ChartJS.</li>
-     </ul></p>` },
-  feedback: { html: `<h3 class="popUpTitle">Geef feedback</h3>
+     </ul></p>`,
+	},
+	feedback: {
+		html: `<h3 class="popUpTitle">Geef feedback</h3>
      <p class="messageBoxP">Feedback wordt erg gewaardeerd. Dit kan in de vorm van fouten/bugs, tips, gewenste functies, noem
        maar op.
        Alles is mogelijk, vul onderstaand formulier in om feedback te verzenden.</p>
@@ -147,6 +156,9 @@ export const popUpData = {
       <div data-markerContainer class="markerContainer center noDisplay">
         <div class="arrowArm loader spin"></div>
         <div class="marker loader"></div>
-      </div>` },
-  contact: { html: `<h3 class="popUpTitle">Contact</h3><p class='messageBoxP'>E-mail: <a href='mailto:dewindnu@gmail.com'>dewindnu@gmail.com</a></p>` }
-}
+      </div>`,
+	},
+	contact: {
+		html: `<h3 class="popUpTitle">Contact</h3><p class='messageBoxP'>E-mail: <a href='mailto:dewindnu@gmail.com'>dewindnu@gmail.com</a></p>`,
+	},
+};
