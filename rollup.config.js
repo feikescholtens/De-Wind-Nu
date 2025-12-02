@@ -14,15 +14,21 @@ const windpageJS = "public/src/windPage/index.js",
 	windpageDestinationDir = "public/dist/windPage",
 	windpagePathURL = "/wind";
 
+//Base HTML files (header, footer, etc.) first element is destination, second is source
+//Destination needs to be the same file as referenced in the HTML files above
+const base_HTML_files = [
+	["public/dist/components/header.ejs", "public/src/components/header.ejs"],
+	["public/dist/components/footer.ejs", "public/src/components/footer.ejs"],
+];
+
 //----------------Main logic------------------------------------------------
 
+import { existsSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
 import html from "@rollup/plugin-html";
-
 //Rollup plugins
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 //PostCSS plugins
 import cssnano from "cssnano";
-import { existsSync, readFileSync, unlinkSync, writeFileSync } from "fs";
 import { minify as minifyHTML } from "html-minifier-terser";
 import postcss from "rollup-plugin-postcss";
 import UglifyJS from "uglify-js";
@@ -50,6 +56,30 @@ export default configs;
 //----------------Helper functions------------------------------------------------
 
 function buildWebPageBundleConfig(mainJSFile, HTMLFile, destinationDir, pathURL) {
+	const plugins = [
+		nodeResolve(),
+		html({
+			fileName: "index.ejs",
+			template: async () => await minifyHTML(readFileSync(HTMLFile).toString(), htmlMinifyOptions),
+		}),
+		postcss({
+			extract: "styles.css", //DO EXTRACT CSS! Not doing it recudes Lighthouse performance with almost 40...
+			plugins: [cssnano()],
+		}),
+		minifyJS(`${destinationDir}/index.unmin.js`, `${destinationDir}/index.js`, pathURL),
+	];
+
+	//Add base HTML files (header, footer, etc.)
+	for (const [dest, src] of base_HTML_files) {
+		plugins.push(
+			html({
+				fileName: dest.split("/").pop(),
+				template: async () => await minifyHTML(readFileSync(src).toString(), htmlMinifyOptions),
+			}),
+		);
+	}
+
+	//Return Rollup config object
 	return {
 		input: mainJSFile,
 		output: {
@@ -60,36 +90,7 @@ function buildWebPageBundleConfig(mainJSFile, HTMLFile, destinationDir, pathURL)
 				if (makeSourceMaps) return true;
 			},
 		},
-		plugins: [
-			nodeResolve(),
-			html({
-				fileName: "index.ejs",
-				template: async () =>
-					await minifyHTML(
-						readFileSync(HTMLFile)
-							.toString()
-							.replace(
-								"</head>",
-								`<script src="index.js" defer></script>
-							<link href="styles.css" rel="stylesheet">
-					</head>`,
-							),
-						{
-							removeAttributeQuotes: true,
-							removeComments: true,
-							collapseWhitespace: true,
-							conservativeCollapse: true,
-							minifyCSS: true,
-							minifyJS: true,
-						},
-					),
-			}),
-			postcss({
-				extract: "styles.css", //DO EXTRACT CSS! Not doing it recudes Lighthouse performance with almost 40...
-				plugins: [cssnano()],
-			}),
-			minifyJS(`${destinationDir}/index.unmin.js`, `${destinationDir}/index.js`, pathURL),
-		],
+		plugins: plugins,
 	};
 }
 
@@ -132,3 +133,12 @@ function minifyJS(inputFile, outputFile, pathURL) {
 		},
 	};
 }
+
+const htmlMinifyOptions = {
+	removeAttributeQuotes: true,
+	removeComments: true,
+	collapseWhitespace: true,
+	conservativeCollapse: true,
+	minifyCSS: true,
+	minifyJS: true,
+};
