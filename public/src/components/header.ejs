@@ -47,3 +47,16 @@
   <meta name="application-name" content="De Wind Nu">
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="theme-color" content="#000000">
+
+  <script> 
+    //Execute here to prevent flashing before loading the other JS (see bottom of document as well)
+    //Setting theme
+    if (!localStorage.getItem("theme")) localStorage.setItem("theme", "auto")
+
+    if (localStorage.getItem("theme") == "auto") {
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.body.classList.add("dark")
+      }
+    } else if (localStorage.getItem("theme") == "dark") document.body.classList.add("dark")
+    else if (localStorage.getItem("theme") == "light") document.body.classList.remove("dark")
+  </script>

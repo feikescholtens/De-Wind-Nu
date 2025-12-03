@@ -5,17 +5,6 @@
 </head>
 
 <body>
-  <script> 
-  // Placed here to instantly execute and preventing white flash
-  if (!localStorage.getItem("theme")) localStorage.setItem("theme", "auto")
-
-  if (localStorage.getItem("theme") == "auto") {
-    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      document.body.classList.add("dark")
-    }
-  } else if (localStorage.getItem("theme") == "dark") document.body.classList.add("dark")
-  else if (localStorage.getItem("theme") == "light") document.body.classList.remove("dark")
-  </script>
 
     <div data-markerContainer class="markerContainer centerAndMiddle">
     <div class="arrowArm loader spin">
@@ -91,36 +80,7 @@
             <h2 class="sectionHeader">Instellingen</h2>
               <div id="settings">
 
-                <label for="theme">Thema</label>
-                <select data-theme>
-                  <option value="auto">Zelfde als browser / systeem</option>
-                  <option value="light">Licht</option>
-                  <option value="dark">Donker</option>
-                </select>
-
-                <label for="showBar">Toon tabbladen met snel wisselen tussen weergavevormen</label>
-                <label class="switch">
-                  <input class="switchInput" type="checkbox" data-showBar id="showBar"></input>
-                  <span class="slider round"></span>
-                </label>
-
-                <label for="unit">Eenheid</label>
-                <select data-unit id="unit">
-                  <option value="kn">Knopen [kn]</option>
-                  <option value="m/s">Meter per seconde [m/s]</option>
-                  <option value="km/h">Kilometer per uur [km/h]</option>
-                  <option value="mph">Mijl per uur [mph]</option>
-                  <option value="Bft">Beaufort [Bft]</option>
-                </select>
-
-                <label for="decimals">Aantal decimalen</label>
-                <select data-decimals id="decimals">
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                </select>
-
-                <hr class="spanRow">
+                <%- include("generalSettingsInputs.ejs") %>
 
                 <label for="dataForm">Weergave vorm</label>
                 <select data-dataFormUnderSettings id="dataForm">

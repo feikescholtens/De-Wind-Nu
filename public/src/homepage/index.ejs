@@ -1,5 +1,5 @@
 <%- include("header.ejs") %>
-  
+
   <script>
     const data = <%- locationsString %>
   </script>
@@ -8,37 +8,11 @@
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet" /> 
   <!-- Don't bundle the mapbox JS OR the CSS, they will both have a negative effect on the performance -->
 
-  <!-- This style must be here and not in the stylesheet -->
-  <style>
-    .custom .leaflet-popup-tip,
-    .custom .leaflet-popup-content-wrapper {
-      font-size: 1.2em;
-      font-family: 'Lato', sans-serif;
-    }
-
-    .custom .leaflet-popup-tip p,
-    .custom .leaflet-popup-content-wrapper p {
-      cursor: pointer;
-    }
-  </style>
-
   <script src="index.js" defer></script>
   <link href="styles.css" rel="stylesheet">
 </head>
 
 <body>
-  <script> 
-    //Execute here to prevent flashing before loading the other JS (see bottom of document as well)
-    //Setting theme
-    if (!localStorage.getItem("theme")) localStorage.setItem("theme", "auto")
-
-    if (localStorage.getItem("theme") == "auto") {
-      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        document.body.classList.add("dark")
-      }
-    } else if (localStorage.getItem("theme") == "dark") document.body.classList.add("dark")
-    else if (localStorage.getItem("theme") == "light") document.body.classList.remove("dark")
-  </script>
 
   <header>
     <svg data-mapfit id="logo" alt="Logo - navigeer home" width="80px" height="80px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 566.929 566.929" color-interpolation-filters="sRGB" fill="none" fill-rule="evenodd" overflow="visible" stroke-linecap="square" stroke-miterlimit="3" xmlns:v="https://vecta.io/nano"><circle cx="58.415" cy="51.328" r="51.328" fill="#000"/><g stroke="#000"><g stroke-linecap="round" stroke-linejoin="round"><path d="M60.092 88.582v457.09" stroke-width="40"/><path d="M28.347 143.192h89.57m-89.57 191.132h89.57" stroke-width="30"/></g><path d="M353.055 235.324v-82.73a11.34 11.34 0 0 1 12.26-11.3l69.83 5.66a11.34 11.34 0 0 1 10.43 11.3v77.07 86.74a11.34 11.34 0 0 1-10.33 11.3l-69.84 6.27a11.34 11.34 0 0 1-12.35-11.29v-93.02zm-154.19 0v-101.8a11.34 11.34 0 0 1 12.44-11.29l69.84 6.81a11.34 11.34 0 0 1 10.23 11.29v94.99 104.66a11.34 11.34 0 0 1-10.14 11.28l-69.83 7.43a11.34 11.34 0 0 1-12.54-11.28v-112.09zm343.07 89.03v-171.19a11.34 11.34 0 0 0-9.89-11.25l-401.34-51.68a11.34 11.34 0 0 0-12.79 11.24v274.57a11.34 11.34 0 0 0 12.79 11.24l401.34-51.69a11.34 11.34 0 0 0 9.89-11.24z" fill="#000" stroke-linejoin="round" stroke-width="15"/></g></svg>
@@ -80,36 +54,8 @@
     <h2 class="sectionHeader">Instellingen</h2>
 
     <div id="settings">
-      <label for="theme">Thema</label>
-        <select data-theme>
-          <option value="auto">Zelfde als browser / systeem</option>
-          <option value="light">Licht</option>
-          <option value="dark">Donker</option>
-        </select>
-
-        <label for="showBar">Toon tabbladen met snel wisselen tussen weergavevormen</label>
-        <label class="switch">
-          <input class="switchInput" type="checkbox" data-showBar id="showBar"></input>
-          <span class="slider round"></span>
-        </label>
-
-        <label for="unit">Eenheid</label>
-        <select data-unit id="unit">
-          <option value="kn">Knopen [kn]</option>
-          <option value="m/s">Meter per seconde [m/s]</option>
-          <option value="km/h">Kilometer per uur [km/h]</option>
-          <option value="mph">Mijl per uur [mph]</option>
-          <option value="Bft">Beaufort [Bft]</option>
-        </select>
-
-        <label for="decimals">Aantal decimalen</label>
-        <select data-decimals id="decimals">
-          <option value="0">0</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-        </select>
-
-        <hr class="spanRow">
+      
+        <%- include("generalSettingsInputs.ejs") %>
       
         <label for="overviewForm">Weergave vorm</label>
         <select data-overviewFormUnderSettings id="dataForm">

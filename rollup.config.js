@@ -19,6 +19,10 @@ const windpageJS = "public/src/windPage/index.js",
 const base_HTML_files = [
 	["public/dist/components/header.ejs", "public/src/components/header.ejs"],
 	["public/dist/components/footer.ejs", "public/src/components/footer.ejs"],
+	[
+		"public/dist/components/generalSettingsInputs.ejs",
+		"public/src/components/generalSettingsInputs.ejs",
+	],
 ];
 
 //----------------Main logic------------------------------------------------
