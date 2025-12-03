@@ -31,11 +31,7 @@ app.get("/", (_, res) =>
 app.get("/getClientIPLocation", (req, res) => getClientIPLocation(req, res));
 
 app.get("/wind/:id", (req, res) => {
-	if (locations[req.params.id] === undefined) {
-		res.redirect("/");
-		return;
-	}
-	const spotName = locations[req.params.id].name;
+	const spotName = locations[req.params.id]?.name;
 	res.render(path.join(__dirname, "/public/dist/windPage/index.ejs"), { spotName });
 });
 app.get("/1984", (_, res) => res.redirect("/wind/8700"));
@@ -51,4 +47,4 @@ app.get("/giveLocationsParsingHarmonie", (_, res) =>
 app.post("/addFeedback", (req, res) => addFeedback(req, res));
 
 // Route for unknown URLs
-app.use("_", (_, res) => res.redirect("/"));
+app.use("/", (_, res) => res.redirect("/"));

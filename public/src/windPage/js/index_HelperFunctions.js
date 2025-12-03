@@ -68,7 +68,7 @@ export function changeInterpolation(interpolationSelector) {
 export async function formulateErrorMessage(dataFetched) {
 	let message;
 	const errorMessages = {
-		400: "Geen of foute ID in de URL gevonden, of er bestaat geen locatie bij de gegeven ID!",
+		404: "Geen of foute ID in de URL gevonden, of er bestaat geen locatie bij de gegeven ID!",
 		204: "Er zijn geen gegevens beschikbaar voor deze locatie en deze datum!",
 		504: "De API heeft geen reactie verzonden (Gateway Timeout server)! Probeer het opnieuw.",
 	};

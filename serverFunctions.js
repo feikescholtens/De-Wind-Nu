@@ -189,7 +189,7 @@ export async function getClientIPLocation(request, response) {
 //Windpage
 export function isExistingLocation(checkID, locations, response) {
 	if (locations[checkID] === undefined) {
-		response.json({ errorCode: 400 });
+		response.json({ errorCode: 404 });
 		return false;
 	}
 	return true;
