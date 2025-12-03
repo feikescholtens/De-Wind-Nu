@@ -9,6 +9,7 @@
 - server: Updated chart.js
 - server: Switched formatter, now using Biome, which is also a linter
 - server: Linted all code
+- feature: updated locations: added Hollandse Kust Noord, Hollandse Kust West Alpha, Horst
 
 ## 3.6.3
 

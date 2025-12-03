@@ -834,6 +834,17 @@
 			"API_ID": "vqYF3lib7K3re0Zc38ZCzlom"
 		}
 	},
+	"4988": {
+		"name": "Hollandse Kust Noord",
+		"lat": 52.6978,
+		"lon": 4.2933,
+		"active": true,
+		"measurements": {
+			"source": "KNMI",
+			"API_ID": "0-528-0-06213",
+			"API_Coordinates": [52.6978, 4.2933]
+		}
+	},
 	"4997": {
 		"name": "Arcen",
 		"lat": 51.4972222222222,
@@ -1045,6 +1056,17 @@
 			"API_ID": "en06bHr9AwHDTwNnvhdtMFmy"
 		}
 	},
+	"6004": {
+		"name": "Horst",
+		"lat": 51.4869,
+		"lon": 6.0561,
+		"active": true,
+		"measurements": {
+			"source": "KNMI",
+			"API_ID": "0-528-0-06392",
+			"API_Coordinates": [51.4869, 6.0561]
+		}
+	},
 	"6019": {
 		"name": "Bonaire (Flamingo Airport)",
 		"lat": 12.13,
@@ -1107,6 +1129,17 @@
 		"measurements": {
 			"source": "VLINDER",
 			"API_ID": "0xwg6AsDvbnxXzB4S3c2BRyJ"
+		}
+	},
+	"6740": {
+		"name": "Hollandse Kust West Alpha",
+		"lat": 52.6797,
+		"lon": 3.8044,
+		"active": true,
+		"measurements": {
+			"source": "KNMI",
+			"API_ID": "0-528-0-06218",
+			"API_Coordinates": [52.6797, 3.8044]
 		}
 	},
 	"6816": {
