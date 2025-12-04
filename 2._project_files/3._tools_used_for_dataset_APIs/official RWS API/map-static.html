@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RWS Wind Data Locations Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/proj4@2.9.2/dist/proj4.js"></script>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+        .info-panel {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            max-width: 300px;
+        }
+        .info-panel h3 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+        }
+        .info-panel p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .leaflet-popup-content {
+            font-size: 13px;
+        }
+        .leaflet-popup-content strong {
+            display: inline-block;
+            width: 120px;
+        }
+        .copy-btn {
+            display: inline-block;
+            margin-left: 5px;
+            padding: 2px 6px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            vertical-align: middle;
+        }
+        .copy-btn:hover {
+            background: #1976D2;
+        }
+        .copy-btn:active {
+            background: #0D47A1;
+        }
+        .coord-line {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .coord-value {
+            font-family: monospace;
+            background: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div class="info-panel">
+        <h3>RWS Wind Data Locations</h3>
+        <p><strong>Total locations:</strong> <span id="location-count">0</span></p>
+        <p style="font-size: 12px; margin-top: 10px;">Wind data available in last 30 days</p>
+        <hr style="margin: 10px 0; border: none; border-top: 1px solid #ddd;">
+        <p style="font-size: 12px; margin: 5px 0;"><span style="color: #4caf50;">●</span> New location</p>
+        <p style="font-size: 12px; margin: 5px 0;"><span style="color: #ff9800;">●</span> Already in locations.json</p>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        // Embedded location data
+        const locationsWithWind = [{"location":{"Locatie_MessageID":252972088,"Coordinatenstelsel":"25831","X":541700.317,"Y":5699149.567,"Naam":"Vlissingen","Code":"VLIS"},"isExisting":false},{"location":{"Locatie_MessageID":252972103,"Coordinatenstelsel":"25831","X":576915.123,"Y":5759061.006,"Naam":"Hoek van Holland","Code":"HOEK"},"isExisting":true},{"location":{"Locatie_MessageID":8385,"Coordinatenstelsel":"25831","X":724996.335864394,"Y":5941470.2703589,"Naam":"Huibertgat","Code":"HUIB"},"isExisting":false},{"location":{"Locatie_MessageID":252972094,"Coordinatenstelsel":"25831","X":561299.809,"Y":5708684.013,"Naam":"Wilhelminadorp","Code":"WILH"},"isExisting":false},{"location":{"Locatie_MessageID":252972344,"Coordinatenstelsel":"25831","X":654952.881,"Y":5924029.987,"Naam":"Terschelling Noordzee","Code":"TERS"},"isExisting":true},{"location":{"Locatie_MessageID":5916,"Coordinatenstelsel":"25831","X":563525.897877064,"Y":5720130.26737017,"Naam":"Zeelandbrug wind","Code":"ZBWI"},"isExisting":true},{"location":{"Locatie_MessageID":252972059,"Coordinatenstelsel":"25831","X":668377.844,"Y":5831675.472,"Naam":"Houtribdijk","Code":"HOUD"},"isExisting":false},{"location":{"Locatie_MessageID":252972062,"Coordinatenstelsel":"25831","X":605643.436,"Y":5813673.313,"Naam":"IJmuiden Buitenhaven","Code":"IJMH"},"isExisting":false},{"location":{"Locatie_MessageID":252972894,"Coordinatenstelsel":"25831","X":581657.276,"Y":5787576.85,"Naam":"Platform HKZA 1","Code":"HKZA1"},"isExisting":false},{"location":{"Locatie_MessageID":14663,"Coordinatenstelsel":"25831","X":503918.942357358,"Y":5727664.94973239,"Naam":"Borssele Alpha","Code":"BSA"},"isExisting":true},{"location":{"Locatie_MessageID":252972508,"Coordinatenstelsel":"25831","X":630088.005,"Y":5942670.93,"Naam":"L9 platform","Code":"L9"},"isExisting":false},{"location":{"Locatie_MessageID":252970219,"Coordinatenstelsel":"25831","X":660618.42,"Y":5833102.117,"Naam":"Trintelzand","Code":"TZND"},"isExisting":true},{"location":{"Locatie_MessageID":252972369,"Coordinatenstelsel":"25831","X":516807.887,"Y":5705870.791,"Naam":"Vlakte v/d Raan","Code":"VR"},"isExisting":false},{"location":{"Locatie_MessageID":252972066,"Coordinatenstelsel":"25831","X":694736.248,"Y":5842711.747,"Naam":"Marknesse","Code":"MARK"},"isExisting":false},{"location":{"Locatie_MessageID":252972100,"Coordinatenstelsel":"25831","X":620098.025,"Y":5865255.268,"Naam":"De Kooy","Code":"DEKO"},"isExisting":false},{"location":{"Locatie_MessageID":252972195,"Coordinatenstelsel":"25831","X":651344.542,"Y":5822517.495,"Naam":"Markermeer Midden -o","Code":"FL42o"},"isExisting":true},{"location":{"Locatie_MessageID":23091,"Coordinatenstelsel":"25831","X":582772.404224611,"Y":5703850.43205288,"Naam":"Marollegat","Code":"MRG"},"isExisting":false},{"location":{"Locatie_MessageID":252971155,"Coordinatenstelsel":"25831","X":554395.196,"Y":5836952.291,"Naam":"Hollandse Kust West A","Code":"HKWA2"},"isExisting":false},{"location":{"Locatie_MessageID":252972581,"Coordinatenstelsel":"25831","X":550685.199,"Y":6137740.9,"Naam":"A12 platform","Code":"A12"},"isExisting":true},{"location":{"Locatie_MessageID":252972758,"Coordinatenstelsel":"25831","X":556796.275,"Y":5687605.86,"Naam":"Terneuzen Westsluis","Code":"TNWS"},"isExisting":true},{"location":{"Locatie_MessageID":252972037,"Coordinatenstelsel":"25831","X":712426.923,"Y":5922455.01,"Naam":"Lauwersoog","Code":"LAUW"},"isExisting":false},{"location":{"Locatie_MessageID":13933,"Coordinatenstelsel":"25831","X":379117.977891604,"Y":6339756.30889541,"Naam":"Gannet platform 1","Code":"GAN1"},"isExisting":true},{"location":{"Locatie_MessageID":252972587,"Coordinatenstelsel":"25831","X":495821.382,"Y":6019758.419,"Naam":"D15 platform","Code":"D15"},"isExisting":false},{"location":{"Locatie_MessageID":252972034,"Coordinatenstelsel":"25831","X":603100.237,"Y":5813724.155,"Naam":"IJgeul stroommeetpaal","Code":"SPY"},"isExisting":false},{"location":{"Locatie_MessageID":14897,"Coordinatenstelsel":"25831","X":574270.750149378,"Y":5759520.90939086,"Naam":"Lage Licht","Code":"LGL1"},"isExisting":true},{"location":{"Locatie_MessageID":252972904,"Coordinatenstelsel":"25831","X":748885.544,"Y":5930746.091,"Naam":"Uithuizerwad","Code":"UHWD"},"isExisting":true},{"location":{"Locatie_MessageID":252972069,"Coordinatenstelsel":"25831","X":778303.963,"Y":5901246.878,"Naam":"Nieuw Beerta","Code":"NIBE"},"isExisting":false},{"location":{"Locatie_MessageID":252972097,"Coordinatenstelsel":"25831","X":634084.374,"Y":5835095.47,"Naam":"Berkhout","Code":"BERK"},"isExisting":false},{"location":{"Locatie_MessageID":252972477,"Coordinatenstelsel":"25831","X":610815.326,"Y":6079820.835,"Naam":"F3 platform","Code":"F3"},"isExisting":false},{"location":{"Locatie_MessageID":252972568,"Coordinatenstelsel":"25831","X":545963.485,"Y":5752911.393,"Naam":"Lichteiland Goeree","Code":"LEG"},"isExisting":false},{"location":{"Locatie_MessageID":252972900,"Coordinatenstelsel":"25831","X":523248.77,"Y":5800980.014,"Naam":"P11 platform","Code":"P11"},"isExisting":false},{"location":{"Locatie_MessageID":12172,"Coordinatenstelsel":"25831","X":575774.487899888,"Y":5724527.14821832,"Naam":"Grevelingensluis wind","Code":"GRWI"},"isExisting":true},{"location":{"Locatie_MessageID":12179,"Coordinatenstelsel":"25831","X":604098.550551581,"Y":5813717.41176161,"Naam":"IJmuiden Zuid havenhoofd","Code":"IJZ1"},"isExisting":true},{"location":{"Locatie_MessageID":15578,"Coordinatenstelsel":"25831","X":590321.143000125,"Y":5749819.65457646,"Naam":"Geulhaven Radarpost 10","Code":"RP10"},"isExisting":false},{"location":{"Locatie_MessageID":252972473,"Coordinatenstelsel":"25831","X":569316.555,"Y":5699858.828,"Naam":"Hansweert wind","Code":"HAWI"},"isExisting":false},{"location":{"Locatie_MessageID":252972084,"Coordinatenstelsel":"25831","X":627792.57,"Y":5901709.756,"Naam":"Vlieland","Code":"VLI1"},"isExisting":false},{"location":{"Locatie_MessageID":252972318,"Coordinatenstelsel":"25831","X":547968.318,"Y":5722910.691,"Naam":"Oosterschelde 4","Code":"OS4"},"isExisting":false},{"location":{"Locatie_MessageID":252972372,"Coordinatenstelsel":"25831","X":696130.301,"Y":5933727.03,"Naam":"Wierumergronden","Code":"WIER"},"isExisting":true},{"location":{"Locatie_MessageID":252972556,"Coordinatenstelsel":"25831","X":518884.678,"Y":5760830.355,"Naam":"Europlatform 2","Code":"EPL2"},"isExisting":false},{"location":{"Locatie_MessageID":252972603,"Coordinatenstelsel":"25831","X":518884.678,"Y":5760830.355,"Naam":"Europlatform","Code":"EPL"},"isExisting":false},{"location":{"Locatie_MessageID":252972619,"Coordinatenstelsel":"25831","X":514618.153,"Y":5896434.579,"Naam":"K13 Alpha","Code":"K13"},"isExisting":false},{"location":{"Locatie_MessageID":14885,"Coordinatenstelsel":"25831","X":581464.221684069,"Y":5707216.45883811,"Naam":"Bergsediepsluis wind","Code":"BDWI"},"isExisting":true},{"location":{"Locatie_MessageID":252971161,"Coordinatenstelsel":"25831","X":554395.196,"Y":5836952.291,"Naam":"Hollandse Kust West A","Code":"HKWA1"},"isExisting":false},{"location":{"Locatie_MessageID":252972081,"Coordinatenstelsel":"25831","X":615429.874,"Y":5873098.564,"Naam":"Texelhors","Code":"TEHO"},"isExisting":false},{"location":{"Locatie_MessageID":252972091,"Coordinatenstelsel":"25831","X":646541.303,"Y":5833598.931,"Naam":"Wijdenes","Code":"WIJD"},"isExisting":false},{"location":{"Locatie_MessageID":5377,"Coordinatenstelsel":"25831","X":496708.794769268,"Y":5963121.52220118,"Naam":"J6 platform","Code":"J6"},"isExisting":true},{"location":{"Locatie_MessageID":252972072,"Coordinatenstelsel":"25831","X":599565.199,"Y":5756379.985,"Naam":"Rotterdam Luchthaven","Code":"ROT1"},"isExisting":false},{"location":{"Locatie_MessageID":252972078,"Coordinatenstelsel":"25831","X":656637.964,"Y":5858505.671,"Naam":"Stavoren","Code":"STVO"},"isExisting":false},{"location":{"Locatie_MessageID":252972505,"Coordinatenstelsel":"25831","X":542240.629,"Y":5902122.805,"Naam":"K14 platform","Code":"K14"},"isExisting":false},{"location":{"Locatie_MessageID":252972220,"Coordinatenstelsel":"25831","X":753602.937,"Y":5931845.843,"Naam":"Stroommeetpaal Eemshaven","Code":"SPE"},"isExisting":true},{"location":{"Locatie_MessageID":8623,"Coordinatenstelsel":"25831","X":579718.089134798,"Y":5756557.4430131,"Naam":"Maeslantkering geleidetor","Code":"MLKZ"},"isExisting":true},{"location":{"Locatie_MessageID":252972075,"Coordinatenstelsel":"25831","X":590321.143,"Y":5749819.655,"Naam":"Rotterdam Geulhaven","Code":"ROT2"},"isExisting":false},{"location":{"Locatie_MessageID":252972622,"Coordinatenstelsel":"25831","X":572646.947,"Y":5743341.97,"Naam":"Haringvlietsluizen sch 1","Code":"HVS01"},"isExisting":true},{"location":{"Locatie_MessageID":252972723,"Coordinatenstelsel":"25831","X":569540.015,"Y":5716805.661,"Naam":"Stavenisse","Code":"STAV"},"isExisting":false},{"location":{"Locatie_MessageID":252972897,"Coordinatenstelsel":"25831","X":581657.276,"Y":5787576.85,"Naam":"Platform HKZA 2","Code":"HKZA2"},"isExisting":false},{"location":{"Locatie_MessageID":6822,"Coordinatenstelsel":"25831","X":695106.58080376,"Y":5930990.21887629,"Naam":"AWG platform","Code":"AWG"},"isExisting":true},{"location":{"Locatie_MessageID":252972056,"Coordinatenstelsel":"25831","X":655941.324,"Y":5918410.666,"Naam":"Hoorn Terschelling","Code":"HOTE"},"isExisting":false},{"location":{"Locatie_MessageID":252972312,"Coordinatenstelsel":"25831","X":683322.955,"Y":5923626.809,"Naam":"Nes","Code":"NES"},"isExisting":true},{"location":{"Locatie_MessageID":15429,"Coordinatenstelsel":"25831","X":542904.767180805,"Y":5735254.0584802,"Naam":"Brouwershavense Gat 2","Code":"BG2"},"isExisting":false},{"location":{"Locatie_MessageID":252972559,"Coordinatenstelsel":"25831","X":672243.143,"Y":5847372.746,"Naam":"Rotterdamse hoek","Code":"FL02"},"isExisting":true},{"location":{"Locatie_MessageID":252972470,"Coordinatenstelsel":"25831","X":525653.71,"Y":5693276.44,"Naam":"Cadzand wind","Code":"CAWI"},"isExisting":false}];
+        
+        // Define projections
+        proj4.defs("EPSG:25831", "+proj=utm +zone=31 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+        
+        // Initialize map
+        const map = L.map('map').setView([52.1326, 5.2913], 7);
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 19
+        }).addTo(map);
+        
+        function convertToLatLon(x, y) {
+            const converted = proj4("EPSG:25831", "EPSG:4326", [x, y]);
+            return [converted[1], converted[0]];
+        }
+        
+        function formatRDCoords(x, y) {
+            return `X: ${x}m, Y: ${y}m`;
+        }
+        
+        // Add markers
+        const markers = L.layerGroup().addTo(map);
+        
+        locationsWithWind.forEach(({ location, isExisting }) => {
+            const latLon = convertToLatLon(location.X, location.Y);
+            
+            const marker = L.circleMarker(latLon, {
+                radius: 6,
+                fillColor: isExisting ? "#ff9800" : "#4caf50",
+                color: isExisting ? "#f57c00" : "#2e7d32",
+                weight: 2,
+                opacity: 1,
+                fillOpacity: 0.7
+            });
+            
+            const statusColor = isExisting ? "#ff9800" : "#4caf50";
+            const statusText = isExisting ? "✓ Wind data available (Already in locations.json)" : "✓ Wind data available (New location)";
+            
+            const popupContent = `
+                <div>
+                    <h4 style="margin: 0 0 10px 0;">${location.Naam}</h4>
+                    <p style="margin: 5px 0;">
+                        <strong>Code:</strong> 
+                        <span class="coord-value">${location.Code}</span>
+                        <button class="copy-btn" onclick="copyToClipboard('${location.Code}', this)">Copy</button>
+                    </p>
+                    <p style="margin: 5px 0;"><strong>Location ID:</strong> ${location.Locatie_MessageID}</p>
+                    <p style="margin: 5px 0;"><strong>Coordinate System:</strong> EPSG:${location.Coordinatenstelsel}</p>
+                    <p style="margin: 5px 0;"><strong>RD Coordinates:</strong></p>
+                    <div class="coord-line" style="margin: 5px 0 5px 20px;">
+                        <span>X:</span>
+                        <span class="coord-value">${location.X}</span>
+                        <button class="copy-btn" onclick="copyToClipboard('${location.X}', this)">Copy</button>
+                    </div>
+                    <div class="coord-line" style="margin: 5px 0 5px 20px;">
+                        <span>Y:</span>
+                        <span class="coord-value">${location.Y}</span>
+                        <button class="copy-btn" onclick="copyToClipboard('${location.Y}', this)">Copy</button>
+                    </div>
+                    <p style="margin: 5px 0;"><strong>Lat/Lon:</strong></p>
+                    <div class="coord-line" style="margin: 5px 0 5px 20px;">
+                        <span>Lat:</span>
+                        <span class="coord-value">${latLon[0].toFixed(6)}</span>
+                        <button class="copy-btn" onclick="copyToClipboard('${latLon[0].toFixed(6)}', this)">Copy</button>
+                    </div>
+                    <div class="coord-line" style="margin: 5px 0 5px 20px;">
+                        <span>Lon:</span>
+                        <span class="coord-value">${latLon[1].toFixed(6)}</span>
+                        <button class="copy-btn" onclick="copyToClipboard('${latLon[1].toFixed(6)}', this)">Copy</button>
+                    </div>
+                    <p style="margin: 5px 0; color: ${statusColor};"><strong>${statusText}</strong></p>
+                </div>
+            `;
+            
+            marker.bindPopup(popupContent);
+            marker.addTo(markers);
+        });
+        
+        document.getElementById('location-count').textContent = locationsWithWind.length;
+        
+        L.control.scale({ imperial: false, metric: true }).addTo(map);
+        
+        // Copy to clipboard function
+        function copyToClipboard(text, button) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.style.background = '#4caf50';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '#2196F3';
+                }, 1500);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                button.textContent = 'Failed';
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                }, 1500);
+            });
+        }
+        
+        console.log('Loaded', locationsWithWind.length, 'locations with wind data');
+    </script>
+</body>
+</html>

@@ -92,6 +92,17 @@
 			"API_Coordinates": [54.0369, 6.0417]
 		}
 	},
+	"1381": {
+		"name": "Trintelzand",
+		"lat": 52.62412,
+		"lon": 5.37297,
+		"active": true,
+		"measurements": {
+			"source": "RWS",
+			"API_ID": "TZND",
+			"API_Coordinates": [660618.42, 5833102.117]
+		}
+	},
 	"1418": {
 		"name": "Oudenaarde De Donk",
 		"lat": 50.843253,
@@ -232,24 +243,24 @@
 	},
 	"2418": {
 		"name": "Uithuizerwad",
-		"lat": 53.46593800002661,
-		"lon": 6.757432000043045,
+		"lat": 53.466778,
+		"lon": 6.749939,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
 			"API_ID": "UHWD",
-			"API_Coordinates": [749387.579062717, 5930678.90555067]
+			"API_Coordinates": [748885.544, 5930746.091]
 		}
 	},
 	"2531": {
 		"name": "Rotterdamse hoek",
-		"lat": 52.74831000000136,
-		"lon": 5.559000000006875,
+		"lat": 52.748722,
+		"lon": 5.552,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
 			"API_ID": "FL02",
-			"API_Coordinates": [672717.142704692, 5847343.70995726]
+			"API_Coordinates": [672243.143, 5847372.746]
 		}
 	},
 	"2721": {
@@ -271,7 +282,7 @@
 		"measurements": {
 			"source": "RWS",
 			"API_ID": "HVS01",
-			"API_Coordinates": [572647.08352493, 5743342.08299768]
+			"API_Coordinates": [572646.947, 5743341.97]
 		}
 	},
 	"2832": {
@@ -306,13 +317,13 @@
 	},
 	"2924": {
 		"name": "Wierumergronden",
-		"lat": 53.51582800000393,
-		"lon": 5.958261000012834,
+		"lat": 53.515827,
+		"lon": 5.958261,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
 			"API_ID": "WIER",
-			"API_Coordinates": [696130.296598613, 5933727.14138876]
+			"API_Coordinates": [696130.301, 5933727.03]
 		}
 	},
 	"3019": {
@@ -344,7 +355,7 @@
 		"measurements": {
 			"source": "RWS",
 			"API_ID": "HOEK",
-			"API_Coordinates": [576917.675576278, 5759136.13463449]
+			"API_Coordinates": [576915.123, 5759061.006]
 		}
 	},
 	"3153": {
@@ -397,14 +408,14 @@
 		"measurements": {
 			"source": "RWS",
 			"API_ID": "TNWS",
-			"API_Coordinates": [556868.640270215, 5686592.99245246]
+			"API_Coordinates": [556796.275, 5687605.86]
 		}
 	},
 	"3318": {
 		"name": "Nelson platform",
 		"lat": 57.66168999999975,
 		"lon": 1.144999999999313,
-		"active": true,
+		"active": false,
 		"measurements": {
 			"source": "RWS",
 			"API_ID": "NLS1",
@@ -815,13 +826,13 @@
 	},
 	"4806": {
 		"name": "A12 platform Rijkswaterstaat sensor",
-		"lat": 55.4166629999998,
-		"lon": 3.816671000000001,
+		"lat": 55.383333,
+		"lon": 3.8,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
 			"API_ID": "A12",
-			"API_Coordinates": [551697.869815018, 6141462.20430188]
+			"API_Coordinates": [550685.199, 6137740.9]
 		}
 	},
 	"4941": {
@@ -1173,6 +1184,16 @@
 			"API_ID": "V0sYUGN2UObPDcHRmrhUntEv"
 		}
 	},
+	"6855": {
+		"name": "Zwin - Meteopark",
+		"lat": 51.3402778,
+		"lon": 3.3716667,
+		"active": true,
+		"measurements": {
+			"source": "MVB",
+			"API_ID": ["ZWNWC3", "ZWNWRS", "ZWNWVC"]
+		}
+	},
 	"6862": {
 		"name": "Grevelingensluis (Bruinisse)",
 		"lat": 51.66661100000014,
@@ -1202,7 +1223,7 @@
 		"measurements": {
 			"source": "RWS",
 			"API_ID": "FL42o",
-			"API_Coordinates": [651339.91252293, 5822566.22032937]
+			"API_Coordinates": [651344.542, 5822517.495]
 		}
 	},
 	"6914": {
@@ -1270,7 +1291,7 @@
 		"name": "Q1 platform",
 		"lat": 52.92533499999996,
 		"lon": 4.150361000000124,
-		"active": true,
+		"active": false,
 		"measurements": {
 			"source": "RWS",
 			"API_ID": "Q1",
@@ -1407,6 +1428,16 @@
 			"API_ID": "Ziocm4OqUjrp7W9988artyfN"
 		}
 	},
+	"8082": {
+		"name": "Zeebrugge Januskop - Windmeting",
+		"lat": 51.3602778,
+		"lon": 3.1875,
+		"active": true,
+		"measurements": {
+			"source": "MVB",
+			"API_ID": ["ZJKWC3", "ZJKWRS", "ZJKWVC"]
+		}
+	},
 	"8105": {
 		"name": "Houtribdijk",
 		"lat": 52.6480555555556,
@@ -1494,13 +1525,13 @@
 	},
 	"8408": {
 		"name": "Terschelling Noordzee",
-		"lat": 53.42794000000058,
-		"lon": 5.333190000003958,
+		"lat": 53.442486,
+		"lon": 5.333033,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
 			"API_ID": "TERS",
-			"API_Coordinates": [655016.251709493, 5922412.47580659]
+			"API_Coordinates": [654952.881, 5924029.987]
 		}
 	},
 	"8502": {
@@ -1757,13 +1788,13 @@
 	},
 	"9810": {
 		"name": "Stroommeetpaal Eemshaven",
-		"lat": 53.474390000030404,
-		"lon": 6.821730000046831,
+		"lat": 53.474392,
+		"lon": 6.821731,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
 			"API_ID": "SPE",
-			"API_Coordinates": [753602.88269246, 5931845.6170377]
+			"API_Coordinates": [753602.937, 5931845.843]
 		}
 	},
 	"9941": {
@@ -1814,7 +1845,7 @@
 		"name": "Oostende",
 		"lat": "51.2375",
 		"lon": "2.92416666666667",
-		"active": true,
+		"active": false,
 		"measurements": {
 			"source": "MVB",
 			"API_ID": ["OS7WRS"]
@@ -1877,13 +1908,13 @@
 	},
 	"0906": {
 		"name": "Nes (Ameland)",
-		"lat": 53.429970000002214,
-		"lon": 5.7589400000091455,
+		"lat": 53.429766,
+		"lon": 5.759448,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
 			"API_ID": "NES",
-			"API_Coordinates": [683288.335482817, 5923648.18977766]
+			"API_Coordinates": [683322.955, 5923626.809]
 		}
 	},
 	"0890": {

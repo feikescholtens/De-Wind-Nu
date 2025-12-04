@@ -9,7 +9,11 @@
 - server: Updated chart.js
 - server: Switched formatter, now using Biome, which is also a linter
 - server: Linted all code
-- feature: updated locations: added Hollandse Kust Noord, Hollandse Kust West Alpha, Horst
+- feature: Updated locations: 
+    - added Hollandse Kust Noord, Hollandse Kust West Alpha, Horst, Trintelzand, Zwin - Meteopark, Zeebrugge Januskop - Windmeting
+    - updated Terneuzen Westsluis, Haringvlietsluizen, Hoek van Holland, Markermeer midden, Uithuizerwad, Stroommeetpaal Eemshaven, Wierumergronden, Nes (Ameland), Terschelling Noordzee. Rotterdamse hoek, A12 platform Rijkswaterstaat sensor
+    - deactivated: Q1 platform, Nelson platform, Oostende
+- feature: Made tool for visualizing RWS locations from API
 
 ## 3.6.3
 
