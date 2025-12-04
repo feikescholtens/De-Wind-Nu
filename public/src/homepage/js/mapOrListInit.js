@@ -128,7 +128,7 @@ export async function initMap(dataAlreadyFetched, locationToUse) {
 		addCurrentLocationMarker(true, locationToUse.lat, locationToUse.lon);
 	}
 
-	//Show popup with instruction / suggestion to click on windsack to view more measurements on closest location
+	//Show popup with instruction / suggestion to click on windsock to view more measurements on closest location
 	if (localStorage.getItem("popupClickOnLocationSuggestionShowed") === "1") return; //This suggestion has already been shown once
 
 	const popupElement = document.createElement("div");

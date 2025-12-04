@@ -14,6 +14,7 @@
     - updated Terneuzen Westsluis, Haringvlietsluizen, Hoek van Holland, Markermeer midden, Uithuizerwad, Stroommeetpaal Eemshaven, Wierumergronden, Nes (Ameland), Terschelling Noordzee. Rotterdamse hoek, A12 platform Rijkswaterstaat sensor
     - deactivated: Q1 platform, Nelson platform, Oostende
 - feature: Made tool for visualizing RWS locations from API
+- bug: Fix broken windsock on overview page if wind direction is not available (A12 KNMI sensor for example)
 
 ## 3.6.3
 
@@ -92,7 +93,7 @@ Backend work:
 
 - Improved popup visibility by giving it a shadow
 
-- Showing a popup at the closest location to the user's location to hint the user to click a windsack and navigate towards the windPage 
+- Showing a popup at the closest location to the user's location to hint the user to click a windsock and navigate towards the windPage 
 
 Bugfixes:
 - Fixed URL hashes when displaying / closing popups

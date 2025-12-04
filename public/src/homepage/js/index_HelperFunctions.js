@@ -247,7 +247,7 @@ export function showLocationPreferenceOptions() {
 
 		popUpObject.on("close", () => {
 			//After popup for the location preference is clicked away, show the popup at the closest location
-			//to show user to click on windsack (only if user hasn't seen this yet). Main logic for this feature is at mapOrListInit.js at lines 87 - 116
+			//to show user to click on windsock (only if user hasn't seen this yet). Main logic for this feature is at mapOrListInit.js at lines 87 - 116
 			if (localStorage.getItem("popupClickOnLocationSuggestionShowed") === "0")
 				closestMarkerToCurrentLocationObject.togglePopup();
 		});

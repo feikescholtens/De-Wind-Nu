@@ -51,7 +51,7 @@ export function setOverviewMapData(data, map) {
 			map.on("load", () => {
 				for (const locationID in data[dataSource]) {
 					if (!checkOldMeasurement(data[dataSource][locationID])) {
-						addMarkerArrowToMap(data[dataSource][locationID], dataSource, locationID);
+						addWindSockArmAndBftToMap(data[dataSource][locationID], dataSource, locationID);
 						updatePopUp(data[dataSource][locationID], locationID);
 					}
 				}
@@ -59,7 +59,7 @@ export function setOverviewMapData(data, map) {
 		else {
 			for (const locationID in data[dataSource]) {
 				if (!checkOldMeasurement(data[dataSource][locationID])) {
-					addMarkerArrowToMap(data[dataSource][locationID], dataSource, locationID);
+					addWindSockArmAndBftToMap(data[dataSource][locationID], dataSource, locationID);
 					updatePopUp(data[dataSource][locationID], locationID);
 				}
 			}
@@ -92,21 +92,23 @@ function updatePopUp(dataLocation, locationID) {
 	popUps[locationID].Object.setDOMContent(popUpWithData);
 }
 
-function addMarkerArrowToMap(dataLocation, dataSource, locationID) {
-	const arrow = document.createElement("div");
-	arrow.classList.add("arrowArm");
-	arrow.classList.add(dataSource);
+function addWindSockArmAndBftToMap(dataLocation, dataSource, locationID) {
+	if (!dataLocation) return;
 
-	if (dataLocation) {
-		arrow.style.transform = `translateX(calc(-0.3 * var(--markerSize))) rotate(${dataLocation.windDirection}deg)`;
+	// biome-ignore lint/suspicious/noDoubleEquals: Needed to check for both null and undefined
+	if (dataLocation.windSpeed == undefined) return;
+	const windSpeedBft = convertValueToBft(dataLocation.windSpeed);
+	document.getElementById(locationID).innerText = windSpeedBft;
 
-		// biome-ignore lint/suspicious/noDoubleEquals: Needed to check for both null and undefined
-		if (dataLocation.windSpeed == undefined) return;
-		const windSpeedBft = convertValueToBft(dataLocation.windSpeed);
-		document.getElementById(locationID).innerText = windSpeedBft;
-	}
+	// biome-ignore lint/suspicious/noDoubleEquals: Needed to check for both null and undefined
+	if (dataLocation.windDirection == undefined) return;
 
-	document.getElementById(locationID).parentNode.prepend(arrow);
+	const windSockArm = document.createElement("div");
+	windSockArm.classList.add("windSockArm");
+	windSockArm.classList.add(dataSource);
+
+	windSockArm.style.transform = `translateX(calc(-0.3 * var(--markerSize))) rotate(${dataLocation.windDirection}deg)`;
+	document.getElementById(locationID).parentNode.prepend(windSockArm);
 }
 
 function checkOldMeasurement(dataLocation) {

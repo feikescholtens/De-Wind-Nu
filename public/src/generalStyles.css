@@ -240,7 +240,7 @@ div.marker {
 	text-shadow: 1px 1px var(--shadowColour);
 }
 
-div.arrowArm {
+div.windSockArm {
 	position: absolute;
 	width: calc(0.2 * var(--markerSize));
 	border-top-width: calc(1.5 * var(--markerSize));
