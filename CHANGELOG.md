@@ -15,6 +15,7 @@
     - deactivated: Q1 platform, Nelson platform, Oostende
 - feature: Made tool for visualizing RWS locations from API
 - bug: Fix broken windsock on overview page if wind direction is not available (A12 KNMI sensor for example)
+- server: Upgraded to node 24 (v24.11.1 used locally), running fine on test production server
 
 ## 3.6.3
 
