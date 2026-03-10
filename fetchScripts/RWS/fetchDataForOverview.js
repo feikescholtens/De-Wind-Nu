@@ -14,14 +14,14 @@ export async function fetchDataForOverview_RWS(locations, resolve) {
 		giveRWSOverviewFetchOptions(locations),
 	)
 		.then((response) => response.text())
-		.catch((error) => catchFetchError(resolve, {}, error, "RWS")); // This handles all errors that can occur during the fetch, like timeouts or no internet connection
+		.catch((error) => catchFetchError(resolve, {}, error, "RWS", true)); // This handles all errors that can occur during the fetch, like timeouts or no internet connection
 	try {
 		rawData = JSON.parse(rawDataString);
 	} catch {
-		JSON_ParseError(rawDataString, resolve, "RWS");
+		JSON_ParseError(rawDataString, resolve, "RWS", true);
 		return;
 	} // If the data can't be parsed to JSON, log, resolve and return
-	if (RWS_API_error(rawData, resolve)) return; // RWS API returns false for "Succesvol" when there is no data, which is convenient
+	if (RWS_API_error(rawData, resolve, true)) return; // RWS API returns false for "Succesvol" when there is no data, which is convenient
 
 	const IDMatches = getMatchedIDs(locations, "RWS"); // Array with objects that contain the application ID and the RWS ID
 

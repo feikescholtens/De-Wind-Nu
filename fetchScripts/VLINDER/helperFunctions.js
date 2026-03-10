@@ -1,12 +1,16 @@
 import { parse } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
 import { log } from "../../serverFunctions.js";
-import { resolveEmptyArrays } from "../errorHandlingFunctions.js";
+import { resolveEmptyArrays, resolveEmptyObject } from "../errorHandlingFunctions.js";
 
-export function VLINDER_API_error(rawData, resolve) {
+export function VLINDER_API_error(rawData, resolve, isOverview = false) {
 	if (rawData.error) {
 		log(`VLINDER API error: "${rawData.error}"`, "error", true);
-		resolveEmptyArrays(resolve, "VLINDER");
+		if (isOverview) {
+			resolveEmptyObject(resolve);
+		} else {
+			resolveEmptyArrays(resolve, "VLINDER");
+		}
 		return true;
 	}
 

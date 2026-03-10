@@ -1,7 +1,7 @@
 import { log } from "../../serverFunctions.js";
-import { resolveEmptyArrays } from "../errorHandlingFunctions.js";
+import { resolveEmptyArrays, resolveEmptyObject } from "../errorHandlingFunctions.js";
 
-export function KNMI_API_error(rawData, resolve) {
+export function KNMI_API_error(rawData, resolve, isOverview = false) {
 	//Both used for overviewdata as data, overviewdata gives "detail" field in returned JSON, data gives "error" field in returned JSON
 
 	if (rawData.error || rawData.detail) {
@@ -10,7 +10,11 @@ export function KNMI_API_error(rawData, resolve) {
 			"error",
 			true,
 		);
-		resolveEmptyArrays(resolve, "KNMI");
+		if (isOverview) {
+			resolveEmptyObject(resolve);
+		} else {
+			resolveEmptyArrays(resolve, "KNMI");
+		}
 		return true;
 	}
 

@@ -1,6 +1,6 @@
 import { getUnixTime, parse } from "date-fns";
 import { log } from "../../serverFunctions.js";
-import { resolveEmptyArrays } from "../errorHandlingFunctions.js";
+import { resolveEmptyArrays, resolveEmptyObject } from "../errorHandlingFunctions.js";
 
 export async function aquireAPI_key(resolve) {
 	// The MVB API requires an API key to be requested, which is only valid for 1 hour (I believe so, might be wrong)
@@ -52,11 +52,15 @@ function MVB_datesToEpoch(dateString) {
 	return epochTime;
 }
 
-export function MVB_API_error(rawData, resolve) {
+export function MVB_API_error(rawData, resolve, isOverview = false) {
 	if (rawData.Message) {
 		log(`Meetnet Vlaamse Banken API "Message"-error: ${rawData.Message}`, "error", true);
 
-		resolveEmptyArrays(resolve, "MVB");
+		if (isOverview) {
+			resolveEmptyObject(resolve);
+		} else {
+			resolveEmptyArrays(resolve, "MVB");
+		}
 
 		return true;
 	}

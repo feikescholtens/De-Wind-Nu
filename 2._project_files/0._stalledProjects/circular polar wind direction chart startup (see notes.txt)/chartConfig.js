@@ -83,7 +83,7 @@ export const chartConfig = {
           stepSize: 1440 / 24 * 4,
 
           showLabelBackdrop: false,
-          callback: function(value, index, values) {
+          callback: (value, index, values) => {
             if (Number.isInteger(value)) {
               return makeTimeStampFromMinutes(value);
             }
@@ -142,21 +142,19 @@ export const chartConfig = {
       },
       tooltip: {
         callbacks: {
-          label: function(data) {
-            return (
+          label: (data) => (
               `Vandaag om ${makeTimeStampFromMinutes(data.raw.radius)}: ${data.raw.angle}°`
-            );
-          },
+            ),
         },
 
       },
     }
   },
   plugins: [{
-    beforeUpdate: function(chart, options) {
-      for (let dataset of chart.config.data.datasets) {
+    beforeUpdate: (chart, options) => {
+      for (const dataset of chart.config.data.datasets) {
 
-        for (let point of dataset.data) {
+        for (const point of dataset.data) {
 
           function toRadians(degrees) {
             return (((360 - degrees) / 360) * (Math.PI * 2))
@@ -172,11 +170,11 @@ export const chartConfig = {
       }
 
     },
-    beforeDraw: function({ ctx, height, width }) {
+    beforeDraw: ({ ctx, height, width }) => {
       ctx.fillStyle = '#efefef'; // your color here
       ctx.fillRect(0, 0, width, height);
     },
-    afterUpdate: function({ ctx, _metasets }) {
+    afterUpdate: ({ ctx, _metasets }) => {
       // const data = _metasets[0].data
 
       // for (let i = 0; i < data.length; i++) {

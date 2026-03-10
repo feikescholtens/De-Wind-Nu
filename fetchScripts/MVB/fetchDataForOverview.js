@@ -1,5 +1,6 @@
 import { parseISO } from "date-fns";
 import fetch from "node-fetch";
+import { catchFetchError, JSON_ParseError } from "../errorHandlingFunctions.js";
 import { getMatchedIDs } from "../fetchUtilFunctions.js";
 import { MVB_API_error } from "./helperFunctions.js";
 import { giveMVBOverviewFetchOptions } from "./helperFunctionsForOverview.js";
@@ -13,14 +14,14 @@ export async function fetchDataForOverview_MVB(locations, resolve) {
 		await giveMVBOverviewFetchOptions(locations, resolve),
 	)
 		.then((response) => response.text())
-		.catch((error) => catchFetchError(resolve, {}, error, "MVB")); // This handles all errors that can occur during the fetch, like timeouts or no internet connection
+		.catch((error) => catchFetchError(resolve, {}, error, "MVB", true)); // This handles all errors that can occur during the fetch, like timeouts or no internet connection
 	try {
 		rawData = JSON.parse(rawDataString);
 	} catch {
-		JSON_ParseError(rawDataString, resolve, "MVB");
+		JSON_ParseError(rawDataString, resolve, "MVB", true);
 		return;
 	} // If the data can't be parsed to JSON, log, resolve and return
-	if (MVB_API_error(rawData, resolve)) return;
+	if (MVB_API_error(rawData, resolve, true)) return;
 
 	const IDMatches = getMatchedIDs(locations, "MVB"); // Array with objects that contain the application ID and the RWS ID
 

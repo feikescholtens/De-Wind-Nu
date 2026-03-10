@@ -1,8 +1,11 @@
 import { log } from "../serverFunctions.js";
 
-export function catchFetchError(resolve, data, error, dataset) {
-	data = { error: error, dataset: dataset };
-	resolve({ data });
+export function catchFetchError(resolve, error, dataset, isOverview = false) {
+	if (isOverview) {
+		resolveEmptyObject(resolve);
+	} else {
+		resolveEmptyArrays(resolve, dataset);
+	}
 
 	const errorCode = error.code;
 
@@ -25,8 +28,12 @@ export function catchFetchError(resolve, data, error, dataset) {
 	}
 }
 
-export function JSON_ParseError(rawDataString, resolve, measurementSource) {
-	resolveEmptyArrays(resolve, measurementSource);
+export function JSON_ParseError(rawDataString, resolve, measurementSource, isOverview = false) {
+	if (isOverview) {
+		resolveEmptyObject(resolve);
+	} else {
+		resolveEmptyArrays(resolve, measurementSource);
+	}
 	log(`Error parsing JSON, rawDataString is equal to: ${rawDataString}`, "error", true);
 }
 
@@ -34,4 +41,8 @@ export function resolveEmptyArrays(resolve, measurementSource) {
 	const data = {};
 	data[measurementSource] = [[], [], []];
 	resolve({ data });
+}
+
+export function resolveEmptyObject(resolve) {
+	resolve({});
 }

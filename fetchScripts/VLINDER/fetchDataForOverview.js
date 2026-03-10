@@ -10,14 +10,14 @@ export async function fetchDataForOverview_VLINDER(locations, resolve) {
 
 	const rawDataString = await fetch("https://mooncake.ugent.be/api/measurements")
 		.then((response) => response.text())
-		.catch((error) => catchFetchError(resolve, {}, error, "VLINDER")); // This handles all errors that can occur during the fetch, like timeouts or no internet connection
+		.catch((error) => catchFetchError(resolve, {}, error, "VLINDER", true)); // This handles all errors that can occur during the fetch, like timeouts or no internet connection
 	try {
 		rawData = JSON.parse(rawDataString);
 	} catch {
-		JSON_ParseError(rawDataString, resolve, "VLINDER");
+		JSON_ParseError(rawDataString, resolve, "VLINDER", true);
 		return;
 	} // If the data can't be parsed to JSON, log, resolve and return
-	if (VLINDER_API_error(rawData, resolve)) return; // Check if the data returned contains an error
+	if (VLINDER_API_error(rawData, resolve, true)) return; // Check if the data returned contains an error
 
 	const IDMatches = getMatchedIDs(locations, "VLINDER"); // Array with objects that contain the application ID and the RWS ID
 

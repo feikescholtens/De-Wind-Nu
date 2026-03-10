@@ -15,14 +15,14 @@ export async function fetchDataForOverview_KNMI(locations, resolve) {
 		{ headers: { Authorization: process.env.KDP_EDR_KEY } },
 	)
 		.then((response) => response.text())
-		.catch((error) => catchFetchError(resolve, {}, error, "KNMI")); // This handles all errors that can occur during the fetch, like timeouts or no internet connection
+		.catch((error) => catchFetchError(resolve, {}, error, "KNMI", true)); // This handles all errors that can occur during the fetch, like timeouts or no internet connection
 	try {
 		rawData = JSON.parse(rawDataString);
 	} catch {
-		JSON_ParseError(rawDataString, resolve, "KNMI");
+		JSON_ParseError(rawDataString, resolve, "KNMI", true);
 		return;
 	} // If the data can't be parsed to JSON, log, resolve and return
-	if (KNMI_API_error(rawData, resolve)) return; // KNMI API returns an error in the JSON when there is no data or there is another error (beside fetch errors like timeouts)
+	if (KNMI_API_error(rawData, resolve, true)) return; // KNMI API returns an error in the JSON when there is no data or there is another error (beside fetch errors like timeouts)
 
 	const IDMatches = getMatchedIDs(locations, "KNMI"); // Array with objects that contain the application ID and the KNMI ID
 

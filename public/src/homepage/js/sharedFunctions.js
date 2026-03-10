@@ -86,6 +86,8 @@ export function setOverviewListData(data) {
 //Helper functions
 
 function updatePopUp(dataLocation, locationID) {
+	if (!popUps[locationID]) return;
+
 	const container = popUps[locationID].Node;
 	const popUpWithData = setMeasurementData(container, dataLocation, true);
 
@@ -112,9 +114,15 @@ function addWindSockArmAndBftToMap(dataLocation, dataSource, locationID) {
 }
 
 function checkOldMeasurement(dataLocation) {
+	// Checks if the measurement is older than 24 hours, if so it is not shown on the map or list. This is done by checking the timeStamp of the measurement and comparing it to the current time.
 	if (dataLocation === "FORECAST_ONLY") return;
 
+	// Skip if dataLocation is not a valid measurement object
+	if (!dataLocation || typeof dataLocation !== "object") return true;
+
 	const timeStampString = dataLocation.timeStamp;
+	if (!timeStampString) return;
+
 	const timeStamp = parseISO(timeStampString);
 	if (isValid(timeStamp)) {
 		const relativeMinutes = differenceInMinutes(new Date(), timeStamp);

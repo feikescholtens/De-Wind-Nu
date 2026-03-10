@@ -82,7 +82,7 @@ class WindDirectionChart extends Chart.controllers.scatter {
 }
 
 function pythagorean(sideA, sideB) {
-  return Math.sqrt(Math.pow(sideA, 2) + Math.pow(sideB, 2));
+  return Math.sqrt(sideA ** 2 + sideB ** 2);
 }
 
 function toRadians(angleDeg) {
@@ -145,7 +145,7 @@ function updateData() {
       tickFontFamily
     );
 
-    helpers.each(me.ticks, function(label, index) {
+    helpers.each(me.ticks, (label, index) => {
       // Don't draw a centre value (if it is minimum)
       if (index > 0 || tickOpts.reverse) {
         var yCenterOffset = me.getDistanceFromCenterForValue(
@@ -201,7 +201,7 @@ function updateData() {
 
   radialScale.setReductions = function() {
     // debugger;
-    let largestPossibleRadius = Math.min(this.height / 2, this.width / 2);
+    const largestPossibleRadius = Math.min(this.height / 2, this.width / 2);
     this.drawingArea = Math.round(largestPossibleRadius);
     this.setCenterPoint(0, 0, 0, 0);
   };
