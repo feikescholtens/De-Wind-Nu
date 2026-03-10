@@ -1,5 +1,9 @@
 # Change log
 
+## 3.7.1
+
+- bug: RWS API no data causing overview measurements to get broken, fixes #23
+
 ## 3.7.0
 
 - server: Upgraded all packages, fixed breaking changes of express, date-fns-tz
