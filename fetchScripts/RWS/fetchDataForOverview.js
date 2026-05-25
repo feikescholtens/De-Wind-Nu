@@ -10,7 +10,7 @@ export async function fetchDataForOverview_RWS(locations, resolve) {
 		rawData; // rawData is the raw data fetched from the API
 
 	const rawDataString = await fetch(
-		"https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenLaatsteWaarnemingen",
+		"https://ddapi20-waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES/OphalenLaatsteWaarnemingen",
 		giveRWSOverviewFetchOptions(locations),
 	)
 		.then((response) => response.text())

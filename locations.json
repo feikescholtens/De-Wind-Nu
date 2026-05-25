@@ -7,7 +7,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06270",
-			"API_Coordinates": [53.2231, 5.7517]
+			"API_Coordinates": [
+				53.2231,
+				5.7517
+			]
 		}
 	},
 	"1103": {
@@ -28,7 +31,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06207",
-			"API_Coordinates": [53.6144, 4.9603]
+			"API_Coordinates": [
+				53.6144,
+				4.9603
+			]
 		}
 	},
 	"1141": {
@@ -39,7 +45,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06235",
-			"API_Coordinates": [52.9269, 4.7811]
+			"API_Coordinates": [
+				52.9269,
+				4.7811
+			]
 		}
 	},
 	"1157": {
@@ -60,7 +69,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06260",
-			"API_Coordinates": [52.0989, 5.1797]
+			"API_Coordinates": [
+				52.0989,
+				5.1797
+			]
 		}
 	},
 	"1234": {
@@ -78,7 +90,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06323",
-			"API_Coordinates": [51.5258, 3.8836]
+			"API_Coordinates": [
+				51.5258,
+				3.8836
+			]
 		}
 	},
 	"1359": {
@@ -89,7 +104,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06214",
-			"API_Coordinates": [54.0369, 6.0417]
+			"API_Coordinates": [
+				54.0369,
+				6.0417
+			]
 		}
 	},
 	"1381": {
@@ -99,8 +117,7 @@
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "TZND",
-			"API_Coordinates": [660618.42, 5833102.117]
+			"API_ID": "markermeer.trintelzand"
 		}
 	},
 	"1418": {
@@ -141,7 +158,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06279",
-			"API_Coordinates": [52.7489, 6.5731]
+			"API_Coordinates": [
+				52.7489,
+				6.5731
+			]
 		}
 	},
 	"1641": {
@@ -152,18 +172,20 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06285",
-			"API_Coordinates": [53.5739, 6.3983]
+			"API_Coordinates": [
+				53.5739,
+				6.3983
+			]
 		}
 	},
 	"1660": {
 		"name": "Maeslantkering geleidetor",
-		"lat": 51.95399900000011,
-		"lon": 4.1600460000001345,
+		"lat": 51.953999,
+		"lon": 4.160046,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "MLKZ",
-			"API_Coordinates": [579718.089134798, 5756557.4430131]
+			"API_ID": "hoekvanholland.maeslantkering"
 		}
 	},
 	"1805": {
@@ -178,13 +200,12 @@
 	},
 	"1843": {
 		"name": "Gannet platform",
-		"lat": 57.185029999999784,
-		"lon": 0.9999999999989315,
+		"lat": 57.18503,
+		"lon": 1.0,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "GAN1",
-			"API_Coordinates": [379117.977891604, 6339756.30889541]
+			"API_ID": "gannet"
 		}
 	},
 	"1892": {
@@ -195,7 +216,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06283",
-			"API_Coordinates": [52.0678, 6.6567]
+			"API_Coordinates": [
+				52.0678,
+				6.6567
+			]
 		}
 	},
 	"2136": {
@@ -206,18 +230,20 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06331",
-			"API_Coordinates": [51.4786, 4.1925]
+			"API_Coordinates": [
+				51.4786,
+				4.1925
+			]
 		}
 	},
 	"2214": {
-		"lat": 61.338187999999526,
-		"lon": 1.1660989999996778,
+		"lat": 61.23283,
+		"lon": 1.13554,
 		"name": "North Cormorant platform",
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "NC1",
-			"API_Coordinates": [401877.242645123, 6801835.30329146]
+			"API_ID": "north.cormorant"
 		}
 	},
 	"2218": {
@@ -238,7 +264,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06320",
-			"API_Coordinates": [51.9258, 3.67]
+			"API_Coordinates": [
+				51.9258,
+				3.67
+			]
 		}
 	},
 	"2418": {
@@ -248,8 +277,7 @@
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "UHWD",
-			"API_Coordinates": [748885.544, 5930746.091]
+			"API_ID": "uithuizerwad"
 		}
 	},
 	"2531": {
@@ -259,8 +287,7 @@
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "FL02",
-			"API_Coordinates": [672243.143, 5847372.746]
+			"API_ID": "rotterdamsehoek.ijsselmeer"
 		}
 	},
 	"2721": {
@@ -271,18 +298,20 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06375",
-			"API_Coordinates": [51.6586, 5.7067]
+			"API_Coordinates": [
+				51.6586,
+				5.7067
+			]
 		}
 	},
 	"2829": {
 		"name": "Haringvlietsluizen",
-		"lat": 51.83616700000008,
-		"lon": 4.054385000000098,
+		"lat": 51.836166,
+		"lon": 4.054383,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "HVS01",
-			"API_Coordinates": [572646.947, 5743341.97]
+			"API_ID": "stellendam.haringvlietsluizen.schuif1"
 		}
 	},
 	"2832": {
@@ -322,8 +351,7 @@
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "WIER",
-			"API_Coordinates": [696130.301, 5933727.03]
+			"API_ID": "wierumergronden"
 		}
 	},
 	"3019": {
@@ -333,7 +361,11 @@
 		"active": true,
 		"measurements": {
 			"source": "MVB",
-			"API_ID": ["MP7WC3", "MP7WRS", "MP7WVC"]
+			"API_ID": [
+				"MP7WC3",
+				"MP7WRS",
+				"MP7WVC"
+			]
 		}
 	},
 	"3107": {
@@ -344,18 +376,20 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06286",
-			"API_Coordinates": [53.1944, 7.1492]
+			"API_Coordinates": [
+				53.1944,
+				7.1492
+			]
 		}
 	},
 	"3139": {
 		"name": "Hoek van Holland",
-		"lat": 51.977574000000054,
-		"lon": 4.119881000000123,
+		"lat": 51.976899,
+		"lon": 4.119827,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "HOEK",
-			"API_Coordinates": [576915.123, 5759061.006]
+			"API_ID": "hoekvanholland"
 		}
 	},
 	"3153": {
@@ -366,7 +400,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06321",
-			"API_Coordinates": [51.9978, 3.275]
+			"API_Coordinates": [
+				51.9978,
+				3.275
+			]
 		}
 	},
 	"3172": {
@@ -377,7 +414,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-528-0-06238",
-			"API_Coordinates": [52.1514, 4.765]
+			"API_Coordinates": [
+				52.1514,
+				4.765
+			]
 		}
 	},
 	"3216": {
@@ -387,7 +427,11 @@
 		"active": true,
 		"measurements": {
 			"source": "MVB",
-			"API_ID": ["OMPWC3", "OMPWRS", "OMPWVC"]
+			"API_ID": [
+				"OMPWC3",
+				"OMPWRS",
+				"OMPWVC"
+			]
 		}
 	},
 	"3235": {
@@ -397,29 +441,31 @@
 		"active": true,
 		"measurements": {
 			"source": "MVB",
-			"API_ID": ["ZDIWRS", "ZDIWVC", "OS7WRS"]
+			"API_ID": [
+				"ZDIWRS",
+				"ZDIWVC",
+				"OS7WRS"
+			]
 		}
 	},
 	"3290": {
 		"name": "Terneuzen Westsluis",
-		"lat": 51.32778400000012,
-		"lon": 3.8162160000000243,
+		"lat": 51.336898,
+		"lon": 3.815339,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "TNWS",
-			"API_Coordinates": [556796.275, 5687605.86]
+			"API_ID": "terneuzen.westsluis"
 		}
 	},
 	"3318": {
 		"name": "Nelson platform",
-		"lat": 57.66168999999975,
-		"lon": 1.144999999999313,
+		"lat": 57.66169,
+		"lon": 1.145,
 		"active": false,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "NLS1",
-			"API_Coordinates": [389328.47782212, 6392559.95957432]
+			"API_ID": "nelson"
 		}
 	},
 	"3323": {
@@ -440,7 +486,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06269",
-			"API_Coordinates": [52.4483, 5.5081]
+			"API_Coordinates": [
+				52.4483,
+				5.5081
+			]
 		}
 	},
 	"3359": {
@@ -461,7 +510,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06205",
-			"API_Coordinates": [55.3992, 3.8103]
+			"API_Coordinates": [
+				55.3992,
+				3.8103
+			]
 		}
 	},
 	"3406": {
@@ -472,7 +524,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06267",
-			"API_Coordinates": [52.8967, 5.3833]
+			"API_Coordinates": [
+				52.8967,
+				5.3833
+			]
 		}
 	},
 	"3459": {
@@ -493,7 +548,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06252",
-			"API_Coordinates": [53.2178, 3.2203]
+			"API_Coordinates": [
+				53.2178,
+				3.2203
+			]
 		}
 	},
 	"3563": {
@@ -508,13 +566,12 @@
 	},
 	"3617": {
 		"name": "L9 platform Rijkswaterstaat sensor",
-		"lat": 53.616669000000115,
-		"lon": 4.966667000001658,
+		"lat": 53.616667,
+		"lon": 4.966667,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "L9",
-			"API_Coordinates": [630087.998728811, 5942671.15254043]
+			"API_ID": "l9"
 		}
 	},
 	"3637": {
@@ -545,7 +602,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06225",
-			"API_Coordinates": [52.4622, 4.555]
+			"API_Coordinates": [
+				52.4622,
+				4.555
+			]
 		}
 	},
 	"3696": {
@@ -556,7 +616,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06229",
-			"API_Coordinates": [52.995, 4.72]
+			"API_Coordinates": [
+				52.995,
+				4.72
+			]
 		}
 	},
 	"3714": {
@@ -567,18 +630,20 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06310",
-			"API_Coordinates": [51.4414, 3.5958]
+			"API_Coordinates": [
+				51.4414,
+				3.5958
+			]
 		}
 	},
 	"3723": {
 		"name": "HKZA platform Rijkswaterstaat sensor 1",
-		"lat": 52.319527,
-		"lon": 4.0431285,
+		"lat": 52.232547,
+		"lon": 4.19569,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "HKZA1",
-			"API_Coordinates": [571099.371, 5797090.138]
+			"API_ID": "hollandsekust.zuid.alpha.1"
 		}
 	},
 	"3835": {
@@ -589,7 +654,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-528-0-06236",
-			"API_Coordinates": [52.3353, 5.0922]
+			"API_Coordinates": [
+				52.3353,
+				5.0922
+			]
 		}
 	},
 	"3880": {
@@ -610,7 +678,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06343",
-			"API_Coordinates": [51.8919, 4.3125]
+			"API_Coordinates": [
+				51.8919,
+				4.3125
+			]
 		}
 	},
 	"3902": {
@@ -641,7 +712,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06350",
-			"API_Coordinates": [51.565, 4.9353]
+			"API_Coordinates": [
+				51.565,
+				4.9353
+			]
 		}
 	},
 	"3985": {
@@ -662,7 +736,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06308",
-			"API_Coordinates": [51.38, 3.3792]
+			"API_Coordinates": [
+				51.38,
+				3.3792
+			]
 		}
 	},
 	"4235": {
@@ -683,7 +760,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-528-0-06317",
-			"API_Coordinates": [51.7, 3.0567]
+			"API_Coordinates": [
+				51.7,
+				3.0567
+			]
 		}
 	},
 	"4352": {
@@ -694,7 +774,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06277",
-			"API_Coordinates": [53.4117, 6.1992]
+			"API_Coordinates": [
+				53.4117,
+				6.1992
+			]
 		}
 	},
 	"4363": {
@@ -715,7 +798,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-78871",
-			"API_Coordinates": [17.6461, -63.2208]
+			"API_Coordinates": [
+				17.6461,
+				-63.2208
+			]
 		}
 	},
 	"4393": {
@@ -726,7 +812,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06251",
-			"API_Coordinates": [53.3911, 5.3458]
+			"API_Coordinates": [
+				53.3911,
+				5.3458
+			]
 		}
 	},
 	"4415": {
@@ -747,7 +836,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06313",
-			"API_Coordinates": [51.5036, 3.2419]
+			"API_Coordinates": [
+				51.5036,
+				3.2419
+			]
 		}
 	},
 	"4512": {
@@ -768,7 +860,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-528-0-06233",
-			"API_Coordinates": [52.4819, 4.7258]
+			"API_Coordinates": [
+				52.4819,
+				4.7258
+			]
 		}
 	},
 	"4585": {
@@ -783,13 +878,12 @@
 	},
 	"4662": {
 		"name": "Zeelandbrug",
-		"lat": 51.6286000000001,
-		"lon": 3.9177850000000363,
+		"lat": 51.6286,
+		"lon": 3.917785,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "ZBWI",
-			"API_Coordinates": [563525.897877064, 5720130.26737017]
+			"API_ID": "zierikzee.zeelandbrug"
 		}
 	},
 	"4710": {
@@ -800,7 +894,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06208",
-			"API_Coordinates": [53.4917, 5.9417]
+			"API_Coordinates": [
+				53.4917,
+				5.9417
+			]
 		}
 	},
 	"4711": {
@@ -811,7 +908,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06370",
-			"API_Coordinates": [51.4497, 5.3769]
+			"API_Coordinates": [
+				51.4497,
+				5.3769
+			]
 		}
 	},
 	"4734": {
@@ -831,8 +931,7 @@
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "A12",
-			"API_Coordinates": [550685.199, 6137740.9]
+			"API_ID": "a12"
 		}
 	},
 	"4941": {
@@ -853,7 +952,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-528-0-06213",
-			"API_Coordinates": [52.6978, 4.2933]
+			"API_Coordinates": [
+				52.6978,
+				4.2933
+			]
 		}
 	},
 	"4997": {
@@ -864,7 +966,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06391",
-			"API_Coordinates": [51.4972, 6.1961]
+			"API_Coordinates": [
+				51.4972,
+				6.1961
+			]
 		}
 	},
 	"5003": {
@@ -895,18 +1000,20 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06312",
-			"API_Coordinates": [51.7667, 3.6217]
+			"API_Coordinates": [
+				51.7667,
+				3.6217
+			]
 		}
 	},
 	"5260": {
 		"name": "Rotterdam Geulhaven",
-		"lat": 51.88862600000009,
-		"lon": 4.313755000000273,
+		"lat": 51.891814,
+		"lon": 4.312531,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "ROT2",
-			"API_Coordinates": [590411.766154589, 5749466.62406122]
+			"API_ID": "botlek.geulhaven"
 		}
 	},
 	"5331": {
@@ -917,29 +1024,30 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06280",
-			"API_Coordinates": [53.1236, 6.5847]
+			"API_Coordinates": [
+				53.1236,
+				6.5847
+			]
 		}
 	},
 	"5367": {
 		"name": "Zandkreeksluis (Kats)",
-		"lat": 51.543971000000084,
-		"lon": 3.8652760000000286,
+		"lat": 51.543947,
+		"lon": 3.865418,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "KATS",
-			"API_Coordinates": [560002.850035323, 5710674.15809413]
+			"API_ID": "kats.zandkreeksluis"
 		}
 	},
 	"5392": {
 		"name": "AWG platform Rijkswaterstaat sensor",
-		"lat": 53.4916400000037,
-		"lon": 5.941140000012515,
+		"lat": 53.49164,
+		"lon": 5.94114,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "AWG",
-			"API_Coordinates": [695106.58080376, 5930990.21887629]
+			"API_ID": "amelandwestgat"
 		}
 	},
 	"5407": {
@@ -950,7 +1058,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06380",
-			"API_Coordinates": [50.9053, 5.7619]
+			"API_Coordinates": [
+				50.9053,
+				5.7619
+			]
 		}
 	},
 	"5444": {
@@ -971,7 +1082,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06315",
-			"API_Coordinates": [51.4458, 3.9975]
+			"API_Coordinates": [
+				51.4458,
+				3.9975
+			]
 		}
 	},
 	"5631": {
@@ -992,7 +1106,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06330",
-			"API_Coordinates": [51.9911, 4.1217]
+			"API_Coordinates": [
+				51.9911,
+				4.1217
+			]
 		}
 	},
 	"5687": {
@@ -1033,18 +1150,20 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06248",
-			"API_Coordinates": [52.6325, 5.1736]
+			"API_Coordinates": [
+				52.6325,
+				5.1736
+			]
 		}
 	},
 	"5852": {
 		"name": "Borssele Alpha platform Rijkswaterstaat sensor",
-		"lat": 51.6999210000001,
-		"lon": 3.056706999999991,
+		"lat": 51.699921,
+		"lon": 3.056707,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "BSA",
-			"API_Coordinates": [503918.942357358, 5727664.94973239]
+			"API_ID": "borsselealpha"
 		}
 	},
 	"5862": {
@@ -1075,7 +1194,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-528-0-06392",
-			"API_Coordinates": [51.4869, 6.0561]
+			"API_Coordinates": [
+				51.4869,
+				6.0561
+			]
 		}
 	},
 	"6019": {
@@ -1086,7 +1208,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-78990",
-			"API_Coordinates": [12.13, -68.2758]
+			"API_Coordinates": [
+				12.13,
+				-68.2758
+			]
 		}
 	},
 	"6327": {
@@ -1097,18 +1222,20 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06324",
-			"API_Coordinates": [51.5956, 4.0061]
+			"API_Coordinates": [
+				51.5956,
+				4.0061
+			]
 		}
 	},
 	"6353": {
 		"name": "Bergsediepsluis (Oesterdam)",
-		"lat": 51.51019700000009,
-		"lon": 4.173901000000157,
+		"lat": 51.510197,
+		"lon": 4.173901,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "BDWI",
-			"API_Coordinates": [581464.221684069, 5707216.45883811]
+			"API_ID": "tholen.bergsediepsluis"
 		}
 	},
 	"6524": {
@@ -1129,7 +1256,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-78873",
-			"API_Coordinates": [17.4956, -62.9828]
+			"API_Coordinates": [
+				17.4956,
+				-62.9828
+			]
 		}
 	},
 	"6707": {
@@ -1150,7 +1280,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-528-0-06218",
-			"API_Coordinates": [52.6797, 3.8044]
+			"API_Coordinates": [
+				52.6797,
+				3.8044
+			]
 		}
 	},
 	"6816": {
@@ -1165,13 +1298,12 @@
 	},
 	"6823": {
 		"name": "Brent Charlie platform",
-		"lat": 61.09610999999952,
-		"lon": 1.721389999999954,
+		"lat": 61.096111,
+		"lon": 1.721389,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "BTC1",
-			"API_Coordinates": [431057.398943666, 6774166.0702699]
+			"API_ID": "brentcharlie"
 		}
 	},
 	"6835": {
@@ -1191,18 +1323,21 @@
 		"active": true,
 		"measurements": {
 			"source": "MVB",
-			"API_ID": ["ZWNWC3", "ZWNWRS", "ZWNWVC"]
+			"API_ID": [
+				"ZWNWC3",
+				"ZWNWRS",
+				"ZWNWVC"
+			]
 		}
 	},
 	"6862": {
 		"name": "Grevelingensluis (Bruinisse)",
-		"lat": 51.66661100000014,
-		"lon": 4.095666000000117,
+		"lat": 51.666611,
+		"lon": 4.095666,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "GRWI",
-			"API_Coordinates": [575774.487899888, 5724527.14821832]
+			"API_ID": "bruinisse.grevelingensluis"
 		}
 	},
 	"6866": {
@@ -1217,13 +1352,12 @@
 	},
 	"6901": {
 		"name": "Markermeer midden",
-		"lat": 52.53213900000051,
-		"lon": 5.2311940000035335,
+		"lat": 52.5317,
+		"lon": 5.23124,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "FL42o",
-			"API_Coordinates": [651344.542, 5822517.495]
+			"API_ID": "markermeer.midden"
 		}
 	},
 	"6914": {
@@ -1238,13 +1372,12 @@
 	},
 	"6943": {
 		"name": "K14 platform Rijkswaterstaat sensor",
-		"lat": 53.266670000000005,
-		"lon": 3.633330000000016,
+		"lat": 53.266667,
+		"lon": 3.633333,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "K14",
-			"API_Coordinates": [542240.42600117, 5902123.13674842]
+			"API_ID": "k14"
 		}
 	},
 	"6993": {
@@ -1289,13 +1422,12 @@
 	},
 	"7117": {
 		"name": "Q1 platform",
-		"lat": 52.92533499999996,
-		"lon": 4.150361000000124,
+		"lat": 52.925335,
+		"lon": 4.150361,
 		"active": false,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "Q1",
-			"API_Coordinates": [577327.765231775, 5864586.03138184]
+			"API_ID": "q1.1"
 		}
 	},
 	"7135": {
@@ -1305,7 +1437,11 @@
 		"active": true,
 		"measurements": {
 			"source": "MVB",
-			"API_ID": ["NP7WC3", "NP7WRS", "NP7WVC"]
+			"API_ID": [
+				"NP7WC3",
+				"NP7WRS",
+				"NP7WVC"
+			]
 		}
 	},
 	"7304": {
@@ -1316,7 +1452,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06239",
-			"API_Coordinates": [54.8539, 4.6961]
+			"API_Coordinates": [
+				54.8539,
+				4.6961
+			]
 		}
 	},
 	"7356": {
@@ -1341,13 +1480,12 @@
 	},
 	"7550": {
 		"name": "P11 platform Rijkswaterstaat sensor",
-		"lat": 52.35867000000004,
-		"lon": 3.3415000000000004,
+		"lat": 52.358611,
+		"lon": 3.341389,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "P11",
-			"API_Coordinates": [523256.298159867, 5800986.61235339]
+			"API_ID": "p11"
 		}
 	},
 	"7579": {
@@ -1367,7 +1505,11 @@
 		"active": true,
 		"measurements": {
 			"source": "MVB",
-			"API_ID": ["MP0WC3", "MP0WRS", "MP0WVC"]
+			"API_ID": [
+				"MP0WC3",
+				"MP0WRS",
+				"MP0WVC"
+			]
 		}
 	},
 	"7654": {
@@ -1385,7 +1527,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06249",
-			"API_Coordinates": [52.6428, 4.9789]
+			"API_Coordinates": [
+				52.6428,
+				4.9789
+			]
 		}
 	},
 	"7722": {
@@ -1415,7 +1560,11 @@
 		"active": true,
 		"measurements": {
 			"source": "MVB",
-			"API_ID": ["MP4WC3", "MP4WRS", "MP4WVC"]
+			"API_ID": [
+				"MP4WC3",
+				"MP4WRS",
+				"MP4WVC"
+			]
 		}
 	},
 	"8080": {
@@ -1435,7 +1584,11 @@
 		"active": true,
 		"measurements": {
 			"source": "MVB",
-			"API_ID": ["ZJKWC3", "ZJKWRS", "ZJKWVC"]
+			"API_ID": [
+				"ZJKWC3",
+				"ZJKWRS",
+				"ZJKWVC"
+			]
 		}
 	},
 	"8105": {
@@ -1446,7 +1599,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06258",
-			"API_Coordinates": [52.6481, 5.4006]
+			"API_Coordinates": [
+				52.6481,
+				5.4006
+			]
 		}
 	},
 	"8139": {
@@ -1467,7 +1623,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06344",
-			"API_Coordinates": [51.9606, 4.4469]
+			"API_Coordinates": [
+				51.9606,
+				4.4469
+			]
 		}
 	},
 	"8233": {
@@ -1478,7 +1637,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-528-0-06216",
-			"API_Coordinates": [52.3194, 4.0422]
+			"API_Coordinates": [
+				52.3194,
+				4.0422
+			]
 		}
 	},
 	"8245": {
@@ -1489,7 +1651,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06340",
-			"API_Coordinates": [51.4478, 4.3419]
+			"API_Coordinates": [
+				51.4478,
+				4.3419
+			]
 		}
 	},
 	"8254": {
@@ -1499,7 +1664,11 @@
 		"active": true,
 		"measurements": {
 			"source": "MVB",
-			"API_ID": ["ZMPWRS", "ZMPWVC", "OS7WRS"]
+			"API_ID": [
+				"ZMPWRS",
+				"ZMPWVC",
+				"OS7WRS"
+			]
 		}
 	},
 	"8325": {
@@ -1520,7 +1689,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06203",
-			"API_Coordinates": [52.36, 3.3417]
+			"API_Coordinates": [
+				52.36,
+				3.3417
+			]
 		}
 	},
 	"8408": {
@@ -1530,8 +1702,7 @@
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "TERS",
-			"API_Coordinates": [654952.881, 5924029.987]
+			"API_ID": "terschelling.noordzee"
 		}
 	},
 	"8502": {
@@ -1542,7 +1713,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06204",
-			"API_Coordinates": [53.2694, 3.6278]
+			"API_Coordinates": [
+				53.2694,
+				3.6278
+			]
 		}
 	},
 	"8527": {
@@ -1553,7 +1727,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06275",
-			"API_Coordinates": [52.0547, 5.8722]
+			"API_Coordinates": [
+				52.0547,
+				5.8722
+			]
 		}
 	},
 	"8540": {
@@ -1578,13 +1755,12 @@
 	},
 	"8609": {
 		"name": "D15 platform Rijkswaterstaat sensor",
-		"lat": 54.316662999999934,
-		"lon": 2.9333329999999966,
+		"lat": 54.325667,
+		"lon": 2.93575,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "D15",
-			"API_Coordinates": [495663.241516565, 6018756.72170369]
+			"API_ID": "d15"
 		}
 	},
 	"8650": {
@@ -1605,7 +1781,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06316",
-			"API_Coordinates": [51.6558, 3.6939]
+			"API_Coordinates": [
+				51.6558,
+				3.6939
+			]
 		}
 	},
 	"8753": {
@@ -1636,18 +1815,20 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06211",
-			"API_Coordinates": [53.8242, 2.9453]
+			"API_Coordinates": [
+				53.8242,
+				2.9453
+			]
 		}
 	},
 	"9057": {
 		"name": "F3-OLT platform",
-		"lat": 54.849994999999936,
-		"lon": 4.716658000000711,
+		"lat": 54.853199,
+		"lon": 4.726133,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "F3",
-			"API_Coordinates": [610215.841475144, 6079449.4135779]
+			"API_ID": "f3"
 		}
 	},
 	"9399": {
@@ -1688,7 +1869,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06201",
-			"API_Coordinates": [54.3256, 2.9358]
+			"API_Coordinates": [
+				54.3256,
+				2.9358
+			]
 		}
 	},
 	"9460": {
@@ -1699,7 +1883,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06242",
-			"API_Coordinates": [53.24, 4.9208]
+			"API_Coordinates": [
+				53.24,
+				4.9208
+			]
 		}
 	},
 	"9462": {
@@ -1710,7 +1897,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06319",
-			"API_Coordinates": [51.2247, 3.8611]
+			"API_Coordinates": [
+				51.2247,
+				3.8611
+			]
 		}
 	},
 	"9470": {
@@ -1731,7 +1921,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06377",
-			"API_Coordinates": [51.1967, 5.7625]
+			"API_Coordinates": [
+				51.1967,
+				5.7625
+			]
 		}
 	},
 	"9690": {
@@ -1741,18 +1934,21 @@
 		"active": true,
 		"measurements": {
 			"source": "MVB",
-			"API_ID": ["BL7WC3", "BL7WRS", "BL7WVC"]
+			"API_ID": [
+				"BL7WC3",
+				"BL7WRS",
+				"BL7WVC"
+			]
 		}
 	},
 	"9745": {
 		"name": "HKZA platform Rijkswaterstaat sensor 2",
-		"lat": 52.319527,
-		"lon": 4.0431287,
+		"lat": 52.232547,
+		"lon": 4.19569,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "HKZA2",
-			"API_Coordinates": [571099.371, 5797090.138]
+			"API_ID": "hollandsekust.zuid.alpha.2"
 		}
 	},
 	"9747": {
@@ -1783,7 +1979,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06278",
-			"API_Coordinates": [52.4344, 6.2589]
+			"API_Coordinates": [
+				52.4344,
+				6.2589
+			]
 		}
 	},
 	"9810": {
@@ -1793,8 +1992,7 @@
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "SPE",
-			"API_Coordinates": [753602.937, 5931845.843]
+			"API_ID": "eemshaven.waddenzee"
 		}
 	},
 	"9941": {
@@ -1805,7 +2003,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-528-0-06237",
-			"API_Coordinates": [52.255, 4.6478]
+			"API_Coordinates": [
+				52.255,
+				4.6478
+			]
 		}
 	},
 	"9990": {
@@ -1816,7 +2017,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06356",
-			"API_Coordinates": [51.8578, 5.1453]
+			"API_Coordinates": [
+				51.8578,
+				5.1453
+			]
 		}
 	},
 	"0290": {
@@ -1827,7 +2031,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06290",
-			"API_Coordinates": [52.2731, 6.8908]
+			"API_Coordinates": [
+				52.2731,
+				6.8908
+			]
 		}
 	},
 	"0304": {
@@ -1838,7 +2045,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06273",
-			"API_Coordinates": [52.7019, 5.8875]
+			"API_Coordinates": [
+				52.7019,
+				5.8875
+			]
 		}
 	},
 	"0205": {
@@ -1848,7 +2058,9 @@
 		"active": false,
 		"measurements": {
 			"source": "MVB",
-			"API_ID": ["OS7WRS"]
+			"API_ID": [
+				"OS7WRS"
+			]
 		}
 	},
 	"0227": {
@@ -1859,7 +2071,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06240",
-			"API_Coordinates": [52.3172, 4.7897]
+			"API_Coordinates": [
+				52.3172,
+				4.7897
+			]
 		}
 	},
 	"0323": {
@@ -1870,40 +2085,40 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06348",
-			"API_Coordinates": [51.9692, 4.9258]
+			"API_Coordinates": [
+				51.9692,
+				4.9258
+			]
 		}
 	},
 	"0727": {
 		"name": "J6 platform Rijkswaterstaat sensor",
-		"lat": 53.81663199999994,
-		"lon": 2.9500099999999967,
+		"lat": 53.816632,
+		"lon": 2.95001,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "J6",
-			"API_Coordinates": [496708.794769268, 5963121.52220118]
+			"API_ID": "j6"
 		}
 	},
 	"0577": {
 		"name": "Lage Licht (Hoek van Holland)",
-		"lat": 51.98139300000006,
-		"lon": 4.081434000000092,
+		"lat": 51.981393,
+		"lon": 4.081434,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "LGL1",
-			"API_Coordinates": [574270.750149378, 5759520.90939086]
+			"API_ID": "hoekvanholland.lagelicht"
 		}
 	},
 	"0868": {
 		"name": "Lichteiland Goeree Rijkswaterstaat sensor",
-		"lat": 51.925745000000084,
-		"lon": 3.6698740000000147,
+		"lat": 51.925034,
+		"lon": 3.668416,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "LEG",
-			"API_Coordinates": [546063.014918327, 5752991.39166245]
+			"API_ID": "goeree.lichteiland"
 		}
 	},
 	"0906": {
@@ -1913,8 +2128,7 @@
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "NES",
-			"API_Coordinates": [683322.955, 5923626.809]
+			"API_ID": "ameland.nes"
 		}
 	},
 	"0890": {
@@ -1925,18 +2139,20 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06209",
-			"API_Coordinates": [52.4636, 4.5175]
+			"API_Coordinates": [
+				52.4636,
+				4.5175
+			]
 		}
 	},
 	"0904": {
 		"name": "IJmuiden havenhoofd zuid",
-		"lat": 52.463693000000085,
-		"lon": 4.5322830000005405,
+		"lat": 52.463693,
+		"lon": 4.532283,
 		"active": true,
 		"measurements": {
 			"source": "RWS",
-			"API_ID": "IJZ1",
-			"API_Coordinates": [604098.550551581, 5813717.41176161]
+			"API_ID": "ijmuiden.havenhoofd.zuid"
 		}
 	},
 	"0757": {
@@ -1947,7 +2163,10 @@
 		"measurements": {
 			"source": "KNMI",
 			"API_ID": "0-20000-0-06215",
-			"API_Coordinates": [52.1397, 4.4364]
+			"API_Coordinates": [
+				52.1397,
+				4.4364
+			]
 		}
 	},
 	"0753": {

@@ -43,8 +43,6 @@ function getLocationList(locations) {
 		if (locations[id].measurements.source !== "RWS") continue;
 
 		locationsArray.push({
-			X: locations[id].measurements.API_Coordinates[0],
-			Y: locations[id].measurements.API_Coordinates[1],
 			Code: locations[id].measurements.API_ID,
 		});
 	}
