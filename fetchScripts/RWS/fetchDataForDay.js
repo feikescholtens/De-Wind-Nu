@@ -13,7 +13,7 @@ export async function fetchDataForDay_RWS(dateParsed, databaseData, resolve, tim
 		rawData; // rawData is the raw data fetched from the API
 
 	const rawDataString = await fetch(
-		"https://waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES_DBO/OphalenWaarnemingen",
+		"https://ddapi20-waterwebservices.rijkswaterstaat.nl/ONLINEWAARNEMINGENSERVICES/OphalenWaarnemingen",
 		giveRWSFetchOptions(dateParsed, databaseData, DSTDates),
 	)
 		.then((response) => response.text())

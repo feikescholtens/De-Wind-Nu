@@ -1,5 +1,11 @@
 # Change log
 
+## 3.7.2
+
+- bug: updated RWS API, locations should be working
+- feature: updated locations. updated Zandkreeksluis (Kats). checked other potential new RWS locations
+- server: updated RWS location inventarisation script
+
 ## 3.7.1
 
 - bug: RWS API no data causing overview measurements to get broken, fixes #23

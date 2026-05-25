@@ -6,6 +6,8 @@ Interactive map showing all RWS (Rijkswaterstaat) measurement locations that hav
 
 Visualize RWS locations with active wind measurements (WINDSHD) and identify which locations are already in the project's `locations.json` file versus new locations that could be added (these could already be in the project as KNMI locations though).
 
+This tool now also includes KNMI locations from `locations.json` and plots them alongside RWS locations for easy comparison.
+
 ## How It Works
 
 1. Loads all RWS locations from OphalenCatalogus API
@@ -13,8 +15,9 @@ Visualize RWS locations with active wind measurements (WINDSHD) and identify whi
 3. Compares locations with existing entries in `locations.json`
 4. Generates a static HTML file with all data embedded
 5. Color-coded markers:
-   - **Green markers**: New locations with wind data (not in locations.json)
-   - **Orange markers**: Existing locations (already in locations.json)
+   - **Green markers**: New RWS locations with wind data (not in locations.json)
+   - **Dark green markers**: Existing RWS locations (already in locations.json)
+   - **Blue markers**: KNMI locations (loaded from locations.json)
 
 ## Usage
 

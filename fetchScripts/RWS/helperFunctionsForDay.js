@@ -4,8 +4,6 @@ import { formatInTimeZone } from "date-fns-tz";
 export function giveRWSFetchOptions(dateParsed, databaseData, DSTDates) {
 	const [startTime, endTime, dateStartFetch, dateEndFetch] = getRWSFetchDates(dateParsed, DSTDates);
 	const locationID = databaseData.measurements.API_ID;
-	const locationX = databaseData.measurements.API_Coordinates[0];
-	const locationY = databaseData.measurements.API_Coordinates[1];
 
 	return {
 		headers: {
@@ -18,7 +16,7 @@ export function giveRWSFetchOptions(dateParsed, databaseData, DSTDates) {
 					Compartiment: { Code: "LT" },
 				},
 			},
-			Locatie: { X: locationX, Y: locationY, Code: `${locationID}` },
+			Locatie: { Code: `${locationID}` },
 			Periode: {
 				Begindatumtijd: `${dateStartFetch}T${startTime}.000+01:00`,
 				Einddatumtijd: `${dateEndFetch}T${endTime}.000+01:00`,
