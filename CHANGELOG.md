@@ -5,6 +5,7 @@
 - feature: added Maasvlakte (forecast only), on Toon's request
 - server: updated NPM packages
 - server: restored RWS gusts, adapted to new RWS API, overview measurements and windpage should be the same once RWS fixes API problems
+- feature: next forcast run time in local time
 
 ## 3.7.2
 

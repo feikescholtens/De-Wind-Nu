@@ -101,10 +101,10 @@ export async function getData(request, response, date, locations) {
 			forecastObj = forecastData[locationID];
 
 			const forecastRun = parseISO(`${forecastData.timeRun}Z`); //The  + "Z" can be removed one parse-save-grib-harmonie-v2 is operational
-			const forecastRunString = formatInTimeZone(forecastRun, "UTC", "HH:mm z");
+			const forecastRunString = formatInTimeZone(forecastRun, timeZone, "HH:mm (z)");
 
 			const timeNextRun = add(forecastRun, { hours: 1 + 2, minutes: 54 }); // Duration determined with script in googleCloudUtilities directory, based of ~864/19=45 publication times
-			const timeNextRunString = formatInTimeZone(timeNextRun, "UTC", "HH:mm z");
+			const timeNextRunString = formatInTimeZone(timeNextRun, timeZone, "HH:mm (z)");
 
 			forecastInfoString = `HARMONIE model (versie Cy43) van het KNMI, run van ${forecastRunString}, volgende update ~${timeNextRunString} (± 8 minuten)`;
 		}
