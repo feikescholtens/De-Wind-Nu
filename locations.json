@@ -1112,6 +1112,13 @@
 			"API_Coordinates": [17.4956, -62.9828]
 		}
 	},
+	"6703": {
+		"name": "Maasvlakte (alleen verwachting)",
+		"lat": 51.9707611,
+		"lon": 3.9689525,
+		"active": true,
+		"measurements": {}
+	},
 	"6707": {
 		"name": "Bonheiden Mechels Broek",
 		"lat": 51.0271,

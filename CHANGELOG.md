@@ -1,5 +1,11 @@
 # Change log
 
+## 3.7.3
+
+- feature: added Maasvlakte (forecast only), on Toon's request
+- server: updated NPM packages
+- server: restored RWS gusts, adapted to new RWS API, overview measurements and windpage should be the same once RWS fixes API problems
+
 ## 3.7.2
 
 - bug: updated RWS API, locations should be working

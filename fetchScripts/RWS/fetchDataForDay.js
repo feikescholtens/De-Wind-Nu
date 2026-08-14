@@ -71,13 +71,32 @@ export async function fetchDataForDay_RWS(dateParsed, databaseData, resolve, tim
 		const theoreticalMeasurementCount = theoreticalMeasurements(measurementTimes, times); // The amount of measurements that should be there, based on the length of the measurementTimes array
 		for (let j = 0; j < times.length - theoreticalMeasurementCount; j++) tempArray.pop(); // Strip the tempArray of all the -999 values at the end
 
+		const parameterName = parameter.AquoMetadata.Grootheid.Code; // Like "WINDSHD" or "WINDRTG"
+		const parameterCode = parameter.AquoMetadata.WaardeBepalingsMethode.Code;
+
 		// Set the wind_speed, wind_gusts and wind_direction arrays based on the parameter that's being looped through
-		if (parameter.AquoMetadata.Grootheid.Code === "WINDSHD")
+		// WINDSPEED
+		if (parameterCode === "other:F136") {
+			// '10 min. scal. gem. windsnelh. gecorr. naar KNMI hoogte (RMI)' in API
 			windSpeed = structuredClone(tempArray).map((x) => x * 1.94384449); // Convert m/s to knots
-		if (parameter.AquoMetadata.Grootheid.Code === "WINDSTOOT")
+		} else if (parameterCode === "other:F018" && windSpeed.length === 0) {
+			// '10 minuut scalair gemiddelde van de windsnelheid' in API
+			windSpeed = structuredClone(tempArray).map((x) => x * 1.94384449); // Convert m/s to knots
+		}
+		// WIND GUSTS
+		if (parameterCode === "other:F137") {
+			// '3 sec max windstoot afgelopen 10 min gecorr. naar 10 m +msl' in API
 			windGusts = structuredClone(tempArray).map((x) => x * 1.94384449); // Convert m/s to knots
-		if (parameter.AquoMetadata.Grootheid.Code === "WINDRTG")
+		}
+		if (parameterCode === "other:F219" && windGusts.length === 0) {
+			// 'Maximale 3 seconden windstoot in de afgelopen 10 minuten' in API
+			windGusts = structuredClone(tempArray).map((x) => x * 1.94384449); // Convert m/s to knots
+		}
+		// WIND DIRECTION
+		if (parameterName === "WINDRTG") {
+			// '10 minuut gemiddelde van de windrichting' in API
 			windDirection = structuredClone(tempArray);
+		}
 	});
 
 	data.RWS = processAllNegativeArrays(windSpeed, windGusts, windDirection);

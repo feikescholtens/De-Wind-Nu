@@ -11,13 +11,6 @@ export function giveRWSOverviewFetchOptions(locations) {
 			{
 				AquoMetadata: {
 					Grootheid: {
-						Code: "WINDSTOOT",
-					},
-				},
-			},
-			{
-				AquoMetadata: {
-					Grootheid: {
 						Code: "WINDRTG",
 					},
 				},

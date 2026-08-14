@@ -32,18 +32,48 @@ export async function fetchDataForOverview_RWS(locations, resolve) {
 		// biome-ignore lint/suspicious/noDoubleEquals: Needed to check for undefined and null
 		if (data[applicationID] == undefined) data[applicationID] = {}; // Create object for the application ID if it doesn't exist
 
-		const parameterName = locationData.AquoMetadata.Grootheid.Code; // Like "WINDSHD" or "WINDSTOOT"
+		const parameterName = locationData.AquoMetadata.Grootheid.Code; // Like "WINDSHD" or "WINDRTG"
+		const parameterCode = locationData.AquoMetadata.WaardeBepalingsMethode.Code; // Like "other:F136"
 		const measurementValue = locationData.MetingenLijst[0].Meetwaarde.Waarde_Numeriek; // Numeric value of the measurement
 
-		if (parameterName === "WINDSHD") data[applicationID].windSpeed = measurementValue * 1.94384449; // Convert m/s to knots
-		if (parameterName === "WINDSTOOT")
-			data[applicationID].windGusts = measurementValue * 1.94384449; // Convert m/s to knots
-		if (parameterName === "WINDRTG") data[applicationID].windDirection = measurementValue;
+		const measurementDate = parseISO(locationData.MetingenLijst[0].Tijdstip);
 
-		if (parameterName === "WINDSHD")
+		const isOlderThan24Hours = Date.now() - measurementDate.getTime() > 24 * 60 * 60 * 1000;
+
+		// WINDSPEED AND MEASUREMENT TIME
+		if (parameterCode === "other:F136" && !isOlderThan24Hours) {
+			// Use F136 (10 min. scal. gem. windsnelh. gecorr. naar KNMI hoogte (RMI)) if available
+			data[applicationID].windSpeed = measurementValue * 1.94384449; // Convert m/s to knots
 			data[applicationID].timeStamp = parseISO(
 				locationData.MetingenLijst[0].Tijdstip,
 			).toISOString(); // Convert timestamp of windspeed measurement to ISO string
+		}
+		if (
+			// Else use F018 (10 minuut scalair gemiddelde van de windsnelheid)
+			data[applicationID].windSpeed === undefined &&
+			parameterCode === "other:F018" &&
+			!isOlderThan24Hours
+		) {
+			data[applicationID].windSpeed = measurementValue * 1.94384449; // Convert m/s to knots
+			data[applicationID].timeStamp = parseISO(
+				locationData.MetingenLijst[0].Tijdstip,
+			).toISOString(); // Convert timestamp of windspeed measurement to ISO string
+		}
+		// WIND GUSTS
+		if (parameterCode === "other:F137" && !isOlderThan24Hours) {
+			// Use F137 (3 sec max windstoot afgelopen 10 min gecorr. naar 10 m +msl) if available
+			data[applicationID].windGusts = measurementValue * 1.94384449; // Convert m/s to knots
+		}
+		if (
+			data[applicationID].windGusts === undefined &&
+			parameterCode === "other:F219" &&
+			!isOlderThan24Hours
+		) {
+			// Else use F219 (Maximale 3 seconden windstoot in de afgelopen 10 minuten)
+			data[applicationID].windGusts = measurementValue * 1.94384449; // Convert m/s to knots
+		}
+		// WIND DIRECTION
+		if (parameterName === "WINDRTG") data[applicationID].windDirection = measurementValue;
 	});
 
 	resolve(data);
