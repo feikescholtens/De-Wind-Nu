@@ -77,6 +77,9 @@ export async function initMap(dataAlreadyFetched, locationToUse) {
 		fetch("getOverviewData/MVB")
 			.then((response) => response.json())
 			.then((dataOverview) => setOverviewMapData({ MVB: dataOverview }, map));
+		fetch("getOverviewData/KMI")
+			.then((response) => response.json())
+			.then((dataOverview) => setOverviewMapData({ KMI: dataOverview }, map));
 	} else setOverviewMapData(globalThis.data, map);
 
 	const dataDistanceSorted = Object.keys(data).sort((a, b) => data[a].distance - data[b].distance);
@@ -202,5 +205,8 @@ export function initList(dataAlreadyFetched, locationToUse) {
 		fetch("getOverviewData/MVB")
 			.then((response) => response.json())
 			.then((dataOverview) => setOverviewListData({ MVB: dataOverview }));
+		fetch("getOverviewData/KMI")
+			.then((response) => response.json())
+			.then((dataOverview) => setOverviewListData({ KMI: dataOverview }));
 	} else setOverviewListData(globalThis.data);
 }

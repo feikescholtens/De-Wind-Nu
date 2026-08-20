@@ -13,12 +13,13 @@ export const popUpData = {
       <div><button class="colouredButton popupRWS">Groene</button></div><div>locaties zijn van Rijkswaterstaat</div>
       <div><button class="colouredButton popupKNMI">Blauwe</button></div><div>locaties zijn van het KNMI</div>
       <div><button class="colouredButton popupMVB">Rode</button></div><div>locaties zijn van het Meetnet Vlaamse Banken</div>
+      <div><button class="colouredButton popupKMI">Paarse</button></div><div>locaties zijn van het KMI (het Koninklijk Meteorologisch Instituut van België) 
       <div><button class="colouredButton popupVLINDER">Gele</button></div><div>locaties zijn van het VLINDER project van de UGent 
       (deze voldoen niet aan de officiële eisen voor meetstations 
         en kunnen daarom lagere waardes aangeven)</div>
     </div><br>
     <p class='messageBoxP'>
-    Bijna elke locatie bevat ook de laatste windverwachtingen van het KNMI.
+    Bijna elke locatie bevat ook de laatste windverwachtingen van het KNMI (Harmonie model).
     Na het klikken op een van de locaties wordt de data van vandaag getoond voor deze locatie. Onderaan zijn opties te vinden,
     om bijvoorbeeld de eenheid te veranderen of om een tabel weer te geven in plaats van de grafieken.
     <br><br>
@@ -42,6 +43,7 @@ export const popUpData = {
       <div><button class="colouredButton popupRWS">Groene</button></div><div>locaties zijn van Rijkswaterstaat</div>
       <div><button class="colouredButton popupKNMI">Blauwe</button></div><div>locaties zijn van het KNMI</div>
       <div><button class="colouredButton popupMVB">Rode</button></div><div>locaties zijn van het Meetnet Vlaamse Banken</div>
+      <div><button class="colouredButton popupKMI">Paarse</button></div><div>locaties zijn van het KMI (het Koninklijk Meteorologisch Instituut van België)</div>
       <div><button class="colouredButton popupVLINDER">Gele</button></div><div>locaties zijn van het VLINDER project van de UGent (deze voldoen niet aan 
       de officiële eisen voor meetstations 
         en kunnen daarom lagere waardes aangeven)</div>
@@ -66,7 +68,7 @@ export const popUpData = {
       
       <h4 class="popUpHeading">Informatie over metingen en verwachtingen</h4>
       <p class='messageBoxP'>
-      Metingen worden gemaakt, in het geval van het KNMI, 
+      Metingen worden gemaakt, in het geval van het KNMI en KMI, 
       door meetstations in kleine veldjes op open plekken, welke een uitgebreid arsenaal aan meetinstrumenten bevatten. Zo kan het KNMI bijvoorbeeld zicht, 
       wolkenhoogte en luchtdruk meten, naast de meer bekende parameters als temperatuur en wind. Rijkswaterstaat en het Meetnet Vlaamse Banken hebben minder 
       geavanceerde stations,
@@ -121,6 +123,7 @@ export const popUpData = {
      <li>KNMI;</li>
      <li>Meetnet Vlaamse Banken, van de Vlaamse Hydrografie 
      (zie <a href="https://www.agentschapmdk.be/nl/vlaamse-hydrografie" target="_blank">Vlaamse Hydrografie | Agentschap MDK</a>);</li>
+     <li><a target='_blank' href='https://www.meteo.be/nl/belgie'>KMI</a></li>
      <li><a target='_blank' href='https://vlinder.ugent.be/'>VLINDER.nl</a> project van de UGent.</li>
      </ul>
      

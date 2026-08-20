@@ -175,10 +175,16 @@ div.MVB {
 	z-index: 4;
 }
 
+div.KMI {
+	background-color: rgb(152, 28, 201);
+	border-top-color: rgb(152, 28, 201);
+	z-index: 5;
+}
+
 div.Other {
 	background-color: rgb(140, 140, 140);
 	border-top-color: rgb(140, 140, 140);
-	z-index: 5;
+	z-index: 6;
 }
 
 div.markerContaineVLINDER {
@@ -195,6 +201,10 @@ div.markerContainerKNMI {
 
 div.markerContainerKNMI {
 	z-index: 4;
+}
+
+div.markerContainerKMI {
+	z-index: 5;
 }
 
 /* Current location marker styling */

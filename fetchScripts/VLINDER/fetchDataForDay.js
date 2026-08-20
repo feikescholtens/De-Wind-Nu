@@ -1,8 +1,11 @@
 import fetch from "node-fetch";
 import { catchFetchError, JSON_ParseError } from "../errorHandlingFunctions.js";
-import { processAllNegativeArrays, theoreticalMeasurements } from "../fetchUtilFunctions.js";
+import {
+	getFetchDates,
+	processAllNegativeArrays,
+	theoreticalMeasurements,
+} from "../fetchUtilFunctions.js";
 import { VLINDER_API_error, VLINDER_dateStringToLocalHHmm } from "./helperFunctions.js";
-import { getFetchDates } from "./helperFunctionsForDay.js";
 
 export async function fetchDataForDay_VLINDER(dateParsed, databaseData, resolve, times, DSTDates) {
 	let data = {}, // data is the object that will be returned

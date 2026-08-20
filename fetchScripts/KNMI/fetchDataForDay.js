@@ -1,12 +1,12 @@
 import fetch from "node-fetch";
 import { catchFetchError, JSON_ParseError } from "../errorHandlingFunctions.js";
 import {
+	getFetchDates,
 	ISO_StringToLocalHHmm,
 	processAllNegativeArrays,
 	theoreticalMeasurements,
 } from "../fetchUtilFunctions.js";
 import { KNMI_API_error } from "./helperFunctions.js";
-import { getFetchDates } from "./helperFunctionsForDay.js";
 
 export async function fetchDataForDay_KNMI(dateParsed, databaseData, resolve, times, DSTDates) {
 	let data = {}, // data is the object that will be returned

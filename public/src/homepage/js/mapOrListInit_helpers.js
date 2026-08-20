@@ -27,7 +27,7 @@ export function createPopupIDAndMarkerElement(location, locationID) {
 	marker.innerHTML = `<div class="marker" title="${location.name}"></div>`;
 
 	const dataset = location.measurements.source;
-	if (["VLINDER", "RWS", "KNMI", "MVB"].includes(dataset)) {
+	if (["VLINDER", "RWS", "KNMI", "MVB", "KMI"].includes(dataset)) {
 		marker.classList.add(`markerContainer${dataset}`);
 		Array.from(marker.getElementsByTagName("div")).forEach((element) => {
 			element.classList.add(dataset);

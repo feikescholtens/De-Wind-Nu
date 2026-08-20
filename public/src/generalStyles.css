@@ -313,6 +313,10 @@ button.popupKNMI {
 	background-color: rgb(101, 124, 201);
 }
 
+button.popupKMI {
+	background-color: rgb(152, 28, 201);
+}
+
 button.popupRWS {
 	background-color: rgb(46, 179, 99);
 }

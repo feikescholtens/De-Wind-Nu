@@ -195,6 +195,16 @@
 			"API_Coordinates": [52.0678, 6.6567]
 		}
 	},
+	"1947": {
+		"name": "Diepenbeek",
+		"lat": 50.916,
+		"lon": 5.45,
+		"active": true,
+		"measurements": {
+			"source": "KMI",
+			"API_ID": "6477"
+		}
+	},
 	"2136": {
 		"name": "Marollegat",
 		"lat": 51.4786,
@@ -298,6 +308,16 @@
 			"API_ID": "g6fFNlSTajdUGUrsJDWEDgz4"
 		}
 	},
+	"2846": {
+		"name": "Zeebrugge",
+		"lat": 51.348,
+		"lon": 3.202,
+		"active": true,
+		"measurements": {
+			"source": "KMI",
+			"API_ID": "6418"
+		}
+	},
 	"2847": {
 		"name": "Menen Centrum",
 		"lat": 50.796269,
@@ -326,6 +346,16 @@
 		"measurements": {
 			"source": "MVB",
 			"API_ID": ["MP7WC3", "MP7WRS", "MP7WVC"]
+		}
+	},
+	"3084": {
+		"name": "Melle",
+		"lat": 50.98,
+		"lon": 3.816,
+		"active": true,
+		"measurements": {
+			"source": "KMI",
+			"API_ID": "6434"
 		}
 	},
 	"3107": {
@@ -379,6 +409,16 @@
 		"measurements": {
 			"source": "MVB",
 			"API_ID": ["OMPWC3", "OMPWRS", "OMPWVC"]
+		}
+	},
+	"3219": {
+		"name": "Humain",
+		"lat": 50.194,
+		"lon": 5.255,
+		"active": true,
+		"measurements": {
+			"source": "KMI",
+			"API_ID": "6472"
 		}
 	},
 	"3235": {
@@ -652,6 +692,16 @@
 			"API_Coordinates": [51.38, 3.3792]
 		}
 	},
+	"4176": {
+		"name": "Buzenol",
+		"lat": 49.62,
+		"lon": 5.587,
+		"active": true,
+		"measurements": {
+			"source": "KMI",
+			"API_ID": "6484"
+		}
+	},
 	"4235": {
 		"name": "Bree Tongerlo",
 		"lat": 51.136244,
@@ -766,6 +816,16 @@
 		"measurements": {
 			"source": "VLINDER",
 			"API_ID": "36Ysu7TgQhOhkF2oJFiIoFLj"
+		}
+	},
+	"4628": {
+		"name": "Uccle",
+		"lat": 50.797,
+		"lon": 4.358,
+		"active": true,
+		"measurements": {
+			"source": "KMI",
+			"API_ID": "6447"
 		}
 	},
 	"4662": {
@@ -945,6 +1005,16 @@
 			"API_ID": "iASUcbCWYglQzIdyQnALsTTT"
 		}
 	},
+	"5462": {
+		"name": "De Haan",
+		"lat": 51.28,
+		"lon": 3.074,
+		"active": true,
+		"measurements": {
+			"source": "KMI",
+			"API_ID": "10101002"
+		}
+	},
 	"5503": {
 		"name": "Hansweert",
 		"lat": 51.4458,
@@ -995,6 +1065,16 @@
 		"measurements": {
 			"source": "VLINDER",
 			"API_ID": "ItzXCMYUzi31xyiEZpLxB7ef"
+		}
+	},
+	"5732": {
+		"name": "Beitem",
+		"lat": 50.904,
+		"lon": 3.122,
+		"active": true,
+		"measurements": {
+			"source": "KMI",
+			"API_ID": "6414"
 		}
 	},
 	"5772": {
@@ -1068,6 +1148,16 @@
 			"source": "KNMI",
 			"API_ID": "0-20000-0-78990",
 			"API_Coordinates": [12.13, -68.2758]
+		}
+	},
+	"6295": {
+		"name": "Retie",
+		"lat": 51.221,
+		"lon": 5.027,
+		"active": true,
+		"measurements": {
+			"source": "KMI",
+			"API_ID": "6464"
 		}
 	},
 	"6327": {
@@ -1311,6 +1401,16 @@
 			"API_ID": "gL8ySh0fD0yikpZGaWQG61oH"
 		}
 	},
+	"7359": {
+		"name": "Sint-Katelijne-Waver",
+		"lat": 51.075,
+		"lon": 4.525,
+		"active": true,
+		"measurements": {
+			"source": "KMI",
+			"API_ID": "6439"
+		}
+	},
 	"7511": {
 		"name": "Melle Proefhoeve 2",
 		"lat": 50.980438,
@@ -1387,6 +1487,16 @@
 		"measurements": {
 			"source": "VLINDER",
 			"API_ID": "bZrYlw0clWwB6ZY8rBdgrbLL"
+		}
+	},
+	"7835": {
+		"name": "Dourbes",
+		"lat": 50.096,
+		"lon": 4.595,
+		"active": true,
+		"measurements": {
+			"source": "KMI",
+			"API_ID": "6455"
 		}
 	},
 	"7941": {
@@ -1525,6 +1635,16 @@
 			"API_Coordinates": [53.2694, 3.6278]
 		}
 	},
+	"8516": {
+		"name": "Ernage",
+		"lat": 50.582,
+		"lon": 4.689,
+		"active": true,
+		"measurements": {
+			"source": "KMI",
+			"API_ID": "6459"
+		}
+	},
 	"8527": {
 		"name": "Arnhem",
 		"lat": 52.0547222222222,
@@ -1618,6 +1738,16 @@
 			"API_Coordinates": [53.8242, 2.9453]
 		}
 	},
+	"9054": {
+		"name": "Mont Rigi",
+		"lat": 50.511,
+		"lon": 6.073,
+		"active": true,
+		"measurements": {
+			"source": "KMI",
+			"API_ID": "6494"
+		}
+	},
 	"9057": {
 		"name": "F3-OLT platform",
 		"lat": 54.853199,
@@ -1626,6 +1756,16 @@
 		"measurements": {
 			"source": "RWS",
 			"API_ID": "f3"
+		}
+	},
+	"9173": {
+		"name": "Stabroek",
+		"lat": 51.325,
+		"lon": 4.364,
+		"active": true,
+		"measurements": {
+			"source": "KMI",
+			"API_ID": "6438"
 		}
 	},
 	"9399": {

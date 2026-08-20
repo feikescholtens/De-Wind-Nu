@@ -268,6 +268,9 @@ async function processRetrievedData(dataFetched) {
 		measurementSourceLabelNode.innerText = "Metingen: UGent VLINDER project";
 	else if (dataFetched.datasetMeasurements === "RWS")
 		measurementSourceLabelNode.innerText = "Metingen: Rijkswaterstaat";
+	else if (dataFetched.datasetMeasurements === "KMI")
+		measurementSourceLabelNode.innerText =
+			"Metingen: KMI (Koninklijk Meteorologisch Instituut van België)";
 	else measurementSourceLabelNode.innerText = `Metingen: ${dataFetched.datasetMeasurements}`;
 	measurementSourceLabelNode.append(document.createElement("br"));
 

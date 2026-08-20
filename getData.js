@@ -1,6 +1,7 @@
 import { Firestore } from "@google-cloud/firestore";
 import { add, isBefore, isFuture, isToday, isValid, parseISO } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
+import { fetchDataForDay_KMI } from "./fetchScripts/KMI/fetchDataForDay.js";
 import { fetchDataForDay_KNMI } from "./fetchScripts/KNMI/fetchDataForDay.js";
 import { fetchDataForDay_MVB } from "./fetchScripts/MVB/fetchDataForDay.js";
 import { fetchDataForDay_RWS } from "./fetchScripts/RWS/fetchDataForDay.js";
@@ -43,7 +44,7 @@ export async function getData(request, response, date, locations) {
 
 	//Times
 	let NoMeasurementsXHour = 6; // Default and also used for forecast only locations
-	if (["RWS", "KNMI", "MVB"].includes(datasetMeasurements)) NoMeasurementsXHour = 6;
+	if (["RWS", "KNMI", "MVB", "KMI"].includes(datasetMeasurements)) NoMeasurementsXHour = 6;
 	if (["VLINDER"].includes(datasetMeasurements)) NoMeasurementsXHour = 12;
 	let times;
 	const DSTDates = getTimeChangeDates(dateParsed);
@@ -75,6 +76,8 @@ export async function getData(request, response, date, locations) {
 			return fetchDataForDay_KNMI(dateParsed, location, resolve, times, DSTDates);
 		if (datasetMeasurements === "MVB")
 			return fetchDataForDay_MVB(dateParsed, location, resolve, times, DSTDates);
+		if (datasetMeasurements === "KMI")
+			return fetchDataForDay_KMI(dateParsed, location, resolve, times, DSTDates);
 	});
 
 	if (!dataFetched || dataFetched.data.error) {
