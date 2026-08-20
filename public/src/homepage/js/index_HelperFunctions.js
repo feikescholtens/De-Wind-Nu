@@ -381,6 +381,23 @@ export function changeTiles(map, tilesSelector, seaMapCheckbox) {
 	location.reload();
 }
 
+export function getSourceCheckboxes() {
+	const showRWSCheckbox = document.querySelector("#showRWS");
+	const showKNMICheckbox = document.querySelector("#showKNMI");
+	const showMVBCheckbox = document.querySelector("#showMVB");
+	const showKMICheckbox = document.querySelector("#showKMI");
+	const showVLINDERCheckbox = document.querySelector("#showVLINDER");
+
+	return [showRWSCheckbox, showKNMICheckbox, showMVBCheckbox, showKMICheckbox, showVLINDERCheckbox];
+}
+
+export function changePopupSourceView(checkbox) {
+	if (checkbox.checked) localStorage.setItem(checkbox.id, 1);
+	else localStorage.setItem(checkbox.id, 0);
+
+	location.reload();
+}
+
 // Helper functions
 
 function removeCurrentLocationLoader() {

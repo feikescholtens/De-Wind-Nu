@@ -548,6 +548,20 @@ select {
 	font-size: 1rem;
 }
 
+input[type="checkbox"] {
+	width: 20px;
+	height: 20px;
+	min-width: 20px;
+	min-height: 20px;
+}
+
+div.checkboxWrapper {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	margin-bottom: 5px;
+}
+
 input#name,
 input#email,
 textarea#message {

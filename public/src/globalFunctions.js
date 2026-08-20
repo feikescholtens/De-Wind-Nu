@@ -98,6 +98,11 @@ export function updateLocalVariables() {
 	if (!localStorage.getItem("overviewForm")) localStorage.setItem("overviewForm", "map");
 	if (!localStorage.getItem("tiles")) localStorage.setItem("tiles", "auto");
 	if (!localStorage.getItem("seaMap")) localStorage.setItem("seaMap", 1);
+	if (!localStorage.getItem("showRWS")) localStorage.setItem("showRWS", 1);
+	if (!localStorage.getItem("showKNMI")) localStorage.setItem("showKNMI", 1);
+	if (!localStorage.getItem("showMVB")) localStorage.setItem("showMVB", 1);
+	if (!localStorage.getItem("showKMI")) localStorage.setItem("showKMI", 1);
+	if (!localStorage.getItem("showVLINDER")) localStorage.setItem("showVLINDER", 1);
 	if (!localStorage.getItem("locationPreference"))
 		localStorage.setItem("locationPreference", "low");
 	if (!localStorage.getItem("userChoseLocationPreference"))

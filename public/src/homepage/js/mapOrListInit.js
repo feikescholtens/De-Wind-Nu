@@ -1,4 +1,8 @@
-import { addCurrentLocationMarker, fitMapToMarkers } from "./independentFunctions.js";
+import {
+	addCurrentLocationMarker,
+	fetchDataAllSources,
+	fitMapToMarkers,
+} from "./independentFunctions.js";
 import {
 	createPopupIDAndMarkerElement,
 	determineCenterToZoomTo,
@@ -62,25 +66,9 @@ export async function initMap(dataAlreadyFetched, locationToUse) {
 			);
 		}
 	});
-	// getLocationsForecastOnly()
 	setOverviewMapData({ FORECAST_ONLY: getLocationsForecastOnly() }, map); //Call the function to update the popups that only have forecast data in the map
-	if (!dataAlreadyFetched) {
-		fetch("getOverviewData/VLINDER")
-			.then((response) => response.json())
-			.then((dataOverview) => setOverviewMapData({ VLINDER: dataOverview }, map));
-		fetch("getOverviewData/RWS")
-			.then((response) => response.json())
-			.then((dataOverview) => setOverviewMapData({ RWS: dataOverview }, map));
-		fetch("getOverviewData/KNMI")
-			.then((response) => response.json())
-			.then((dataOverview) => setOverviewMapData({ KNMI: dataOverview }, map));
-		fetch("getOverviewData/MVB")
-			.then((response) => response.json())
-			.then((dataOverview) => setOverviewMapData({ MVB: dataOverview }, map));
-		fetch("getOverviewData/KMI")
-			.then((response) => response.json())
-			.then((dataOverview) => setOverviewMapData({ KMI: dataOverview }, map));
-	} else setOverviewMapData(globalThis.data, map);
+	if (!dataAlreadyFetched) fetchDataAllSources(setOverviewMapData, map);
+	else setOverviewMapData(globalThis.data, map);
 
 	const dataDistanceSorted = Object.keys(data).sort((a, b) => data[a].distance - data[b].distance);
 	const closestLocationID = dataDistanceSorted[0];
@@ -99,7 +87,6 @@ export async function initMap(dataAlreadyFetched, locationToUse) {
 		button.className = `colouredButton ${popupId}`;
 		button.innerText = data[id].name;
 		button.addEventListener("click", () => {
-			// ?x=${map.getCenter().lng}&y=${map.getCenter().lat}?z=${map.getZoom()}
 			localStorage.setItem(
 				"edgeOperaMapLocation",
 				JSON.stringify({ x: map.getCenter().lng, y: map.getCenter().lat, z: map.getZoom() }),
@@ -192,21 +179,6 @@ export function initList(dataAlreadyFetched, locationToUse) {
 		document.getElementById("list").append(listItem);
 	}
 
-	if (!dataAlreadyFetched) {
-		fetch("getOverviewData/VLINDER")
-			.then((response) => response.json())
-			.then((dataOverview) => setOverviewListData({ VLINDER: dataOverview }));
-		fetch("getOverviewData/RWS")
-			.then((response) => response.json())
-			.then((dataOverview) => setOverviewListData({ RWS: dataOverview }));
-		fetch("getOverviewData/KNMI")
-			.then((response) => response.json())
-			.then((dataOverview) => setOverviewListData({ KNMI: dataOverview }));
-		fetch("getOverviewData/MVB")
-			.then((response) => response.json())
-			.then((dataOverview) => setOverviewListData({ MVB: dataOverview }));
-		fetch("getOverviewData/KMI")
-			.then((response) => response.json())
-			.then((dataOverview) => setOverviewListData({ KMI: dataOverview }));
-	} else setOverviewListData(globalThis.data);
+	if (!dataAlreadyFetched) fetchDataAllSources(setOverviewListData);
+	else setOverviewListData(globalThis.data);
 }

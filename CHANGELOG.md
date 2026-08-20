@@ -4,9 +4,10 @@
 
 - feature: added Maasvlakte (forecast only), on Toon's request
 - server: updated NPM packages
-- server: restored RWS gusts, adapted to new RWS API, overview measurements and windpage should be the same once RWS fixes API problems
-- feature: next forcast run time in local time
+- server: restored RWS gusts, adapted to new RWS API, overview measurements and windpage should be the same once RWS fixes API problems, fixes #25
+- feature: next forcast run time in local time, fixes #26
 - feature: added locations of KMI (Belgium)
+- feature: it's now possible to hide datasources (like RWS or KNMI) from the overviews, fixes #11
 
 ## 3.7.2
 

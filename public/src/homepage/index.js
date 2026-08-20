@@ -21,9 +21,11 @@ import {
 	acquireLocation,
 	changeLocationPreference,
 	changeOverviewForm,
+	changePopupSourceView,
 	changeTiles,
 	distanceLocationToCurrentLocation,
 	getLocationToUse,
+	getSourceCheckboxes,
 	showLocationPreferenceOptions,
 } from "./js/index_HelperFunctions.js";
 import { initList, initMap } from "./js/mapOrListInit.js";
@@ -56,6 +58,8 @@ const overviewFormSelector = document.querySelector("[data-overviewFormUnderSett
 	tilesSelector = document.querySelector("[data-tiles]"),
 	seaMapCheckbox = document.querySelector("[data-seaMap]"),
 	locationPreferenceSelector = document.querySelector("[data-locationPreference]");
+const [showRWSCheckbox, showKNMICheckbox, showMVBCheckbox, showKMICheckbox, showVLINDERCheckbox] =
+	getSourceCheckboxes();
 
 //Initialize PostHog for analytics
 posthog.init("phc_bU5HrnJn5DkToBMigMsJH6dbW2J9sgVvBDsHT4VQBcD", {
@@ -70,6 +74,11 @@ setGeneralSettings();
 overviewFormSelector.value = localStorage.getItem("overviewForm");
 tilesSelector.value = localStorage.getItem("tiles");
 if (localStorage.getItem("seaMap") === "1") seaMapCheckbox.checked = true;
+if (localStorage.getItem("showRWS") === "1") showRWSCheckbox.checked = true;
+if (localStorage.getItem("showKNMI") === "1") showKNMICheckbox.checked = true;
+if (localStorage.getItem("showMVB") === "1") showMVBCheckbox.checked = true;
+if (localStorage.getItem("showKMI") === "1") showKMICheckbox.checked = true;
+if (localStorage.getItem("showVLINDER") === "1") showVLINDERCheckbox.checked = true;
 locationPreferenceSelector.value = localStorage.getItem("locationPreference");
 
 //Listener functions for when settings are changed
@@ -96,8 +105,27 @@ document
 	.addEventListener("click", (e) => changeOverviewForm(overviewFormSelector, e)); //in the select bar
 tilesSelector.onchange = () => changeTiles(globalThis.map, tilesSelector, seaMapCheckbox);
 seaMapCheckbox.onchange = () => changeTiles(globalThis.map, tilesSelector, seaMapCheckbox);
+[showRWSCheckbox, showKNMICheckbox, showMVBCheckbox, showKMICheckbox, showVLINDERCheckbox].forEach(
+	(checkbox) => {
+		checkbox.onchange = () => changePopupSourceView(checkbox);
+	},
+);
 locationPreferenceSelector.onchange = () => changeLocationPreference(locationPreferenceSelector);
 
+// Remove locations from data object that are not wanted to be shown based on the source checkboxes
+// A check to prevent fetching is also in place elsewhere
+for (const id in data) {
+	if (localStorage.getItem("showRWS") === "0" && data[id]?.measurements?.source === "RWS")
+		delete data[id];
+	if (localStorage.getItem("showKNMI") === "0" && data[id]?.measurements?.source === "KNMI")
+		delete data[id];
+	if (localStorage.getItem("showMVB") === "0" && data[id]?.measurements?.source === "MVB")
+		delete data[id];
+	if (localStorage.getItem("showKMI") === "0" && data[id]?.measurements?.source === "KMI")
+		delete data[id];
+	if (localStorage.getItem("showVLINDER") === "0" && data[id]?.measurements?.source === "VLINDER")
+		delete data[id];
+}
 //Initialize main UI's
 acquireLocation().then((locationToUse) => {
 	//Add the distance to the user's current location to the data object

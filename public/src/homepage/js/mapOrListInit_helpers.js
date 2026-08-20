@@ -34,6 +34,7 @@ export function createPopupIDAndMarkerElement(location, locationID) {
 		});
 		popupId = `popup${dataset}`;
 	} else {
+		marker.classList.add(`markerContainerOther`);
 		Array.from(marker.getElementsByTagName("div")).forEach((element) => {
 			element.classList.add("Other");
 		});
