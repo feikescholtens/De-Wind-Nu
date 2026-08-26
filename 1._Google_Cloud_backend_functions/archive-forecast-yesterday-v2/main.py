@@ -15,7 +15,7 @@ mode = "development" # production or development
 # ---------------- Configuration parameters for development environment* -------------------------
 # *in production environment these are overwriten by the ones in the request that calls main(...)
 # ------------------------------------------------------------------------------------------------
-use_local_JSON_for_getting_and_storing_forecasts = False 
+use_local_JSON_for_getting_and_storing_forecasts = True 
 # Instead of setting the data in the Firestore documents, 
 # save them to JSON files in the test_input_and_output_forecasts directory
 # Saving to Firestore will overwrite in the (hardcoded) bucket, JSON files will be kept
@@ -78,8 +78,8 @@ def main (request):
 			if date == split_date: break
 			if skip_splitting == True: break # This was placed here to avoid an extra if statement before the loop
 
-			# Location array trimmed for day: date
-			day_location_array = location_array[:count]
+			# Location array trimmed for day: date, plus the 00:00 interval of the next day
+			day_location_array = location_array[:count + 1]
 			# Remove the data from day: date from the location_array
 			location_array = location_array[count:]
 			

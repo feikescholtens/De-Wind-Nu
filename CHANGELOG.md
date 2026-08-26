@@ -10,6 +10,7 @@
 - feature: it's now possible to hide datasources (like RWS or KNMI) from the overviews, fixes #11
 - bug: disabled datasets chart aren't saved
 - feature: better(?) tooltip design, that doesn't cover the graph lines, fixes #8
+- bug: last hour of forecast isn't archived, fixes #22
 
 ## 3.7.2
 
