@@ -2,6 +2,7 @@
 
 ## 3.8.0
 
+- bug: acquiring location on first visit could hang indefinitely (>20s) leaving a blank page, now bounded with timeouts and a warning message if it's taking a while, fixes #12
 - feature: added Maasvlakte (forecast only), on Toon's request
 - server: updated NPM packages
 - server: restored RWS gusts, adapted to new RWS API, overview measurements and windpage should be the same once RWS fixes API problems, fixes #25

@@ -97,8 +97,17 @@ export function acquireLocation() {
 			return;
 		}
 
+		//Acquiring a location (especially high accuracy GPS) can take a long time, or hang entirely if a fix is
+		//hard to get. Warn the user after 5 seconds so they're not just staring at what looks like a frozen page.
+		const acquiringLocationTimeout = setTimeout(showAcquiringLocationWarning, 5000);
+		function finish(value) {
+			clearTimeout(acquiringLocationTimeout);
+			hideAcquiringLocationWarning();
+			resolve(value);
+		}
+
 		if (localStorage.getItem("locationPreference") === "low") {
-			fetch(`/getClientIPLocation`)
+			fetch(`/getClientIPLocation`, { signal: AbortSignal.timeout(10000) })
 				.then((response) => response.json())
 				.then((lowAccuracyLocation) => {
 					if (lowAccuracyLocation.lowEnoughIPScore) {
@@ -106,23 +115,23 @@ export function acquireLocation() {
 							lat: lowAccuracyLocation.lat,
 							lon: lowAccuracyLocation.lon,
 						};
-						resolve(globalThis.lowAccuracyLocation);
+						finish(globalThis.lowAccuracyLocation);
 					} else {
 						globalThis.lowAccuracyLocation = "failed";
-						resolve();
+						finish();
 					}
 				})
 				.catch((error) => {
 					console.log(error);
 					globalThis.lowAccuracyLocation = "failed";
-					resolve();
+					finish();
 				});
 			return;
 		}
 
 		if (localStorage.getItem("locationPreference") === "high") {
 			if (globalThis.highAccuracyLocation) {
-				resolve(globalThis.highAccuracyLocation);
+				finish(globalThis.highAccuracyLocation);
 				return;
 			}
 
@@ -134,7 +143,7 @@ export function acquireLocation() {
 					globalThis.highAccuracyLocation = JSON.parse(
 						localStorage.getItem("highAccuracyLocation"),
 					).location;
-					resolve(globalThis.highAccuracyLocation);
+					finish(globalThis.highAccuracyLocation);
 				}
 				navigator.geolocation.getCurrentPosition(
 					(position) => {
@@ -157,21 +166,21 @@ export function acquireLocation() {
 							"highAccuracyLocation",
 							JSON.stringify({ location: globalThis.highAccuracyLocation, time: new Date() }),
 						);
-						resolve(globalThis.highAccuracyLocation);
+						finish(globalThis.highAccuracyLocation);
 
 						removeCurrentLocationLoader(); //Remove loader again (in function because it is called when switching from list to map as well)
 					},
 					() => {
-						//User blocked location access
+						//User blocked location access, or a fix couldn't be acquired within the timeout below
 						globalThis.highAccuracyLocation = "failed";
-						resolve();
+						finish();
 					},
-					{ enableHighAccuracy: true },
+					{ enableHighAccuracy: true, timeout: 15000 },
 				);
 			} else {
 				//Location access unavailable
 				globalThis.highAccuracyLocation = "failed";
-				resolve();
+				finish();
 			}
 		}
 	});
@@ -399,6 +408,28 @@ export function changePopupSourceView(checkbox) {
 }
 
 // Helper functions
+
+function showAcquiringLocationWarning() {
+	const bar = document.querySelector("[data-barLocationNotification]");
+	if (!bar) return;
+
+	bar.dataset.acquiringLocationWarning = "1";
+	bar.innerHTML = "Bezig met het bepalen van je locatie, dit kan soms wat langer duren&hellip;";
+	bar.classList.remove("noDisplay");
+	document.body.scrollTop = 0; // For Safari
+	document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+
+function hideAcquiringLocationWarning() {
+	//Only clear the bar if it's still showing the message we put there ourselves, so we don't clobber
+	//a different message (e.g. the "location failed" bar) that may have replaced it in the meantime
+	const bar = document.querySelector("[data-barLocationNotification]");
+	if (!bar || !bar.dataset.acquiringLocationWarning) return;
+
+	delete bar.dataset.acquiringLocationWarning;
+	bar.innerHTML = "";
+	bar.classList.add("noDisplay");
+}
 
 function removeCurrentLocationLoader() {
 	if (localStorage.getItem("overviewForm") === "list") return;
