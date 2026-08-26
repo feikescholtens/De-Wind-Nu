@@ -179,8 +179,8 @@ function setMeasurementData(container, dataLocation, returnNode) {
 	windDirectionElement.innerHTML = `${windDirection}° / ${windDirectionLetters} ${directionArrow}`;
 
 	const timeStampString = dataLocation.timeStamp;
-	const timeStamp = parseISO(timeStampString);
-	if (isValid(timeStamp)) {
+	const timeStamp = timeStampString ? parseISO(timeStampString) : undefined;
+	if (timeStamp && isValid(timeStamp)) {
 		const relativeMinutes = differenceInMinutes(new Date(), timeStamp);
 
 		if (relativeMinutes === 0) {
