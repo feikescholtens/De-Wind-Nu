@@ -139,20 +139,20 @@ export function calcInterpolation() {
 
 	const arraysToInterpolate = ["windSpeed", "windGusts", "windDirection"];
 	arraysToInterpolate.forEach((dataType) => {
-		for (let i = 0; i < data[dataType].length; i++) {
+		for (let i = 0; i < rawValues[dataType].length; i++) {
 			let j;
 
-			if (data[dataType][i] < 0) {
-				for (j = i + 1; j < data[dataType].length; j++) {
-					if (data[dataType][j] >= 0) break;
+			if (rawValues[dataType][i] < 0) {
+				for (j = i + 1; j < rawValues[dataType].length; j++) {
+					if (rawValues[dataType][j] >= 0) break;
 				}
 
 				const startIndex = i - 1,
 					stopIndex = j;
 
 				for (let k = startIndex; k < stopIndex - 1; k++) {
-					const startValue = parseFloat(data[dataType][startIndex]),
-						stopValue = parseFloat(data[dataType][stopIndex]);
+					const startValue = parseFloat(rawValues[dataType][startIndex]),
+						stopValue = parseFloat(rawValues[dataType][stopIndex]);
 					const value =
 						startValue +
 						((stopValue - startValue) / (stopIndex - startIndex)) * (k + 1 - startIndex);
@@ -168,13 +168,13 @@ export function calcInterpolation() {
 	return { interpolatedData: interpolatedData, interpolatedIndices: interpolatedIndices };
 }
 
-export function changeTableSort(tableSort) {
+export function changeTableSort(timeHeadingElement) {
 	if (localStorage.getItem("tableSort") === "ascending") {
 		localStorage.setItem("tableSort", "descending");
-		tableSort.innerHTML = `Tijd <span id="sortArrow">▲</span>`;
+		timeHeadingElement.innerHTML = `Tijd <span id="sortArrow">▲</span>`;
 	} else if (localStorage.getItem("tableSort") === "descending") {
 		localStorage.setItem("tableSort", "ascending");
-		tableSort.innerHTML = `Tijd <span id="sortArrow">▼</span>`;
+		timeHeadingElement.innerHTML = `Tijd <span id="sortArrow">▼</span>`;
 	}
 
 	contentUpdate();

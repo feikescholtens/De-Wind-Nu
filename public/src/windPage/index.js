@@ -102,8 +102,8 @@ function fetchData(date) {
 }
 
 //These need to be global because of other .js files!
-globalThis.data = {};
-globalThis.dataWUnits = {};
+globalThis.rawValues = {};
+globalThis.displayValues = {};
 globalThis.date;
 globalThis.unit = localStorage.getItem("unit");
 globalThis.decimals; //Is set in setGeneralSettings function
@@ -133,7 +133,7 @@ const compassCanvas = document.querySelector("[data-compass]"),
 	currentWindBox = document.querySelector("[data-currentWindBox]"),
 	headingChartWindspeed = document.querySelector("[data-headingChartWindspeed]"),
 	headingTable = document.querySelector("[data-headingtabel]"),
-	tableSort = document.querySelector("[data-timeHeading]");
+	timeHeadingElement = document.querySelector("[data-timeHeading]");
 
 //Sets the options in the settingstable and table with the data (sorting arrow) for the ones in local storage
 //General settings
@@ -148,7 +148,7 @@ if (localStorage.getItem("dataForm") === "table") {
 }
 if (localStorage.getItem("interpolation") === "1") interpolationSelector.checked = true;
 if (localStorage.getItem("tableSort") === "ascending")
-	tableSort.innerHTML = `Tijd <span id="sortArrow">▼</span>`;
+	timeHeadingElement.innerHTML = `Tijd <span id="sortArrow">▼</span>`;
 
 //Adding "dynamic" styles
 locationLabelNode.style.right = `${(document.body.clientWidth - document.getElementsByTagName("main")[0].clientWidth) / 2}px`;
@@ -212,7 +212,7 @@ document
 	.querySelector("[data-table]")
 	.addEventListener("click", (e) => changeDataForm(dataFormSelector, e)); //in the select bar
 interpolationSelector.onchange = () => changeInterpolation(interpolationSelector);
-tableSort.addEventListener("click", () => changeTableSort(tableSort));
+timeHeadingElement.addEventListener("click", () => changeTableSort(timeHeadingElement));
 
 addUIListeners();
 checkWrapFlexNavBar(true);
@@ -258,8 +258,8 @@ async function processRetrievedData(dataFetched) {
 	globalThis.interpolatedData = {};
 	globalThis.interpolatedIndices = {};
 
-	data = dataFetched.values;
-	dataWUnits = data.copy();
+	rawValues = dataFetched.values;
+	displayValues = rawValues.copy();
 	({ interpolatedData, interpolatedIndices } = calcInterpolation());
 	if (dataFetched.datasetMeasurements === undefined) measurementSourceLabelNode.remove();
 	else if (dataFetched.datasetMeasurements === "MVB")
@@ -282,23 +282,23 @@ async function processRetrievedData(dataFetched) {
 
 	//Remove current wind box if no mearurements are available OR date is not of the current day and set headings
 	if (
-		(dataWUnits.windSpeed.length === 0 &&
-			dataWUnits.windGusts.length === 0 &&
-			dataWUnits.windDirection.length === 0) ||
+		(displayValues.windSpeed.length === 0 &&
+			displayValues.windGusts.length === 0 &&
+			displayValues.windDirection.length === 0) ||
 		!isToday(dateData)
 	)
 		hideCurrentWindBox();
 	else showCurrentWindBox();
 	const NoMeasurementTypesAvailable = [
-		dataWUnits.windSpeed.length !== 0,
-		dataWUnits.windGusts.length !== 0,
-		dataWUnits.windDirection.length !== 0,
+		displayValues.windSpeed.length !== 0,
+		displayValues.windGusts.length !== 0,
+		displayValues.windDirection.length !== 0,
 	].filter((array) => array !== false).length;
-	if (dataWUnits.windGusts.length !== 0 || dataWUnits.windSpeedForecast)
+	if (displayValues.windGusts.length !== 0 || displayValues.windSpeedForecast)
 		headingChartWindspeed.innerText = "Windsterkte en -vlagen";
-	if (NoMeasurementTypesAvailable === 3 || dataWUnits.windSpeedForecast)
+	if (NoMeasurementTypesAvailable === 3 || displayValues.windSpeedForecast)
 		headingTable.innerText = "Windsterkte, -vlagen en -richting";
-	else if (NoMeasurementTypesAvailable !== 3 && !dataWUnits.windSpeedForecast)
+	else if (NoMeasurementTypesAvailable !== 3 && !displayValues.windSpeedForecast)
 		headingTable.innerText = "Windsterkte, en -richting";
 
 	//For both graphs and table

@@ -73,7 +73,7 @@ export function updateGraphs() {
 	];
 	dataTypeArray.forEach((dataType) => {
 		datasets[dataType] = { ...datasets[dataType], ...datasetObject };
-		if (dataWUnits[dataType]) datasets[dataType].data = dataWUnits[dataType];
+		if (displayValues[dataType]) datasets[dataType].data = displayValues[dataType];
 
 		if (JSON.parse(localStorage.getItem("hiddenDatasets"))[datasets[dataType].label])
 			datasets[dataType].hidden = true;
@@ -106,7 +106,7 @@ export function updateGraphs() {
 		"windGustsForecast",
 	];
 	dataTypesChartWindSpeed.forEach((dataType) => {
-		if (dataWUnits[dataType] && dataWUnits[dataType].length !== 0)
+		if (displayValues[dataType] && displayValues[dataType].length !== 0)
 			datasetsChartWindSpeed.push(datasets[dataType]);
 	});
 
@@ -127,7 +127,7 @@ export function updateGraphs() {
 	}
 
 	//Chart winddirection
-	if (dataWUnits.windDirection.length === 0 && !dataWUnits.windDirectionForecast) {
+	if (displayValues.windDirection.length === 0 && !displayValues.windDirectionForecast) {
 		document.querySelector("[data-headingchartwinddirection]").classList.add("noDisplay");
 		document.querySelector("[data-chartwindDirection]").classList.add("noDisplay");
 		return;
@@ -137,10 +137,10 @@ export function updateGraphs() {
 	let chartWindDirection,
 		datasetsChartWindDirection = [];
 
-	if (dataWUnits.windDirection.length !== 0)
+	if (displayValues.windDirection.length !== 0)
 		datasetsChartWindDirection.push(datasets.windDirection);
-	if (dataWUnits.windDirectionForecast)
-		if (dataWUnits.windDirectionForecast.length !== 0)
+	if (displayValues.windDirectionForecast)
+		if (displayValues.windDirectionForecast.length !== 0)
 			datasetsChartWindDirection.push(datasets.windDirectionForecast);
 
 	if (!Chart.instances[1])
@@ -183,9 +183,9 @@ export function updateTable() {
 	const table = document.querySelector("[data-dataTable]");
 
 	const NoMeasurementTypesAvailable = [
-		dataWUnits.windSpeed.length !== 0,
-		dataWUnits.windGusts.length !== 0,
-		dataWUnits.windDirection.length !== 0,
+		displayValues.windSpeed.length !== 0,
+		displayValues.windGusts.length !== 0,
+		displayValues.windDirection.length !== 0,
 	].filter((array) => array !== false).length;
 	document
 		.querySelector("[data-dataTable] th:nth-child(2)")
@@ -196,7 +196,10 @@ export function updateTable() {
 	)
 		document.querySelector("[data-dataTable] th:nth-child(2)").classList.add("noDisplay");
 	else document.querySelector("[data-dataTable] th:nth-child(2)").classList.remove("noDisplay");
-	if (!dataWUnits.windSpeedForecast && document.querySelector("[data-dataTable] th:nth-child(3)"))
+	if (
+		!displayValues.windSpeedForecast &&
+		document.querySelector("[data-dataTable] th:nth-child(3)")
+	)
 		document.querySelector("[data-dataTable] th:nth-child(3)").remove();
 
 	//Clearing table
@@ -221,14 +224,18 @@ export function updateTable() {
 		windDirectionForecast: `richting [°]`,
 	};
 	dataTypeArray.forEach((dataType) => {
-		if (dataWUnits[dataType] && dataWUnits[dataType].length !== 0)
+		if (displayValues[dataType] && displayValues[dataType].length !== 0)
 			tableHeaderRow.innerHTML += `<th>${headerTexts[dataType]}</th>`;
 	});
 
 	let lengthLongestArray = Math.max(
-		...[dataWUnits.windSpeed.length, dataWUnits.windGusts.length, dataWUnits.windDirection.length],
+		...[
+			displayValues.windSpeed.length,
+			displayValues.windGusts.length,
+			displayValues.windDirection.length,
+		],
 	);
-	if (lengthLongestArray === 0) lengthLongestArray = dataWUnits.windSpeedForecast.length;
+	if (lengthLongestArray === 0) lengthLongestArray = displayValues.windSpeedForecast.length;
 
 	for (let i = 0; i < lengthLongestArray; i++) {
 		const row = document.createElement("tr");
@@ -239,8 +246,8 @@ export function updateTable() {
 
 		dataTypeArray.forEach((dataType) => {
 			const cell = document.createElement("td");
-			if (dataWUnits[dataType]?.[i]) {
-				cell.innerText = dataWUnits[dataType][i].replace(".", ",");
+			if (displayValues[dataType]?.[i]) {
+				cell.innerText = displayValues[dataType][i].replace(".", ",");
 				row.append(cell);
 			}
 		});
