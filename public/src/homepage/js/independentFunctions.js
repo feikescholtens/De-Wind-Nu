@@ -57,29 +57,43 @@ export function fitMapToMarkers(map, markersLats, markersLons) {
 }
 
 export function fetchDataAllSources(callbackFunction, map = null) {
+	const fetchesDone = [];
+
 	if (localStorage.getItem("showVLINDER") === "1") {
-		fetch("getOverviewData/VLINDER")
-			.then((response) => response.json())
-			.then((dataOverview) => callbackFunction({ VLINDER: dataOverview }, map));
+		fetchesDone.push(
+			fetch("getOverviewData/VLINDER")
+				.then((response) => response.json())
+				.then((dataOverview) => callbackFunction({ VLINDER: dataOverview }, map)),
+		);
 	}
 	if (localStorage.getItem("showRWS") === "1") {
-		fetch("getOverviewData/RWS")
-			.then((response) => response.json())
-			.then((dataOverview) => callbackFunction({ RWS: dataOverview }, map));
+		fetchesDone.push(
+			fetch("getOverviewData/RWS")
+				.then((response) => response.json())
+				.then((dataOverview) => callbackFunction({ RWS: dataOverview }, map)),
+		);
 	}
 	if (localStorage.getItem("showKNMI") === "1") {
-		fetch("getOverviewData/KNMI")
-			.then((response) => response.json())
-			.then((dataOverview) => callbackFunction({ KNMI: dataOverview }, map));
+		fetchesDone.push(
+			fetch("getOverviewData/KNMI")
+				.then((response) => response.json())
+				.then((dataOverview) => callbackFunction({ KNMI: dataOverview }, map)),
+		);
 	}
 	if (localStorage.getItem("showMVB") === "1") {
-		fetch("getOverviewData/MVB")
-			.then((response) => response.json())
-			.then((dataOverview) => callbackFunction({ MVB: dataOverview }, map));
+		fetchesDone.push(
+			fetch("getOverviewData/MVB")
+				.then((response) => response.json())
+				.then((dataOverview) => callbackFunction({ MVB: dataOverview }, map)),
+		);
 	}
 	if (localStorage.getItem("showKMI") === "1") {
-		fetch("getOverviewData/KMI")
-			.then((response) => response.json())
-			.then((dataOverview) => callbackFunction({ KMI: dataOverview }, map));
+		fetchesDone.push(
+			fetch("getOverviewData/KMI")
+				.then((response) => response.json())
+				.then((dataOverview) => callbackFunction({ KMI: dataOverview }, map)),
+		);
 	}
+
+	return Promise.all(fetchesDone);
 }

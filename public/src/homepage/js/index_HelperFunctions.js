@@ -79,12 +79,18 @@ export function changeOverviewForm(selector, e) {
 			locationNotificationBar,
 			document.querySelector(".tabContainerWrapper").nextSibling,
 		);
+		const listSortBar = htmlToElement(
+			`<div class="listSortBar"><label for="listSort">Sorteer op</label><select data-listSort id="listSort"><option value="distance">Afstand</option><option value="alphabet">Alfabet</option><option value="windSpeed">Hoogste windsnelheid</option><option value="windGusts">Hoogste windvlagen</option></select></div>`,
+		);
+		main.insertBefore(listSortBar, document.querySelector(".sectionHeader"));
 		const div = document.createElement("div");
 		div.id = "list";
 		//Above lines should make the same HTML as in index.js (homepage), bottom of markup
 		main.insertBefore(div, document.querySelector(".sectionHeader"));
 
-		initList(true, getLocationToUse());
+		const locationToUse = getLocationToUse();
+		wireListSortSelector(locationToUse);
+		initList(true, locationToUse);
 	}
 
 	showLocationPreferenceOptions();
@@ -339,6 +345,27 @@ export function getLocationToUse() {
 		return globalThis.highAccuracyLocation;
 
 	return null;
+}
+
+export function changeListSort(selector) {
+	localStorage.setItem("listSort", selector.value);
+	location.reload();
+}
+
+// The sort dropdown only exists in the DOM while in list view, so this needs to be (re)called whenever the list is (re)built
+export function wireListSortSelector(locationToUse) {
+	const listSortSelector = document.querySelector("[data-listSort]");
+	if (!listSortSelector) return;
+
+	const distanceUnavailable = !locationToUse;
+	listSortSelector.querySelector('option[value="distance"]').disabled = distanceUnavailable;
+
+	const storedSort = localStorage.getItem("listSort");
+	//Don't persist this fallback: it only reflects the sort actually being applied right now (see initList),
+	//so the "Afstand" preference is kept and used again as soon as a location becomes available
+	listSortSelector.value =
+		distanceUnavailable && storedSort === "distance" ? "alphabet" : storedSort;
+	listSortSelector.onchange = () => changeListSort(listSortSelector);
 }
 
 export function changeLocationPreference(selector, changeSelectorValueFirstTo) {

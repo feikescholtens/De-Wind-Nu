@@ -72,6 +72,20 @@ div.barLocationNotification span {
 	text-decoration: underline;
 }
 
+/* Sort bar above the list */
+
+div.listSortBar {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 10px;
+	padding: 10px 15px;
+}
+
+div.listSortBar select {
+	height: 34px;
+}
+
 /* Settings icon scroll styling */
 
 button#settingsButton {

@@ -10,7 +10,12 @@ import {
 	getMapBoxStyle,
 	tilesObjects,
 } from "./mapOrListInit_helpers.js";
-import { panMapToLocation, setOverviewListData, setOverviewMapData } from "./sharedFunctions.js";
+import {
+	checkOldMeasurement,
+	panMapToLocation,
+	setOverviewListData,
+	setOverviewMapData,
+} from "./sharedFunctions.js";
 
 export async function initMap(dataAlreadyFetched, locationToUse) {
 	document.querySelector("#settingsButton").addEventListener("click", () => {
@@ -149,16 +154,38 @@ export async function initMap(dataAlreadyFetched, locationToUse) {
 }
 
 export function initList(dataAlreadyFetched, locationToUse) {
-	const dataSorted = Object.entries(data);
-	if (locationToUse)
-		dataSorted.sort((a, b) => {
-			return a[1].distance - b[1].distance;
-		}); //If position is retrieved, sort by distance
-	else
-		dataSorted.sort((a, b) => {
-			return a[1].name.localeCompare(b[1].name);
-		}); //If not, sort alphabetically
+	const listSort = localStorage.getItem("listSort");
+	const sortsByWind = listSort === "windSpeed" || listSort === "windGusts";
 
+	//Wind speed/gusts aren't available yet at this point (they're fetched per source below), so the list
+	//needs to wait for that data to arrive before it can be built and sorted
+	if (sortsByWind && !dataAlreadyFetched) {
+		fetchDataAllSources((sourceData) => {
+			Object.keys(sourceData).forEach((dataSource) => {
+				globalThis.data[dataSource] = { ...sourceData[dataSource] };
+			});
+		}).then(() => {
+			buildList(sortLocationsByWind(listSort), locationToUse);
+			setOverviewListData(globalThis.data);
+		});
+		return;
+	}
+
+	//Distance can only be sorted on if a location was retrieved; without one, fall back to alphabetical
+	//(the "Afstand" option is also greyed out in that case, see wireListSortSelector)
+	const dataSorted = sortsByWind
+		? sortLocationsByWind(listSort)
+		: listSort === "distance" && locationToUse
+			? Object.entries(data).sort((a, b) => a[1].distance - b[1].distance)
+			: Object.entries(data).sort((a, b) => a[1].name.localeCompare(b[1].name));
+
+	buildList(dataSorted, locationToUse);
+
+	if (!dataAlreadyFetched) fetchDataAllSources(setOverviewListData);
+	else setOverviewListData(globalThis.data);
+}
+
+function buildList(dataSorted, locationToUse) {
 	for (let i = 0; i < dataSorted.length; i++) {
 		const [popupId, marker] = createPopupIDAndMarkerElement(dataSorted[i][1], dataSorted[i][0]);
 
@@ -178,7 +205,24 @@ export function initList(dataAlreadyFetched, locationToUse) {
 		listItem.querySelector("div").id = dataSorted[i][0];
 		document.getElementById("list").append(listItem);
 	}
+}
 
-	if (!dataAlreadyFetched) fetchDataAllSources(setOverviewListData);
-	else setOverviewListData(globalThis.data);
+// Sorts locations by highest windSpeed/windGusts first; locations without a recent measurement for that
+// field are sorted last (values are always >= 0, so -1 works as an always-lowest sentinel)
+function sortLocationsByWind(field) {
+	return Object.entries(data).sort(
+		(a, b) => getWindValueForSort(b[0], field) - getWindValueForSort(a[0], field),
+	);
+}
+
+function getWindValueForSort(locationID, field) {
+	//Fetched wind data is merged into globalThis.data (a plain property on the global object), which is a
+	//separate object from the bare `data` global set up in index.ejs (a page-global `const`, never assigned
+	//onto globalThis) that holds the location metadata (name, lat, lon, measurements.source, ...)
+	const source = data[locationID]?.measurements?.source;
+	const locationData = source ? globalThis.data[source]?.[locationID] : undefined;
+	if (!locationData || checkOldMeasurement(locationData)) return -1;
+
+	const value = locationData[field];
+	return typeof value === "number" ? value : -1;
 }

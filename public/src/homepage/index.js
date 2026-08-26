@@ -27,6 +27,7 @@ import {
 	getLocationToUse,
 	getSourceCheckboxes,
 	showLocationPreferenceOptions,
+	wireListSortSelector,
 } from "./js/index_HelperFunctions.js";
 import { initList, initMap } from "./js/mapOrListInit.js";
 import { panMapToLocation, setOverviewListData, setOverviewMapData } from "./js/sharedFunctions.js";
@@ -138,6 +139,8 @@ acquireLocation().then((locationToUse) => {
 				data[id].lon,
 			);
 	}
+
+	wireListSortSelector(locationToUse);
 
 	if (localStorage.getItem("overviewForm") === "map") initMap(false, locationToUse);
 	if (localStorage.getItem("overviewForm") === "list") initList(false, locationToUse);

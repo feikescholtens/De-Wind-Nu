@@ -134,7 +134,7 @@
     //Above lines should make the same HTML as in functions.js (homepage) bottom of function changeOverviewForm 
     }
     if (localStorage.getItem("overviewForm") == "list") {
-      main.innerHTML = `<div data-barLocationNotification id="barLocationNotificationList" class="barLocationNotification noDisplay"></div><div id="list"></div>${main.innerHTML}`
+      main.innerHTML = `<div data-barLocationNotification id="barLocationNotificationList" class="barLocationNotification noDisplay"></div><div class="listSortBar"><label for="listSort">Sorteer op</label><select data-listSort id="listSort"><option value="distance">Afstand</option><option value="alphabet">Alfabet</option><option value="windSpeed">Hoogste windsnelheid</option><option value="windGusts">Hoogste windvlagen</option></select></div><div id="list"></div>${main.innerHTML}`
     //Above lines should make the same HTML as in functions.js (homepage) bottom of function changeOverviewForm
     }
 

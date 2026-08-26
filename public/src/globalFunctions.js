@@ -96,6 +96,7 @@ export function updateLocalVariables() {
 
 	//Homepage specific settings
 	if (!localStorage.getItem("overviewForm")) localStorage.setItem("overviewForm", "map");
+	if (!localStorage.getItem("listSort")) localStorage.setItem("listSort", "distance");
 	if (!localStorage.getItem("tiles")) localStorage.setItem("tiles", "auto");
 	if (!localStorage.getItem("seaMap")) localStorage.setItem("seaMap", 1);
 	if (!localStorage.getItem("showRWS")) localStorage.setItem("showRWS", 1);

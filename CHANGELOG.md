@@ -12,6 +12,7 @@
 - bug: disabled datasets chart aren't saved
 - feature: better(?) tooltip design, that doesn't cover the graph lines, fixes #8
 - bug: last hour of forecast isn't archived, fixes #22
+- feature: sorting list view by distance, alphabet, wind speed or wind gusts, fixes #9
 
 ## 3.7.2
 

@@ -113,7 +113,7 @@ function addWindSockArmAndBftToMap(dataLocation, dataSource, locationID) {
 	document.getElementById(locationID).parentNode.prepend(windSockArm);
 }
 
-function checkOldMeasurement(dataLocation) {
+export function checkOldMeasurement(dataLocation) {
 	// Checks if the measurement is older than 24 hours, if so it is not shown on the map or list. This is done by checking the timeStamp of the measurement and comparing it to the current time.
 	if (dataLocation === "FORECAST_ONLY") return;
 
