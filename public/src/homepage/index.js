@@ -36,7 +36,7 @@ redirect();
 updateLocalVariables();
 handleTimeZoneWarning();
 
-globalThis.data = {};
+globalThis.measurementsBySource = {};
 globalThis.unit = localStorage.getItem("unit");
 globalThis.decimals; //Is set in setGeneralSettings function
 globalThis.units = units;
@@ -88,13 +88,17 @@ themeSelector.onchange = () => changeTheme(document.querySelector("[data-theme]"
 showBarSelector.onchange = () => changeShowBar(showBarSelector);
 unitSelector.onchange = () => {
 	changeUnit(unitSelector, decimalsSelector);
-	if (localStorage.getItem("overviewForm") === "map") setOverviewMapData(globalThis.data, map);
-	if (localStorage.getItem("overviewForm") === "list") setOverviewListData(globalThis.data);
+	if (localStorage.getItem("overviewForm") === "map")
+		setOverviewMapData(globalThis.measurementsBySource, map);
+	if (localStorage.getItem("overviewForm") === "list")
+		setOverviewListData(globalThis.measurementsBySource);
 };
 decimalsSelector.onchange = () => {
 	changeDecimals(decimalsSelector);
-	if (localStorage.getItem("overviewForm") === "map") setOverviewMapData(globalThis.data, map);
-	if (localStorage.getItem("overviewForm") === "list") setOverviewListData(globalThis.data);
+	if (localStorage.getItem("overviewForm") === "map")
+		setOverviewMapData(globalThis.measurementsBySource, map);
+	if (localStorage.getItem("overviewForm") === "list")
+		setOverviewListData(globalThis.measurementsBySource);
 };
 //Homepage specific settings
 overviewFormSelector.onchange = () => changeOverviewForm(overviewFormSelector);
@@ -113,30 +117,33 @@ seaMapCheckbox.onchange = () => changeTiles(globalThis.map, tilesSelector, seaMa
 );
 locationPreferenceSelector.onchange = () => changeLocationPreference(locationPreferenceSelector);
 
-// Remove locations from data object that are not wanted to be shown based on the source checkboxes
+// Remove locations that are not wanted to be shown, based on the source checkboxes
 // A check to prevent fetching is also in place elsewhere
-for (const id in data) {
-	if (localStorage.getItem("showRWS") === "0" && data[id]?.measurements?.source === "RWS")
-		delete data[id];
-	if (localStorage.getItem("showKNMI") === "0" && data[id]?.measurements?.source === "KNMI")
-		delete data[id];
-	if (localStorage.getItem("showMVB") === "0" && data[id]?.measurements?.source === "MVB")
-		delete data[id];
-	if (localStorage.getItem("showKMI") === "0" && data[id]?.measurements?.source === "KMI")
-		delete data[id];
-	if (localStorage.getItem("showVLINDER") === "0" && data[id]?.measurements?.source === "VLINDER")
-		delete data[id];
+for (const id in locations) {
+	if (localStorage.getItem("showRWS") === "0" && locations[id]?.measurements?.source === "RWS")
+		delete locations[id];
+	if (localStorage.getItem("showKNMI") === "0" && locations[id]?.measurements?.source === "KNMI")
+		delete locations[id];
+	if (localStorage.getItem("showMVB") === "0" && locations[id]?.measurements?.source === "MVB")
+		delete locations[id];
+	if (localStorage.getItem("showKMI") === "0" && locations[id]?.measurements?.source === "KMI")
+		delete locations[id];
+	if (
+		localStorage.getItem("showVLINDER") === "0" &&
+		locations[id]?.measurements?.source === "VLINDER"
+	)
+		delete locations[id];
 }
 //Initialize main UI's
 acquireLocation().then((locationToUse) => {
-	//Add the distance to the user's current location to the data object
+	//Add the distance to the user's current location to each entry in the locations object
 	if (locationToUse) {
-		for (const id in data)
-			data[id].distance = distanceLocationToCurrentLocation(
+		for (const id in locations)
+			locations[id].distance = distanceLocationToCurrentLocation(
 				locationToUse.lat,
 				locationToUse.lon,
-				data[id].lat,
-				data[id].lon,
+				locations[id].lat,
+				locations[id].lon,
 			);
 	}
 

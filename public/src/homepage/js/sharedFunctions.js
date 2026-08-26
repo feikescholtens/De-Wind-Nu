@@ -43,39 +43,47 @@ export function panMapToLocation(locationToUse, addMarker) {
 	fitMapToMarkers(map, latBounds, lonBounds);
 }
 
-export function setOverviewMapData(data, map) {
-	Object.keys(data).forEach((dataSource) => {
-		globalThis.data[dataSource] = { ...data[dataSource] };
+export function setOverviewMapData(measurementsBySource, map) {
+	Object.keys(measurementsBySource).forEach((dataSource) => {
+		globalThis.measurementsBySource[dataSource] = { ...measurementsBySource[dataSource] };
 
 		if (!map._loaded)
 			map.on("load", () => {
-				for (const locationID in data[dataSource]) {
-					if (!checkOldMeasurement(data[dataSource][locationID])) {
-						addWindSockArmAndBftToMap(data[dataSource][locationID], dataSource, locationID);
-						updatePopUp(data[dataSource][locationID], locationID);
+				for (const locationID in measurementsBySource[dataSource]) {
+					if (!checkOldMeasurement(measurementsBySource[dataSource][locationID])) {
+						addWindSockArmAndBftToMap(
+							measurementsBySource[dataSource][locationID],
+							dataSource,
+							locationID,
+						);
+						updatePopUp(measurementsBySource[dataSource][locationID], locationID);
 					}
 				}
 			});
 		else {
-			for (const locationID in data[dataSource]) {
-				if (!checkOldMeasurement(data[dataSource][locationID])) {
-					addWindSockArmAndBftToMap(data[dataSource][locationID], dataSource, locationID);
-					updatePopUp(data[dataSource][locationID], locationID);
+			for (const locationID in measurementsBySource[dataSource]) {
+				if (!checkOldMeasurement(measurementsBySource[dataSource][locationID])) {
+					addWindSockArmAndBftToMap(
+						measurementsBySource[dataSource][locationID],
+						dataSource,
+						locationID,
+					);
+					updatePopUp(measurementsBySource[dataSource][locationID], locationID);
 				}
 			}
 		}
 	});
 }
 
-export function setOverviewListData(data) {
-	Object.keys(data).forEach((dataSource) => {
-		globalThis.data[dataSource] = { ...data[dataSource] };
+export function setOverviewListData(measurementsBySource) {
+	Object.keys(measurementsBySource).forEach((dataSource) => {
+		globalThis.measurementsBySource[dataSource] = { ...measurementsBySource[dataSource] };
 
-		for (const locationID in data[dataSource]) {
-			if (!checkOldMeasurement(data[dataSource][locationID])) {
+		for (const locationID in measurementsBySource[dataSource]) {
+			if (!checkOldMeasurement(measurementsBySource[dataSource][locationID])) {
 				setMeasurementData(
 					document.querySelector(`[id="${locationID}"]`),
-					data[dataSource][locationID],
+					measurementsBySource[dataSource][locationID],
 					false,
 				);
 			}

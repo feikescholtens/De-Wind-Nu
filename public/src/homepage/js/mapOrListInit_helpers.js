@@ -136,8 +136,8 @@ export function determineCenterToZoomTo(whatToDetermine, removeEdgeOperaLocation
 
 export function getLocationsForecastOnly() {
 	const locationsForecastOnly = {};
-	for (const id in data) {
-		if (Object.keys(data[id].measurements).length === 0)
+	for (const id in locations) {
+		if (Object.keys(locations[id].measurements).length === 0)
 			locationsForecastOnly[id] = "FORECAST_ONLY";
 	}
 	return locationsForecastOnly;
