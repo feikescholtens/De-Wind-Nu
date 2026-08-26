@@ -191,7 +191,7 @@ div.tooltipWrapper {
 	height: 50px;
 	overflow: hidden;
 	box-sizing: border-box;
-	color: rgb(111, 111, 111);
+	color: var(--textColour2);
 }
 
 div.tooltipContents {
