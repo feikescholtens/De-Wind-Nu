@@ -9,13 +9,6 @@ main {
 	overflow-x: auto;
 }
 
-div#loaderText {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, calc(-50% + 50px));
-}
-
 nav {
 	margin: 0 10px;
 	box-sizing: border-box;

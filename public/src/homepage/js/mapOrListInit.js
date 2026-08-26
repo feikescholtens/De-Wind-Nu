@@ -1,3 +1,4 @@
+import { hideLoader, setNewNumber, showLoader } from "../../globalFunctions.js";
 import {
 	addCurrentLocationMarker,
 	fetchDataAllSources,
@@ -165,11 +166,17 @@ export function initList(dataAlreadyFetched, locationToUse) {
 	//Wind speed/gusts aren't available yet at this point (they're fetched per source below), so the list
 	//needs to wait for that data to arrive before it can be built and sorted
 	if (sortsByWind && !dataAlreadyFetched) {
+		showLoader();
+		const loaderNumberInterval = setInterval(() => setNewNumber(), 80);
+
 		fetchDataAllSources((measurementsBySource) => {
 			Object.keys(measurementsBySource).forEach((dataSource) => {
 				globalThis.measurementsBySource[dataSource] = { ...measurementsBySource[dataSource] };
 			});
 		}).then(() => {
+			clearInterval(loaderNumberInterval);
+			hideLoader();
+
 			buildList(sortLocationsByWind(listSort), locationToUse);
 			setOverviewListData(globalThis.measurementsBySource);
 		});

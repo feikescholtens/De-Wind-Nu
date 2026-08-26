@@ -100,27 +100,6 @@ export function showMain() {
 	document.getElementsByTagName("main")[0].classList.remove("hidden");
 }
 
-export function showLoader() {
-	document.querySelector("[data-markerContainer]").style.display = "block";
-	document.querySelector("[data-loaderText]").style.display = "block";
-}
-
-export function hideLoader() {
-	document.querySelector("[data-markerContainer]").style.display = "none";
-	document.querySelector("[data-loaderText]").style.display = "none";
-}
-
-export function setNewNumber() {
-	const latestNumber = document.getElementsByClassName("marker")[0].innerText;
-	const newNumber = parseInt(String(Math.random())[2], 10);
-
-	if (latestNumber !== newNumber) {
-		document.getElementsByClassName("marker")[0].innerText = parseInt(String(Math.random())[2], 10);
-	} else {
-		setNewNumber();
-	}
-}
-
 export function showCurrentWindBox() {
 	document.querySelector("[data-headingcurrentwind]").classList.remove("noDisplay");
 	document.querySelector("[data-currentwindbox]").classList.remove("noDisplay");

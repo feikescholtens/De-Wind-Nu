@@ -233,6 +233,27 @@ export function changeDecimals(decimalsSelector) {
 	globalThis.decimals = decimalsSelector.value;
 }
 
+export function showLoader() {
+	document.querySelector("[data-markerContainer]").style.display = "block";
+	document.querySelector("[data-loaderText]").style.display = "block";
+}
+
+export function hideLoader() {
+	document.querySelector("[data-markerContainer]").style.display = "none";
+	document.querySelector("[data-loaderText]").style.display = "none";
+}
+
+export function setNewNumber() {
+	const latestNumber = document.getElementsByClassName("marker")[0].innerText;
+	const newNumber = parseInt(String(Math.random())[2], 10);
+
+	if (latestNumber !== newNumber) {
+		document.getElementsByClassName("marker")[0].innerText = parseInt(String(Math.random())[2], 10);
+	} else {
+		setNewNumber();
+	}
+}
+
 export function addUIListeners() {
 	document
 		.querySelector("[data-about]")
