@@ -8,6 +8,8 @@
 - feature: next forcast run time in local time, fixes #26
 - feature: added locations of KMI (Belgium)
 - feature: it's now possible to hide datasources (like RWS or KNMI) from the overviews, fixes #11
+- bug: disabled datasets chart aren't saved
+- feature: better(?) tooltip design, that doesn't cover the graph lines
 
 ## 3.7.2
 

@@ -14,6 +14,7 @@ import {
 	datasetObject,
 	optionsWindDirectionChart,
 	optionsWindSpeedChart,
+	tooltipRenderer,
 } from "../js/objects/chartData.js";
 
 Chart.register(
@@ -31,6 +32,7 @@ const graphNodeElements = [
 	document.querySelector("[data-chartwindSpeed]"),
 	document.querySelector("[data-headingchartwinddirection]"),
 	document.querySelector("[data-chartwindDirection]"),
+	...document.querySelectorAll(".tooltipWrapper"),
 ];
 const tableNodeElements = [
 	document.querySelector("[data-headingTabel]"),
@@ -61,19 +63,6 @@ export function updateGraphs() {
 	//Initialize datasets
 	const datasets = datasetInfo.copy();
 
-	const maxWindSpeed = Math.max(
-		...dataWUnits.windSpeed.filter((value) => {
-			// biome-ignore lint/suspicious/noDoubleEquals: Needs checking for undefined and null
-			return !isNaN(value) && value != undefined;
-		}),
-	);
-	const maxGusts = Math.max(
-		...dataWUnits.windGusts.filter((value) => {
-			// biome-ignore lint/suspicious/noDoubleEquals: Needs checking for undefined and null
-			return !isNaN(value) && value != undefined;
-		}),
-	);
-
 	const dataTypeArray = [
 		"windSpeed",
 		"windGusts",
@@ -89,8 +78,7 @@ export function updateGraphs() {
 		if (JSON.parse(localStorage.getItem("hiddenDatasets"))[datasets[dataType].label])
 			datasets[dataType].hidden = true;
 	});
-	datasets.windSpeed.label += ` | max: ${JSON.stringify(maxWindSpeed).replace(".", ",")} ${unit}`;
-	datasets.windGusts.label += ` | max: ${JSON.stringify(maxGusts).replace(".", ",")} ${unit}`;
+
 	if (interpolation === 1) {
 		datasets.windSpeed.segment = {
 			borderColor: (ctx) =>
@@ -175,6 +163,10 @@ export function updateGraphs() {
 		chartWindDirection.config.options.scales.x.grid.color =
 		chartWindDirection.config.options.scales.y.grid.color =
 			getComputedStyle(document.body).getPropertyValue("--lineColour1");
+
+	// Update the tooltips
+	tooltipRenderer(chartWindSpeed);
+	tooltipRenderer(chartWindDirection);
 }
 
 export function updateTable() {
@@ -259,7 +251,7 @@ export function updateTable() {
 }
 
 // Helper functions for updateDisplayCurrentWind.js
-import { tooltipLine } from "../js/objects/chartData.js";
+import { higherLegend, tooltipLine } from "../js/objects/chartData.js";
 
 function newChartOptions(datasets, options) {
 	return {
@@ -269,7 +261,7 @@ function newChartOptions(datasets, options) {
 			datasets: datasets,
 		},
 		options: options,
-		plugins: [tooltipLine],
+		plugins: [tooltipLine, higherLegend],
 	};
 }
 

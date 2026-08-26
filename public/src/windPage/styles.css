@@ -182,6 +182,60 @@ label.labelBig {
 	width: 120px;
 }
 
+/* Tooltip styles */
+
+div.tooltipWrapper {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	height: 50px;
+	overflow: hidden;
+	box-sizing: border-box;
+	color: rgb(111, 111, 111);
+}
+
+div.tooltipContents {
+	position: relative;
+	top: 50%;
+	padding: 0 5px;
+	transform: translateY(-50%);
+}
+
+div.tooltipContents p {
+	margin: 0;
+	padding: 0;
+	text-wrap: nowrap;
+	font-size: 15px;
+	text-align: center;
+	font-weight: bold;
+}
+
+div.tooltipItems {
+	display: flex;
+	flex-wrap: nowrap;
+	column-gap: 2px;
+	align-items: center;
+	margin-top: 4px;
+	justify-content: center;
+}
+
+div.tooltipItem {
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	column-gap: 5px;
+	text-wrap: nowrap;
+	font-size: 14px;
+	width: 80px;
+	font-weight: bold;
+}
+
+div.box {
+	width: 20px;
+	height: 15px;
+	display: inline-block;
+}
+
 /* Other styles */
 
 canvas.charts {
