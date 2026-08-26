@@ -73,6 +73,9 @@ posthog.init("phc_bU5HrnJn5DkToBMigMsJH6dbW2J9sgVvBDsHT4VQBcD", {
 setGeneralSettings();
 //Homepage specific settings
 overviewFormSelector.value = localStorage.getItem("overviewForm");
+//Show the sort dropdown's likely value immediately, based on locationPreference alone (acquiring the actual
+//location can take a while, e.g. the IP lookup for "low"); corrected below once acquireLocation() resolves
+wireListSortSelector(localStorage.getItem("locationPreference") !== "none");
 tilesSelector.value = localStorage.getItem("tiles");
 if (localStorage.getItem("seaMap") === "1") seaMapCheckbox.checked = true;
 if (localStorage.getItem("showRWS") === "1") showRWSCheckbox.checked = true;

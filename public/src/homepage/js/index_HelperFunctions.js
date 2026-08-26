@@ -80,7 +80,7 @@ export function changeOverviewForm(selector, e) {
 			document.querySelector(".tabContainerWrapper").nextSibling,
 		);
 		const listSortBar = htmlToElement(
-			`<div class="listSortBar"><label for="listSort">Sorteer op</label><select data-listSort id="listSort"><option value="distance">Afstand</option><option value="alphabet">Alfabet</option><option value="windSpeed">Hoogste windsnelheid</option><option value="windGusts">Hoogste windvlagen</option></select></div>`,
+			`<div class="listSortBar"><label for="listSort">Sorteer op</label><select data-listSort id="listSort"><option value="distance">Afstand</option><option value="alphabet">Alfabet</option><option value="windSpeed">Hoogste windsnelheid</option><option value="windGusts">Hardste windvlagen</option></select></div>`,
 		);
 		main.insertBefore(listSortBar, document.querySelector(".sectionHeader"));
 		const div = document.createElement("div");
