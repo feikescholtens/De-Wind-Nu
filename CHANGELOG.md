@@ -13,6 +13,7 @@
 - feature: better(?) tooltip design, that doesn't cover the graph lines, fixes #8
 - bug: last hour of forecast isn't archived, fixes #22
 - feature: sorting list view by distance, alphabet, wind speed or wind gusts, fixes #9
+- feature: better popup and list element design, with nice labels for the wind, gusts and direction
 
 ## 3.7.2
 

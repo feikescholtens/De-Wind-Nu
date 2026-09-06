@@ -25,6 +25,21 @@ body {
 	--anchorColour: #0000ee;
 	--shadowColour: grey;
 	--locationLoaderColour: #fff;
+	/* Wind measurement colours: shared between the wind page charts (windPage/js/objects/chartData.js reads
+	   these at runtime) and the homepage's measurement badges */
+	--windSpeedColour: rgb(106, 176, 76);
+	--windGustsColour: rgb(235, 77, 75);
+	--windDirectionColour: rgb(95, 39, 205);
+	--windSpeedForecastColour: rgb(46, 134, 222);
+	--windGustsForecastColour: rgb(255, 159, 243);
+	--windDirectionForecastColour: rgb(255, 159, 67);
+	/* Measurement source colours: shared between the homepage's map markers and popup/list buttons */
+	--vlinderColour: rgb(254, 202, 87);
+	--rwsColour: rgb(46, 179, 99);
+	--knmiColour: rgb(101, 124, 201);
+	--mvbColour: rgb(201, 62, 28);
+	--kmiColour: rgb(201, 126, 28);
+	--otherColour: rgb(140, 140, 140);
 
 	background-color: var(--BGColour);
 	color: var(--textColour1);
@@ -42,6 +57,7 @@ body.dark {
 	--anchorColour: #d686ff;
 	--shadowColour: var(--BGColour);
 	--locationLoaderColour: #545454;
+	--windDirectionColour: rgb(179, 136, 255); /* Lightened for readability on a dark background */
 }
 
 header,
@@ -313,27 +329,27 @@ button.colouredButton {
 }
 
 button.popupMVB {
-	background-color: rgb(201, 62, 28);
+	background-color: var(--mvbColour);
 }
 
 button.popupKNMI {
-	background-color: rgb(101, 124, 201);
+	background-color: var(--knmiColour);
 }
 
 button.popupKMI {
-	background-color: rgb(152, 28, 201);
+	background-color: var(--kmiColour);
 }
 
 button.popupRWS {
-	background-color: rgb(46, 179, 99);
+	background-color: var(--rwsColour);
 }
 
 button.popupVLINDER {
-	background-color: rgb(254, 202, 87);
+	background-color: var(--vlinderColour);
 }
 
 button.popupOther {
-	background-color: rgb(140, 140, 140);
+	background-color: var(--otherColour);
 }
 
 button.colouredButton:hover {

@@ -42,11 +42,28 @@
 
     <template data-templateMapPopup>
       <div class="popUp alwaysBlackText">
-        <button title="Bekijk metingen van deze locatie"></button>
-        <p class="windSpeedGusts" title="Windsnelheid en windvlagen">- / -</p>
-        <p class="windDirection" title="Windrichting">-</p>
-        <p class="relativeTime" title="Tijd sinds deze meting">-</p>
-      </button>
+        <div class="buttonWrapper"><button title="Bekijk metingen van deze locatie"></button></div>
+        <div class="measurementBody">
+          <div class="measurementStats">
+            <div class="windStat">
+              <p class="windSpeed" title="Windsnelheid">-</p>
+              <span class="windStatLabel">wind</span>
+            </div>
+            <div class="windStat">
+              <p class="windGusts" title="Windvlagen">-</p>
+              <span class="windStatLabel">vlagen</span>
+            </div>
+            <div class="windStat">
+              <p class="windDirection" title="Windrichting">-</p>
+              <span class="windStatLabel">richting</span>
+            </div>
+          </div>
+          <div class="measurementFooter">
+            <p class="distance" title="Afstand tot deze meetlocatie"></p>
+            <p class="relativeTime" title="Tijd sinds deze meting">-</p>
+          </div>
+        </div>
+      </div>
     </template>
 
     <template data-templateMapLocationPreferencePopup>
@@ -61,11 +78,27 @@
     <template data-templateListItem>
       <div class="listElement">
         <div class="buttonWrapper"><button title="Bekijk metingen van deze locatie"></button></div>
-        <p class="distance" title="Afstand tot deze meetlocatie"></p>
-        <p class="windSpeedGusts" title="Windsnelheid en windvlagen">- / -</p>
-        <p class="windDirection" title="Windrichting">-</p>
-        <p class="relativeTime" title="Tijd sinds deze meting">-</p>
-      </button>
+        <div class="measurementBody">
+          <div class="measurementStats">
+            <div class="windStat">
+              <p class="windSpeed" title="Windsnelheid">-</p>
+              <span class="windStatLabel">wind</span>
+            </div>
+            <div class="windStat">
+              <p class="windGusts" title="Windvlagen">-</p>
+              <span class="windStatLabel">vlagen</span>
+            </div>
+            <div class="windStat">
+              <p class="windDirection" title="Windrichting">-</p>
+              <span class="windStatLabel">richting</span>
+            </div>
+          </div>
+          <div class="measurementFooter">
+            <p class="distance" title="Afstand tot deze meetlocatie"></p>
+            <p class="relativeTime" title="Tijd sinds deze meting">-</p>
+          </div>
+        </div>
+      </div>
     </template>
 
     <h2 class="sectionHeader">Instellingen</h2>
@@ -139,7 +172,7 @@
     //Above lines should make the same HTML as in functions.js (homepage) bottom of function changeOverviewForm 
     }
     if (localStorage.getItem("overviewForm") == "list") {
-      main.innerHTML = `<div data-barLocationNotification id="barLocationNotificationList" class="barLocationNotification noDisplay"></div><div class="listSortBar"><label for="listSort">Sorteer op</label><select data-listSort id="listSort"><option value="distance">Afstand</option><option value="alphabet">Alfabet</option><option value="windSpeed">Hoogste windsnelheid</option><option value="windGusts">Hoogste windvlagen</option></select></div><div id="list"></div>${main.innerHTML}`
+      main.innerHTML = `<div data-barLocationNotification id="barLocationNotificationList" class="barLocationNotification noDisplay"></div><div class="listSortBar"><label for="listSort">Sorteer op</label><select data-listSort id="listSort"><option value="distance">Afstand</option><option value="alphabet">Alfabet</option><option value="windSpeed">Hoogste windsnelheid</option><option value="windGusts">Hardste windvlagen</option></select></div><div id="list"></div>${main.innerHTML}`
     //Above lines should make the same HTML as in functions.js (homepage) bottom of function changeOverviewForm
     }
 

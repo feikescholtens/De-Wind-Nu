@@ -10,8 +10,8 @@ import {
 	Tooltip,
 } from "chart.js";
 import {
-	datasetInfo,
 	datasetObject,
+	getDatasetInfo,
 	optionsWindDirectionChart,
 	optionsWindSpeedChart,
 	tooltipRenderer,
@@ -61,6 +61,7 @@ export function updateGraphs() {
 	});
 
 	//Initialize datasets
+	const datasetInfo = getDatasetInfo();
 	const datasets = datasetInfo.copy();
 
 	const dataTypeArray = [

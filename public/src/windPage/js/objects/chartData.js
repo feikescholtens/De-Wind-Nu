@@ -7,44 +7,54 @@ export const datasetObject = {
 	pointHoverRadius: 4,
 };
 
-export const datasetInfo = {
-	windSpeed: {
-		label: "Windsterkte",
-		labelCode: "windSpeed",
-		borderColor: "rgba(106, 176, 76, 1)",
-		backgroundColor: "rgba(106, 176, 76, 0.4)",
-	},
-	windGusts: {
-		label: "Windvlagen",
-		labelCode: "windGusts",
-		borderColor: "rgba(235, 77, 75, 1)",
-		backgroundColor: "rgba(235, 77, 75, 0.4)",
-	},
-	windDirection: {
-		label: "Windrichting",
-		labelCode: "windDirection",
-		borderColor: "rgba(95, 39, 205, 1)",
-		backgroundColor: "rgba(95, 39, 205, 0.4)",
-	},
-	windSpeedForecast: {
-		label: "Windsterkte verwachting",
-		labelCode: "windSpeedForecast",
-		borderColor: "rgba(46, 134, 222, 1)",
-		backgroundColor: "rgba(46, 134, 222, 0.4)",
-	},
-	windGustsForecast: {
-		label: "Windvlagen verwachting",
-		labelCode: "windGustsForecast",
-		borderColor: "rgba(255, 159, 243, 1)",
-		backgroundColor: "rgba(255, 159, 243, 0.4)",
-	},
-	windDirectionForecast: {
-		label: "Windrichting verwachting",
-		labelCode: "windDirectionForecast",
-		borderColor: "rgba(255, 159, 67, 1)",
-		backgroundColor: "rgba(255, 159, 67, 0.4)",
-	},
-};
+// Colours are read from the CSS custom properties in generalStyles.css (the single source of truth,
+// also used by the homepage's measurement badges) instead of being hardcoded here. This needs to stay a
+// function called fresh on each render rather than a static object, so it also picks up live theme
+// changes - e.g. windDirection's colour is lightened in dark mode, applied without a page reload.
+export function getDatasetInfo() {
+	const style = getComputedStyle(document.body);
+	const colour = (name) => style.getPropertyValue(name).trim();
+	const withAlpha = (rgb, alpha) => rgb.replace("rgb(", "rgba(").replace(")", `, ${alpha})`);
+
+	return {
+		windSpeed: {
+			label: "Windsterkte",
+			labelCode: "windSpeed",
+			borderColor: colour("--windSpeedColour"),
+			backgroundColor: withAlpha(colour("--windSpeedColour"), 0.4),
+		},
+		windGusts: {
+			label: "Windvlagen",
+			labelCode: "windGusts",
+			borderColor: colour("--windGustsColour"),
+			backgroundColor: withAlpha(colour("--windGustsColour"), 0.4),
+		},
+		windDirection: {
+			label: "Windrichting",
+			labelCode: "windDirection",
+			borderColor: colour("--windDirectionColour"),
+			backgroundColor: withAlpha(colour("--windDirectionColour"), 0.4),
+		},
+		windSpeedForecast: {
+			label: "Windsterkte verwachting",
+			labelCode: "windSpeedForecast",
+			borderColor: colour("--windSpeedForecastColour"),
+			backgroundColor: withAlpha(colour("--windSpeedForecastColour"), 0.4),
+		},
+		windGustsForecast: {
+			label: "Windvlagen verwachting",
+			labelCode: "windGustsForecast",
+			borderColor: colour("--windGustsForecastColour"),
+			backgroundColor: withAlpha(colour("--windGustsForecastColour"), 0.4),
+		},
+		windDirectionForecast: {
+			label: "Windrichting verwachting",
+			labelCode: "windDirectionForecast",
+			borderColor: colour("--windDirectionForecastColour"),
+			backgroundColor: withAlpha(colour("--windDirectionForecastColour"), 0.4),
+		},
+	};
+}
 
 // --- Chart.js plugins ---
 

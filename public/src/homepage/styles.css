@@ -1,4 +1,5 @@
 /** biome-ignore-all lint/complexity/noImportantStyles: Important style needed for proper functioning **/
+/** biome-ignore-all lint/style/noDescendingSpecificity: the flagged rules never actually collide with the ones biome compares them against (e.g. the unrelated #iconSettings svg rule) **/
 body {
 	margin: 0 auto;
 	overflow-x: hidden;
@@ -166,33 +167,33 @@ div.mapboxgl-ctrl-bottom-right {
 }
 
 div.VLINDER {
-	background-color: rgb(254, 202, 87);
-	border-top-color: rgb(254, 202, 87);
+	background-color: var(--vlinderColour);
+	border-top-color: var(--vlinderColour);
 }
 
 div.RWS {
-	background-color: rgb(46, 179, 99);
-	border-top-color: rgb(46, 179, 99);
+	background-color: var(--rwsColour);
+	border-top-color: var(--rwsColour);
 }
 
 div.KNMI {
-	background-color: rgb(101, 124, 201);
-	border-top-color: rgb(101, 124, 201);
+	background-color: var(--knmiColour);
+	border-top-color: var(--knmiColour);
 }
 
 div.MVB {
-	background-color: rgb(201, 62, 28);
-	border-top-color: rgb(201, 62, 28);
+	background-color: var(--mvbColour);
+	border-top-color: var(--mvbColour);
 }
 
 div.KMI {
-	background-color: rgb(201, 126, 28);
-	border-top-color: rgb(201, 126, 28);
+	background-color: var(--kmiColour);
+	border-top-color: var(--kmiColour);
 }
 
 div.Other {
-	background-color: rgb(140, 140, 140);
-	border-top-color: rgb(140, 140, 140);
+	background-color: var(--otherColour);
+	border-top-color: var(--otherColour);
 }
 
 div.markerContaineVLINDER {
@@ -287,6 +288,7 @@ div.circleCurrentLocation:after {
 div.popUp {
 	display: grid;
 	grid-template-columns: 1fr;
+	gap: 6px;
 }
 
 div#popupSuggestionClickMarker {
@@ -314,7 +316,8 @@ button.popupLocationPrefferenceNone {
 }
 
 div.mapboxgl-popup {
-	max-width: 200px;
+	/* No max-width here: mapboxgl.Popup applies its own maxWidth option as an inline style, which would
+	   always win over anything set here anyway - it's explicitly disabled instead (see mapOrListInit.js) */
 	z-index: 998;
 }
 
@@ -331,27 +334,139 @@ button:focus {
 	outline: none;
 }
 
-/* Styling grid of list elements */
+/* Styling list elements */
 div.listElement {
-	display: grid;
-	grid-template-columns: 1fr 0.7fr 1fr;
-	margin: 5px 15px;
-	column-gap: 10px;
-	align-items: center;
-	padding: 8px;
-	margin-bottom: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin: 8px 15px;
+	padding: 14px 16px;
 	border: 1px var(--lineColour1) solid;
-	border-radius: 15px;
+	border-radius: 16px;
 	font-size: 14px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+	transition: box-shadow 0.15s ease;
+}
+
+div.listElement:hover {
+	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
 div.buttonWrapper {
-	grid-column: 1 / 3;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid var(--lineColour2);
+	/* Without this the button (an inline-block) would inherit text-align: center from div.mapboxgl-popup-content in the popup */
+	text-align: left;
 }
 
 div.buttonWrapper button {
-	font-size: 1em !important;
+	/* rem, not em: em is relative to the parent's font-size, which differs between the list card
+	   (font-size: 14px set on div.listElement) and the popup (no such override, so it inherits
+	   Mapbox's own smaller popup font-size) - rem stays anchored to the root font-size in both */
+	font-size: 1.05rem !important;
+	font-weight: 700 !important;
 	margin: 0 !important;
+	width: 100%;
+	max-width: 250px;
+}
+
+div.measurementBody {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	width: fit-content;
+}
+
+div.measurementStats {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	column-gap: 12px;
+	row-gap: 14px;
+}
+
+div.windStat {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
+}
+
+div.listElement .windSpeed,
+div.listElement .windGusts,
+div.listElement .windDirection,
+div.popUp .windSpeed,
+div.popUp .windGusts,
+div.popUp .windDirection {
+	margin: 0;
+	padding: 3px 8px;
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	border-radius: 8px;
+	color: white;
+	font-weight: 700;
+	white-space: nowrap;
+	opacity: 0.8;
+}
+
+/* Shrunk to match the line-height of the speed/gusts boxes' text, so all three boxes end up the same height */
+div.listElement .windDirection svg,
+div.popUp .windDirection svg {
+	width: 14px;
+	height: 14px;
+}
+
+div.listElement .windSpeed,
+div.popUp .windSpeed {
+	background-color: var(--windSpeedColour);
+}
+
+div.listElement .windGusts,
+div.popUp .windGusts {
+	background-color: var(--windGustsColour);
+}
+
+div.listElement .windDirection,
+div.popUp .windDirection {
+	background-color: var(--windDirectionColour);
+}
+
+div.listElement .measurementArrow svg,
+div.popUp .measurementArrow svg {
+	fill: white;
+}
+
+span.windStatLabel {
+	font-size: 11px;
+	color: var(--textColour2);
+	text-transform: uppercase;
+	letter-spacing: 0.3px;
+	white-space: nowrap;
+}
+
+div.measurementFooter {
+	display: flex;
+	justify-content: space-around;
+	gap: 10px;
+	width: 100%;
+}
+
+/* Unlike the list, the popup centers all of its content - the button included - instead of left-aligning it */
+div.popUp div.buttonWrapper {
+	text-align: center;
+}
+
+div.popUp div.measurementBody {
+	justify-self: center;
+}
+
+p.distance,
+p.relativeTime {
+	margin: 0;
+	color: var(--textColour2);
+	font-size: 12px;
 }
 
 p.favorite {
@@ -362,7 +477,7 @@ span.listElementStar {
 	vertical-align: bottom;
 }
 
-div.listElementArrow {
+div.measurementArrow {
 	vertical-align: middle;
 	display: inline-block;
 }

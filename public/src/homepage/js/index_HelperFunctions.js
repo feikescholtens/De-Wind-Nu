@@ -36,6 +36,7 @@ export function changeOverviewForm(selector, e) {
 	const listNodeElements = [
 		document.getElementById("list"),
 		document.querySelector("#barLocationNotificationList"),
+		document.querySelector(".listSortBar"),
 	];
 
 	//Remove list elements and add map element
@@ -463,7 +464,8 @@ function removeCurrentLocationLoader() {
 	//Remove loader from current location marker,
 	if (map instanceof Element || !document.querySelector("#acquireLocationLoader"))
 		setTimeout(
-			() => document.querySelector("#acquireLocationLoader").classList.add("noDisplay"),
+			//With locationPreference "none" this element never gets created at all, so it may still be missing a second from now
+			() => document.querySelector("#acquireLocationLoader")?.classList.add("noDisplay"),
 			1000,
 		);
 	else document.querySelector("#acquireLocationLoader").classList.add("noDisplay");

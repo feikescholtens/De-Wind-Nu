@@ -91,6 +91,31 @@ export function setOverviewListData(measurementsBySource) {
 	});
 }
 
+// setOverviewListData/setOverviewMapData only visit locations for which a source reported fresh data
+// today; every other location is left showing its template's raw "-" placeholders, uncleaned. This
+// sweeps those leftovers, for both the list and the map's popups:
+// - a location with no measurement source at all (true forecast-only) never had this data to begin with,
+//   so its wind stat boxes/labels and relative time are all hidden, same as a genuine FORECAST_ONLY entry.
+// - a location that does have a source, but no fresh data today (or only stale data), still keeps its
+//   wind stat "-" placeholders (that data is normally expected), just with the relative time hidden too.
+export function hideLocationsWithNoMeasurements(isMap) {
+	for (const id in locations) {
+		const hasSource = Object.keys(locations[id].measurements).length > 0;
+		const source = locations[id].measurements.source;
+		const measurement = hasSource ? globalThis.measurementsBySource[source]?.[id] : undefined;
+
+		//A present, non-stale measurement was already handled by setOverviewListData/setOverviewMapData above
+		if (measurement !== undefined && !checkOldMeasurement(measurement)) continue;
+
+		//A popup's content isn't necessarily attached to the document (only while actually open), so on the
+		//map it has to be reached directly via its stored reference instead of a document query - which,
+		//confusingly, would otherwise match the (always-live) marker element sharing the same id rather than
+		//the popup content, since document IDs aren't actually unique here
+		const container = isMap ? globalThis.popUps[id]?.Node : document.querySelector(`[id="${id}"]`);
+		if (container) setMeasurementData(container, hasSource ? {} : "FORECAST_ONLY", false);
+	}
+}
+
 //Helper functions
 
 function updatePopUp(dataLocation, locationID) {
@@ -148,13 +173,17 @@ function setMeasurementData(container, dataLocation, returnNode) {
 		windDirectionLetters = "",
 		directionArrow = "";
 
-	const windSpeedGustsElement = container.querySelector(".windSpeedGusts"),
+	const windSpeedElement = container.querySelector(".windSpeed"),
+		windGustsElement = container.querySelector(".windGusts"),
 		windDirectionElement = container.querySelector(".windDirection"),
 		relativeTimeElement = container.querySelector(".relativeTime");
 
 	if (dataLocation === "FORECAST_ONLY") {
-		windSpeedGustsElement?.remove();
-		windDirectionElement?.remove();
+		//In the list, each of these sits inside a ".windStat" wrapper (with its caption) that needs to go
+		//along with it; in the popup there's no such wrapper, so it just removes the element itself
+		for (const element of [windSpeedElement, windGustsElement, windDirectionElement]) {
+			(element?.closest(".windStat") ?? element)?.remove();
+		}
 		relativeTimeElement?.remove();
 
 		if (returnNode) return container;
@@ -178,13 +207,15 @@ function setMeasurementData(container, dataLocation, returnNode) {
 	if (windDirection != undefined) {
 		windDirection = windDirection.toFixed(0);
 		windDirectionLetters = directionToLetters(windDirection);
-		directionArrow = `<div style="transform: rotate(${windDirection}deg);" title="Windrichting" class="listElementArrow">
+		directionArrow = `<div style="transform: rotate(${windDirection}deg);" title="Windrichting" class="measurementArrow">
     <svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 96 960 960" width="25"><path d="M480 974q-9 0-17.5-3T447 960L208 721q-15-14-15-33.5t15-33.5q13-14 32-14t33 14l160 160V198q0-20 13.5-33t33.5-13q20 0 33.5 13.5T527 199v615l160-160q13-13 32.5-13.5T753 654q14 14 14 33.5T753 721L513 960q-7 8-15.5 11t-17.5 3Z"/></svg>
     </div>`;
 	} else windDirection = "-";
 
-	windSpeedGustsElement.innerText = `${windSpeed.replace(".", ",")} / ${windGusts.replace(".", ",")} ${unit}`;
-	windDirectionElement.innerHTML = `${windDirection}° / ${windDirectionLetters} ${directionArrow}`;
+	windSpeedElement.innerText = windSpeed === "-" ? "-" : `${windSpeed.replace(".", ",")} ${unit}`;
+	windGustsElement.innerText = windGusts === "-" ? "-" : `${windGusts.replace(".", ",")} ${unit}`;
+	windDirectionElement.innerHTML =
+		windDirection === "-" ? "-" : `${windDirection}° / ${windDirectionLetters} ${directionArrow}`;
 
 	const timeStampString = dataLocation.timeStamp;
 	const timeStamp = timeStampString ? parseISO(timeStampString) : undefined;
@@ -199,6 +230,9 @@ function setMeasurementData(container, dataLocation, returnNode) {
 		} else {
 			relativeTimeElement.innerText = `${relativeMinutes} minuten geleden`;
 		}
+	} else {
+		//Unlike the wind stats, a "-" doesn't read naturally for a relative time, so hide it instead
+		relativeTimeElement?.remove();
 	}
 
 	if (returnNode) return container;

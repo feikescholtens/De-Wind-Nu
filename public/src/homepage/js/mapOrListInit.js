@@ -13,6 +13,7 @@ import {
 } from "./mapOrListInit_helpers.js";
 import {
 	checkOldMeasurement,
+	hideLocationsWithNoMeasurements,
 	panMapToLocation,
 	setOverviewListData,
 	setOverviewMapData,
@@ -73,7 +74,8 @@ export async function initMap(dataAlreadyFetched, locationToUse) {
 		}
 	});
 	setOverviewMapData({ FORECAST_ONLY: getLocationsForecastOnly() }, map); //Call the function to update the popups that only have forecast data in the map
-	if (!dataAlreadyFetched) fetchDataAllSources(setOverviewMapData, map);
+	let dataFetchPromise;
+	if (!dataAlreadyFetched) dataFetchPromise = fetchDataAllSources(setOverviewMapData, map);
 	else setOverviewMapData(globalThis.measurementsBySource, map);
 
 	const locationIDsSortedByDistance = Object.keys(locations).sort(
@@ -102,9 +104,17 @@ export async function initMap(dataAlreadyFetched, locationToUse) {
 			window.location.assign(`${window.location.protocol}//${window.location.host}/wind/${id}`);
 		});
 
+		setDistanceText(popup, locations[id].distance, locationToUse);
+
 		globalThis.popUps[id] = { Node: popup.querySelector("div") };
 
-		const popUpObject = new mapboxgl.Popup({ offset: 13, closeButton: false }).setDOMContent(popup);
+		//mapboxgl.Popup defaults maxWidth to "240px" and applies it as an inline style, which would
+		//otherwise always win over any max-width set on div.mapboxgl-popup in the stylesheet
+		const popUpObject = new mapboxgl.Popup({
+			offset: 13,
+			closeButton: false,
+			maxWidth: "none",
+		}).setDOMContent(popup);
 		const markerObject = new mapboxgl.Marker(marker).setLngLat([
 			locations[id].lon,
 			locations[id].lat,
@@ -116,6 +126,11 @@ export async function initMap(dataAlreadyFetched, locationToUse) {
 			globalThis.closestMarkerToCurrentLocationObject = markerObject;
 		}
 	}
+
+	//Needs the popups above to already be built, since it may need to reach into their (possibly closed/
+	//detached) content nodes directly
+	if (dataFetchPromise) dataFetchPromise.then(() => hideLocationsWithNoMeasurements(true));
+	else hideLocationsWithNoMeasurements(true);
 
 	[markersLats, markersLons].forEach((array) => {
 		array.sort();
@@ -179,6 +194,7 @@ export function initList(dataAlreadyFetched, locationToUse) {
 
 			buildList(sortLocationsByWind(listSort), locationToUse);
 			setOverviewListData(globalThis.measurementsBySource);
+			hideLocationsWithNoMeasurements();
 		});
 		return;
 	}
@@ -193,8 +209,12 @@ export function initList(dataAlreadyFetched, locationToUse) {
 
 	buildList(sortedLocations, locationToUse);
 
-	if (!dataAlreadyFetched) fetchDataAllSources(setOverviewListData);
-	else setOverviewListData(globalThis.measurementsBySource);
+	if (!dataAlreadyFetched) {
+		fetchDataAllSources(setOverviewListData).then(() => hideLocationsWithNoMeasurements());
+	} else {
+		setOverviewListData(globalThis.measurementsBySource);
+		hideLocationsWithNoMeasurements();
+	}
 }
 
 function buildList(sortedLocations, locationToUse) {
@@ -214,12 +234,16 @@ function buildList(sortedLocations, locationToUse) {
 			),
 		);
 
-		if (locationToUse)
-			listItem.querySelector(".distance").innerText = `${sortedLocations[i][1].distance} km`;
+		setDistanceText(listItem, sortedLocations[i][1].distance, locationToUse);
 
 		listItem.querySelector("div").id = sortedLocations[i][0];
 		document.getElementById("list").append(listItem);
 	}
+}
+
+// Shared between the list and the map popups, which show distance the same way
+function setDistanceText(container, distance, locationToUse) {
+	if (locationToUse) container.querySelector(".distance").innerText = `${distance} km verwijderd`;
 }
 
 // Sorts locations by highest windSpeed/windGusts first; locations without a recent measurement for that
