@@ -68,7 +68,10 @@ function buildWebPageBundleConfig(mainJSFile, HTMLFile, destinationDir, pathURL)
 		}),
 		postcss({
 			extract: "styles.css", //DO EXTRACT CSS! Not doing it recudes Lighthouse performance with almost 40...
-			plugins: [cssnano()],
+			//colormin disabled: it rewrites opaque rgb(...) custom properties (e.g. --windSpeedColour) to hex,
+			//which breaks chartData.js's withAlpha() - that reads the computed CSS var at runtime and expects
+			//the literal "rgb(" format to inject alpha for the chart tooltip's colour boxes.
+			plugins: [cssnano({ preset: ["default", { colormin: false }] })],
 		}),
 		minifyJS(`${destinationDir}/index.unmin.js`, `${destinationDir}/index.js`, pathURL),
 	];
