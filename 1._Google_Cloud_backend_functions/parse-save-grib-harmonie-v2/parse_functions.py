@@ -55,9 +55,12 @@ def parse_wind_speed_and_direction (data_arrays, parse_location, method, NO_deci
 		}
 
 		# We, if configured so by the dont_update_already_archived_intervals variable, only want to keep the forecast data that is not in the past, so we skip the data that is older than the current date
+		# <= (not <): the 00:00 interval of today is the boundary interval already frozen as the last entry of
+		# yesterday's archive (see archive-forecast-yesterday-v2). It must not be overwritten by a newer model
+		# run, or the archived value and the live value for that same timestamp diverge.
 		# See also comments in main.py under variable force_update_forecast_with_older_run
 		date_interval_obj = convert_unix_to_local_date_obj(time_intervals[interval_hour])
-		if (dont_update_already_archived_intervals == True and date_interval_obj < date_today_local_time): continue
+		if (dont_update_already_archived_intervals == True and date_interval_obj <= date_today_local_time): continue
 
 		location_array = np.append(location_array, location_object)
 
@@ -110,10 +113,13 @@ def parse_wind_gust (data_arrays, parse_location, method, NO_decimals, dont_upda
 		}
 
 		# We, if configured so by the dont_update_already_archived_intervals variable, only want to keep the forecast data that is not in the past, so we skip the data that is older than the current date
+		# <= (not <): the 00:00 interval of today is the boundary interval already frozen as the last entry of
+		# yesterday's archive (see archive-forecast-yesterday-v2). It must not be overwritten by a newer model
+		# run, or the archived value and the live value for that same timestamp diverge.
 		# See also comments in main.py under variable force_update_forecast_with_older_run
 		date_interval_obj = convert_unix_to_local_date_obj(time_intervals[interval_hour])
-		if (dont_update_already_archived_intervals == True and date_interval_obj < date_today_local_time): continue
-		
+		if (dont_update_already_archived_intervals == True and date_interval_obj <= date_today_local_time): continue
+
 		location_array = np.append(location_array, location_object)
 
 		# For debugging purposes
