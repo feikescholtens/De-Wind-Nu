@@ -118,4 +118,5 @@ def save_NEW_forecast_today_future(NEW_forecast_today_future, use_local_JSON_for
 
 		# Save data to Firestore document
 		document.set(NEW_forecast_today_future)
-		print(f"Saved the forecast data for today and the future in the Firestore document. First interval, for location '8700', now stored is {json.dumps(NEW_forecast_today_future["8700"][0])}")
+		first_interval_8700 = NEW_forecast_today_future["8700"][0] if NEW_forecast_today_future.get("8700") else None
+		print(f"Saved the forecast data for today and the future in the Firestore document. First interval, for location '8700', now stored is {json.dumps(first_interval_8700)}")

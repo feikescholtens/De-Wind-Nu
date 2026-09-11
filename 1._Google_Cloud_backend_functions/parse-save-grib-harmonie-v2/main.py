@@ -124,7 +124,8 @@ def main (request):
     # Merge the parsed wind, direction and gust forecasts
     new_forecast = merge_parsed_wind_direction_gust(new_forecast_wind_and_direction, new_forecast_gust)
     print(f"Parsed forecast run with timeRun of {new_forecast["timeRun"]}")
-    print(f"First interval for location 8700 in merged object is: {json.dumps(new_forecast["8700"][0])}")
+    first_interval_8700 = new_forecast["8700"][0] if new_forecast.get("8700") else None
+    print(f"First interval for location 8700 in merged object is: {json.dumps(first_interval_8700)}")
 
     # -------- 3rd part: joining the old and new forecast data and saving accordingly --------------
 

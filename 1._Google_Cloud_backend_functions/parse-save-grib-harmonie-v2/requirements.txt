@@ -5,6 +5,7 @@ pytz
 google-cloud-firestore
 google-cloud-secret-manager
 h5netcdf
+h5py
 scipy
 datetime
 python-dotenv
