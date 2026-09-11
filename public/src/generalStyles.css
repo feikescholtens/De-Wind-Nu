@@ -68,6 +68,12 @@ footer {
 	margin: 0 auto;
 }
 
+main {
+	/* Containing block for the full-page loading spinner (.markerContainer.centerAndMiddle, #loaderText),
+	   so it centres in the content area instead of the viewport or whole document */
+	position: relative;
+}
+
 svg {
 	fill: currentColor;
 	/* Gives SVG's the same color as the text-color */
@@ -290,9 +296,15 @@ div.center {
 	transform: translateX(-50%);
 }
 
-div.centerAndMiddle {
+div.markerContainer.centerAndMiddle {
+	/* This variant is the full-page loading spinner, nested inside <main> (which is
+	   position: relative, see below) so it centres in the content area, not the whole viewport
+	   or document. visibility: visible is needed since it's rendered inside <main class="hidden"> on
+	   the wind page while data is loading. top is set dynamically by showLoader() in
+	   globalFunctions.js, since it depends on the header/nav/announcement bar's actual height. */
+	position: absolute;
+	visibility: visible;
 	left: 50%;
-	top: 50%;
 	transform: translate(-50%, -50%);
 }
 
@@ -320,9 +332,10 @@ div.spin {
 }
 
 div#loaderText {
+	/* top is set dynamically by showLoader() in globalFunctions.js, see .markerContainer.centerAndMiddle above */
 	position: absolute;
+	visibility: visible;
 	left: 50%;
-	top: 50%;
 	transform: translate(-50%, calc(-50% + 50px));
 }
 

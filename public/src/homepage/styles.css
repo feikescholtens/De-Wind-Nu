@@ -42,6 +42,8 @@ div.tabContainerWrapper {
 /* -------- */
 
 div#mapWrapper {
+	/* Keeps #settingsButton anchored to the map itself (not <main>, now that main is position: relative) */
+	position: relative;
 	width: calc(100 * var(--vw, 1vw));
 	margin-left: calc((100 * var(--vw, 1vw) - 100%) / -2);
 }

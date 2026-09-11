@@ -234,8 +234,21 @@ export function changeDecimals(decimalsSelector) {
 }
 
 export function showLoader() {
-	document.querySelector("[data-markerContainer]").style.display = "block";
-	document.querySelector("[data-loaderText]").style.display = "block";
+	// Centre the loader in the visible space below the header/nav/announcement bar, not in the
+	// middle of <main> as a whole: <main>'s own content (compass, charts, settings, ...) is already
+	// laid out (just invisible) while loading, so it's much taller than one screen. Measuring main's
+	// actual top offset (rather than assuming fixed header/nav/banner heights) keeps this correct
+	// regardless of announcement bar content.
+	const mainTop = document.getElementsByTagName("main")[0].getBoundingClientRect().top;
+	const loaderTop = `${(window.innerHeight - mainTop) / 2}px`;
+
+	const markerContainer = document.querySelector("[data-markerContainer]");
+	const loaderText = document.querySelector("[data-loaderText]");
+
+	markerContainer.style.top = loaderTop;
+	markerContainer.style.display = "block";
+	loaderText.style.top = loaderTop;
+	loaderText.style.display = "block";
 }
 
 export function hideLoader() {
