@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>De Wind Nu - Admin</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 1.4em;
+    }
+
+    label {
+      display: block;
+      margin: 20px 0 6px 0;
+      font-weight: bold;
+    }
+
+    textarea {
+      width: 100%;
+      height: 140px;
+      font-family: monospace;
+      font-size: 0.95em;
+      padding: 8px;
+    }
+
+    .checkboxRow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .checkboxRow label {
+      margin: 0;
+      font-weight: normal;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 18px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    #preview {
+      margin-top: 8px;
+      border: 1px dashed #999;
+    }
+
+    #status {
+      margin-top: 14px;
+      font-weight: bold;
+    }
+
+    #status.success {
+      color: #10ac84;
+    }
+
+    #status.error {
+      color: #c0392b;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Informatiebalk</h1>
+
+  <label for="html">HTML inhoud</label>
+  <textarea id="html" placeholder="Bijvoorbeeld: &lt;p&gt;storing bij Rijkswaterstaat&lt;/p&gt;"></textarea>
+
+  <label>Voorbeeld (styles zijn anders dan op de site):</label>
+  <div id="preview"></div>
+
+  <div class="checkboxRow">
+    <input type="checkbox" id="enabled">
+    <label for="enabled">Balk tonen op de site</label>
+  </div>
+
+  <button id="save">Opslaan</button>
+  <p id="status"></p>
+
+  <script>
+    const htmlField = document.getElementById("html");
+    const enabledField = document.getElementById("enabled");
+    const preview = document.getElementById("preview");
+    const status = document.getElementById("status");
+
+    function updatePreview() {
+      preview.innerHTML = htmlField.value;
+    }
+
+    async function load() {
+      const response = await fetch("/api/admin/announcement");
+      if (!response.ok) {
+        status.textContent = "Kon huidige inhoud niet laden.";
+        status.className = "error";
+        return;
+      }
+      const data = await response.json();
+      htmlField.value = data.html || "";
+      enabledField.checked = !!data.enabled;
+      updatePreview();
+    }
+
+    async function save() {
+      status.textContent = "Opslaan...";
+      status.className = "";
+      const response = await fetch("/api/admin/announcement", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ html: htmlField.value, enabled: enabledField.checked }),
+      });
+      if (response.ok) {
+        status.textContent = "Opgeslagen.";
+        status.className = "success";
+      } else {
+        status.textContent = "Opslaan mislukt.";
+        status.className = "error";
+      }
+    }
+
+    htmlField.addEventListener("input", updatePreview);
+    document.getElementById("save").addEventListener("click", save);
+
+    load();
+  </script>
+</body>
+
+</html>

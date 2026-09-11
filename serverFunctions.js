@@ -1,4 +1,6 @@
+import { timingSafeEqual } from "node:crypto";
 import { readFileSync } from "node:fs";
+import { Firestore } from "@google-cloud/firestore";
 import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
 
 const client = new SecretManagerServiceClient();
@@ -9,6 +11,7 @@ import { formatInTimeZone } from "date-fns-tz";
 import express from "express";
 import fetch from "node-fetch";
 import nodemailer from "nodemailer";
+import { firestoreAuth } from "./getScriptUtilFunctions.js";
 
 export async function setEnvironmentVariables() {
 	// From dotenv on localhost, if not on localhost, load env's from Google Secret Manager
@@ -24,6 +27,7 @@ export async function setEnvironmentVariables() {
 			"MVB_PWD_ENCODED",
 			"IPQUALITYSCORE_KEY",
 			"KDP_EDR_KEY",
+			"ADMIN_PASSWORD",
 		].forEach((identifier) => {
 			promises.push(setEnvironmentVariableFromGoogleSecretManager(identifier));
 		});
@@ -193,4 +197,73 @@ export function isExistingLocation(checkID, locations, response) {
 		return false;
 	}
 	return true;
+}
+
+//Admin / announcement bar
+
+const ANNOUNCEMENT_DOC_PATH = "Site config/announcementBar";
+const ANNOUNCEMENT_CACHE_TTL_MS = 5 * 60 * 1000;
+let announcementCache = null;
+let announcementCacheExpiry = 0;
+
+export function requireAdminAuth(request, response, next) {
+	const [scheme, encoded] = (request.headers.authorization || "").split(" ");
+
+	if (scheme === "Basic" && encoded) {
+		// Basic auth encodes "username:password"; the username is unused here
+		const password = Buffer.from(encoded, "base64").toString().split(":").slice(1).join(":");
+		if (passwordMatches(password)) {
+			next();
+			return;
+		}
+	}
+
+	response.set("WWW-Authenticate", 'Basic realm="De Wind Nu admin"');
+	response.status(401).send("Authenticatie vereist");
+}
+
+function passwordMatches(password) {
+	const expected = process.env.ADMIN_PASSWORD || "";
+	const passwordBuffer = Buffer.from(password);
+	const expectedBuffer = Buffer.from(expected);
+
+	// timingSafeEqual throws on unequal-length buffers, so an empty secret or wrong-length guess is rejected here
+	if (expected === "" || passwordBuffer.length !== expectedBuffer.length) return false;
+	return timingSafeEqual(passwordBuffer, expectedBuffer);
+}
+
+async function getAnnouncementDoc() {
+	const firestore = new Firestore(firestoreAuth());
+	const doc = await firestore.doc(ANNOUNCEMENT_DOC_PATH).get();
+	return doc.exists ? doc.data() : { html: "", enabled: false };
+}
+
+export async function getAnnouncementCached() {
+	// Cached so normal page loads don't hit Firestore on every request; saving from the admin page clears this
+	if (announcementCache !== null && Date.now() < announcementCacheExpiry) return announcementCache;
+
+	const data = await getAnnouncementDoc();
+	announcementCache = data.enabled ? data.html : "";
+	announcementCacheExpiry = Date.now() + ANNOUNCEMENT_CACHE_TTL_MS;
+
+	return announcementCache;
+}
+
+export async function getAnnouncementForAdmin(_, response) {
+	response.json(await getAnnouncementDoc());
+}
+
+export async function saveAnnouncement(request, response) {
+	const { html, enabled } = request.body;
+	if (typeof html !== "string" || typeof enabled !== "boolean") {
+		response.status(400).json({ success: false, error: "Ongeldige invoer" });
+		return;
+	}
+
+	const firestore = new Firestore(firestoreAuth());
+	await firestore.doc(ANNOUNCEMENT_DOC_PATH).set({ html, enabled });
+
+	announcementCache = null;
+
+	response.json({ success: true });
 }

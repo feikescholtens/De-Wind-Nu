@@ -23,6 +23,10 @@ const base_HTML_files = [
 		"public/dist/components/generalSettingsInputs.ejs",
 		"public/src/components/generalSettingsInputs.ejs",
 	],
+	[
+		"public/dist/components/announcementBar.ejs",
+		"public/src/components/announcementBar.ejs",
+	],
 ];
 
 //----------------Main logic------------------------------------------------

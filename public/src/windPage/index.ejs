@@ -5,7 +5,8 @@
 </head>
 
 <body>
-  <script> 
+  <%- include("announcementBar.ejs") %>
+  <script>
     //Execute here to prevent flashing before loading the other JS (see bottom of document as well)
     //Setting theme
     if (!localStorage.getItem("theme")) localStorage.setItem("theme", "auto")

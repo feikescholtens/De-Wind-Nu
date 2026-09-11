@@ -15,6 +15,7 @@
 - feature: sorting list view by distance, alphabet, wind speed or wind gusts, fixes #9
 - feature: better popup and list element design, with nice labels for the wind, gusts and direction
 - feature: already archived forecast was still being updated, which didn't make the forecast continous at 0:00 from day to day
+- feature: added announcement bar (editable via an admin page) that can display messages (e.g. outages with RWS etc.)
 
 ## 3.7.2
 

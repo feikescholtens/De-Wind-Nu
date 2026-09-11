@@ -96,6 +96,19 @@ textarea {
 	user-select: none;
 }
 
+/* Announcement bar styling (content is set by the admin page, see admin.html) */
+
+div#announcementBarWrapper {
+	width: 100vw;
+	box-sizing: border-box;
+	background-color: var(--BGColour);
+	color: var(--textColour1);
+}
+
+div#announcementBarWrapper a {
+	color: var(--anchorColour);
+}
+
 /* Header, headings and icon styling */
 
 header {
