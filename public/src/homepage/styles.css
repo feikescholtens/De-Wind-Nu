@@ -165,7 +165,13 @@ div.mapboxgl-ctrl-bottom-right {
 /* ------------------------------------------------- */
 
 .alwaysBlackText {
-	color: black;
+	--textColour1: black;
+	--textColour2: grey;
+	--textColour3: #bbb;
+	--lineColour1: #eee;
+	--lineColour2: #ddd;
+	--lineColour3: #dedede;
+	color: var(--textColour1);
 }
 
 div.VLINDER {
