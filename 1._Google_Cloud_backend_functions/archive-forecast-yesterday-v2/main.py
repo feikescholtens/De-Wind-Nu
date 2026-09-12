@@ -9,13 +9,13 @@ from pathlib import Path
 import shutil
 
 
-mode = "development" # production or development
+mode = "production" # production or development
 
 
 # ---------------- Configuration parameters for development environment* -------------------------
 # *in production environment these are overwriten by the ones in the request that calls main(...)
 # ------------------------------------------------------------------------------------------------
-use_local_JSON_for_getting_and_storing_forecasts = True 
+use_local_JSON_for_getting_and_storing_forecasts = False 
 # Instead of setting the data in the Firestore documents, 
 # save them to JSON files in the test_input_and_output_forecasts directory
 # Saving to Firestore will overwrite in the (hardcoded) bucket, JSON files will be kept
@@ -36,7 +36,7 @@ firestore_document_today_future = "Harmonie forecast today & future v2"
 # The Firestore document to use for the forecast data, only used if 
 # use_local_JSON_for_getting_and_storing_forecasts is set to False
 # -----------------------------------------------------------------------------------------
-firestore_document_archive = "Harmonie forecast archive v2_testing_only"
+firestore_document_archive = "Harmonie forecast archive"
 # The Firestore document to use for the forecast data, only used if 
 # use_local_JSON_for_getting_and_storing_forecasts is set to False
 # Since Firestore document can't be renamed, this is a new document for testing purposes

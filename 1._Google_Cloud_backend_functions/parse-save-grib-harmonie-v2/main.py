@@ -16,7 +16,7 @@ from pathlib import Path
 import shutil
 import json
 
-mode = "development" # production or development, e.g. to determine address of the webserver
+mode = "production" # production or development, e.g. to determine address of the webserver
 
 
 # ---------------- Configuration parameters for development environment* -------------------------
@@ -49,7 +49,7 @@ dont_update_already_archived_intervals = True
 # will not be saved, since it's already in the archived forecast and has no place in the 
 # 'today' forecast, since that interval is in the past (for the local time at least)
 # -----------------------------------------------------------------------------------------
-use_local_JSON_for_getting_and_storing_forecasts = True 
+use_local_JSON_for_getting_and_storing_forecasts = False 
 # Instead of setting the data in the Firestore documents, 
 # save them to JSON files in the test_input_and_output_forecasts directory
 # Saving to Firestore will overwrite in the (hardcoded) bucket, JSON files will be kept
