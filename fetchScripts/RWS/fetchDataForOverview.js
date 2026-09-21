@@ -73,7 +73,8 @@ export async function fetchDataForOverview_RWS(locations, resolve) {
 			data[applicationID].windGusts = measurementValue * 1.94384449; // Convert m/s to knots
 		}
 		// WIND DIRECTION
-		if (parameterName === "WINDRTG") data[applicationID].windDirection = measurementValue;
+		if (parameterName === "WINDRTG" && !isOlderThan24Hours)
+			data[applicationID].windDirection = measurementValue;
 	});
 
 	resolve(data);
