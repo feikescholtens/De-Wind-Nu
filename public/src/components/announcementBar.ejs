@@ -1,18 +1,18 @@
 <% if (typeof announcementHtml !== "undefined" && announcementHtml) { %>
-  <div id="announcementBarWrapper">
+  <div id="announcementBarWrapper" style="display: none;">
     <div id="announcementBarContent"><%- announcementHtml %></div>
     <button id="announcementBarClose" aria-label="Sluiten" title="Sluiten">&times;</button>
   </div>
   <script>
-    // Inline (not deferred) so a previously dismissed bar never flashes before this hides it
+    // Hidden by default via the inline style above so there's nothing to flash: this only ever
+    // reveals the bar, it never has to hide an already-visible one.
     (function () {
       var wrapper = document.getElementById("announcementBarWrapper");
       var content = document.getElementById("announcementBarContent").innerHTML;
 
-      if (sessionStorage.getItem("dismissedAnnouncement") === content) {
-        wrapper.style.display = "none";
-        return;
-      }
+      if (sessionStorage.getItem("dismissedAnnouncement") === content) return;
+
+      wrapper.style.display = "";
 
       document.getElementById("announcementBarClose").addEventListener("click", function () {
         sessionStorage.setItem("dismissedAnnouncement", content);
