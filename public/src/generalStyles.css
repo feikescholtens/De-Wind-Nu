@@ -109,6 +109,26 @@ div#announcementBarWrapper {
 	box-sizing: border-box;
 	background-color: var(--BGColour);
 	color: var(--textColour1);
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	border-bottom: 2px #ddd solid;
+}
+
+div#announcementBarContent {
+	flex: 1;
+	min-width: 0;
+}
+
+button#announcementBarClose {
+	flex-shrink: 0;
+	background: none;
+	border: none;
+	color: inherit;
+	font-size: 1.6em;
+	line-height: 1;
+	cursor: pointer;
+	padding: 4px 10px;
 }
 
 div#announcementBarWrapper a {

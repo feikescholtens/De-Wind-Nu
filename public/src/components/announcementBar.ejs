@@ -1,3 +1,23 @@
 <% if (typeof announcementHtml !== "undefined" && announcementHtml) { %>
-  <div id="announcementBarWrapper"><%- announcementHtml %></div>
+  <div id="announcementBarWrapper">
+    <div id="announcementBarContent"><%- announcementHtml %></div>
+    <button id="announcementBarClose" aria-label="Sluiten" title="Sluiten">&times;</button>
+  </div>
+  <script>
+    // Inline (not deferred) so a previously dismissed bar never flashes before this hides it
+    (function () {
+      var wrapper = document.getElementById("announcementBarWrapper");
+      var content = document.getElementById("announcementBarContent").innerHTML;
+
+      if (sessionStorage.getItem("dismissedAnnouncement") === content) {
+        wrapper.style.display = "none";
+        return;
+      }
+
+      document.getElementById("announcementBarClose").addEventListener("click", function () {
+        sessionStorage.setItem("dismissedAnnouncement", content);
+        wrapper.style.display = "none";
+      });
+    })();
+  </script>
 <% } %>
